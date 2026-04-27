@@ -1,0 +1,1447 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Avanade — Proposta de Evolução: Time de IA como Acelerador</title>
+    <style>
+        /* ===== RESET & BASE ===== */
+        *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+        html, body { width: 100%; height: 100%; overflow: hidden; font-family: 'Segoe UI', system-ui, -apple-system, sans-serif; background: #ffffff; color: #333; }
+
+        /* ===== LANGUAGE TOGGLE ===== */
+        .lang-pt { display: none !important; }
+        .lang-en { display: inline; }
+        body.pt-active .lang-pt { display: inline !important; }
+        body.pt-active .lang-en { display: none !important; }
+        div.lang-pt, p.lang-pt, li.lang-pt, tr.lang-pt, h2.lang-pt, h3.lang-pt, h4.lang-pt, ul.lang-pt, ol.lang-pt, table.lang-pt, section.lang-pt, span.lang-pt { display: none !important; }
+        body.pt-active div.lang-pt, body.pt-active p.lang-pt, body.pt-active li.lang-pt, body.pt-active tr.lang-pt,
+        body.pt-active h2.lang-pt, body.pt-active h3.lang-pt, body.pt-active h4.lang-pt,
+        body.pt-active ul.lang-pt, body.pt-active ol.lang-pt, body.pt-active table.lang-pt,
+        body.pt-active section.lang-pt, body.pt-active span.lang-pt { display: block !important; }
+        body.pt-active span.lang-pt { display: inline !important; }
+        body.pt-active div.lang-en, body.pt-active p.lang-en, body.pt-active li.lang-en, body.pt-active tr.lang-en,
+        body.pt-active h2.lang-en, body.pt-active h3.lang-en, body.pt-active h4.lang-en,
+        body.pt-active ul.lang-en, body.pt-active ol.lang-en, body.pt-active table.lang-en,
+        body.pt-active section.lang-en, body.pt-active span.lang-en { display: none !important; }
+
+        /* ===== SLIDE ENGINE ===== */
+        .slide-deck { position: relative; width: 100%; height: 100vh; }
+        .slide {
+            position: absolute; top: 0; left: 0;
+            width: 100%; height: 100vh;
+            display: flex; flex-direction: column; justify-content: flex-start; align-items: center;
+            padding: 60px 80px 80px;
+            opacity: 0; visibility: hidden;
+            transition: opacity 0.45s ease, visibility 0.45s ease;
+            overflow-y: auto;
+        }
+        .slide.active { opacity: 1; visibility: visible; }
+
+        /* ===== TOP BAR ===== */
+        .top-bar {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; justify-content: space-between; align-items: center;
+            padding: 10px 30px; height: 44px;
+            background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+            border-bottom: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 1px 3px rgba(0,0,0,0.06);
+        }
+        .top-bar .brand { font-size: 13px; font-weight: 600; color: #ff5a00; letter-spacing: 1px; text-transform: uppercase; }
+        .top-bar .controls { display: flex; gap: 10px; align-items: center; }
+        .lang-btn {
+            background: transparent; border: 1px solid rgba(0,0,0,0.15); color: #666;
+            padding: 3px 10px; border-radius: 4px; font-size: 12px; cursor: pointer; transition: all 0.2s;
+        }
+        .lang-btn:hover { border-color: #ff5a00; color: #ff5a00; }
+        .lang-btn.active { background: #ff5a00; border-color: #ff5a00; color: #fff; }
+
+        /* ===== BOTTOM NAV ===== */
+        .bottom-nav {
+            position: fixed; bottom: 0; left: 0; right: 0; z-index: 1000;
+            display: flex; justify-content: center; align-items: center; gap: 20px;
+            padding: 12px 30px; height: 56px;
+            background: rgba(255,255,255,0.96); backdrop-filter: blur(10px);
+            border-top: 1px solid rgba(0,0,0,0.08);
+            box-shadow: 0 -1px 3px rgba(0,0,0,0.06);
+        }
+        .nav-btn {
+            background: rgba(255,90,0,0.1); border: 1px solid rgba(255,90,0,0.3); color: #ff5a00;
+            padding: 8px 24px; border-radius: 6px; font-size: 14px; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; user-select: none;
+        }
+        .nav-btn:hover { background: rgba(255,90,0,0.25); border-color: #ff5a00; }
+        .nav-btn:disabled { opacity: 0.3; cursor: default; }
+        .slide-counter { color: #666; font-size: 13px; font-variant-numeric: tabular-nums; min-width: 70px; text-align: center; }
+
+        /* ===== PROGRESS BAR ===== */
+        .progress-bar { position: fixed; top: 44px; left: 0; height: 3px; background: #ff5a00; z-index: 1001; transition: width 0.4s ease; }
+
+        /* ===== TYPOGRAPHY ===== */
+        .slide h1 { font-size: 2.6rem; font-weight: 700; color: #1a1a1a; margin-bottom: 8px; text-align: center; }
+        .slide h2 { font-size: 1.9rem; font-weight: 700; color: #ff5a00; margin-bottom: 16px; text-align: center; }
+        .slide h3 { font-size: 1.3rem; font-weight: 600; color: #e05500; margin: 18px 0 10px; }
+        .slide h4 { font-size: 1.05rem; font-weight: 600; color: #555; margin: 12px 0 6px; }
+        .slide p, .slide li { font-size: 0.95rem; line-height: 1.65; color: #444; }
+        .subtitle { font-size: 1.15rem; color: #666; margin-bottom: 30px; text-align: center; }
+
+        /* ===== CARDS & GRID ===== */
+        .card-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 20px; width: 100%; max-width: 1100px; }
+        .card {
+            background: #f8f9fa; border: 1px solid #e2e2e2;
+            border-radius: 10px; padding: 22px 24px; transition: border-color 0.2s;
+        }
+        .card:hover { border-color: rgba(255,90,0,0.5); }
+        .card-icon { font-size: 1.8rem; margin-bottom: 8px; }
+        .card h3 { margin: 0 0 8px; text-align: left; }
+        .card p, .card li { font-size: 0.88rem; }
+        .card ul { padding-left: 18px; }
+        .card ul li { margin-bottom: 4px; }
+
+        /* ===== TAG / BADGE ===== */
+        .tag {
+            display: inline-block; padding: 3px 10px; border-radius: 12px; font-size: 0.78rem; font-weight: 600;
+            margin: 2px 4px 2px 0;
+        }
+        .tag-green { background: rgba(34,197,94,0.12); color: #15803d; border: 1px solid rgba(34,197,94,0.3); }
+        .tag-orange { background: rgba(255,90,0,0.1); color: #c2410c; border: 1px solid rgba(255,90,0,0.3); }
+        .tag-blue { background: rgba(59,130,246,0.1); color: #2563eb; border: 1px solid rgba(59,130,246,0.3); }
+        .tag-red { background: rgba(239,68,68,0.1); color: #dc2626; border: 1px solid rgba(239,68,68,0.3); }
+        .tag-purple { background: rgba(168,85,247,0.1); color: #9333ea; border: 1px solid rgba(168,85,247,0.3); }
+
+        /* ===== TABLES ===== */
+        table { width: 100%; max-width: 1100px; border-collapse: collapse; margin: 10px 0; font-size: 0.85rem; }
+        th { background: rgba(255,90,0,0.08); color: #d04800; text-align: left; padding: 10px 14px; border-bottom: 2px solid rgba(255,90,0,0.25); }
+        td { padding: 8px 14px; border-bottom: 1px solid #eee; color: #444; }
+        tr:hover td { background: rgba(255,90,0,0.03); }
+
+        /* ===== HIGHLIGHT BOX ===== */
+        .highlight-box {
+            background: rgba(255,90,0,0.06); border: 1px solid rgba(255,90,0,0.2); border-left: 4px solid #ff5a00;
+            border-radius: 8px; padding: 16px 20px; margin: 12px 0; width: 100%; max-width: 1100px;
+        }
+        .highlight-box strong { color: #d04800; }
+        .success-box {
+            background: rgba(34,197,94,0.06); border: 1px solid rgba(34,197,94,0.2); border-left: 4px solid #22c55e;
+            border-radius: 8px; padding: 16px 20px; margin: 12px 0; width: 100%; max-width: 1100px;
+        }
+        .success-box strong { color: #16a34a; }
+        .warning-box {
+            background: rgba(234,179,8,0.08); border: 1px solid rgba(234,179,8,0.3); border-left: 4px solid #eab308;
+            border-radius: 8px; padding: 16px 20px; margin: 12px 0; width: 100%; max-width: 1100px;
+        }
+        .warning-box strong { color: #a16207; }
+        .danger-box {
+            background: rgba(239,68,68,0.06); border: 1px solid rgba(239,68,68,0.2); border-left: 4px solid #ef4444;
+            border-radius: 8px; padding: 16px 20px; margin: 12px 0; width: 100%; max-width: 1100px;
+        }
+        .danger-box strong { color: #dc2626; }
+
+        /* ===== CONTENT WIDTH ===== */
+        .content-area { width: 100%; max-width: 1100px; text-align: left; }
+
+        /* ===== ARCHITECTURE / CODE DIAGRAM ===== */
+        .arch-diagram {
+            background: #f5f6f8; border: 1px solid #e0e0e0;
+            border-radius: 12px; padding: 30px; margin: 16px 0; width: 100%; max-width: 1100px;
+            font-family: 'Cascadia Code', 'Fira Code', 'Consolas', monospace; font-size: 0.82rem;
+            color: #555; line-height: 1.5; white-space: pre; overflow-x: auto; text-align: center;
+        }
+
+        /* ===== SECTION BREAK ===== */
+        .section-break {
+            justify-content: center !important;
+            text-align: center;
+            background: linear-gradient(135deg, #fff8f5 0%, #ffffff 60%, #fff5ef 100%);
+        }
+        .section-break .section-number {
+            font-size: 0.85rem; font-weight: 700; letter-spacing: 3px;
+            text-transform: uppercase; color: #ff5a00; margin-bottom: 16px; opacity: 0.7;
+        }
+        .section-break h1 {
+            font-size: 2.4rem; font-weight: 700; color: #ff5a00; margin-bottom: 12px;
+        }
+        .section-break .section-subtitle {
+            font-size: 1.15rem; color: #666; max-width: 600px; line-height: 1.6;
+        }
+        .section-break .section-icon { font-size: 3.5rem; margin-bottom: 20px; }
+        .section-break .section-divider {
+            width: 80px; height: 4px; background: #ff5a00; border-radius: 2px; margin: 20px auto 0;
+        }
+
+        /* ===== THREE COLUMNS ===== */
+        .three-columns { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 20px; width: 100%; max-width: 1100px; }
+
+        /* ===== TWO COLUMNS ===== */
+        .two-columns { display: grid; grid-template-columns: 1fr 1fr; gap: 30px; width: 100%; max-width: 1100px; }
+
+        /* ===== ICON LIST ===== */
+        .icon-list { list-style: none; padding: 0; width: 100%; max-width: 1100px; }
+        .icon-list li { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 12px; font-size: 0.95rem; line-height: 1.6; }
+        .icon-list li .icon { font-size: 1.4rem; flex-shrink: 0; margin-top: 2px; }
+
+        /* ===== SCROLLBAR ===== */
+        .slide::-webkit-scrollbar { width: 6px; }
+        .slide::-webkit-scrollbar-track { background: transparent; }
+        .slide::-webkit-scrollbar-thumb { background: rgba(255,90,0,0.4); border-radius: 3px; }
+
+        /* ===== RESPONSIVE ===== */
+        @media (max-width: 900px) {
+            .slide { padding: 56px 24px 70px; }
+            .slide h1 { font-size: 1.8rem; }
+            .slide h2 { font-size: 1.4rem; }
+            .card-grid { grid-template-columns: 1fr; }
+            .two-columns { grid-template-columns: 1fr; }
+            .three-columns { grid-template-columns: 1fr; }
+            .section-break h1 { font-size: 1.6rem; }
+        }
+    </style>
+</head>
+<body class="pt-active">
+
+<!-- ===== TOP BAR ===== -->
+<div class="top-bar">
+    <div class="brand">Avanade — Proposta de Evolução IA</div>
+    <div class="controls">
+        <button class="lang-btn" id="btnEN" onclick="setLang('en')">EN</button>
+        <button class="lang-btn active" id="btnPT" onclick="setLang('pt')">PT</button>
+    </div>
+</div>
+
+<!-- ===== PROGRESS BAR ===== -->
+<div class="progress-bar" id="progressBar"></div>
+
+<div class="slide-deck" id="slideDeck">
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 1 — CAPA
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide active" style="justify-content: center;">
+        <h1>🚀 <span class="lang-pt">Proposta de Evolução</span><span class="lang-en">Evolution Proposal</span></h1>
+        <p class="subtitle lang-pt">De Time AAP para Acelerador de IA Multi-Plataforma</p>
+        <p class="subtitle lang-en">From AAP Team to Multi-Platform AI Accelerator</p>
+
+        <div style="margin-top: 32px; display: flex; gap: 40px; justify-content: center; flex-wrap: wrap; max-width: 800px;">
+            <div style="text-align: center; flex: 1; min-width: 260px; padding: 24px; background: #f8f9fa; border-radius: 12px; border: 1px solid #e2e2e2;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">⚡</div>
+                <h3 style="color: #ff5a00; font-size: 1.1rem; margin: 0 0 6px;">
+                    <span class="lang-pt">Evolução Técnica</span>
+                    <span class="lang-en">Technical Evolution</span>
+                </h3>
+                <p style="font-size: 0.85rem; color: #666;">
+                    <span class="lang-pt">De 1 plataforma para um arsenal de 5 soluções</span>
+                    <span class="lang-en">From 1 platform to an arsenal of 5 solutions</span>
+                </p>
+            </div>
+            <div style="text-align: center; flex: 1; min-width: 260px; padding: 24px; background: #f8f9fa; border-radius: 12px; border: 1px solid #e2e2e2;">
+                <div style="font-size: 2.2rem; margin-bottom: 8px;">📋</div>
+                <h3 style="color: #ff5a00; font-size: 1.1rem; margin: 0 0 6px;">
+                    <span class="lang-pt">Evolução de Processos</span>
+                    <span class="lang-en">Process Evolution</span>
+                </h3>
+                <p style="font-size: 0.85rem; color: #666;">
+                    <span class="lang-pt">Fluxo estruturado com intake, DoR, DoD e métricas</span>
+                    <span class="lang-en">Structured flow with intake, DoR, DoD and metrics</span>
+                </p>
+            </div>
+        </div>
+
+        <div style="margin-top: 40px; text-align: center;">
+            <p style="font-size: 0.85rem; color: #666;">
+                <span class="lang-pt">Time Interno de IA — Avanade • Fevereiro 2026</span>
+                <span class="lang-en">Internal AI Team — Avanade • February 2026</span>
+            </p>
+            <p style="font-size: 0.8rem; color: #555; margin-top: 6px;">
+                <span class="lang-pt">Pressione → ou clique em Próximo para começar</span>
+                <span class="lang-en">Press → or click Next to begin</span>
+            </p>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 2 — CONTEXTO ATUAL
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Contexto Atual</span>
+            <span class="lang-en">Current Context</span>
+        </h2>
+        <p class="subtitle lang-pt">O que limita nosso impacto hoje</p>
+        <p class="subtitle lang-en">What limits our impact today</p>
+        <div class="content-area">
+            <div class="two-columns">
+                <div>
+                    <h3 style="margin-top: 0;"><span class="lang-pt">⚡ Limitações Técnicas</span><span class="lang-en">⚡ Technical Limitations</span></h3>
+                    <div class="card" style="margin-bottom: 12px; border-left: 4px solid #ef4444;">
+                        <h4><span class="lang-pt">🔒 Plataforma única</span><span class="lang-en">🔒 Single platform</span></h4>
+                        <p class="lang-pt" style="font-size: 0.85rem;">Atuamos quase exclusivamente com AAP/Cockpit. Demandas simples recebem soluções complexas — porque é a única ferramenta disponível.</p>
+                        <p class="lang-en" style="font-size: 0.85rem;">We operate almost exclusively with AAP/Cockpit. Simple demands receive complex solutions — because it's the only available tool.</p>
+                    </div>
+                    <div class="card" style="margin-bottom: 12px; border-left: 4px solid #ef4444;">
+                        <h4><span class="lang-pt">🔐 Compliance e hospedagem</span><span class="lang-en">🔐 Compliance and hosting</span></h4>
+                        <p class="lang-pt" style="font-size: 0.85rem;">AppRegistration aparece como surpresa no final. Ambiente Azure pendente. Agentes finalizados ficam "em estoque" sem ir para produção.</p>
+                        <p class="lang-en" style="font-size: 0.85rem;">AppRegistration appears as a surprise at the end. Azure environment pending. Completed agents remain "in stock" without reaching production.</p>
+                    </div>
+                </div>
+                <div>
+                    <h3 style="margin-top: 0;"><span class="lang-pt">📋 Limitações de Processo</span><span class="lang-en">📋 Process Limitations</span></h3>
+                    <div class="card" style="margin-bottom: 12px; border-left: 4px solid #eab308;">
+                        <h4><span class="lang-pt">📋 Sem intake padronizado</span><span class="lang-en">📋 No standardized intake</span></h4>
+                        <p class="lang-pt" style="font-size: 0.85rem;">Demandas chegam sem ROI, sem saving estimado, sem mapeamento de usuários. Priorização reativa ao invés de baseada em valor.</p>
+                        <p class="lang-en" style="font-size: 0.85rem;">Demands arrive without ROI, estimated savings, or user mapping. Reactive prioritization instead of value-based.</p>
+                    </div>
+                    <div class="card" style="margin-bottom: 12px; border-left: 4px solid #eab308;">
+                        <h4><span class="lang-pt">📊 Sem visibilidade nem critérios</span><span class="lang-en">📊 No visibility or criteria</span></h4>
+                        <p class="lang-pt" style="font-size: 0.85rem;">Sem DoR/DoD, sem board atualizado, sem métricas de fluxo. Spillover recorrente (~50%+). Stakeholders pedem status por reunião.</p>
+                        <p class="lang-en" style="font-size: 0.85rem;">No DoR/DoD, no updated board, no flow metrics. Recurring spillover (~50%+). Stakeholders request status via meetings.</p>
+                    </div>
+                </div>
+            </div>
+            <div class="danger-box" style="margin-top: 16px;">
+                <p class="lang-pt"><strong>Resultado:</strong> Entregas demoram semanas. Agentes não vão para produção. O time opera como uma esteira reativa ao invés de um acelerador de resultados.</p>
+                <p class="lang-en"><strong>Result:</strong> Deliveries take weeks. Agents never reach production. The team operates as a reactive assembly line instead of a results accelerator.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 3 — A PROPOSTA
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">A Proposta: De Time AAP → Acelerador de IA</span>
+            <span class="lang-en">The Proposal: From AAP Team → AI Accelerator</span>
+        </h2>
+        <p class="subtitle lang-pt">Expandir o leque de atuação, soluções e impacto</p>
+        <p class="subtitle lang-en">Expand the range of action, solutions, and impact</p>
+        <div class="content-area">
+            <table>
+                <thead>
+                    <tr>
+                        <th style="width: 20%;"><span class="lang-pt">Dimensão</span><span class="lang-en">Dimension</span></th>
+                        <th style="width: 38%;"><span class="lang-pt">Hoje (Time AAP)</span><span class="lang-en">Today (AAP Team)</span></th>
+                        <th style="width: 42%;"><span class="lang-pt">Proposta (Acelerador de IA)</span><span class="lang-en">Proposal (AI Accelerator)</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong><span class="lang-pt">Posicionamento</span><span class="lang-en">Positioning</span></strong></td>
+                        <td><span class="lang-pt">Time reativo focado em 1 plataforma</span><span class="lang-en">Reactive team focused on 1 platform</span></td>
+                        <td><span class="lang-pt">Hub interno que acelera resultados usando IA multi-plataforma</span><span class="lang-en">Internal hub that accelerates results using multi-platform AI</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Plataformas</span><span class="lang-en">Platforms</span></strong></td>
+                        <td><span class="lang-pt">Apenas AAP/Cockpit</span><span class="lang-en">AAP/Cockpit only</span></td>
+                        <td><span class="lang-pt">5 ferramentas: AAP, Microsoft 365 Copilot, Copilot Studio, Power Automate, GitHub Copilot</span><span class="lang-en">5 tools: AAP, Microsoft 365 Copilot, Copilot Studio, Power Automate, GitHub Copilot</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Entrada</span><span class="lang-en">Entry</span></strong></td>
+                        <td><span class="lang-pt">Sem filtro — "o DL pediu"</span><span class="lang-en">No filter — "the DL requested"</span></td>
+                        <td><span class="lang-pt">Discovery Call → Refinamento → Card de Triagem com ROI</span><span class="lang-en">Discovery Call → Refinement → Triage Card with ROI</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Entrega</span><span class="lang-en">Delivery</span></strong></td>
+                        <td><span class="lang-pt">Semanas a sprints (só AAP)</span><span class="lang-en">Weeks to sprints (AAP only)</span></td>
+                        <td><span class="lang-pt">Horas a dias (ferramentas nativas) a sprints (AAP complexo)</span><span class="lang-en">Hours to days (native tools) to sprints (complex AAP)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Métrica</span><span class="lang-en">Metric</span></strong></td>
+                        <td><span class="lang-pt">Quantidade de agentes</span><span class="lang-en">Number of agents</span></td>
+                        <td><span class="lang-pt">Valor: horas economizadas, erros evitados, satisfação</span><span class="lang-en">Value: hours saved, errors avoided, satisfaction</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Engajamento</span><span class="lang-en">Engagement</span></strong></td>
+                        <td><span class="lang-pt">Apenas full-service</span><span class="lang-en">Full-service only</span></td>
+                        <td><span class="lang-pt">4 modelos: Full-service, Co-criação, Self-service, Consultoria</span><span class="lang-en">4 models: Full-service, Co-creation, Self-service, Consulting</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="success-box" style="margin-top: 16px;">
+                <p class="lang-pt"><strong>💡 Impacto no ROI:</strong> Agentes conversacionais simples podem ser entregues em <strong>horas</strong> (via Microsoft 365 Copilot), automações em <strong>1-3 dias</strong> (via Power Automate), enquanto orquestrações complexas mantêm o ciclo de <strong>1 sprint</strong> via AAP — tudo com a ferramenta certa para cada cenário.</p>
+                <p class="lang-en"><strong>💡 ROI Impact:</strong> Simple conversational agents can be delivered in <strong>hours</strong> (via Microsoft 365 Copilot), automations in <strong>1-3 days</strong> (via Power Automate), while complex orchestrations maintain the <strong>1 sprint</strong> cycle via AAP — all with the right tool for each scenario.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 4 — SECTION BREAK: EVOLUÇÃO TÉCNICA
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide section-break">
+        <div class="section-number">
+            <span class="lang-pt">BLOCO 1</span>
+            <span class="lang-en">BLOCK 1</span>
+        </div>
+        <div class="section-icon">⚡</div>
+        <h1>
+            <span class="lang-pt">Proposta de Evolução Técnica</span>
+            <span class="lang-en">Technical Evolution Proposal</span>
+        </h1>
+        <p class="section-subtitle">
+            <span class="lang-pt">De 1 plataforma para um arsenal de 5 soluções</span>
+            <span class="lang-en">From 1 platform to an arsenal of 5 solutions</span>
+        </p>
+        <div class="section-divider"></div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 5 — POR QUE EXPANDIR ALÉM DO AAP
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Por Que Expandir Além do AAP?</span>
+            <span class="lang-en">Why Expand Beyond AAP?</span>
+        </h2>
+        <p class="subtitle lang-pt">Limitações do modelo atual vs. oportunidade de evolução</p>
+        <p class="subtitle lang-en">Limitations of the current model vs. evolution opportunity</p>
+        <div class="content-area">
+            <div class="two-columns">
+                <div>
+                    <div class="danger-box" style="margin-top: 0;">
+                        <h4><span class="lang-pt">🚧 Limitações do Modelo Atual</span><span class="lang-en">🚧 Current Model Limitations</span></h4>
+                        <ul style="padding-left: 18px; margin-top: 8px; font-size: 0.88rem;">
+                            <li class="lang-pt">Agentes dependem de infraestrutura Azure (ambiente pendente aprovação)</li>
+                            <li class="lang-en">Agents depend on Azure infrastructure (environment pending approval)</li>
+                            <li class="lang-pt">Compliance obrigatório via AppRegistration para acesso O365</li>
+                            <li class="lang-en">Mandatory compliance via AppRegistration for O365 access</li>
+                            <li class="lang-pt">Agentes finalizados não vão para produção por falta de hosting/compliance</li>
+                            <li class="lang-en">Completed agents don't reach production due to missing hosting/compliance</li>
+                            <li class="lang-pt">Ciclo de entrega longo: semanas a sprints para qualquer demanda</li>
+                            <li class="lang-en">Long delivery cycle: weeks to sprints for any demand</li>
+                            <li class="lang-pt">Risco de depender de uma só plataforma — sem alternativas</li>
+                            <li class="lang-en">Risk of depending on a single platform — no alternatives</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="success-box" style="margin-top: 0;">
+                        <h4><span class="lang-pt">🚀 Oportunidade com 5 Plataformas</span><span class="lang-en">🚀 Opportunity with 5 Platforms</span></h4>
+                        <ul style="padding-left: 18px; margin-top: 8px; font-size: 0.88rem;">
+                            <li class="lang-pt">Entregas rápidas: agentes simples em horas/dias (M365 Copilot, PA)</li>
+                            <li class="lang-en">Fast delivery: simple agents in hours/days (M365 Copilot, PA)</li>
+                            <li class="lang-pt">Compliance herdado do M365 em 3 das 5 ferramentas — zero etapa extra</li>
+                            <li class="lang-en">M365-inherited compliance in 3 of 5 tools — zero extra step</li>
+                            <li class="lang-pt">Zero hosting necessário em 3 das 5 ferramentas (SaaS/nativo)</li>
+                            <li class="lang-en">Zero hosting needed in 3 of 5 tools (SaaS/native)</li>
+                            <li class="lang-pt">Flexibilidade: ferramenta certa para cada demanda</li>
+                            <li class="lang-en">Flexibility: the right tool for each demand</li>
+                            <li class="lang-pt">AAP permanece para orquestrações complexas — não é substituído</li>
+                            <li class="lang-en">AAP remains for complex orchestrations — not replaced</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+            <div class="highlight-box" style="margin-top: 16px;">
+                <p class="lang-pt"><strong>Este é o motivo base desta proposta:</strong> Expandir o arsenal não é abandonar o AAP — é garantir que cada demanda receba a solução com o menor ciclo, menor custo e menor fricção possível. O resultado é: mais agentes em produção, mais rápido.</p>
+                <p class="lang-en"><strong>This is the core reason for this proposal:</strong> Expanding the arsenal isn't abandoning AAP — it's ensuring each demand receives the solution with the shortest cycle, lowest cost and least friction possible. The result: more agents in production, faster.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 6 — ARSENAL: 5 PLATAFORMAS + COMPARATIVO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Arsenal: 5 Plataformas</span>
+            <span class="lang-en">Arsenal: 5 Platforms</span>
+        </h2>
+        <p class="subtitle lang-pt">Cada demanda tem uma ferramenta ideal</p>
+        <p class="subtitle lang-en">Each demand has an ideal tool</p>
+        <div class="content-area">
+            <ul class="icon-list" style="margin-bottom: 16px;">
+                <li><span class="icon">🧠</span><span><strong>AAP / Cockpit</strong> — <span class="lang-pt">Orquestração multi-agente, dados externos, MCPs customizados</span><span class="lang-en">Multi-agent orchestration, external data, custom MCPs</span></span></li>
+                <li><span class="icon">💬</span><span><strong>Microsoft 365 Copilot</strong> — <span class="lang-pt">Agentes nativos M365 com SharePoint, OneDrive e Teams</span><span class="lang-en">Native M365 agents with SharePoint, OneDrive and Teams</span></span></li>
+                <li><span class="icon">🤖</span><span><strong>Copilot Studio</strong> — <span class="lang-pt">Agentes SaaS com triggers proativos e multi-canal</span><span class="lang-en">SaaS agents with proactive triggers and multi-channel</span></span></li>
+                <li><span class="icon">⚡</span><span><strong>Power Automate</strong> — <span class="lang-pt">Automação determinística + camada de trigger para agentes IA</span><span class="lang-en">Deterministic automation + trigger layer for AI agents</span></span></li>
+                <li><span class="icon">🛠️</span><span><strong>GitHub Copilot no VS Code</strong> — <span class="lang-pt">Produtividade de desenvolvimento e construção de agentes</span><span class="lang-en">Development productivity and agent building</span></span></li>
+            </ul>
+
+            <table style="font-size: 0.78rem;">
+                <thead>
+                    <tr>
+                        <th><span class="lang-pt">Critério</span><span class="lang-en">Criteria</span></th>
+                        <th>AAP / Cockpit</th>
+                        <th>M365 Copilot</th>
+                        <th>Copilot Studio</th>
+                        <th>Power Automate</th>
+                        <th>GitHub Copilot</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong><span class="lang-pt">Categoria</span><span class="lang-en">Category</span></strong></td>
+                        <td><span class="lang-pt">Agentes negócio</span><span class="lang-en">Business agents</span></td>
+                        <td><span class="lang-pt">Agentes negócio</span><span class="lang-en">Business agents</span></td>
+                        <td><span class="lang-pt">Agentes negócio</span><span class="lang-en">Business agents</span></td>
+                        <td><span class="lang-pt">Automação</span><span class="lang-en">Automation</span></td>
+                        <td><span class="lang-pt">Produt. Dev</span><span class="lang-en">Dev Productivity</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Licença</span><span class="lang-en">License</span></strong></td>
+                        <td><span class="tag tag-green" style="font-size: 0.7rem;">Avanade</span></td>
+                        <td><span class="tag tag-green" style="font-size: 0.7rem;">✅ M365</span></td>
+                        <td><span class="tag tag-green" style="font-size: 0.7rem;"><span class="lang-pt">✅ Disp.</span><span class="lang-en">✅ Avail.</span></span></td>
+                        <td><span class="tag tag-green" style="font-size: 0.7rem;">✅ M365</span></td>
+                        <td><span class="tag tag-orange" style="font-size: 0.7rem;">Business</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Hosting</strong></td>
+                        <td><span class="lang-pt">Azure (pendente)</span><span class="lang-en">Azure (pending)</span></td>
+                        <td><span class="lang-pt">Nenhum</span><span class="lang-en">None</span></td>
+                        <td>SaaS</td>
+                        <td><span class="lang-pt">Nenhum</span><span class="lang-en">None</span></td>
+                        <td>Local</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compliance¹</strong></td>
+                        <td><span class="lang-pt">⚠️ AppReg</span><span class="lang-en">⚠️ AppReg</span></td>
+                        <td><span class="lang-pt">✅ Herdado</span><span class="lang-en">✅ Inherited</span></td>
+                        <td>✅ PP</td>
+                        <td><span class="lang-pt">✅ Herdado</span><span class="lang-en">✅ Inherited</span></td>
+                        <td>✅ MCPs</td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Complexidade</span><span class="lang-en">Complexity</span></strong></td>
+                        <td><span class="lang-pt">Média-Alta</span><span class="lang-en">Med-High</span></td>
+                        <td><span class="lang-pt">Baixa</span><span class="lang-en">Low</span></td>
+                        <td><span class="lang-pt">Baixa-Média</span><span class="lang-en">Low-Med</span></td>
+                        <td><span class="lang-pt">Baixa</span><span class="lang-en">Low</span></td>
+                        <td><span class="lang-pt">Baixa-Média</span><span class="lang-en">Low-Med</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Multi-agente</strong></td>
+                        <td>✅ LangGraph</td>
+                        <td>❌</td>
+                        <td><span class="lang-pt">⚠️ Limitado</span><span class="lang-en">⚠️ Limited</span></td>
+                        <td>❌</td>
+                        <td>❌</td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <div class="warning-box" style="margin-top: 12px;">
+                <p class="lang-pt" style="font-size: 0.82rem;"><strong>¹ Compliance = AppRegistration.</strong> Necessário apenas quando a solução acessa O365 via backend (C#, Python, Graph API, MCP customizado). Ferramentas nativas Microsoft herdam compliance do tenant M365.</p>
+                <p class="lang-en" style="font-size: 0.82rem;"><strong>¹ Compliance = AppRegistration.</strong> Required only when the solution accesses O365 via backend (C#, Python, Graph API, custom MCP). Native Microsoft tools inherit compliance from the M365 tenant.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 7 — ÁRVORE DE DECISÃO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Árvore de Decisão — Qual Ferramenta?</span>
+            <span class="lang-en">Decision Tree — Which Tool?</span>
+        </h2>
+        <p class="subtitle lang-pt">Aplicar no refinamento de cada nova demanda</p>
+        <p class="subtitle lang-en">Apply during refinement of each new demand</p>
+        <div class="content-area">
+            <div class="arch-diagram">
+<span class="lang-pt">PASSO 1 — É puramente automação determinística (sem IA generativa)?
+  SIM → Power Automate (dados O365, agendamento, notificações)    |    NÃO → Passo 2
+
+PASSO 2 — Conversacional simples + dados no M365?
+  SIM → Microsoft 365 Copilot (sem hosting, compliance nativo)    |    NÃO → Passo 3
+
+PASSO 3 — Precisa de trigger proativo / multi-canal / canal grupo Teams?
+  SIM → Copilot Studio    |    NÃO → Passo 4
+
+PASSO 4 — Orquestração complexa / multi-agente / dados externos / MCP custom?
+  SIM → AAP / Cockpit    |    NÃO → Revisar Passos 2 e 3
+
+PASSO 5 — Precisa acelerar o desenvolvimento de software / construção de agentes?
+  SIM → GitHub Copilot no VS Code    |    NÃO → Revisar Passos 1 a 4
+
+──────────────────────────────────────────────────────────
+PERGUNTA ADICIONAL: Power Automate pode ser camada de trigger/scheduler?
+→ Se SIM, PA atua como scheduler + IA fica no agente (zero custo extra)</span>
+<span class="lang-en">STEP 1 — Is it purely deterministic automation (no generative AI)?
+  YES → Power Automate (O365 data, scheduling, notifications)    |    NO → Step 2
+
+STEP 2 — Simple conversational + data in M365?
+  YES → Microsoft 365 Copilot (no hosting, native compliance)    |    NO → Step 3
+
+STEP 3 — Needs proactive trigger / multi-channel / Teams group channel?
+  YES → Copilot Studio    |    NO → Step 4
+
+STEP 4 — Complex orchestration / multi-agent / external data / custom MCP?
+  YES → AAP / Cockpit    |    NO → Review Steps 2 and 3
+
+STEP 5 — Need to accelerate software development / agent building?
+  YES → GitHub Copilot in VS Code    |    NO → Review Steps 1 to 4
+
+──────────────────────────────────────────────────────────
+ADDITIONAL QUESTION: Can Power Automate be the trigger/scheduler layer?
+→ If YES, PA acts as scheduler + AI stays in the agent (zero extra cost)</span></div>
+
+            <div class="highlight-box">
+                <p class="lang-pt"><strong>📋 Card de Triagem:</strong> Template preenchido no Azure DevOps durante o Refinamento. Artefato obrigatório do DoR — vinculado ao item de backlog, validado pelo desenvolvedor sênior.</p>
+                <p class="lang-en"><strong>📋 Triage Card:</strong> Template filled in Azure DevOps during Refinement. Mandatory DoR artifact — linked to backlog item, validated by senior developer.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 8 — COMBINAÇÕES & IMPACTO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Combinações & Impacto</span>
+            <span class="lang-en">Combinations & Impact</span>
+        </h2>
+        <p class="subtitle lang-pt">As ferramentas se complementam — e o impacto no tempo de entrega é direto</p>
+        <p class="subtitle lang-en">The tools complement each other — and the delivery time impact is direct</p>
+        <div class="content-area">
+            <div class="card-grid" style="grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));">
+                <div class="card" style="border-left: 4px solid #ff5a00;">
+                    <h4>Power Automate → AAP</h4>
+                    <p class="lang-pt" style="font-size: 0.82rem;">PA é o scheduler, AAP é o cérebro. Resolve limite de 1x/dia do AAP. Agente complexo com trigger flexível.</p>
+                    <p class="lang-en" style="font-size: 0.82rem;">PA is the scheduler, AAP is the brain. Resolves AAP's 1x/day limit. Complex agent with flexible trigger.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #22c55e;">
+                    <h4>Microsoft 365 Copilot + PA</h4>
+                    <p class="lang-pt" style="font-size: 0.82rem;">Agent responde Q&A sobre docs; PA cuida de notificações, agendamento e atualizações automáticas.</p>
+                    <p class="lang-en" style="font-size: 0.82rem;">Agent handles Q&A on docs; PA handles notifications, scheduling and automatic updates.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #3b82f6;">
+                    <h4>GitHub Copilot + AAP</h4>
+                    <p class="lang-pt" style="font-size: 0.82rem;">Dev usa GitHub Copilot para construir agentes AAP com mais qualidade e velocidade (uso interno do time).</p>
+                    <p class="lang-en" style="font-size: 0.82rem;">Dev uses GitHub Copilot to build AAP agents with more quality and speed (team internal use).</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #9333ea;">
+                    <h4>Copilot Studio + PA</h4>
+                    <p class="lang-pt" style="font-size: 0.82rem;">Studio tem o agente conversacional; PA dispara triggers de eventos externos e automações complementares.</p>
+                    <p class="lang-en" style="font-size: 0.82rem;">Studio has the conversational agent; PA fires external event triggers and complementary automations.</p>
+                </div>
+            </div>
+
+            <div class="success-box" style="margin-top: 20px;">
+                <h4 style="margin-top: 0;"><span class="lang-pt">📊 Impacto Esperado no Tempo de Entrega</span><span class="lang-en">📊 Expected Delivery Time Impact</span></h4>
+                <div style="display: flex; gap: 20px; flex-wrap: wrap; margin-top: 10px;">
+                    <div style="flex: 1; min-width: 200px; text-align: center;">
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-bottom: 4px;"><span class="lang-pt">Horas</span><span class="lang-en">Hours</span></p>
+                        <p style="font-size: 0.82rem;"><span class="lang-pt">Q&A sobre docs via M365 Copilot</span><span class="lang-en">Q&A on docs via M365 Copilot</span></p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; text-align: center;">
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-bottom: 4px;">1-3 <span class="lang-pt">dias</span><span class="lang-en">days</span></p>
+                        <p style="font-size: 0.82rem;"><span class="lang-pt">Automação + IA via PA + Copilot Studio</span><span class="lang-en">Automation + AI via PA + Copilot Studio</span></p>
+                    </div>
+                    <div style="flex: 1; min-width: 200px; text-align: center;">
+                        <p style="font-size: 1.5rem; font-weight: 700; color: #16a34a; margin-bottom: 4px;">1 sprint</p>
+                        <p style="font-size: 0.82rem;"><span class="lang-pt">Orquestração complexa via AAP</span><span class="lang-en">Complex orchestration via AAP</span></p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 9 — SECTION BREAK: EVOLUÇÃO DE PROCESSOS
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide section-break">
+        <div class="section-number">
+            <span class="lang-pt">BLOCO 2</span>
+            <span class="lang-en">BLOCK 2</span>
+        </div>
+        <div class="section-icon">📋</div>
+        <h1>
+            <span class="lang-pt">Proposta de Evolução de Processos</span>
+            <span class="lang-en">Process Evolution Proposal</span>
+        </h1>
+        <p class="section-subtitle">
+            <span class="lang-pt">Da operação reativa à excelência operacional</span>
+            <span class="lang-en">From reactive operations to operational excellence</span>
+        </p>
+        <div class="section-divider"></div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 10 — DORES DO PROCESSO ATUAL
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Como Operamos Hoje</span>
+            <span class="lang-en">How We Operate Today</span>
+        </h2>
+        <p class="subtitle lang-pt">Diagnóstico detalhado do fluxo de trabalho atual</p>
+        <p class="subtitle lang-en">Detailed diagnosis of the current workflow</p>
+        <div class="content-area">
+            <div class="card-grid">
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <div class="card-icon">📋</div>
+                    <h3><span class="lang-pt">Sem Intake Padrão</span><span class="lang-en">No Standard Intake</span></h3>
+                    <p class="lang-pt">Demandas chegam sem formulário padronizado, sem ROI estimado, sem saving calculado, sem mapeamento de usuários impactados e sem dores do processo atual documentadas. Priorizamos o que é "barulhento".</p>
+                    <p class="lang-en">Demands arrive without standardized form, no estimated ROI, no calculated savings, no mapping of impacted users and no documented current process pain points. We prioritize what's "loud".</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <div class="card-icon">✅</div>
+                    <h3><span class="lang-pt">Sem DoR / DoD</span><span class="lang-en">No DoR / DoD</span></h3>
+                    <p class="lang-pt">Itens entram no sprint sem estar prontos (sem critérios de aceite, sem sizing, sem dependências mapeadas). "Terminam" em pontos diferentes — gera retrabalho e dívida técnica.</p>
+                    <p class="lang-en">Items enter sprints unprepared (no acceptance criteria, no sizing, no mapped dependencies). They "finish" at different points — generating rework and tech debt.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <div class="card-icon">⏱️</div>
+                    <h3><span class="lang-pt">Spillover Recorrente</span><span class="lang-en">Recurring Spillover</span></h3>
+                    <p class="lang-pt">Estimativa: ~50%+ dos itens passam de um sprint para o seguinte. Sem estimativa confiável, sem WIP limits, o commitment de sprint é apenas nominal.</p>
+                    <p class="lang-en">Estimate: ~50%+ of items carry over from one sprint to the next. Without reliable estimates or WIP limits, sprint commitment is nominal only.</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <div class="card-icon">📊</div>
+                    <h3><span class="lang-pt">Zero Visibilidade</span><span class="lang-en">Zero Visibility</span></h3>
+                    <p class="lang-pt">Board no Azure DevOps existe mas não reflete a realidade. Sem métricas de fluxo (throughput, lead time, cycle time). Stakeholders pedem status por reunião ao invés de olhar o board.</p>
+                    <p class="lang-en">Azure DevOps board exists but doesn't reflect reality. No flow metrics (throughput, lead time, cycle time). Stakeholders request status via meetings instead of checking the board.</p>
+                </div>
+            </div>
+            <div class="warning-box" style="margin-top: 16px;">
+                <p class="lang-pt"><strong>⚠️ Consequência:</strong> Sem um processo de entrada estruturado, a qualidade das entregas é inconsistente, a previsibilidade é zero e não conseguimos medir nem comunicar nosso impacto real.</p>
+                <p class="lang-en"><strong>⚠️ Consequence:</strong> Without a structured entry process, delivery quality is inconsistent, predictability is zero, and we can't measure or communicate our real impact.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 11 — JORNADA DO AGENTE: NOVO FLUXO DE ENTRADA
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Jornada do Agente — Novo Fluxo de Entrada</span>
+            <span class="lang-en">Agent Journey — New Entry Flow</span>
+        </h2>
+        <p class="subtitle lang-pt">Do primeiro contato até o backlog priorizado</p>
+        <p class="subtitle lang-en">From first contact to prioritized backlog</p>
+        <div class="content-area">
+            <div class="arch-diagram" style="font-size: 0.78rem;">
+<span class="lang-pt">┌──────────────┐   ┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+│ DISCOVERY    │──▶│  REFINAMENTO     │──▶│  CARD DE         │──▶│  PRIORIZAÇÃO     │──▶  Sprint
+│ CALL (30min) │   │  (1-2h)          │   │  TRIAGEM (async) │   │  DL              │    Planning
+└──────────────┘   └──────────────────┘   └──────────────────┘   └──────────────────┘
+   Go / No-Go         Intake preenchido      Item no backlog       Ordenado por
+                       ROI calculado          DoR atendido          ROI + capacidade</span>
+<span class="lang-en">┌──────────────┐   ┌──────────────────┐   ┌──────────────────┐   ┌──────────────────┐
+│ DISCOVERY    │──▶│  REFINEMENT      │──▶│  TRIAGE          │──▶│  PRIORITIZATION  │──▶  Sprint
+│ CALL (30min) │   │  (1-2h)          │   │  CARD (async)    │   │  DL              │    Planning
+└──────────────┘   └──────────────────┘   └──────────────────┘   └──────────────────┘
+   Go / No-Go         Intake filled          Backlog item          Ordered by
+                       ROI calculated         DoR met               ROI + capacity</span></div>
+
+            <div class="card-grid" style="margin-top: 12px; grid-template-columns: repeat(auto-fit, minmax(230px, 1fr));">
+                <div class="card" style="border-left: 4px solid #3b82f6;">
+                    <h4><span class="lang-pt">1. Discovery Call</span><span class="lang-en">1. Discovery Call</span></h4>
+                    <p style="font-size: 0.82rem;">
+                        <span class="lang-pt"><strong>30 min.</strong> Primeira conversa. Entender o problema, mapear stakeholders, avaliar viabilidade inicial. <strong>Resultado:</strong> Go/No-Go para Refinamento.</span>
+                        <span class="lang-en"><strong>30 min.</strong> First conversation. Understand the problem, map stakeholders, assess initial feasibility. <strong>Result:</strong> Go/No-Go for Refinement.</span>
+                    </p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ff5a00;">
+                    <h4><span class="lang-pt">2. Refinamento</span><span class="lang-en">2. Refinement</span></h4>
+                    <p style="font-size: 0.82rem;">
+                        <span class="lang-pt"><strong>1-2h.</strong> Imersão técnica + negócio. Levantar: usuários impactados, saving estimado, ROI, dados necessários, complexidade. <strong>Resultado:</strong> Intake preenchido.</span>
+                        <span class="lang-en"><strong>1-2h.</strong> Technical + business deep-dive. Gather: impacted users, estimated savings, ROI, required data, complexity. <strong>Result:</strong> Intake filled.</span>
+                    </p>
+                </div>
+                <div class="card" style="border-left: 4px solid #22c55e;">
+                    <h4><span class="lang-pt">3. Card de Triagem</span><span class="lang-en">3. Triage Card</span></h4>
+                    <p style="font-size: 0.82rem;">
+                        <span class="lang-pt"><strong>Async.</strong> Formulário no Azure DevOps. Ferramenta recomendada (via árvore de decisão), prioridade, estimativa, dependências. <strong>Resultado:</strong> Item pronto para backlog (DoR ✓).</span>
+                        <span class="lang-en"><strong>Async.</strong> Azure DevOps form. Recommended tool (via decision tree), priority, estimate, dependencies. <strong>Result:</strong> Backlog-ready item (DoR ✓).</span>
+                    </p>
+                </div>
+                <div class="card" style="border-left: 4px solid #9333ea;">
+                    <h4><span class="lang-pt">4. Priorização</span><span class="lang-en">4. Prioritization</span></h4>
+                    <p style="font-size: 0.82rem;">
+                        <span class="lang-pt"><strong>DL decide.</strong> Ordena backlog por ROI + capacidade disponível + dependências. Item entra no próximo Sprint Planning com commitment realista.</span>
+                        <span class="lang-en"><strong>DL decides.</strong> Orders backlog by ROI + available capacity + dependencies. Item enters next Sprint Planning with realistic commitment.</span>
+                    </p>
+                </div>
+            </div>
+
+            <div class="success-box" style="margin-top: 12px;">
+                <p class="lang-pt"><strong>Todo agente que entra no backlog já tem:</strong> problema claro, ROI estimado, ferramenta definida, sponsor identificado e critérios de aceite escritos.</p>
+                <p class="lang-en"><strong>Every agent entering the backlog already has:</strong> clear problem, estimated ROI, defined tool, identified sponsor and written acceptance criteria.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 12 — INTAKE, DoR & DoD
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Intake, DoR & DoD</span>
+            <span class="lang-en">Intake, DoR & DoD</span>
+        </h2>
+        <p class="subtitle lang-pt">Os 3 pilares que garantem qualidade de entrada e saída</p>
+        <p class="subtitle lang-en">The 3 pillars that guarantee entry and exit quality</p>
+        <div class="content-area">
+            <div class="three-columns">
+                <div>
+                    <div class="highlight-box" style="margin-top: 0;">
+                        <h4 style="margin-top: 0;"><span class="lang-pt">📋 Modelo de Intake</span><span class="lang-en">📋 Intake Model</span></h4>
+                        <ul style="padding-left: 16px; font-size: 0.82rem; margin-top: 8px;">
+                            <li class="lang-pt"><strong>Solicitante</strong> — Nome, Área, Sponsor</li>
+                            <li class="lang-en"><strong>Requester</strong> — Name, Area, Sponsor</li>
+                            <li class="lang-pt"><strong>AS-IS</strong> — Processo atual + tempo gasto/mês</li>
+                            <li class="lang-en"><strong>AS-IS</strong> — Current process + time spent/month</li>
+                            <li class="lang-pt"><strong>TO-BE</strong> — O que o agente faz, resultado</li>
+                            <li class="lang-en"><strong>TO-BE</strong> — What the agent does, result</li>
+                            <li class="lang-pt"><strong>ROI</strong> — Saving, payback, custo de hosting</li>
+                            <li class="lang-en"><strong>ROI</strong> — Savings, payback, hosting cost</li>
+                            <li class="lang-pt"><strong>Compliance</strong> — Precisa AppReg?</li>
+                            <li class="lang-en"><strong>Compliance</strong> — Needs AppReg?</li>
+                            <li class="lang-pt"><strong>Prioridade</strong> — Urgente / Alta / Normal / Exploratório</li>
+                            <li class="lang-en"><strong>Priority</strong> — Urgent / High / Normal / Exploratory</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="success-box" style="margin-top: 0;">
+                        <h4 style="margin-top: 0;"><span class="lang-pt">✅ Definition of Ready</span><span class="lang-en">✅ Definition of Ready</span></h4>
+                        <ul style="padding-left: 16px; font-size: 0.82rem; margin-top: 8px;">
+                            <li class="lang-pt">Formulário de intake preenchido</li>
+                            <li class="lang-en">Intake form filled</li>
+                            <li class="lang-pt">Cenário as-is e to-be documentados</li>
+                            <li class="lang-en">As-is and to-be documented</li>
+                            <li class="lang-pt">Critérios de aceite escritos (mín. 3)</li>
+                            <li class="lang-en">Acceptance criteria written (min. 3)</li>
+                            <li class="lang-pt">Plataforma definida (Card Triagem ✓)</li>
+                            <li class="lang-en">Platform defined (Triage Card ✓)</li>
+                            <li class="lang-pt">Sizing feito (P/M/G)</li>
+                            <li class="lang-en">Sizing done (S/M/L)</li>
+                            <li class="lang-pt">Dependências mapeadas</li>
+                            <li class="lang-en">Dependencies mapped</li>
+                            <li class="lang-pt">Compliance: AppReg avaliada</li>
+                            <li class="lang-en">Compliance: AppReg assessed</li>
+                        </ul>
+                    </div>
+                </div>
+                <div>
+                    <div class="danger-box" style="margin-top: 0; border-left-color: #ff5a00; background: rgba(255,90,0,0.04); border-color: rgba(255,90,0,0.2);">
+                        <h4 style="margin-top: 0; color: #d04800;"><span class="lang-pt">🏁 Definition of Done</span><span class="lang-en">🏁 Definition of Done</span></h4>
+                        <ul style="padding-left: 16px; font-size: 0.82rem; margin-top: 8px;">
+                            <li class="lang-pt">Critérios de aceite atendidos</li>
+                            <li class="lang-en">Acceptance criteria met</li>
+                            <li class="lang-pt">Code review aprovado</li>
+                            <li class="lang-en">Code review approved</li>
+                            <li class="lang-pt">Testes realizados</li>
+                            <li class="lang-en">Tests performed</li>
+                            <li class="lang-pt">Documentação do agente criada</li>
+                            <li class="lang-en">Agent documentation created</li>
+                            <li class="lang-pt">Compliance aprovado (se aplicável)</li>
+                            <li class="lang-en">Compliance approved (if applicable)</li>
+                            <li class="lang-pt">Deploy no ambiente alvo</li>
+                            <li class="lang-en">Deploy in target environment</li>
+                            <li class="lang-pt">Stakeholder notificado + aceite</li>
+                            <li class="lang-en">Stakeholder notified + acceptance</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 16px;">
+                <p class="lang-pt"><strong>Regra:</strong> Sem intake preenchido = não entra no backlog. ROI negativo ou sem sponsor = não aceito. Sem DoR atendido = não entra no sprint. Sem DoD atendido = não é "Done".</p>
+                <p class="lang-en"><strong>Rule:</strong> No filled intake = doesn't enter backlog. Negative ROI or no sponsor = not accepted. DoR not met = doesn't enter sprint. DoD not met = not "Done".</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 13 — FLUXO PONTA A PONTA, CADÊNCIAS & MÉTRICAS
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Fluxo, Cadências & Métricas</span>
+            <span class="lang-en">Flow, Cadences & Metrics</span>
+        </h2>
+        <div class="content-area">
+            <div class="arch-diagram" style="font-size: 0.75rem; padding: 20px;">
+<span class="lang-pt">INTAKE (WIP:3) ──▶ DISCOVERY (WIP:2) ──▶ BUILD (WIP:2) ──▶ COMPLIANCE¹ (WIP:2) ──▶ RELEASE (WIP:1) ──▶ PÓS-RELEASE
+ (Triagem)          (Refino)              (Dev)             (se AppReg — paralelo)    (Deploy)            (2 semanas)</span>
+<span class="lang-en">INTAKE (WIP:3) ──▶ DISCOVERY (WIP:2) ──▶ BUILD (WIP:2) ──▶ COMPLIANCE¹ (WIP:2) ──▶ RELEASE (WIP:1) ──▶ POST-RELEASE
+ (Triage)           (Refine)              (Dev)             (if AppReg — parallel)    (Deploy)            (2 weeks)</span></div>
+
+            <h3 style="margin-top: 12px;"><span class="lang-pt">Cadências Mínimas</span><span class="lang-en">Minimum Cadences</span></h3>
+            <table style="font-size: 0.8rem;">
+                <thead>
+                    <tr>
+                        <th><span class="lang-pt">Ritual</span><span class="lang-en">Ritual</span></th>
+                        <th><span class="lang-pt">Freq.</span><span class="lang-en">Freq.</span></th>
+                        <th><span class="lang-pt">Dur.</span><span class="lang-en">Dur.</span></th>
+                        <th><span class="lang-pt">Objetivo</span><span class="lang-en">Objective</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Daily</strong></td>
+                        <td><span class="lang-pt">Diária</span><span class="lang-en">Daily</span></td>
+                        <td>15 min</td>
+                        <td><span class="lang-pt">Sincronizar bloqueios. Foco no board.</span><span class="lang-en">Sync blockers. Focus on board.</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Planning</strong></td>
+                        <td><span class="lang-pt">Quinzenal</span><span class="lang-en">Biweekly</span></td>
+                        <td>1h</td>
+                        <td><span class="lang-pt">Selecionar itens "Ready". Commitment realista.</span><span class="lang-en">Select "Ready" items. Realistic commitment.</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Review</strong></td>
+                        <td><span class="lang-pt">Quinzenal</span><span class="lang-en">Biweekly</span></td>
+                        <td>45 min</td>
+                        <td><span class="lang-pt">Demo + métricas + feedback stakeholders.</span><span class="lang-en">Demo + metrics + stakeholder feedback.</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Retro</strong></td>
+                        <td><span class="lang-pt">Quinzenal</span><span class="lang-en">Biweekly</span></td>
+                        <td>30 min</td>
+                        <td><span class="lang-pt">1 ação de melhoria concreta por retro.</span><span class="lang-en">1 concrete improvement action per retro.</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Refinamento</span><span class="lang-en">Refinement</span></strong></td>
+                        <td><span class="lang-pt">Semanal</span><span class="lang-en">Weekly</span></td>
+                        <td>45 min</td>
+                        <td><span class="lang-pt">Preparar itens futuros (DoR).</span><span class="lang-en">Prepare future items (DoR).</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 12px;"><span class="lang-pt">Métricas de Fluxo</span><span class="lang-en">Flow Metrics</span></h3>
+            <div style="display: flex; gap: 16px; flex-wrap: wrap; width: 100%; max-width: 1100px;">
+                <div class="card" style="flex: 1; min-width: 140px; text-align: center; padding: 14px;">
+                    <div style="font-size: 1.3rem;">📊</div>
+                    <h4 style="font-size: 0.9rem;">Throughput</h4>
+                    <p style="font-size: 0.75rem;"><span class="lang-pt">Itens done / sprint</span><span class="lang-en">Items done / sprint</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 140px; text-align: center; padding: 14px;">
+                    <div style="font-size: 1.3rem;">⏱️</div>
+                    <h4 style="font-size: 0.9rem;">Lead Time</h4>
+                    <p style="font-size: 0.75rem;"><span class="lang-pt">Intake → Done</span><span class="lang-en">Intake → Done</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 140px; text-align: center; padding: 14px;">
+                    <div style="font-size: 1.3rem;">🔄</div>
+                    <h4 style="font-size: 0.9rem;">Cycle Time</h4>
+                    <p style="font-size: 0.75rem;"><span class="lang-pt">In Progress → Done</span><span class="lang-en">In Progress → Done</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 140px; text-align: center; padding: 14px;">
+                    <div style="font-size: 1.3rem;">⏳</div>
+                    <h4 style="font-size: 0.9rem;">Aging</h4>
+                    <p style="font-size: 0.75rem;"><span class="lang-pt">Tempo na mesma coluna</span><span class="lang-en">Time in same column</span></p>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 12px;">
+                <p class="lang-pt" style="font-size: 0.85rem;"><strong>WIP total: máximo 4 itens simultâneos</strong> em todas as colunas "In Progress". Terminar antes de começar → menos context switching, menor lead time.</p>
+                <p class="lang-en" style="font-size: 0.85rem;"><strong>Total WIP: maximum 4 simultaneous items</strong> across all "In Progress" columns. Finish before starting → less context switching, lower lead time.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 14 — RACI & MODELOS DE ENGAJAMENTO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">RACI & Modelos de Engajamento</span>
+            <span class="lang-en">RACI & Engagement Models</span>
+        </h2>
+        <div class="content-area">
+            <table style="font-size: 0.78rem;">
+                <thead>
+                    <tr>
+                        <th style="width: 22%;"><span class="lang-pt">Atividade</span><span class="lang-en">Activity</span></th>
+                        <th>DL</th>
+                        <th><span class="lang-pt">Dev Sr</span><span class="lang-en">Sr Dev</span></th>
+                        <th>Dev</th>
+                        <th>BA</th>
+                        <th><span class="lang-pt">Jr</span><span class="lang-en">Jr</span></th>
+                        <th>Stakeholder</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Intake / <span class="lang-pt">Triagem</span><span class="lang-en">Triage</span></strong></td>
+                        <td><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-green">R</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Priorização</span><span class="lang-en">Prioritization</span></strong></td>
+                        <td><span class="tag tag-green">R</span><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-blue">C</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Discovery</strong></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-purple">I</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Desenvolvimento</span><span class="lang-en">Development</span></strong></td>
+                        <td><span class="tag tag-purple">I</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Code Review</strong></td>
+                        <td>—</td>
+                        <td><span class="tag tag-green">R</span><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Compliance</strong></td>
+                        <td><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-purple">I</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Deploy / Release</strong></td>
+                        <td><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td>—</td>
+                        <td>—</td>
+                        <td><span class="tag tag-purple">I</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Documentação</span><span class="lang-en">Documentation</span></strong></td>
+                        <td><span class="tag tag-purple">I</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td><span class="tag tag-green">R</span><span class="tag tag-orange">A</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Board + <span class="lang-pt">Métricas</span><span class="lang-en">Metrics</span></strong></td>
+                        <td><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td><span class="tag tag-green">R</span></td>
+                        <td>—</td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Comunicação</span><span class="lang-en">Comms</span></strong></td>
+                        <td><span class="tag tag-green">R</span><span class="tag tag-orange">A</span></td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-blue">C</span></td>
+                        <td>—</td>
+                        <td><span class="tag tag-purple">I</span></td>
+                    </tr>
+                </tbody>
+            </table>
+            <div style="margin-top: 8px; display: flex; gap: 16px; flex-wrap: wrap; font-size: 0.8rem;">
+                <span><span class="tag tag-green">R</span> Responsible</span>
+                <span><span class="tag tag-orange">A</span> Accountable</span>
+                <span><span class="tag tag-blue">C</span> Consulted</span>
+                <span><span class="tag tag-purple">I</span> Informed</span>
+            </div>
+
+            <h3 style="margin-top: 16px;"><span class="lang-pt">Modelos de Engajamento</span><span class="lang-en">Engagement Models</span></h3>
+            <div style="display: flex; gap: 12px; flex-wrap: wrap; width: 100%; max-width: 1100px;">
+                <div class="card" style="flex: 1; min-width: 150px; border-left: 4px solid #ff5a00; padding: 14px;">
+                    <h4 style="font-size: 0.9rem;"><span class="lang-pt">🔧 Full-service</span><span class="lang-en">🔧 Full-service</span></h4>
+                    <p style="font-size: 0.78rem;"><span class="lang-pt">Time faz tudo. Agentes complexos.</span><span class="lang-en">Team does everything. Complex agents.</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 150px; border-left: 4px solid #22c55e; padding: 14px;">
+                    <h4 style="font-size: 0.9rem;"><span class="lang-pt">🤝 Co-criação</span><span class="lang-en">🤝 Co-creation</span></h4>
+                    <p style="font-size: 0.78rem;"><span class="lang-pt">Colaboração com dev da squad.</span><span class="lang-en">Collaboration with squad's dev.</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 150px; border-left: 4px solid #3b82f6; padding: 14px;">
+                    <h4 style="font-size: 0.9rem;"><span class="lang-pt">📄 Self-service</span><span class="lang-en">📄 Self-service</span></h4>
+                    <p style="font-size: 0.78rem;"><span class="lang-pt">Templates prontos. Escala.</span><span class="lang-en">Ready templates. Scale.</span></p>
+                </div>
+                <div class="card" style="flex: 1; min-width: 150px; border-left: 4px solid #9333ea; padding: 14px;">
+                    <h4 style="font-size: 0.9rem;"><span class="lang-pt">💬 Consultoria</span><span class="lang-en">💬 Consulting</span></h4>
+                    <p style="font-size: 0.78rem;"><span class="lang-pt">Análise pontual (2-3 reuniões).</span><span class="lang-en">Point analysis (2-3 meetings).</span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 15 — PLANO 30-60-90 DIAS
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Plano 30-60-90 Dias</span>
+            <span class="lang-en">30-60-90 Day Plan</span>
+        </h2>
+        <div class="content-area">
+            <div class="card-grid">
+                <div class="card" style="border-left: 4px solid #3b82f6;">
+                    <h3><span class="lang-pt">🔵 0-30 Dias — Fundação</span><span class="lang-en">🔵 0-30 Days — Foundation</span></h3>
+                    <ul style="font-size: 0.85rem; padding-left: 16px;">
+                        <li class="lang-pt">Definir DoR e DoD com o time (workshop 1h)</li>
+                        <li class="lang-en">Define DoR and DoD with team (1h workshop)</li>
+                        <li class="lang-pt">Reorganizar board no Azure DevOps (colunas, WIP, hierarquia)</li>
+                        <li class="lang-en">Reorganize Azure DevOps board (columns, WIP, hierarchy)</li>
+                        <li class="lang-pt">Criar template de intake e testar com 2 stakeholders</li>
+                        <li class="lang-en">Create intake template and test with 2 stakeholders</li>
+                        <li class="lang-pt">Instaurar cadências (daily, planning, review, retro, refino)</li>
+                        <li class="lang-en">Establish cadences (daily, planning, review, retro, refine)</li>
+                        <li class="lang-pt">Medir lead time e throughput dos últimos 3 meses (baseline)</li>
+                        <li class="lang-en">Measure lead time and throughput of last 3 months (baseline)</li>
+                        <li class="lang-pt">Alinhar responsabilidades com o time</li>
+                        <li class="lang-en">Align responsibilities with team</li>
+                    </ul>
+                    <p style="margin-top: 8px;"><span class="tag tag-blue"><span class="lang-pt">Meta: fundações em 30 dias</span><span class="lang-en">Goal: foundations in 30 days</span></span></p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ff5a00;">
+                    <h3><span class="lang-pt">🟠 31-60 Dias — Estabilização</span><span class="lang-en">🟠 31-60 Days — Stabilization</span></h3>
+                    <ul style="font-size: 0.85rem; padding-left: 16px;">
+                        <li class="lang-pt">Rodar 2 sprints completas no novo modelo</li>
+                        <li class="lang-en">Run 2 full sprints on the new model</li>
+                        <li class="lang-pt">Compliance integrado ao fluxo (paralelo ao build)</li>
+                        <li class="lang-en">Compliance integrated into flow (parallel with build)</li>
+                        <li class="lang-pt">Montar business case para ambiente de deploy</li>
+                        <li class="lang-en">Build business case for deployment environment</li>
+                        <li class="lang-pt">Primeira Sprint Review para stakeholders (demo + métricas)</li>
+                        <li class="lang-en">First Sprint Review for stakeholders (demo + metrics)</li>
+                        <li class="lang-pt">Apresentar proposta "Acelerador de IA" com service catalog</li>
+                        <li class="lang-en">Present "AI Accelerator" proposal with service catalog</li>
+                    </ul>
+                    <p style="margin-top: 8px;"><span class="tag tag-orange"><span class="lang-pt">Meta: ≤ 20% spillover</span><span class="lang-en">Goal: ≤ 20% spillover</span></span></p>
+                </div>
+                <div class="card" style="border-left: 4px solid #22c55e;">
+                    <h3><span class="lang-pt">🟢 61-90 Dias — Escala</span><span class="lang-en">🟢 61-90 Days — Scale</span></h3>
+                    <ul style="font-size: 0.85rem; padding-left: 16px;">
+                        <li class="lang-pt">Previsão de throughput baseada em dados reais (6+ sprints)</li>
+                        <li class="lang-en">Throughput forecast based on real data (6+ sprints)</li>
+                        <li class="lang-pt">Pilotar co-criação com 1 squad (ex: Fleury/Go Orange)</li>
+                        <li class="lang-en">Pilot co-creation with 1 squad (e.g., Fleury/Go Orange)</li>
+                        <li class="lang-pt">Retro de 90 dias: "O que mudou" com dados comparativos</li>
+                        <li class="lang-en">90-day retro: "What changed" with comparative data</li>
+                        <li class="lang-pt">Publicar métricas de impacto (horas economizadas, satisfação)</li>
+                        <li class="lang-en">Publish impact metrics (hours saved, satisfaction)</li>
+                        <li class="lang-pt">Ambiente de deploy operacional (se aprovação de custo saiu)</li>
+                        <li class="lang-en">Deploy environment operational (if cost approved)</li>
+                    </ul>
+                    <p style="margin-top: 8px;"><span class="tag tag-green"><span class="lang-pt">Meta: previsibilidade com dados</span><span class="lang-en">Goal: data-driven predictability</span></span></p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 16 — MÉTRICAS DE SUCESSO & INVESTIMENTO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Métricas de Sucesso & Investimento</span>
+            <span class="lang-en">Success Metrics & Investment</span>
+        </h2>
+        <div class="content-area">
+            <table>
+                <thead>
+                    <tr>
+                        <th><span class="lang-pt">Métrica</span><span class="lang-en">Metric</span></th>
+                        <th><span class="lang-pt">Hoje (estimado)</span><span class="lang-en">Today (estimated)</span></th>
+                        <th><span class="lang-pt">Meta 90 dias</span><span class="lang-en">90-day target</span></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td><strong>Throughput</strong></td>
+                        <td><span class="lang-pt">~2 agentes/sprint (com pendências)</span><span class="lang-en">~2 agents/sprint (with carryover)</span></td>
+                        <td><span class="lang-pt">2 consistentes (sem pendências)</span><span class="lang-en">2 consistent (no carryover)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong>Spillover</strong></td>
+                        <td>~50%+</td>
+                        <td>≤ 20%</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Lead Time</strong></td>
+                        <td><span class="lang-pt">Desconhecido</span><span class="lang-en">Unknown</span></td>
+                        <td><span class="lang-pt">Medido e &lt; 15 dias úteis (P/M)</span><span class="lang-en">Measured and &lt; 15 business days (S/M)</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Agentes em produção</span><span class="lang-en">Agents in production</span></strong></td>
+                        <td><span class="lang-pt">Muitos empacotados, poucos live</span><span class="lang-en">Many packaged, few live</span></td>
+                        <td><span class="lang-pt">100% dos "done" em produção</span><span class="lang-en">100% of "done" in production</span></td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Satisfação</span><span class="lang-en">Satisfaction</span></strong></td>
+                        <td><span class="lang-pt">Não medida</span><span class="lang-en">Not measured</span></td>
+                        <td>≥ 7/10 (NPS/survey)</td>
+                    </tr>
+                    <tr>
+                        <td><strong><span class="lang-pt">Plataformas</span><span class="lang-en">Platforms</span></strong></td>
+                        <td><span class="lang-pt">1 (apenas AAP)</span><span class="lang-en">1 (AAP only)</span></td>
+                        <td><span class="lang-pt">≥ 3 do arsenal</span><span class="lang-en">≥ 3 from arsenal</span></td>
+                    </tr>
+                </tbody>
+            </table>
+
+            <h3 style="margin-top: 16px;"><span class="lang-pt">Investimento Necessário</span><span class="lang-en">Required Investment</span></h3>
+            <div class="card-grid" style="grid-template-columns: repeat(3, 1fr);">
+                <div class="card" style="border-left: 4px solid #ef4444;">
+                    <h4><span class="lang-pt">💰 Financeiro</span><span class="lang-en">💰 Financial</span></h4>
+                    <p class="lang-pt" style="font-size: 0.85rem;">Aprovação de custeio Azure/infra para deploy — <strong>crítico</strong></p>
+                    <p class="lang-en" style="font-size: 0.85rem;">Azure/infra costing approval for deploy — <strong>critical</strong></p>
+                </div>
+                <div class="card" style="border-left: 4px solid #ff5a00;">
+                    <h4><span class="lang-pt">⏰ Tempo</span><span class="lang-en">⏰ Time</span></h4>
+                    <p class="lang-pt" style="font-size: 0.85rem;">~20h do time na primeira sprint para setup (board, templates, cadências)</p>
+                    <p class="lang-en" style="font-size: 0.85rem;">~20h team time in first sprint for setup (board, templates, cadences)</p>
+                </div>
+                <div class="card" style="border-left: 4px solid #3b82f6;">
+                    <h4><span class="lang-pt">🏢 Organizacional</span><span class="lang-en">🏢 Organizational</span></h4>
+                    <p class="lang-pt" style="font-size: 0.85rem;">Alinhamento de papéis e responsabilidades dentro do time (30 dias)</p>
+                    <p class="lang-en" style="font-size: 0.85rem;">Alignment of roles and responsibilities within team (30 days)</p>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 17 — PRÓXIMOS PASSOS
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide">
+        <h2>
+            <span class="lang-pt">Próximos Passos</span>
+            <span class="lang-en">Next Steps</span>
+        </h2>
+        <p class="subtitle lang-pt">Ações concretas para iniciar a evolução</p>
+        <p class="subtitle lang-en">Concrete actions to start the evolution</p>
+        <div class="content-area">
+            <div class="card-grid" style="grid-template-columns: 1fr;">
+                <div class="card" style="border-left: 4px solid #ff5a00; display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 2rem; flex-shrink: 0;">1️⃣</div>
+                    <div>
+                        <h4 style="margin: 0;"><span class="lang-pt">Aprovação desta proposta</span><span class="lang-en">Approval of this proposal</span></h4>
+                        <p style="font-size: 0.85rem;"><span class="lang-pt">Validar com liderança o direcionamento: evolução técnica (5 plataformas) + evolução de processos (novo fluxo).</span><span class="lang-en">Validate with leadership the direction: technical evolution (5 platforms) + process evolution (new flow).</span></p>
+                        <p style="margin-top: 4px;"><span class="tag tag-orange"><span class="lang-pt">Liderança + DL</span><span class="lang-en">Leadership + DL</span></span> <span class="tag tag-blue"><span class="lang-pt">Esta semana</span><span class="lang-en">This week</span></span></p>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid #3b82f6; display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 2rem; flex-shrink: 0;">2️⃣</div>
+                    <div>
+                        <h4 style="margin: 0;"><span class="lang-pt">Setup do board no Azure DevOps</span><span class="lang-en">Board setup in Azure DevOps</span></h4>
+                        <p style="font-size: 0.85rem;"><span class="lang-pt">Criar colunas, configurar WIP limits, criar template de intake como work item type.</span><span class="lang-en">Create columns, configure WIP limits, create intake template as work item type.</span></p>
+                        <p style="margin-top: 4px;"><span class="tag tag-green">Time IA</span> <span class="tag tag-blue"><span class="lang-pt">Semana 1</span><span class="lang-en">Week 1</span></span></p>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid #22c55e; display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 2rem; flex-shrink: 0;">3️⃣</div>
+                    <div>
+                        <h4 style="margin: 0;"><span class="lang-pt">Primeira Discovery Call Piloto</span><span class="lang-en">First Pilot Discovery Call</span></h4>
+                        <p style="font-size: 0.85rem;"><span class="lang-pt">Aplicar o novo fluxo (Discovery Call → Refinamento → Triagem) com uma demanda real para validar o processo.</span><span class="lang-en">Apply the new flow (Discovery Call → Refinement → Triage) with a real demand to validate the process.</span></p>
+                        <p style="margin-top: 4px;"><span class="tag tag-green">Time IA</span> <span class="tag tag-blue"><span class="lang-pt">Semana 2</span><span class="lang-en">Week 2</span></span></p>
+                    </div>
+                </div>
+                <div class="card" style="border-left: 4px solid #9333ea; display: flex; align-items: center; gap: 20px;">
+                    <div style="font-size: 2rem; flex-shrink: 0;">4️⃣</div>
+                    <div>
+                        <h4 style="margin: 0;"><span class="lang-pt">Review de 30 Dias</span><span class="lang-en">30-Day Review</span></h4>
+                        <p style="font-size: 0.85rem;"><span class="lang-pt">Apresentar resultados da fase de fundação: métricas baseline, board funcionando, primeiras Discovery Calls realizadas.</span><span class="lang-en">Present foundation phase results: baseline metrics, working board, first Discovery Calls completed.</span></p>
+                        <p style="margin-top: 4px;"><span class="tag tag-orange"><span class="lang-pt">DL + Liderança</span><span class="lang-en">DL + Leadership</span></span> <span class="tag tag-blue"><span class="lang-pt">Dia 30</span><span class="lang-en">Day 30</span></span></p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="highlight-box" style="margin-top: 20px;">
+                <p class="lang-pt"><strong>Aguardamos a validação para iniciar a Fase 1 (0-30 dias) na próxima sprint.</strong> A proposta é incremental — cada fase entrega valor antes de avançar para a seguinte.</p>
+                <p class="lang-en"><strong>We await validation to start Phase 1 (0-30 days) in the next sprint.</strong> The proposal is incremental — each phase delivers value before advancing to the next.</p>
+            </div>
+        </div>
+    </div>
+
+
+    <!-- ══════════════════════════════════════════════════════════════
+         SLIDE 18 — RESUMO / ENCERRAMENTO
+         ══════════════════════════════════════════════════════════════ -->
+    <div class="slide" style="justify-content: center;">
+        <h2>
+            <span class="lang-pt">Resumo</span>
+            <span class="lang-en">Summary</span>
+        </h2>
+        <div style="margin: 20px 0; display: flex; flex-wrap: wrap; gap: 16px; justify-content: center; max-width: 1100px;">
+            <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-color: rgba(255,90,0,0.3);">
+                <div style="font-size: 2rem;">🚀</div>
+                <h4>
+                    <span class="lang-pt">De 1 para 5 plataformas</span>
+                    <span class="lang-en">From 1 to 5 platforms</span>
+                </h4>
+                <p style="font-size: 0.82rem;">
+                    <span class="lang-pt">Arsenal multi-plataforma com árvore de decisão para cada demanda</span>
+                    <span class="lang-en">Multi-platform arsenal with decision tree for each demand</span>
+                </p>
+            </div>
+            <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-color: rgba(34,197,94,0.3);">
+                <div style="font-size: 2rem;">📋</div>
+                <h4>
+                    <span class="lang-pt">Processo estruturado</span>
+                    <span class="lang-en">Structured process</span>
+                </h4>
+                <p style="font-size: 0.82rem;">
+                    <span class="lang-pt">Discovery Call → Refinamento → Triagem → Build → Release</span>
+                    <span class="lang-en">Discovery Call → Refinement → Triage → Build → Release</span>
+                </p>
+            </div>
+            <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-color: rgba(59,130,246,0.3);">
+                <div style="font-size: 2rem;">📊</div>
+                <h4>
+                    <span class="lang-pt">Visibilidade real</span>
+                    <span class="lang-en">Real visibility</span>
+                </h4>
+                <p style="font-size: 0.82rem;">
+                    <span class="lang-pt">Board Kanban com WIP limits + métricas de fluxo objetivas</span>
+                    <span class="lang-en">Kanban board with WIP limits + objective flow metrics</span>
+                </p>
+            </div>
+            <div class="card" style="flex: 1; min-width: 200px; text-align: center; border-color: rgba(168,85,247,0.3);">
+                <div style="font-size: 2rem;">🤝</div>
+                <h4>
+                    <span class="lang-pt">Escala sem contratar</span>
+                    <span class="lang-en">Scale without hiring</span>
+                </h4>
+                <p style="font-size: 0.82rem;">
+                    <span class="lang-pt">4 modelos de engajamento: full-service, co-criação, self-service, consultoria</span>
+                    <span class="lang-en">4 engagement models: full-service, co-creation, self-service, consulting</span>
+                </p>
+            </div>
+        </div>
+
+        <div class="success-box" style="max-width: 800px; text-align: center; margin-top: 16px;">
+            <p style="font-size: 1.1rem;">
+                <span class="lang-pt"><strong>Se trabalharmos desta forma, saindo do escopo AAP e entrando no universo de IA multi-plataforma, podemos aumentar o leque de atuação, soluções e o valor entregue para a Avanade.</strong></span>
+                <span class="lang-en"><strong>By working this way, moving beyond the AAP scope into the multi-platform AI universe, we can expand our range of action, solutions, and value delivered to Avanade.</strong></span>
+            </p>
+            <p style="font-size: 0.85rem; margin-top: 8px;">
+                <span class="lang-pt">Implementável em 90 dias. Incremental. Baseado em dados.</span>
+                <span class="lang-en">Implementable in 90 days. Incremental. Data-driven.</span>
+            </p>
+        </div>
+    </div>
+
+
+</div><!-- /slide-deck -->
+
+
+<!-- ===== BOTTOM NAVIGATION ===== -->
+<div class="bottom-nav">
+    <button class="nav-btn" id="btnPrev" onclick="prevSlide()">
+        <span class="lang-en">◀ Previous</span>
+        <span class="lang-pt">◀ Anterior</span>
+    </button>
+    <span class="slide-counter" id="slideCounter">1 / 18</span>
+    <button class="nav-btn" id="btnNext" onclick="nextSlide()">
+        <span class="lang-en">Next ▶</span>
+        <span class="lang-pt">Próximo ▶</span>
+    </button>
+</div>
+
+
+<script>
+(function() {
+    'use strict';
+
+    let currentSlide = 0;
+    let currentLang = 'pt';
+    const slides = document.querySelectorAll('.slide');
+    const totalSlides = slides.length;
+    const progressBar = document.getElementById('progressBar');
+    const slideCounter = document.getElementById('slideCounter');
+    const btnPrev = document.getElementById('btnPrev');
+    const btnNext = document.getElementById('btnNext');
+    const btnEN = document.getElementById('btnEN');
+    const btnPT = document.getElementById('btnPT');
+
+    function goToSlide(index) {
+        if (index < 0 || index >= totalSlides) return;
+        slides[currentSlide].classList.remove('active');
+        currentSlide = index;
+        slides[currentSlide].classList.add('active');
+        updateUI();
+    }
+
+    window.nextSlide = function() { goToSlide(currentSlide + 1); };
+    window.prevSlide = function() { goToSlide(currentSlide - 1); };
+
+    function updateUI() {
+        slideCounter.textContent = (currentSlide + 1) + ' / ' + totalSlides;
+        const pct = ((currentSlide + 1) / totalSlides) * 100;
+        progressBar.style.width = pct + '%';
+        btnPrev.disabled = (currentSlide === 0);
+        btnNext.disabled = (currentSlide === totalSlides - 1);
+        slides[currentSlide].scrollTop = 0;
+    }
+
+    window.setLang = function(lang) {
+        currentLang = lang;
+        if (lang === 'pt') {
+            document.body.classList.add('pt-active');
+            btnPT.classList.add('active');
+            btnEN.classList.remove('active');
+        } else {
+            document.body.classList.remove('pt-active');
+            btnEN.classList.add('active');
+            btnPT.classList.remove('active');
+        }
+    };
+
+    document.addEventListener('keydown', function(e) {
+        switch(e.key) {
+            case 'ArrowRight': case 'ArrowDown': case 'PageDown': case ' ':
+                e.preventDefault(); nextSlide(); break;
+            case 'ArrowLeft': case 'ArrowUp': case 'PageUp':
+                e.preventDefault(); prevSlide(); break;
+            case 'Home': e.preventDefault(); goToSlide(0); break;
+            case 'End': e.preventDefault(); goToSlide(totalSlides - 1); break;
+        }
+    });
+
+    let touchStartX = 0;
+    document.addEventListener('touchstart', function(e) {
+        touchStartX = e.changedTouches[0].screenX;
+    }, { passive: true });
+    document.addEventListener('touchend', function(e) {
+        const diff = e.changedTouches[0].screenX - touchStartX;
+        if (Math.abs(diff) > 60) { if (diff < 0) nextSlide(); else prevSlide(); }
+    }, { passive: true });
+
+    updateUI();
+})();
+</script>
+
+</body>
+</html>

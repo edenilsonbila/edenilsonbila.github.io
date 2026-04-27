@@ -1,0 +1,2001 @@
+<!--
+    Minicurso {CERT_CODE}: {CERT_FULL_NAME}
+    
+    Copyright (c) 2026 Edenilson Bila
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Edenilson Bila">
+    <!-- ============================================
+         SUBSTITUIR: {CERT_CODE} e {CERT_FULL_NAME}
+         Exemplo: Minicurso DP-900: Azure Data Fundamentals
+         ============================================ -->
+    <title>Minicurso {CERT_CODE}: {CERT_FULL_NAME}</title>
+    <style>
+        /* ==========================================
+           CSS CUSTOM PROPERTIES (THEMING)
+           ========================================== */
+        :root {
+            --bg-body: #f5f7fa;
+            --bg-card: #ffffff;
+            --bg-card-alt: #fafbfc;
+            --bg-input: #f7fafc;
+            --bg-hover: #f7fafc;
+            --text-primary: #1a202c;
+            --text-body: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #3182ce;
+            --accent-hover: #2c5aa0;
+            --accent-shadow: rgba(49,130,206,0.25);
+            --border: #e2e8f0;
+            --border-hover: #cbd5e0;
+            --success: #48bb78;
+            --success-hover: #38a169;
+            --danger: #fc8181;
+            --warning-accent: #ed8936;
+            --warning-hover: #dd6b20;
+            --orange-accent: #f39c12;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+            /* Content boxes */
+            --macete-bg: #fef5e7;
+            --macete-border: #f39c12;
+            --macete-text: #7d5a29;
+            --tip-bg: #e6f7ff;
+            --tip-border: #3182ce;
+            --tip-text: #2c5282;
+            --warning-bg: #fff5f5;
+            --warning-border: #fc8181;
+            --warning-text: #742a2a;
+            --example-bg: #f0fff4;
+            --example-border: #48bb78;
+            --example-text: #22543d;
+            --recall-bg: #fff9e6;
+            --recall-border: #ed8936;
+            --recall-text: #744210;
+            --recall-divider: #fbd38d;
+            /* Explanation */
+            --explanation-bg: #e6f7ff;
+            --explanation-border: #3182ce;
+            /* Code */
+            --code-bg: #f7fafc;
+            --code-text: #d53f8c;
+            /* Highlight */
+            --highlight-bg: #fef5e7;
+            --highlight-text: #744210;
+            /* Study tips */
+            --study-bg: #f0f9ff;
+            --study-border: #3182ce;
+            --study-title: #2c5282;
+            /* Testimonial */
+            --testimonial-bg: #fffbeb;
+            --testimonial-border: #f59e0b;
+            --testimonial-author: #92400e;
+            --testimonial-text: #78350f;
+            /* Module list */
+            --module-list-bg: #f9fafb;
+            --module-item-bg: #ffffff;
+            --module-item-text: #1f2937;
+            --module-item-sub: #4b5563;
+            /* Score */
+            --score-bg: #f7fafc;
+            --score-border: #e2e8f0;
+            /* Intro section */
+            --intro-section-bg: #ffffff;
+            /* Footer */
+            --footer-license-bg: #f7fafc;
+            --footer-license-border: #e2e8f0;
+            --footer-license-text: #4a5568;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-alt: #1e293b;
+            --bg-input: #334155;
+            --bg-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-body: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-muted: #94a3b8;
+            --accent: #60a5fa;
+            --accent-hover: #3b82f6;
+            --accent-shadow: rgba(96,165,250,0.25);
+            --border: #334155;
+            --border-hover: #475569;
+            --success: #34d399;
+            --success-hover: #10b981;
+            --danger: #f87171;
+            --warning-accent: #fb923c;
+            --warning-hover: #f97316;
+            --orange-accent: #fbbf24;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+            /* Content boxes - dark */
+            --macete-bg: #422006;
+            --macete-border: #f59e0b;
+            --macete-text: #fde68a;
+            --tip-bg: #172554;
+            --tip-border: #60a5fa;
+            --tip-text: #bfdbfe;
+            --warning-bg: #450a0a;
+            --warning-border: #f87171;
+            --warning-text: #fecaca;
+            --example-bg: #052e16;
+            --example-border: #34d399;
+            --example-text: #bbf7d0;
+            --recall-bg: #451a03;
+            --recall-border: #fb923c;
+            --recall-text: #fed7aa;
+            --recall-divider: #92400e;
+            /* Explanation */
+            --explanation-bg: #172554;
+            --explanation-border: #60a5fa;
+            /* Code */
+            --code-bg: #334155;
+            --code-text: #f472b6;
+            /* Highlight */
+            --highlight-bg: #422006;
+            --highlight-text: #fde68a;
+            /* Study tips */
+            --study-bg: #172554;
+            --study-border: #60a5fa;
+            --study-title: #93c5fd;
+            /* Testimonial */
+            --testimonial-bg: #451a03;
+            --testimonial-border: #f59e0b;
+            --testimonial-author: #fde68a;
+            --testimonial-text: #fed7aa;
+            /* Module list */
+            --module-list-bg: #1e293b;
+            --module-item-bg: #334155;
+            --module-item-text: #f1f5f9;
+            --module-item-sub: #cbd5e0;
+            /* Score */
+            --score-bg: #1e293b;
+            --score-border: #334155;
+            /* Intro section */
+            --intro-section-bg: #1e293b;
+            /* Footer */
+            --footer-license-bg: #1e293b;
+            --footer-license-border: #334155;
+            --footer-license-text: #cbd5e0;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html:not([data-theme="light"]) {
+                --bg-body: #0f172a;
+                --bg-card: #1e293b;
+                --bg-card-alt: #1e293b;
+                --bg-input: #334155;
+                --bg-hover: #334155;
+                --text-primary: #f1f5f9;
+                --text-body: #e2e8f0;
+                --text-secondary: #cbd5e0;
+                --text-muted: #94a3b8;
+                --accent: #60a5fa;
+                --accent-hover: #3b82f6;
+                --accent-shadow: rgba(96,165,250,0.25);
+                --border: #334155;
+                --border-hover: #475569;
+                --success: #34d399;
+                --success-hover: #10b981;
+                --danger: #f87171;
+                --warning-accent: #fb923c;
+                --warning-hover: #f97316;
+                --orange-accent: #fbbf24;
+                --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+                --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+                --macete-bg: #422006; --macete-border: #f59e0b; --macete-text: #fde68a;
+                --tip-bg: #172554; --tip-border: #60a5fa; --tip-text: #bfdbfe;
+                --warning-bg: #450a0a; --warning-border: #f87171; --warning-text: #fecaca;
+                --example-bg: #052e16; --example-border: #34d399; --example-text: #bbf7d0;
+                --recall-bg: #451a03; --recall-border: #fb923c; --recall-text: #fed7aa; --recall-divider: #92400e;
+                --explanation-bg: #172554; --explanation-border: #60a5fa;
+                --code-bg: #334155; --code-text: #f472b6;
+                --highlight-bg: #422006; --highlight-text: #fde68a;
+                --study-bg: #172554; --study-border: #60a5fa; --study-title: #93c5fd;
+                --testimonial-bg: #451a03; --testimonial-border: #f59e0b; --testimonial-author: #fde68a; --testimonial-text: #fed7aa;
+                --module-list-bg: #1e293b; --module-item-bg: #334155; --module-item-text: #f1f5f9; --module-item-sub: #cbd5e0;
+                --score-bg: #1e293b; --score-border: #334155;
+                --intro-section-bg: #1e293b;
+                --footer-license-bg: #1e293b; --footer-license-border: #334155; --footer-license-text: #cbd5e0;
+            }
+        }
+
+        /* ==========================================
+           RESET & BASE STYLES
+           ========================================== */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: var(--text-body);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        /* ==========================================
+           HEADER - Minimalista e focado
+           ========================================== */
+        .header {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 40px;
+            border-left: 4px solid var(--accent);
+            position: relative;
+        }
+
+        .header h1 {
+            color: var(--text-primary);
+            font-size: 2em;
+            margin-bottom: 12px;
+            font-weight: 700;
+            letter-spacing: -0.5px;
+        }
+
+        .header h1 .icon {
+            color: var(--accent);
+        }
+
+        .header p.subtitle {
+            color: var(--text-muted);
+            font-size: 1.05em;
+            font-weight: 400;
+        }
+
+        /* Toggle buttons */
+        .header-controls {
+            display: flex;
+            gap: 8px;
+            position: absolute;
+            top: 16px;
+            right: 16px;
+        }
+
+        .toggle-btn {
+            background: var(--bg-input);
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            padding: 6px 12px;
+            cursor: pointer;
+            font-size: 0.85em;
+            font-weight: 500;
+            color: var(--text-secondary);
+            transition: all 0.2s ease;
+            display: flex;
+            align-items: center;
+            gap: 4px;
+        }
+
+        .toggle-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+
+        /* Progress bar - Clean and minimal */
+        .progress-bar {
+            width: 100%;
+            height: 6px;
+            background: var(--border);
+            border-radius: 8px;
+            margin-top: 24px;
+            overflow: hidden;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: var(--accent);
+            width: 0%;
+            transition: width 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .progress-text {
+            text-align: center;
+            margin-top: 12px;
+            color: var(--text-muted);
+            font-weight: 500;
+            font-size: 0.95em;
+        }
+
+        /* ==========================================
+           TABS - Simples e claros
+           ========================================== */
+        .tabs {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 12px;
+            margin-bottom: 32px;
+        }
+
+        .tab {
+            background: var(--bg-card);
+            padding: 20px 16px;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            box-shadow: var(--shadow-sm);
+            border: 2px solid transparent;
+            position: relative;
+        }
+
+        .tab:hover {
+            border-color: var(--accent);
+            box-shadow: 0 2px 8px var(--accent-shadow);
+        }
+
+        .tab.active {
+            background: var(--accent);
+            color: white;
+            border-color: var(--accent);
+            box-shadow: 0 4px 12px var(--accent-shadow);
+        }
+
+        .tab-title {
+            font-weight: 600;
+            font-size: 0.9em;
+            margin-bottom: 6px;
+            color: inherit;
+        }
+
+        .tab-duration {
+            font-size: 0.8em;
+            opacity: 0.7;
+        }
+
+        .tab.active .tab-duration {
+            opacity: 0.9;
+        }
+
+        .tab-checkmark {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 20px;
+            height: 20px;
+            background: var(--success);
+            border-radius: 50%;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            color: white;
+            font-size: 12px;
+        }
+
+        .tab.completed .tab-checkmark {
+            display: flex;
+        }
+
+        /* ==========================================
+           CONTENT AREA - Espaçoso e limpo
+           ========================================== */
+        .content {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 48px;
+            box-shadow: var(--shadow-md);
+        }
+
+        .module {
+            display: none;
+        }
+
+        .module.active {
+            display: block;
+        }
+
+        /* ==========================================
+           LESSON BLOCKS - Chunking para reduzir carga cognitiva
+           ========================================== */
+        .lesson {
+            margin-bottom: 48px;
+            padding: 0;
+            background: transparent;
+            border: none;
+        }
+
+        .lesson-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 32px;
+            padding-bottom: 20px;
+            border-bottom: 2px solid var(--border);
+        }
+
+        .lesson h3 {
+            color: var(--text-primary);
+            font-size: 1.75em;
+            margin-bottom: 8px;
+            font-weight: 700;
+            line-height: 1.3;
+        }
+
+        .lesson h4 {
+            color: var(--text-body);
+            font-size: 1.25em;
+            margin-top: 32px;
+            margin-bottom: 16px;
+            font-weight: 600;
+        }
+
+        .mark-complete {
+            background: var(--accent);
+            color: white;
+            border: none;
+            padding: 14px 40px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            font-size: 1em;
+            transition: all 0.2s ease;
+            box-shadow: 0 2px 8px var(--accent-shadow);
+        }
+
+        .mark-complete:hover {
+            background: var(--accent-hover);
+            box-shadow: 0 4px 12px var(--accent-shadow);
+            transform: translateY(-1px);
+        }
+
+        .mark-complete:active {
+            transform: translateY(0);
+        }
+
+        .mark-complete.completed {
+            background: var(--success);
+            box-shadow: 0 2px 8px rgba(72,187,120,0.2);
+        }
+
+        .mark-complete.completed:hover {
+            background: var(--success-hover);
+            box-shadow: 0 4px 12px rgba(72,187,120,0.4);
+        }
+
+        /* ==========================================
+           CONTENT BOXES - Redução de carga cognitiva
+           Cores baseadas em psicologia cognitiva
+           ========================================== */
+        .macete {
+            background: var(--macete-bg);
+            border-left: 4px solid var(--macete-border);
+            color: var(--macete-text);
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .macete::before {
+            content: "🔑 MACETE";
+            display: block;
+            font-weight: 700;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            color: var(--macete-border);
+        }
+
+        .tip {
+            background: var(--tip-bg);
+            border-left: 4px solid var(--tip-border);
+            color: var(--tip-text);
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .tip::before {
+            content: "💡 DICA";
+            display: block;
+            font-weight: 700;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            color: var(--tip-border);
+        }
+
+        .warning {
+            background: var(--warning-bg);
+            border-left: 4px solid var(--warning-border);
+            color: var(--warning-text);
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+            box-shadow: var(--shadow-sm);
+        }
+
+        .warning::before {
+            content: "⚠️ ATENÇÃO";
+            display: block;
+            font-weight: 700;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            color: var(--warning-border);
+        }
+
+        .example {
+            background: var(--example-bg);
+            border-left: 4px solid var(--example-border);
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+            color: var(--example-text);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .example::before {
+            content: "📝 EXEMPLO";
+            display: block;
+            font-weight: 700;
+            color: var(--example-border);
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
+        /* Bilingual ::before labels */
+        html[lang="en"] .macete::before { content: "🔑 MNEMONIC"; }
+        html[lang="en"] .tip::before { content: "💡 TIP"; }
+        html[lang="en"] .warning::before { content: "⚠️ WARNING"; }
+        html[lang="en"] .example::before { content: "📝 EXAMPLE"; }
+        html[lang="en"] .explanation::before { content: "💬 EXPLANATION"; }
+
+        /* ==========================================
+           TYPOGRAPHY - Legibilidade otimizada
+           ========================================== */
+        ul, ol {
+            margin-left: 24px;
+            margin-bottom: 20px;
+        }
+
+        li {
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        p {
+            margin-bottom: 20px;
+            color: var(--text-secondary);
+        }
+
+        strong {
+            color: var(--text-body);
+            font-weight: 700;
+        }
+
+        /* ==========================================
+           EXERCISES - Feedback imediato e claro
+           ========================================== */
+        .exercises {
+            margin-top: 64px;
+            padding-top: 48px;
+            border-top: 2px solid var(--border);
+        }
+
+        .exercises > h3 {
+            color: var(--text-primary);
+            font-size: 1.5em;
+            margin-bottom: 32px;
+            font-weight: 700;
+        }
+
+        .exercise-card {
+            background: var(--bg-card-alt);
+            border-radius: 8px;
+            padding: 32px;
+            margin-bottom: 32px;
+            border: 2px solid var(--border);
+            transition: all 0.2s ease;
+        }
+
+        .exercise-card:hover {
+            border-color: var(--border-hover);
+        }
+
+        .exercise-card.correct {
+            border-color: var(--success);
+            background: var(--example-bg);
+        }
+
+        .exercise-card.incorrect {
+            border-color: var(--danger);
+            background: var(--warning-bg);
+        }
+
+        .question {
+            font-weight: 600;
+            font-size: 1.05em;
+            margin-bottom: 24px;
+            color: var(--text-body);
+            line-height: 1.6;
+        }
+
+        .options {
+            list-style: none;
+            margin: 0;
+        }
+
+        .option {
+            background: var(--bg-card);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            border-radius: 6px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 2px solid var(--border);
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .option:hover {
+            border-color: var(--accent);
+            background: var(--bg-hover);
+        }
+
+        .option input[type="radio"] {
+            cursor: pointer;
+            width: 18px;
+            height: 18px;
+        }
+
+        .option label {
+            cursor: pointer;
+            flex: 1;
+        }
+
+        .option.selected {
+            background: var(--tip-bg);
+            border-color: var(--accent);
+        }
+
+        .option.correct {
+            background: var(--example-bg);
+            border-color: var(--success);
+        }
+
+        .option.incorrect {
+            background: var(--warning-bg);
+            border-color: var(--danger);
+        }
+
+        .explanation {
+            margin-top: 24px;
+            padding: 20px;
+            background: var(--explanation-bg);
+            border-radius: 6px;
+            border-left: 4px solid var(--explanation-border);
+            display: none;
+        }
+
+        .explanation.show {
+            display: block;
+        }
+
+        .explanation::before {
+            content: "💬 EXPLICAÇÃO";
+            display: block;
+            font-weight: 700;
+            color: var(--accent);
+            margin-bottom: 12px;
+            font-size: 0.85em;
+        }
+
+        /* Botão de ação principal (laranja para engajamento) */
+        .check-answers-btn {
+            background: var(--warning-accent);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            border-radius: 8px;
+            font-size: 1.05em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            display: block;
+            margin: 40px auto;
+            box-shadow: 0 2px 8px rgba(237,137,54,0.3);
+        }
+
+        .check-answers-btn:hover {
+            background: var(--warning-hover);
+            box-shadow: 0 4px 12px rgba(237,137,54,0.4);
+        }
+
+        .check-answers-btn:active {
+            transform: scale(0.98);
+        }
+
+        .score {
+            text-align: center;
+            font-size: 1.3em;
+            font-weight: 600;
+            color: var(--text-body);
+            margin-top: 32px;
+            padding: 24px;
+            background: var(--score-bg);
+            border-radius: 8px;
+            display: none;
+            border: 2px solid var(--score-border);
+        }
+
+        .score.show {
+            display: block;
+        }
+
+        /* ==========================================
+           NAVIGATION - Simples e funcional
+           ========================================== */
+        .nav-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 48px;
+            gap: 16px;
+            padding-top: 32px;
+            border-top: 2px solid var(--border);
+        }
+
+        .nav-btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 6px;
+            font-weight: 600;
+            font-size: 0.95em;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            flex: 1;
+        }
+
+        .nav-btn.prev {
+            background: var(--border);
+            color: var(--text-secondary);
+        }
+
+        .nav-btn.prev:hover {
+            background: var(--border-hover);
+        }
+
+        .nav-btn.next {
+            background: var(--accent);
+            color: white;
+        }
+
+        .nav-btn.next:hover {
+            background: var(--accent-hover);
+        }
+
+        .nav-btn:disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .nav-btn:disabled:hover {
+            background: var(--border);
+        }
+
+        /* ==========================================
+           ACTIVE RECALL - Técnica de recuperação ativa
+           ========================================== */
+        .active-recall {
+            background: var(--recall-bg);
+            border: 2px dashed var(--recall-border);
+            border-radius: 8px;
+            padding: 24px;
+            margin: 32px 0;
+        }
+
+        .active-recall summary {
+            font-weight: 700;
+            color: var(--recall-border);
+            cursor: pointer;
+            list-style: none;
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            font-size: 0.95em;
+            user-select: none;
+        }
+
+        .active-recall summary::-webkit-details-marker {
+            display: none;
+        }
+
+        .active-recall summary::before {
+            content: "🤔";
+            font-size: 1.2em;
+        }
+
+        .active-recall[open] summary::before {
+            content: "💡";
+        }
+
+        .active-recall summary:hover {
+            color: var(--recall-border);
+        }
+
+        .active-recall .recall-content {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--recall-divider);
+            color: var(--recall-text);
+        }
+
+        /* ==========================================
+           UTILITIES
+           ========================================== */
+        .separator {
+            height: 1px;
+            background: var(--border);
+            margin: 32px 0;
+        }
+
+        .highlight {
+            background: var(--highlight-bg);
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-weight: 600;
+            color: var(--highlight-text);
+        }
+
+        code {
+            background: var(--code-bg);
+            padding: 3px 8px;
+            border-radius: 4px;
+            font-family: 'Consolas', 'Monaco', monospace;
+            color: var(--code-text);
+            font-size: 0.9em;
+        }
+
+        .icon {
+            font-size: 1.3em;
+        }
+
+        /* ==========================================
+           INTRO PAGE STYLES - Específicos para módulo de introdução
+           ========================================== */
+        .intro-section {
+            background: var(--intro-section-bg);
+            padding: 32px;
+            margin: 24px 0;
+            border-radius: 10px;
+            border-left: 4px solid var(--accent);
+            box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+        }
+
+        .intro-section h4 {
+            color: var(--accent);
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.3em;
+        }
+
+        .intro-section p {
+            color: var(--text-secondary);
+            line-height: 1.8;
+        }
+
+        .intro-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 32px;
+            border-radius: 12px;
+            margin: 32px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+        }
+
+        .intro-highlight h3 {
+            color: white;
+            margin-bottom: 12px;
+            font-size: 1.5em;
+        }
+
+        .intro-highlight p {
+            color: rgba(255,255,255,0.95);
+            font-size: 1.1em;
+            margin: 0;
+        }
+
+        .study-tips {
+            background: var(--study-bg);
+            border: 2px solid var(--study-border);
+            border-radius: 10px;
+            padding: 28px;
+            margin: 28px 0;
+        }
+
+        .study-tips h4 {
+            color: var(--study-title);
+            margin-top: 0;
+            margin-bottom: 16px;
+            font-size: 1.2em;
+        }
+
+        .study-tips ul {
+            margin-left: 20px;
+        }
+
+        .study-tips li {
+            color: var(--text-body);
+            margin-bottom: 12px;
+            line-height: 1.7;
+        }
+
+        /* ==========================================
+           FOOTER - Copyright
+           ========================================== */
+        .footer {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 32px;
+            margin-top: 40px;
+            text-align: center;
+            box-shadow: var(--shadow-md);
+            border-top: 3px solid var(--accent);
+        }
+
+        .footer-content {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .footer h3 {
+            color: var(--text-primary);
+            margin-bottom: 16px;
+            font-size: 1.2em;
+        }
+
+        .footer p {
+            color: var(--text-muted);
+            line-height: 1.8;
+            margin-bottom: 12px;
+        }
+
+        .footer-license {
+            background: var(--footer-license-bg);
+            border: 1px solid var(--footer-license-border);
+            border-radius: 8px;
+            padding: 16px;
+            margin-top: 20px;
+            font-size: 0.9em;
+        }
+
+        .footer-license strong {
+            color: var(--accent);
+            display: block;
+            margin-bottom: 8px;
+        }
+
+        .footer-license p {
+            color: var(--footer-license-text);
+            margin: 0;
+            font-size: 0.9em;
+        }
+
+        .footer-author {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid var(--border);
+            color: var(--text-body);
+            font-weight: 500;
+        }
+
+        .footer-author span {
+            color: var(--accent);
+            font-weight: 600;
+        }
+
+        .action-box {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            padding: 24px 32px;
+            border-radius: 10px;
+            margin: 28px 0;
+            text-align: center;
+            box-shadow: 0 4px 15px rgba(245, 87, 108, 0.3);
+        }
+
+        .action-box h4 {
+            color: white;
+            margin: 0 0 12px 0;
+            font-size: 1.3em;
+        }
+
+        .action-box p {
+            color: rgba(255,255,255,0.95);
+            margin: 0;
+            font-size: 1.05em;
+        }
+
+        .action-box a {
+            color: white;
+            text-decoration: underline;
+            font-weight: 600;
+        }
+
+        .testimonial {
+            background: var(--testimonial-bg);
+            border-left: 4px solid var(--testimonial-border);
+            padding: 28px;
+            margin: 32px 0;
+            border-radius: 10px;
+            box-shadow: 0 2px 8px rgba(245, 158, 11, 0.15);
+        }
+
+        .testimonial-header {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            margin-bottom: 16px;
+        }
+
+        .testimonial-avatar {
+            width: 50px;
+            height: 50px;
+            background: linear-gradient(135deg, #fbbf24, #f59e0b);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5em;
+            color: white;
+        }
+
+        .testimonial-author {
+            font-weight: 700;
+            color: var(--testimonial-author);
+            font-size: 1.1em;
+        }
+
+        .testimonial-content {
+            color: var(--testimonial-text);
+            line-height: 1.8;
+            font-style: italic;
+            font-size: 1.05em;
+        }
+
+        .module-list {
+            background: var(--module-list-bg);
+            padding: 24px;
+            border-radius: 10px;
+            margin: 24px 0;
+        }
+
+        .module-list h4 {
+            color: var(--module-item-text);
+            margin-top: 0;
+            margin-bottom: 20px;
+        }
+
+        .module-item {
+            background: var(--module-item-bg);
+            padding: 16px;
+            margin-bottom: 12px;
+            border-radius: 8px;
+            border-left: 3px solid var(--accent);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .module-item strong {
+            color: var(--module-item-text);
+            display: block;
+            margin-bottom: 8px;
+            font-size: 1.05em;
+        }
+
+        .module-item ul {
+            margin: 8px 0 0 20px;
+        }
+
+        .module-item li {
+            color: var(--module-item-sub);
+            font-size: 0.95em;
+            margin-bottom: 6px;
+        }
+
+        .cta-button {
+            display: inline-block;
+            background: linear-gradient(135deg, #10b981, #059669);
+            color: white;
+            padding: 16px 40px;
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 1.1em;
+            text-decoration: none;
+            margin-top: 20px;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16, 185, 129, 0.3);
+        }
+
+        .cta-button:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(16, 185, 129, 0.4);
+        }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+
+            .header {
+                padding: 24px;
+                padding-top: 48px;
+            }
+
+            .header-controls {
+                position: static;
+                margin-bottom: 16px;
+                justify-content: flex-end;
+            }
+
+            .header h1 {
+                font-size: 1.5em;
+            }
+
+            .tabs {
+                grid-template-columns: 1fr;
+            }
+
+            .content {
+                padding: 24px;
+            }
+
+            .lesson h3 {
+                font-size: 1.4em;
+            }
+
+            .nav-buttons {
+                flex-direction: column;
+            }
+
+            .lesson-header {
+                flex-direction: column;
+                gap: 16px;
+            }
+
+            .mark-complete {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- ============================================
+             SUBSTITUIR: {EMOJI}, {CERT_CODE}, {CERT_FULL_NAME}
+             ============================================ -->
+        <!-- Header -->
+        <div class="header">
+            <div class="header-controls">
+                <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+                <button class="toggle-btn" id="langToggle" onclick="toggleLanguage()" title="Toggle language">🇧🇷 PT</button>
+            </div>
+            <h1><span class="icon">{EMOJI}</span>Minicurso {CERT_CODE}: {CERT_FULL_NAME}</h1>
+            <p class="subtitle" data-i18n="subtitle">Tudo que você precisa para passar na certificação - Resumido e Focado!</p>
+            <div class="progress-bar">
+                <div class="progress-fill" id="progressFill"></div>
+            </div>
+            <div class="progress-text">
+                <span id="progressText">0% Completo</span> • 
+                <span id="lessonsCompleted">0</span> <span data-i18n="progressOf">de</span> <span id="totalLessons">0</span> <span data-i18n="progressLessons">lições</span>
+            </div>
+        </div>
+
+        <!-- Tabs -->
+        <div class="tabs" id="tabs"></div>
+
+        <!-- Content -->
+        <div class="content">
+            <div id="modules"></div>
+            
+            <!-- Navigation -->
+            <div class="nav-buttons">
+                <button class="nav-btn prev" id="prevBtn" onclick="navigateModule(-1)" data-i18n="prevModule">← Módulo Anterior</button>
+                <button class="nav-btn next" id="nextBtn" onclick="navigateModule(1)" data-i18n="nextModule">Próximo Módulo →</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // ============================================================
+        // CONTEÚDO DO CURSO - SUBSTITUIR INTEGRALMENTE
+        // ============================================================
+        const courseData = {
+            modules: [
+                // =============================================
+                // MÓDULO 0 - INTRODUÇÃO (landing page)
+                // =============================================
+                {
+                    id: 0,
+                    title: "0. Introdução ao Curso",
+                    duration: "15 min",
+                    lessons: [
+                        {
+                            title: "Bem-vindo ao Minicurso {CERT_CODE}",
+                            content: `
+                                <!-- Banner de boas-vindas -->
+                                <div class="intro-highlight">
+                                    <h3>🎓 Bem-vindo ao Minicurso {CERT_CODE}: {CERT_FULL_NAME}!</h3>
+                                    <p style="font-size: 1.15em;">Seu guia completo e focado para a certificação</p>
+                                </div>
+
+                                <!-- O que é a certificação -->
+                                <div class="intro-section">
+                                    <h4>📋 O que é a {CERT_CODE}?</h4>
+                                    <p>{DESCRIÇÃO_DA_CERTIFICAÇÃO}</p>
+                                    <ul>
+                                        <li><strong>Provedor:</strong> Microsoft</li>
+                                        <li><strong>Nível:</strong> {NÍVEL}</li>
+                                        <li><strong>Formato:</strong> Múltipla escolha</li>
+                                        <li><strong>Nota mínima:</strong> 700/1000</li>
+                                        <li><strong>Duração:</strong> ~45 minutos</li>
+                                        <li><strong>Custo:</strong> ~USD 99 (gratuito com voucher ESI/eventos)</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Estrutura do curso -->
+                                <div class="module-list">
+                                    <h4>📚 Estrutura do Curso</h4>
+                                    <!-- Repetir para cada módulo -->
+                                    <div class="module-item">
+                                        <strong>Módulo 1: {NOME} ({DURAÇÃO})</strong>
+                                        <ul>
+                                            <li>Tópico A</li>
+                                            <li>Tópico B</li>
+                                        </ul>
+                                    </div>
+                                </div>
+
+                                <!-- Dicas de estudo -->
+                                <div class="study-tips">
+                                    <h4>📖 Como estudar com este material</h4>
+                                    <ul>
+                                        <li><strong>Leia cada módulo</strong> com atenção — o conteúdo é resumido e vai direto ao ponto</li>
+                                        <li><strong>Preste atenção nos MACETES</strong> 🔑 — são truques de memorização para a prova</li>
+                                        <li><strong>Use os Active Recall</strong> 🤔 — tente responder ANTES de ver a resposta</li>
+                                        <li><strong>Faça os exercícios</strong> de cada módulo — simulam questões reais</li>
+                                        <li><strong>Revise o último módulo</strong> antes da prova — é o guia rápido</li>
+                                    </ul>
+                                </div>
+
+                                <!-- Links úteis -->
+                                <div class="intro-section">
+                                    <h4>🔗 Links Úteis</h4>
+                                    <ul>
+                                        <li><a href="{LINK_LEARN}" target="_blank">📘 Microsoft Learn - {CERT_CODE}</a></li>
+                                        <li><a href="{LINK_PRACTICE}" target="_blank">📝 Teste de Prática Oficial</a></li>
+                                        <li><a href="{LINK_SCHEDULE}" target="_blank">📅 Agendar a Prova</a></li>
+                                    </ul>
+                                </div>
+
+                                <!-- Depoimento -->
+                                <div class="testimonial">
+                                    <div class="testimonial-header">
+                                        <div class="testimonial-avatar">👨‍💻</div>
+                                        <div class="testimonial-author">Edenilson Bila - Autor</div>
+                                    </div>
+                                    <div class="testimonial-content">
+                                        "Eu adiei bastante a realização da prova por não ter um ponto de partida claro para os estudos; me sentia perdido. Em determinado momento, agendei a prova, mas não consegui estudar a tempo e perdi o prazo para remarcação. Não havia alternativa: eu teria que fazer a prova. Estudei durante uma noite e algumas horas no dia seguinte, montei este guia com a ajuda de IA, revisei bastante antes do exame, fiz a prova e fui aprovado 😄
+
+Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então fica a dica, pessoal — vão em frente!"
+                                    </div>
+                                </div>
+
+                                <!-- CTA final -->
+                                <div class="intro-highlight" style="background: linear-gradient(135deg, #10b981 0%, #059669 100%);">
+                                    <h3>🎯 Objetivo deste material:</h3>
+                                    <p style="font-size: 1.15em;"><strong>Aprovar você na {CERT_CODE} de forma eficiente, prática e sem enrolação!</strong></p>
+                                    <p style="margin-top: 20px; font-size: 1.05em;">Vamos começar? Clique em "Próximo Módulo" abaixo! 👇</p>
+                                </div>
+                            `
+                        }
+                    ],
+                    exercises: []
+                },
+
+                // =============================================
+                // MÓDULOS DE CONTEÚDO (repetir para cada skill area)
+                // =============================================
+                {
+                    id: 1,
+                    title: "1. {NOME_DO_MÓDULO}",
+                    duration: "{XX} min",
+                    lessons: [
+                        {
+                            title: "{X.1 Título da Lição}",
+                            content: `
+                                <h4>📌 Tópico: {Nome do Conceito}</h4>
+
+                                <p><strong>Explicação:</strong></p>
+                                <p>{Definição clara e objetiva do conceito}</p>
+
+                                <div class="macete">
+                                    {Mnemônico ou truque de memorização}
+                                </div>
+
+                                <div class="example">
+                                    <strong>Cenário Real:</strong><br>
+                                    {Caso de uso prático}<br>
+                                    • <strong>Serviço:</strong> {Azure Service}<br>
+                                    • <strong>Por quê?</strong> {justificativa}<br>
+                                    • <strong>Resultado:</strong> {outcome}
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: {Próximo Conceito}</h4>
+                                <!-- ... repetir padrão ... -->
+
+                                <!-- A cada 2-3 tópicos: -->
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: {Pergunta sobre os tópicos acima}?</summary>
+                                    <div class="recall-content">
+                                        <strong>Resposta:</strong><br>
+                                        {Resposta completa}
+                                    </div>
+                                </details>
+
+                                <div class="tip">{Comparação entre conceitos}</div>
+                                <div class="warning">{Armadilha do exame}</div>
+                            `
+                        }
+                        // ... mais lições
+                    ],
+                    exercises: [
+                        {
+                            question: "{Cenário baseado em situação real}",
+                            options: [
+                                "{Opção A}",
+                                "{Opção B}",
+                                "{Opção C}",
+                                "{Opção D}"
+                            ],
+                            correct: 0, // índice 0-based da resposta correta
+                            explanation: "<strong>{RESPOSTA}!</strong><br><br>Por quê?<br>✅ {Justificativa da correta}<br><br>❌ {Opção B}: {por que está errada}<br>❌ {Opção C}: {por que está errada}<br>❌ {Opção D}: {por que está errada}<br><br>Macete: {referência ao macete relevante}!"
+                        }
+                        // ... mais exercícios (mín. 5 por módulo)
+                    ]
+                },
+
+                // =============================================
+                // ÚLTIMO MÓDULO - REVISÃO FINAL
+                // =============================================
+                {
+                    id: -1, // SUBSTITUIR pelo último número sequencial
+                    title: "📝 Revisão Final - Guia Rápido",
+                    duration: "30 min",
+                    lessons: [
+                        {
+                            title: "Revisão Rápida para o Exame",
+                            content: `
+                                <h4>📌 Resumo dos Serviços/Conceitos Chave</h4>
+                                <p>{Tabela ou lista resumida de todos os serviços/conceitos importantes}</p>
+
+                                <div class="macete">
+                                    {Compilação dos macetes mais importantes de todos os módulos}
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Decision Tree - Qual Serviço Usar?</h4>
+                                <p>
+                                    ❓ <strong>Precisa de X?</strong> → Use serviço Y<br>
+                                    ❓ <strong>Precisa de Z?</strong> → Use serviço W<br>
+                                </p>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Checklist Pré-Prova</h4>
+                                <ul>
+                                    <li>✅ Revisei todos os macetes</li>
+                                    <li>✅ Fiz todos os exercícios (≥70%)</li>
+                                    <li>✅ Entendo as diferenças entre serviços</li>
+                                    <li>✅ Sei identificar cenários de uso</li>
+                                </ul>
+
+                                <div class="tip">
+                                    Releia esta página 30 minutos antes da prova. 
+                                    Foque nos macetes e na decision tree!
+                                </div>
+                            `
+                        }
+                    ],
+                    exercises: []
+                }
+            ]
+        };
+
+        // ============================================================
+        // JAVASCRIPT FIXO - NÃO MODIFICAR (exceto prefixo localStorage)
+        // ============================================================
+
+        // ============================================================
+        // TRANSLATIONS - UI strings in PT and EN
+        // ============================================================
+        const translations = {
+            pt: {
+                subtitle: "Tudo que você precisa para passar na certificação - Resumido e Focado!",
+                prevModule: "← Módulo Anterior",
+                nextModule: "Próximo Módulo →",
+                markComplete: "✓ Marcar como completo",
+                completed: "✓ Completo",
+                checkAnswers: "Verificar Respostas",
+                exercises: "✏️ Exercícios",
+                resultLabel: "Resultado",
+                correct: "corretas",
+                congratulations: "🎉 Parabéns! Você dominou este módulo!",
+                tryAgain: "📚 Revise o conteúdo e tente novamente!",
+                progressComplete: "Completo",
+                progressOf: "de",
+                progressLessons: "lições",
+                resetConfirm: "Deseja resetar todo o progresso do curso?",
+                footerDev: "Desenvolvido por",
+                footerLicense: "sob Licença MIT",
+                langLabel: "🇧🇷 PT"
+            },
+            en: {
+                subtitle: "Everything you need to pass the certification - Summarized and Focused!",
+                prevModule: "← Previous Module",
+                nextModule: "Next Module →",
+                markComplete: "✓ Mark as complete",
+                completed: "✓ Completed",
+                checkAnswers: "Check Answers",
+                exercises: "✏️ Exercises",
+                resultLabel: "Result",
+                correct: "correct",
+                congratulations: "🎉 Congratulations! You mastered this module!",
+                tryAgain: "📚 Review the content and try again!",
+                progressComplete: "Complete",
+                progressOf: "of",
+                progressLessons: "lessons",
+                resetConfirm: "Do you want to reset all course progress?",
+                footerDev: "Developed by",
+                footerLicense: "under MIT License",
+                langLabel: "🇺🇸 EN"
+            }
+        };
+
+        let currentLang = 'pt';
+
+        // ============================================================
+        // THEME & LANGUAGE TOGGLE
+        // ============================================================
+        function getEffectiveTheme() {
+            const stored = localStorage.getItem(STORAGE_KEY_THEME);
+            if (stored) return stored;
+            return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+        }
+
+        function applyTheme(theme) {
+            document.documentElement.setAttribute('data-theme', theme);
+            const btn = document.getElementById('themeToggle');
+            if (btn) btn.textContent = theme === 'dark' ? '☀️' : '🌙';
+        }
+
+        function toggleTheme() {
+            const current = document.documentElement.getAttribute('data-theme') || getEffectiveTheme();
+            const next = current === 'dark' ? 'light' : 'dark';
+            applyTheme(next);
+            try { localStorage.setItem(STORAGE_KEY_THEME, next); } catch(e) {}
+        }
+
+        function applyLanguage(lang) {
+            currentLang = lang;
+            document.documentElement.setAttribute('lang', lang === 'pt' ? 'pt-BR' : 'en');
+            const t = translations[lang];
+
+            // Update all elements with data-i18n
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) el.textContent = t[key];
+            });
+
+            // Update lang toggle button
+            const btn = document.getElementById('langToggle');
+            if (btn) btn.textContent = t.langLabel;
+
+            // Update mark-complete buttons
+            document.querySelectorAll('.mark-complete').forEach(btn => {
+                if (btn.classList.contains('completed')) {
+                    btn.textContent = t.completed;
+                } else {
+                    btn.textContent = t.markComplete;
+                }
+            });
+
+            // Update check-answers buttons
+            document.querySelectorAll('.check-answers-btn').forEach(btn => {
+                btn.textContent = t.checkAnswers;
+            });
+
+            // Update progress text
+            updateProgress();
+
+            try { localStorage.setItem(STORAGE_KEY_LANG, lang); } catch(e) {}
+        }
+
+        function toggleLanguage() {
+            applyLanguage(currentLang === 'pt' ? 'en' : 'pt');
+        }
+
+        // State management
+        let currentModule = 0;
+        let completedLessons = new Set();
+        let selectedAnswers = {};
+
+        // ============================================
+        // SUBSTITUIR: prefixo das chaves localStorage
+        // Exemplo: 'dp900_', 'az900_', 'sc900_'
+        // ============================================
+        const STORAGE_KEY_COMPLETED = '{cert_lower}_completed_lessons';
+        const STORAGE_KEY_MODULE = '{cert_lower}_current_module';
+        const STORAGE_KEY_ANSWERS = '{cert_lower}_selected_answers';
+        const STORAGE_KEY_SCROLL = '{cert_lower}_scroll_position';
+        const STORAGE_KEY_THEME = '{cert_lower}_theme';
+        const STORAGE_KEY_LANG = '{cert_lower}_lang';
+
+        // Save progress to localStorage
+        function saveProgress() {
+            try {
+                localStorage.setItem(STORAGE_KEY_COMPLETED, JSON.stringify([...completedLessons]));
+                localStorage.setItem(STORAGE_KEY_MODULE, currentModule.toString());
+                localStorage.setItem(STORAGE_KEY_ANSWERS, JSON.stringify(selectedAnswers));
+            } catch (e) {
+                console.warn('Não foi possível salvar o progresso:', e);
+            }
+        }
+
+        // Save scroll position
+        function saveScrollPosition() {
+            try {
+                const scrollData = {
+                    module: currentModule,
+                    position: window.scrollY
+                };
+                localStorage.setItem(STORAGE_KEY_SCROLL, JSON.stringify(scrollData));
+            } catch (e) {
+                console.warn('Não foi possível salvar posição de scroll:', e);
+            }
+        }
+
+        // Debounce function to avoid too many saves
+        function debounce(func, wait) {
+            let timeout;
+            return function executedFunction(...args) {
+                const later = () => {
+                    clearTimeout(timeout);
+                    func(...args);
+                };
+                clearTimeout(timeout);
+                timeout = setTimeout(later, wait);
+            };
+        }
+
+        // Debounced scroll save (save every 500ms of inactivity)
+        const debouncedSaveScroll = debounce(saveScrollPosition, 500);
+
+        // Load progress from localStorage
+        function loadProgress() {
+            try {
+                // Load completed lessons
+                const savedCompleted = localStorage.getItem(STORAGE_KEY_COMPLETED);
+                if (savedCompleted) {
+                    const completed = JSON.parse(savedCompleted);
+                    completedLessons = new Set(completed);
+                }
+
+                // Load current module
+                const savedModule = localStorage.getItem(STORAGE_KEY_MODULE);
+                if (savedModule) {
+                    currentModule = parseInt(savedModule);
+                }
+
+                // Load selected answers
+                const savedAnswers = localStorage.getItem(STORAGE_KEY_ANSWERS);
+                if (savedAnswers) {
+                    selectedAnswers = JSON.parse(savedAnswers);
+                }
+            } catch (e) {
+                console.warn('Não foi possível carregar o progresso:', e);
+            }
+        }
+
+        // Restore scroll position
+        function restoreScrollPosition() {
+            try {
+                const savedScroll = localStorage.getItem(STORAGE_KEY_SCROLL);
+                if (savedScroll) {
+                    const scrollData = JSON.parse(savedScroll);
+                    // Only restore if we're on the same module
+                    if (scrollData.module === currentModule) {
+                        // Use setTimeout to ensure DOM is fully rendered
+                        setTimeout(() => {
+                            window.scrollTo({
+                                top: scrollData.position,
+                                behavior: 'smooth'
+                            });
+                        }, 100);
+                    }
+                }
+            } catch (e) {
+                console.warn('Não foi possível restaurar posição de scroll:', e);
+            }
+        }
+
+        // Clear progress (útil para resetar o curso)
+        function clearProgress() {
+            const t = translations[currentLang];
+            if (confirm(t.resetConfirm)) {
+                localStorage.removeItem(STORAGE_KEY_COMPLETED);
+                localStorage.removeItem(STORAGE_KEY_MODULE);
+                localStorage.removeItem(STORAGE_KEY_ANSWERS);
+                localStorage.removeItem(STORAGE_KEY_SCROLL);
+                localStorage.removeItem(STORAGE_KEY_THEME);
+                localStorage.removeItem(STORAGE_KEY_LANG);
+                location.reload();
+            }
+        }
+
+        // Initialize
+        function init() {
+            // Apply theme first (before render to avoid flash)
+            applyTheme(getEffectiveTheme());
+
+            // Load language preference
+            try {
+                const savedLang = localStorage.getItem(STORAGE_KEY_LANG);
+                if (savedLang) currentLang = savedLang;
+            } catch(e) {}
+
+            loadProgress();
+            renderTabs();
+            renderModules();
+            updateProgress();
+            loadModule(currentModule, true);
+            restoreCompletedButtons();
+            restoreSelectedAnswers();
+            checkModuleCompletion();
+            restoreScrollPosition();
+
+            // Apply language after DOM is rendered
+            applyLanguage(currentLang);
+            
+            window.addEventListener('scroll', debouncedSaveScroll);
+            window.addEventListener('beforeunload', saveScrollPosition);
+        }
+
+        // Render tabs
+        function renderTabs() {
+            const tabsContainer = document.getElementById('tabs');
+            courseData.modules.forEach((module, index) => {
+                const tab = document.createElement('div');
+                tab.className = `tab ${index === 0 ? 'active' : ''}`;
+                tab.onclick = () => loadModule(index);
+                tab.innerHTML = `
+                    <div class="tab-title">${module.title}</div>
+                    <div class="tab-duration">${module.duration}</div>
+                    <div class="tab-checkmark">✓</div>
+                `;
+                tabsContainer.appendChild(tab);
+            });
+        }
+
+        // Render all modules
+        function renderModules() {
+            const modulesContainer = document.getElementById('modules');
+            courseData.modules.forEach((module, moduleIndex) => {
+                const moduleDiv = document.createElement('div');
+                moduleDiv.className = `module ${moduleIndex === 0 ? 'active' : ''}`;
+                moduleDiv.id = `module-${moduleIndex}`;
+
+                // Render lessons
+                let lessonsHTML = '';
+                module.lessons.forEach((lesson, lessonIndex) => {
+                    const lessonId = `${moduleIndex}-${lessonIndex}`;
+                    lessonsHTML += `
+                        <div class="lesson">
+                            <div class="lesson-header">
+                                <h3>${lesson.title}</h3>
+                            </div>
+                            ${lesson.content}
+                            <div class="separator"></div>
+                            <div style="text-align: center; margin-top: 32px;">
+                                <button class="mark-complete" data-lesson="${lessonId}" data-i18n="markComplete" onclick="toggleLesson('${lessonId}')">
+                                    ✓ Marcar como completo
+                                </button>
+                            </div>
+                        </div>
+                    `;
+                });
+
+                // Render exercises
+                let exercisesHTML = '';
+                if (module.exercises && module.exercises.length > 0) {
+                    exercisesHTML = `
+                        <div class="exercises">
+                            <h3 data-i18n="exercises">✏️ Exercícios - ${module.title}</h3>
+                            <div class="separator"></div>
+                    `;
+
+                    module.exercises.forEach((exercise, exerciseIndex) => {
+                        const questionId = `${moduleIndex}-${exerciseIndex}`;
+                        exercisesHTML += `
+                            <div class="exercise-card" id="card-${questionId}">
+                                <div class="question">${exerciseIndex + 1}. ${exercise.question}</div>
+                                <ul class="options">
+                        `;
+
+                        exercise.options.forEach((option, optionIndex) => {
+                            exercisesHTML += `
+                                <li class="option" onclick="selectOption('${questionId}', ${optionIndex})">
+                                    <input type="radio" name="q-${questionId}" value="${optionIndex}" id="opt-${questionId}-${optionIndex}">
+                                    <label for="opt-${questionId}-${optionIndex}">${option}</label>
+                                </li>
+                            `;
+                        });
+
+                        exercisesHTML += `
+                                </ul>
+                                <div class="explanation" id="exp-${questionId}">
+                                    ${exercise.explanation}
+                                </div>
+                            </div>
+                        `;
+                    });
+
+                    exercisesHTML += `
+                            <button class="check-answers-btn" onclick="checkAnswers(${moduleIndex})" data-i18n="checkAnswers">
+                                Verificar Respostas
+                            </button>
+                            <div class="score" id="score-${moduleIndex}"></div>
+                        </div>
+                    `;
+                }
+
+                moduleDiv.innerHTML = lessonsHTML + exercisesHTML;
+                modulesContainer.appendChild(moduleDiv);
+            });
+
+            // Update total lessons count
+            const totalLessons = courseData.modules.reduce((sum, m) => sum + m.lessons.length, 0);
+            document.getElementById('totalLessons').textContent = totalLessons;
+        }
+
+        // Load module
+        function loadModule(index, skipScroll = false) {
+            document.querySelectorAll('.tab').forEach((tab, i) => {
+                tab.classList.toggle('active', i === index);
+            });
+
+            document.querySelectorAll('.module').forEach((module, i) => {
+                module.classList.toggle('active', i === index);
+            });
+
+            currentModule = index;
+            updateNavButtons();
+            updateProgress();
+            saveProgress();
+
+            if (!skipScroll) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                saveScrollPosition();
+            }
+        }
+
+        // Navigate between modules
+        function navigateModule(direction) {
+            const newIndex = currentModule + direction;
+            if (newIndex >= 0 && newIndex < courseData.modules.length) {
+                saveScrollPosition();
+                loadModule(newIndex);
+            }
+        }
+
+        // Update navigation buttons
+        function updateNavButtons() {
+            document.getElementById('prevBtn').disabled = currentModule === 0;
+            document.getElementById('nextBtn').disabled = currentModule === courseData.modules.length - 1;
+        }
+
+        // Toggle lesson completion
+        function toggleLesson(lessonId) {
+            const t = translations[currentLang];
+            const button = document.querySelector(`[data-lesson="${lessonId}"]`);
+            
+            if (completedLessons.has(lessonId)) {
+                completedLessons.delete(lessonId);
+                button.classList.remove('completed');
+                button.textContent = t.markComplete;
+            } else {
+                completedLessons.add(lessonId);
+                button.classList.add('completed');
+                button.textContent = t.completed;
+            }
+
+            updateProgress();
+            checkModuleCompletion();
+            saveProgress();
+        }
+
+        // Restore completed buttons state
+        function restoreCompletedButtons() {
+            const t = translations[currentLang];
+            completedLessons.forEach(lessonId => {
+                const button = document.querySelector(`[data-lesson="${lessonId}"]`);
+                if (button) {
+                    button.classList.add('completed');
+                    button.textContent = t.completed;
+                }
+            });
+        }
+
+        // Restore selected answers state
+        function restoreSelectedAnswers() {
+            Object.keys(selectedAnswers).forEach(questionId => {
+                const optionIndex = selectedAnswers[questionId];
+                const card = document.getElementById(`card-${questionId}`);
+                if (card) {
+                    const options = card.querySelectorAll('.option');
+                    options.forEach((opt, i) => {
+                        if (i === optionIndex) {
+                            opt.classList.add('selected');
+                        }
+                    });
+                    const radio = document.getElementById(`opt-${questionId}-${optionIndex}`);
+                    if (radio) {
+                        radio.checked = true;
+                    }
+                }
+            });
+        }
+
+        // Check if module is completed
+        function checkModuleCompletion() {
+            courseData.modules.forEach((module, moduleIndex) => {
+                const allLessonsCompleted = module.lessons.every((_, lessonIndex) => {
+                    return completedLessons.has(`${moduleIndex}-${lessonIndex}`);
+                });
+
+                const tab = document.querySelectorAll('.tab')[moduleIndex];
+                if (allLessonsCompleted) {
+                    tab.classList.add('completed');
+                } else {
+                    tab.classList.remove('completed');
+                }
+            });
+        }
+
+        // Update progress
+        function updateProgress() {
+            const t = translations[currentLang];
+            const totalLessons = courseData.modules.reduce((sum, m) => sum + m.lessons.length, 0);
+            const completed = completedLessons.size;
+            const percentage = (completed / totalLessons * 100).toFixed(0);
+
+            document.getElementById('progressFill').style.width = percentage + '%';
+            document.getElementById('progressText').textContent = percentage + '% ' + t.progressComplete;
+            document.getElementById('lessonsCompleted').textContent = completed;
+        }
+
+        // Select option
+        function selectOption(questionId, optionIndex) {
+            selectedAnswers[questionId] = optionIndex;
+            
+            const card = document.getElementById(`card-${questionId}`);
+            const options = card.querySelectorAll('.option');
+            options.forEach((opt, i) => {
+                opt.classList.toggle('selected', i === optionIndex);
+            });
+
+            document.getElementById(`opt-${questionId}-${optionIndex}`).checked = true;
+            saveProgress();
+        }
+
+        // Check answers
+        function checkAnswers(moduleIndex) {
+            const module = courseData.modules[moduleIndex];
+            let correct = 0;
+            let total = module.exercises.length;
+
+            module.exercises.forEach((exercise, exerciseIndex) => {
+                const questionId = `${moduleIndex}-${exerciseIndex}`;
+                const card = document.getElementById(`card-${questionId}`);
+                const explanation = document.getElementById(`exp-${questionId}`);
+                const userAnswer = selectedAnswers[questionId];
+
+                if (userAnswer !== undefined) {
+                    const isCorrect = userAnswer === exercise.correct;
+                    
+                    if (isCorrect) {
+                        correct++;
+                        card.classList.add('correct');
+                        card.classList.remove('incorrect');
+                    } else {
+                        card.classList.add('incorrect');
+                        card.classList.remove('correct');
+                    }
+
+                    explanation.classList.add('show');
+
+                    const options = card.querySelectorAll('.option');
+                    options.forEach((opt, i) => {
+                        if (i === exercise.correct) {
+                            opt.classList.add('correct');
+                        } else if (i === userAnswer && !isCorrect) {
+                            opt.classList.add('incorrect');
+                        }
+                    });
+                }
+            });
+
+            const scoreDiv = document.getElementById(`score-${moduleIndex}`);
+            const percentage = (correct / total * 100).toFixed(0);
+            const t = translations[currentLang];
+            scoreDiv.innerHTML = `
+                <strong>${t.resultLabel}: ${correct}/${total} ${t.correct} (${percentage}%)</strong><br>
+                ${percentage >= 70 ? t.congratulations : t.tryAgain}
+            `;
+            scoreDiv.classList.add('show');
+
+            scoreDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // Initialize on load
+        window.onload = init;
+    </script>
+
+    <!-- Footer com direitos autorais -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-author">
+                <span data-i18n="footerDev">Desenvolvido por</span> <span>Edenilson Bila</span> © 2026 <span data-i18n="footerLicense">sob Licença MIT</span><br>
+                <a href="https://github.com/edenilsonbila" target="_blank" style="color: var(--accent); text-decoration: none; font-weight: 500; margin-top: 8px; display: inline-block;">
+                    🔗 GitHub: @edenilsonbila
+                </a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html>
