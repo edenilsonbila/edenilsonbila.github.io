@@ -1,0 +1,2352 @@
+<!--
+    Simulado Final — Prova Completa AB-731 + AB-900
+    Combinação de todos os domínios de ambas certificações
+    
+    Copyright (c) 2026 Edenilson Bila
+    
+    Permission is hereby granted, free of charge, to any person obtaining a copy
+    of this software and associated documentation files (the "Software"), to deal
+    in the Software without restriction, including without limitation the rights
+    to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+    copies of the Software, and to permit persons to whom the Software is
+    furnished to do so, subject to the following conditions:
+    
+    The above copyright notice and this permission notice shall be included in all
+    copies or substantial portions of the Software.
+    
+    THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+    IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+    FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+    AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+    LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+    OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+    SOFTWARE.
+-->
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="author" content="Edenilson Bila">
+    <title>Simulado Final — AB-731 + AB-900</title>
+    <style>
+        /* ==========================================
+           CSS CUSTOM PROPERTIES (THEMING)
+           ========================================== */
+        :root {
+            --bg-body: #f5f7fa;
+            --bg-card: #ffffff;
+            --bg-card-alt: #fafbfc;
+            --bg-input: #f7fafc;
+            --bg-hover: #f7fafc;
+            --text-primary: #1a202c;
+            --text-body: #2d3748;
+            --text-secondary: #4a5568;
+            --text-muted: #718096;
+            --accent: #3182ce;
+            --accent-hover: #2c5aa0;
+            --accent-shadow: rgba(49,130,206,0.25);
+            --border: #e2e8f0;
+            --border-hover: #cbd5e0;
+            --success: #48bb78;
+            --success-hover: #38a169;
+            --danger: #fc8181;
+            --danger-strong: #e53e3e;
+            --warning-accent: #ed8936;
+            --warning-hover: #dd6b20;
+            --orange-accent: #f39c12;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.08);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.06);
+            --explanation-bg: #e6f7ff;
+            --explanation-border: #3182ce;
+            --tip-bg: #e6f7ff;
+            --tip-border: #3182ce;
+            --tip-text: #2c5282;
+            --warning-bg: #fff5f5;
+            --warning-border: #fc8181;
+            --warning-text: #742a2a;
+            --example-bg: #f0fff4;
+            --example-border: #48bb78;
+            --example-text: #22543d;
+            --score-bg: #f7fafc;
+            --score-border: #e2e8f0;
+            --intro-section-bg: #ffffff;
+            --footer-license-bg: #f7fafc;
+            --footer-license-border: #e2e8f0;
+            --footer-license-text: #4a5568;
+            --code-bg: #f7fafc;
+            --code-text: #d53f8c;
+            --highlight-bg: #fef5e7;
+            --highlight-text: #744210;
+            /* Exam-specific */
+            --timer-bg: #1a365d;
+            --timer-text: #ffffff;
+            --timer-danger: #e53e3e;
+            --nav-answered: #3182ce;
+            --nav-flagged: #ed8936;
+            --nav-current: #48bb78;
+            --nav-unanswered: #e2e8f0;
+            --bar-excellent: #48bb78;
+            --bar-good: #3182ce;
+            --bar-needs-work: #e53e3e;
+            --badge-pass-bg: #f0fff4;
+            --badge-pass-border: #48bb78;
+            --badge-pass-text: #22543d;
+            --badge-fail-bg: #fff5f5;
+            --badge-fail-border: #e53e3e;
+            --badge-fail-text: #742a2a;
+        }
+
+        [data-theme="dark"] {
+            --bg-body: #0f172a;
+            --bg-card: #1e293b;
+            --bg-card-alt: #1e293b;
+            --bg-input: #334155;
+            --bg-hover: #334155;
+            --text-primary: #f1f5f9;
+            --text-body: #e2e8f0;
+            --text-secondary: #cbd5e0;
+            --text-muted: #94a3b8;
+            --accent: #60a5fa;
+            --accent-hover: #3b82f6;
+            --accent-shadow: rgba(96,165,250,0.25);
+            --border: #334155;
+            --border-hover: #475569;
+            --success: #34d399;
+            --success-hover: #10b981;
+            --danger: #f87171;
+            --danger-strong: #ef4444;
+            --warning-accent: #fb923c;
+            --warning-hover: #f97316;
+            --orange-accent: #fbbf24;
+            --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+            --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+            --explanation-bg: #172554;
+            --explanation-border: #60a5fa;
+            --tip-bg: #172554;
+            --tip-border: #60a5fa;
+            --tip-text: #bfdbfe;
+            --warning-bg: #450a0a;
+            --warning-border: #f87171;
+            --warning-text: #fecaca;
+            --example-bg: #052e16;
+            --example-border: #34d399;
+            --example-text: #bbf7d0;
+            --score-bg: #1e293b;
+            --score-border: #334155;
+            --intro-section-bg: #1e293b;
+            --footer-license-bg: #1e293b;
+            --footer-license-border: #334155;
+            --footer-license-text: #cbd5e0;
+            --code-bg: #334155;
+            --code-text: #f472b6;
+            --highlight-bg: #422006;
+            --highlight-text: #fde68a;
+            /* Exam-specific dark */
+            --timer-bg: #1e293b;
+            --timer-text: #f1f5f9;
+            --timer-danger: #f87171;
+            --nav-answered: #60a5fa;
+            --nav-flagged: #fb923c;
+            --nav-current: #34d399;
+            --nav-unanswered: #334155;
+            --bar-excellent: #34d399;
+            --bar-good: #60a5fa;
+            --bar-needs-work: #f87171;
+            --badge-pass-bg: #052e16;
+            --badge-pass-border: #34d399;
+            --badge-pass-text: #bbf7d0;
+            --badge-fail-bg: #450a0a;
+            --badge-fail-border: #f87171;
+            --badge-fail-text: #fecaca;
+        }
+
+        @media (prefers-color-scheme: dark) {
+            html:not([data-theme="light"]) {
+                --bg-body: #0f172a;
+                --bg-card: #1e293b;
+                --bg-card-alt: #1e293b;
+                --bg-input: #334155;
+                --bg-hover: #334155;
+                --text-primary: #f1f5f9;
+                --text-body: #e2e8f0;
+                --text-secondary: #cbd5e0;
+                --text-muted: #94a3b8;
+                --accent: #60a5fa;
+                --accent-hover: #3b82f6;
+                --accent-shadow: rgba(96,165,250,0.25);
+                --border: #334155;
+                --border-hover: #475569;
+                --success: #34d399;
+                --success-hover: #10b981;
+                --danger: #f87171;
+                --danger-strong: #ef4444;
+                --warning-accent: #fb923c;
+                --warning-hover: #f97316;
+                --orange-accent: #fbbf24;
+                --shadow-sm: 0 1px 3px rgba(0,0,0,0.3);
+                --shadow-md: 0 2px 8px rgba(0,0,0,0.3);
+                --explanation-bg: #172554; --explanation-border: #60a5fa;
+                --tip-bg: #172554; --tip-border: #60a5fa; --tip-text: #bfdbfe;
+                --warning-bg: #450a0a; --warning-border: #f87171; --warning-text: #fecaca;
+                --example-bg: #052e16; --example-border: #34d399; --example-text: #bbf7d0;
+                --score-bg: #1e293b; --score-border: #334155;
+                --intro-section-bg: #1e293b;
+                --footer-license-bg: #1e293b; --footer-license-border: #334155; --footer-license-text: #cbd5e0;
+                --code-bg: #334155; --code-text: #f472b6;
+                --highlight-bg: #422006; --highlight-text: #fde68a;
+                --timer-bg: #1e293b; --timer-text: #f1f5f9; --timer-danger: #f87171;
+                --nav-answered: #60a5fa; --nav-flagged: #fb923c; --nav-current: #34d399; --nav-unanswered: #334155;
+                --bar-excellent: #34d399; --bar-good: #60a5fa; --bar-needs-work: #f87171;
+                --badge-pass-bg: #052e16; --badge-pass-border: #34d399; --badge-pass-text: #bbf7d0;
+                --badge-fail-bg: #450a0a; --badge-fail-border: #f87171; --badge-fail-text: #fecaca;
+            }
+        }
+
+        /* ==========================================
+           RESET & BASE
+           ========================================== */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+
+        body {
+            font-family: 'Segoe UI', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg-body);
+            min-height: 100vh;
+            padding: 20px;
+            line-height: 1.8;
+            color: var(--text-body);
+            transition: background 0.3s ease, color 0.3s ease;
+        }
+
+        .container { max-width: 960px; margin: 0 auto; }
+
+        /* ==========================================
+           HEADER
+           ========================================== */
+        .header {
+            background: var(--bg-card);
+            border-radius: 12px;
+            padding: 40px;
+            box-shadow: var(--shadow-md);
+            margin-bottom: 32px;
+            border-left: 4px solid var(--accent);
+            position: relative;
+        }
+        .header h1 { color: var(--text-primary); font-size: 1.8em; margin-bottom: 8px; font-weight: 700; letter-spacing: -0.5px; }
+        .header h1 .icon { color: var(--accent); }
+        .header p.subtitle { color: var(--text-muted); font-size: 1em; font-weight: 400; }
+        .header-controls { display: flex; gap: 8px; position: absolute; top: 16px; right: 16px; }
+        .toggle-btn {
+            background: var(--bg-input); border: 1px solid var(--border); border-radius: 6px;
+            padding: 6px 12px; cursor: pointer; font-size: 0.85em; font-weight: 500;
+            color: var(--text-secondary); transition: all 0.2s ease; display: flex; align-items: center; gap: 4px;
+        }
+        .toggle-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* ==========================================
+           SCREEN MANAGEMENT
+           ========================================== */
+        .screen { display: none; }
+        .screen.active { display: block; }
+
+        /* ==========================================
+           INTRO SCREEN
+           ========================================== */
+        .intro-card {
+            background: var(--bg-card); border-radius: 12px; padding: 48px;
+            box-shadow: var(--shadow-md); margin-bottom: 24px;
+        }
+        .intro-card h2 { color: var(--text-primary); font-size: 1.5em; margin-bottom: 24px; font-weight: 700; }
+        .intro-card p { color: var(--text-secondary); margin-bottom: 16px; line-height: 1.8; }
+
+        .exam-info-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 16px; margin: 32px 0;
+        }
+        .exam-info-item {
+            background: var(--bg-card-alt); border: 2px solid var(--border); border-radius: 10px;
+            padding: 24px; text-align: center; transition: border-color 0.2s;
+        }
+        .exam-info-item:hover { border-color: var(--accent); }
+        .exam-info-item .info-icon { font-size: 2em; margin-bottom: 8px; }
+        .exam-info-item .info-value { font-size: 1.5em; font-weight: 700; color: var(--text-primary); }
+        .exam-info-item .info-label { font-size: 0.85em; color: var(--text-muted); margin-top: 4px; }
+
+        .domain-breakdown { margin: 32px 0; }
+        .domain-breakdown h3 { color: var(--text-primary); font-size: 1.15em; margin-bottom: 16px; }
+        .domain-tag {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 10px 16px; border-radius: 8px; margin: 6px 4px;
+            font-size: 0.85em; font-weight: 600; border: 2px solid var(--border);
+            background: var(--bg-card-alt); color: var(--text-body);
+        }
+        .domain-tag .tag-dot { width: 10px; height: 10px; border-radius: 50%; }
+        .domain-tag .tag-cert {
+            font-size: 0.7em; padding: 2px 6px; border-radius: 4px;
+            background: var(--accent); color: white; font-weight: 700;
+        }
+
+        .exam-rules {
+            background: var(--intro-section-bg); border-left: 4px solid var(--warning-accent);
+            padding: 24px; border-radius: 8px; margin: 24px 0;
+        }
+        .exam-rules h4 { color: var(--warning-accent); margin-bottom: 12px; }
+        .exam-rules ul { margin-left: 20px; }
+        .exam-rules li { color: var(--text-secondary); margin-bottom: 8px; font-size: 0.95em; }
+
+        .start-btn {
+            display: block; width: 100%; max-width: 400px; margin: 32px auto 0;
+            background: linear-gradient(135deg, #10b981, #059669); color: white;
+            border: none; padding: 18px 48px; border-radius: 10px; font-size: 1.15em;
+            font-weight: 700; cursor: pointer; transition: all 0.3s ease;
+            box-shadow: 0 4px 15px rgba(16,185,129,0.3); text-align: center;
+        }
+        .start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(16,185,129,0.4); }
+        .start-btn:active { transform: translateY(0); }
+
+        /* ==========================================
+           EXAM SCREEN — TIMER BAR
+           ========================================== */
+        .timer-bar {
+            position: sticky; top: 0; z-index: 100;
+            background: var(--timer-bg); color: var(--timer-text);
+            padding: 12px 24px; border-radius: 10px; margin-bottom: 24px;
+            display: flex; justify-content: space-between; align-items: center;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+        }
+        .timer-bar.danger { background: var(--timer-danger); animation: pulse-timer 1s ease-in-out infinite; }
+        @keyframes pulse-timer { 0%,100% { opacity: 1; } 50% { opacity: 0.85; } }
+        .timer-left { display: flex; align-items: center; gap: 16px; }
+        .timer-clock { font-size: 1.4em; font-weight: 700; font-variant-numeric: tabular-nums; letter-spacing: 1px; }
+        .timer-progress-text { font-size: 0.9em; opacity: 0.85; }
+        .timer-right { display: flex; align-items: center; gap: 12px; }
+        .timer-btn {
+            background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.25);
+            color: white; padding: 8px 16px; border-radius: 6px; cursor: pointer;
+            font-size: 0.85em; font-weight: 600; transition: all 0.2s;
+        }
+        .timer-btn:hover { background: rgba(255,255,255,0.25); }
+        .timer-btn.flag-active { background: var(--warning-accent); border-color: var(--warning-accent); }
+        .timer-btn.submit-btn { background: var(--danger-strong); border-color: var(--danger-strong); }
+        .timer-btn.submit-btn:hover { background: #c53030; }
+
+        /* ==========================================
+           EXAM SCREEN — LAYOUT
+           ========================================== */
+        .exam-layout {
+            display: grid; grid-template-columns: 1fr 200px; gap: 24px; align-items: start;
+        }
+
+        /* Question Area */
+        .question-area {
+            background: var(--bg-card); border-radius: 12px; padding: 40px;
+            box-shadow: var(--shadow-md); min-height: 400px;
+        }
+        .question-header { margin-bottom: 24px; }
+        .question-number {
+            font-size: 0.85em; font-weight: 600; color: var(--accent);
+            text-transform: uppercase; letter-spacing: 1px; margin-bottom: 8px;
+        }
+        .question-domain-badge {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 4px 12px; border-radius: 20px; font-size: 0.75em; font-weight: 600;
+            background: var(--bg-card-alt); border: 1px solid var(--border); color: var(--text-muted);
+            margin-bottom: 16px;
+        }
+        .question-domain-badge .badge-dot { width: 8px; height: 8px; border-radius: 50%; }
+        .question-scenario {
+            background: var(--bg-card-alt); border-left: 4px solid var(--accent);
+            padding: 20px; border-radius: 0 8px 8px 0; margin-bottom: 24px;
+            color: var(--text-secondary); font-size: 0.95em; line-height: 1.8;
+        }
+        .question-text {
+            font-weight: 600; font-size: 1.1em; margin-bottom: 24px;
+            color: var(--text-body); line-height: 1.6;
+        }
+        .question-instruction {
+            font-size: 0.85em; color: var(--accent); font-weight: 600;
+            margin-bottom: 16px; font-style: italic;
+        }
+
+        /* Options */
+        .options-list { list-style: none; margin: 0; padding: 0; }
+        .option-item {
+            background: var(--bg-card); padding: 16px 20px; margin-bottom: 12px;
+            border-radius: 8px; cursor: pointer; transition: all 0.2s ease;
+            border: 2px solid var(--border); display: flex; align-items: center; gap: 12px;
+        }
+        .option-item:hover { border-color: var(--accent); background: var(--bg-hover); }
+        .option-item input[type="radio"],
+        .option-item input[type="checkbox"] { cursor: pointer; width: 18px; height: 18px; flex-shrink: 0; }
+        .option-item label { cursor: pointer; flex: 1; line-height: 1.6; color: var(--text-body); }
+        .option-item.selected { background: var(--tip-bg); border-color: var(--accent); }
+        .option-item.review-correct { background: var(--example-bg); border-color: var(--success); }
+        .option-item.review-incorrect { background: var(--warning-bg); border-color: var(--danger); }
+        .option-letter {
+            width: 28px; height: 28px; border-radius: 50%; background: var(--border);
+            display: flex; align-items: center; justify-content: center;
+            font-weight: 700; font-size: 0.85em; color: var(--text-secondary); flex-shrink: 0;
+        }
+        .option-item.selected .option-letter { background: var(--accent); color: white; }
+        .option-item.review-correct .option-letter { background: var(--success); color: white; }
+        .option-item.review-incorrect .option-letter { background: var(--danger); color: white; }
+
+        /* Question navigation buttons */
+        .question-nav-buttons {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-top: 32px; padding-top: 24px; border-top: 2px solid var(--border); gap: 12px;
+        }
+        .q-nav-btn {
+            padding: 12px 28px; border: none; border-radius: 8px; font-weight: 600;
+            font-size: 0.95em; cursor: pointer; transition: all 0.2s ease;
+        }
+        .q-nav-btn.prev { background: var(--border); color: var(--text-secondary); }
+        .q-nav-btn.prev:hover { background: var(--border-hover); }
+        .q-nav-btn.next { background: var(--accent); color: white; }
+        .q-nav-btn.next:hover { background: var(--accent-hover); }
+        .q-nav-btn:disabled { opacity: 0.4; cursor: not-allowed; }
+
+        /* ==========================================
+           EXAM SCREEN — NAVIGATION GRID (sidebar)
+           ========================================== */
+        .nav-sidebar {
+            background: var(--bg-card); border-radius: 12px; padding: 20px;
+            box-shadow: var(--shadow-md); position: sticky; top: 80px;
+        }
+        .nav-sidebar h4 { font-size: 0.85em; color: var(--text-muted); margin-bottom: 12px; text-transform: uppercase; letter-spacing: 1px; }
+        .nav-grid {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 6px;
+        }
+        .nav-grid-btn {
+            width: 100%; aspect-ratio: 1; border: 2px solid var(--border); border-radius: 6px;
+            background: var(--bg-card-alt); color: var(--text-muted); font-weight: 600;
+            font-size: 0.8em; cursor: pointer; transition: all 0.15s ease;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .nav-grid-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .nav-grid-btn.current { background: var(--nav-current); color: white; border-color: var(--nav-current); }
+        .nav-grid-btn.answered { background: var(--nav-answered); color: white; border-color: var(--nav-answered); }
+        .nav-grid-btn.flagged { border-color: var(--nav-flagged); box-shadow: inset 0 0 0 2px var(--nav-flagged); }
+        .nav-grid-btn.flagged.answered { background: var(--nav-answered); border-color: var(--nav-flagged); box-shadow: inset 0 0 0 2px var(--nav-flagged); }
+
+        .nav-legend { margin-top: 16px; font-size: 0.75em; }
+        .nav-legend-item { display: flex; align-items: center; gap: 6px; margin-bottom: 4px; color: var(--text-muted); }
+        .nav-legend-dot { width: 12px; height: 12px; border-radius: 3px; }
+
+        .nav-summary {
+            margin-top: 16px; padding-top: 12px; border-top: 1px solid var(--border);
+            font-size: 0.8em; color: var(--text-muted);
+        }
+        .nav-summary div { margin-bottom: 4px; }
+        .nav-summary strong { color: var(--text-body); }
+
+        /* ==========================================
+           RESULTS SCREEN — SCORE REPORT
+           ========================================== */
+        .results-card {
+            background: var(--bg-card); border-radius: 12px; padding: 48px;
+            box-shadow: var(--shadow-md); margin-bottom: 24px;
+        }
+
+        .score-hero {
+            text-align: center; padding: 40px 0; margin-bottom: 32px;
+            border-bottom: 2px solid var(--border);
+        }
+        .score-hero .score-label { font-size: 0.9em; color: var(--text-muted); text-transform: uppercase; letter-spacing: 2px; margin-bottom: 8px; }
+        .score-hero .score-value { font-size: 4em; font-weight: 800; color: var(--text-primary); line-height: 1; }
+        .score-hero .score-max { font-size: 1.2em; color: var(--text-muted); font-weight: 400; }
+        .score-hero .score-badge {
+            display: inline-block; padding: 10px 32px; border-radius: 30px;
+            font-size: 1.1em; font-weight: 700; margin-top: 20px; letter-spacing: 1px;
+        }
+        .score-badge.pass { background: var(--badge-pass-bg); border: 2px solid var(--badge-pass-border); color: var(--badge-pass-text); }
+        .score-badge.fail { background: var(--badge-fail-bg); border: 2px solid var(--badge-fail-border); color: var(--badge-fail-text); }
+
+        .score-stats {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+            gap: 16px; margin: 24px 0 40px;
+        }
+        .score-stat {
+            text-align: center; padding: 20px; border-radius: 10px;
+            background: var(--bg-card-alt); border: 1px solid var(--border);
+        }
+        .score-stat .stat-value { font-size: 1.8em; font-weight: 700; color: var(--text-primary); }
+        .score-stat .stat-label { font-size: 0.8em; color: var(--text-muted); margin-top: 4px; }
+
+        /* Domain bar chart */
+        .domain-results { margin: 32px 0; }
+        .domain-results h3 { color: var(--text-primary); font-size: 1.2em; margin-bottom: 20px; }
+        .domain-result-row {
+            display: grid; grid-template-columns: 250px 1fr 80px; gap: 16px;
+            align-items: center; margin-bottom: 16px; padding: 12px 0;
+            border-bottom: 1px solid var(--border);
+        }
+        .domain-result-name {
+            font-size: 0.9em; font-weight: 600; color: var(--text-body);
+            display: flex; align-items: center; gap: 8px;
+        }
+        .domain-result-name .dr-dot { width: 10px; height: 10px; border-radius: 50%; flex-shrink: 0; }
+        .domain-result-name .dr-cert {
+            font-size: 0.7em; padding: 2px 6px; border-radius: 4px;
+            background: var(--accent); color: white; font-weight: 700; flex-shrink: 0;
+        }
+        .domain-bar-container {
+            height: 28px; background: var(--border); border-radius: 14px; overflow: hidden;
+            position: relative;
+        }
+        .domain-bar-fill {
+            height: 100%; border-radius: 14px; transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+            display: flex; align-items: center; justify-content: flex-end; padding-right: 10px;
+            font-size: 0.75em; font-weight: 700; color: white; min-width: 40px;
+        }
+        .domain-result-pct { font-weight: 700; font-size: 1em; color: var(--text-primary); text-align: right; }
+
+        /* Recommendations */
+        .recommendations { margin: 32px 0; }
+        .recommendations h3 { color: var(--text-primary); font-size: 1.2em; margin-bottom: 16px; }
+        .rec-item {
+            padding: 16px 20px; border-radius: 8px; margin-bottom: 12px;
+            display: flex; align-items: flex-start; gap: 12px;
+        }
+        .rec-item.needs-work { background: var(--warning-bg); border-left: 4px solid var(--danger-strong); }
+        .rec-item.good { background: var(--tip-bg); border-left: 4px solid var(--accent); }
+        .rec-item.excellent { background: var(--example-bg); border-left: 4px solid var(--success); }
+        .rec-item .rec-icon { font-size: 1.3em; flex-shrink: 0; }
+        .rec-item .rec-text { font-size: 0.95em; color: var(--text-body); }
+        .rec-item .rec-text strong { display: block; margin-bottom: 4px; }
+
+        .results-actions {
+            display: flex; gap: 12px; justify-content: center; margin-top: 32px; flex-wrap: wrap;
+        }
+        .results-btn {
+            padding: 14px 32px; border-radius: 8px; font-weight: 600; font-size: 1em;
+            cursor: pointer; transition: all 0.2s ease; border: 2px solid transparent;
+        }
+        .results-btn.primary { background: var(--accent); color: white; border-color: var(--accent); }
+        .results-btn.primary:hover { background: var(--accent-hover); }
+        .results-btn.secondary { background: var(--bg-card-alt); color: var(--text-body); border-color: var(--border); }
+        .results-btn.secondary:hover { border-color: var(--accent); color: var(--accent); }
+        .results-btn.danger { background: var(--danger-strong); color: white; }
+        .results-btn.danger:hover { background: #c53030; }
+
+        /* ==========================================
+           REVIEW MODE
+           ========================================== */
+        .review-filters {
+            display: flex; gap: 8px; margin-bottom: 24px; flex-wrap: wrap;
+        }
+        .review-filter-btn {
+            padding: 8px 20px; border-radius: 20px; font-size: 0.85em; font-weight: 600;
+            cursor: pointer; transition: all 0.2s; border: 2px solid var(--border);
+            background: var(--bg-card-alt); color: var(--text-secondary);
+        }
+        .review-filter-btn:hover { border-color: var(--accent); }
+        .review-filter-btn.active { background: var(--accent); color: white; border-color: var(--accent); }
+
+        .review-question {
+            background: var(--bg-card-alt); border-radius: 10px; padding: 28px;
+            margin-bottom: 20px; border: 2px solid var(--border);
+        }
+        .review-question.rq-correct { border-left: 4px solid var(--success); }
+        .review-question.rq-incorrect { border-left: 4px solid var(--danger); }
+        .review-question .rq-header {
+            display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 12px; flex-wrap: wrap; gap: 8px;
+        }
+        .review-question .rq-number { font-weight: 700; color: var(--text-primary); }
+        .review-question .rq-result {
+            padding: 4px 12px; border-radius: 20px; font-size: 0.8em; font-weight: 600;
+        }
+        .rq-result.correct { background: var(--example-bg); color: var(--success); border: 1px solid var(--success); }
+        .rq-result.incorrect { background: var(--warning-bg); color: var(--danger-strong); border: 1px solid var(--danger); }
+        .review-explanation {
+            margin-top: 16px; padding: 16px; background: var(--explanation-bg);
+            border-radius: 6px; border-left: 4px solid var(--explanation-border);
+            font-size: 0.95em; line-height: 1.7; color: var(--text-body);
+        }
+        .review-explanation::before {
+            content: "💬 EXPLICAÇÃO"; display: block; font-weight: 700;
+            color: var(--accent); margin-bottom: 8px; font-size: 0.85em;
+        }
+
+        /* ==========================================
+           FOOTER
+           ========================================== */
+        .footer {
+            background: var(--bg-card); border-radius: 12px; padding: 32px;
+            margin-top: 40px; text-align: center; box-shadow: var(--shadow-md);
+            border-top: 3px solid var(--accent);
+        }
+        .footer-author { color: var(--text-body); font-weight: 500; }
+        .footer-author span { color: var(--accent); font-weight: 600; }
+
+        /* ==========================================
+           UTILITIES
+           ========================================== */
+        .separator { height: 1px; background: var(--border); margin: 32px 0; }
+        .hidden { display: none !important; }
+        strong { color: var(--text-body); font-weight: 700; }
+        p { margin-bottom: 16px; color: var(--text-secondary); }
+        ul, ol { margin-left: 24px; margin-bottom: 20px; }
+        li { margin-bottom: 8px; line-height: 1.7; }
+        code { background: var(--code-bg); padding: 3px 8px; border-radius: 4px; font-family: 'Consolas','Monaco',monospace; color: var(--code-text); font-size: 0.9em; }
+
+        /* ==========================================
+           RESPONSIVE
+           ========================================== */
+        @media (max-width: 768px) {
+            body { padding: 12px; }
+            .header { padding: 24px; padding-top: 48px; }
+            .header-controls { position: static; margin-bottom: 16px; justify-content: flex-end; }
+            .header h1 { font-size: 1.3em; }
+            .intro-card { padding: 24px; }
+            .exam-layout { grid-template-columns: 1fr; }
+            .nav-sidebar { position: static; order: -1; }
+            .nav-grid { grid-template-columns: repeat(10, 1fr); }
+            .question-area { padding: 24px; }
+            .timer-bar { flex-direction: column; gap: 8px; text-align: center; border-radius: 0; margin: -12px -12px 24px; position: sticky; top: 0; }
+            .timer-left, .timer-right { width: 100%; justify-content: center; }
+            .results-card { padding: 24px; }
+            .score-hero .score-value { font-size: 2.5em; }
+            .domain-result-row { grid-template-columns: 1fr; gap: 8px; }
+            .question-nav-buttons { flex-direction: column; }
+            .q-nav-btn { width: 100%; text-align: center; }
+            .review-question { padding: 20px; }
+        }
+
+        html[lang="en"] .review-explanation::before { content: "💬 EXPLANATION"; }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <!-- Header -->
+        <div class="header">
+            <div class="header-controls">
+                <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
+                <button class="toggle-btn" id="langToggle" onclick="toggleLanguage()" title="Toggle language">🇧🇷 PT</button>
+            </div>
+            <h1><span class="icon">📝</span> Simulado Final — AB-731 + AB-900</h1>
+            <p class="subtitle" id="headerSubtitle">Prova simulada combinando todas as áreas de ambas certificações</p>
+        </div>
+
+        <!-- ============ SCREEN: INTRO ============ -->
+        <div class="screen active" id="screen-intro">
+            <div class="intro-card">
+                <h2 id="introTitle">🎯 Simulado Final — Prova Completa</h2>
+                <p id="introDesc">Este simulado reproduz o formato real das provas de certificação Microsoft, combinando questões de <strong>AB-731 (AI Transformation Leader)</strong> e <strong>AB-900 (M365 Copilot & Agent Admin Fundamentals)</strong>. As questões são mais difíceis que os exercícios dos módulos e cobrem cenários realistas de negócio.</p>
+
+                <div class="exam-info-grid">
+                    <div class="exam-info-item">
+                        <div class="info-icon">❓</div>
+                        <div class="info-value">50</div>
+                        <div class="info-label" data-i18n="infoQuestions">Questões</div>
+                    </div>
+                    <div class="exam-info-item">
+                        <div class="info-icon">⏱️</div>
+                        <div class="info-value">45 min</div>
+                        <div class="info-label" data-i18n="infoTime">Tempo Limite</div>
+                    </div>
+                    <div class="exam-info-item">
+                        <div class="info-icon">🎯</div>
+                        <div class="info-value">700</div>
+                        <div class="info-label" data-i18n="infoPass">Pontuação para Aprovação (de 1000)</div>
+                    </div>
+                    <div class="exam-info-item">
+                        <div class="info-icon">📊</div>
+                        <div class="info-value">6</div>
+                        <div class="info-label" data-i18n="infoDomains">Domínios Avaliados</div>
+                    </div>
+                </div>
+
+                <div class="domain-breakdown">
+                    <h3 id="domainBreakdownTitle">📋 Domínios Avaliados</h3>
+                    <div id="domainTagsContainer"></div>
+                </div>
+
+                <div class="exam-rules">
+                    <h4 id="rulesTitle">⚠️ Regras do Simulado</h4>
+                    <ul id="rulesList">
+                        <li>O timer inicia ao clicar em "Iniciar Simulado" e não pode ser pausado</li>
+                        <li>Você pode navegar entre questões livremente e marcar questões para revisão</li>
+                        <li>Questões de múltipla seleção indicam quantas respostas selecionar</li>
+                        <li>Não há pontuação negativa — responda todas as questões</li>
+                        <li>Ao finalizar, você verá um relatório detalhado por domínio no estilo Microsoft</li>
+                        <li>O simulado é salvo automaticamente — você pode fechar e voltar</li>
+                    </ul>
+                </div>
+
+                <button class="start-btn" id="startBtn" onclick="startExam()">
+                    🚀 <span id="startBtnText">Iniciar Simulado</span>
+                </button>
+            </div>
+        </div>
+
+        <!-- ============ SCREEN: EXAM ============ -->
+        <div class="screen" id="screen-exam">
+            <!-- Timer bar -->
+            <div class="timer-bar" id="timerBar">
+                <div class="timer-left">
+                    <span class="timer-clock" id="timerClock">45:00</span>
+                    <span class="timer-progress-text" id="timerProgress">Questão 1 de 50</span>
+                </div>
+                <div class="timer-right">
+                    <button class="timer-btn" id="flagBtn" onclick="toggleFlag()">🚩 <span id="flagBtnText">Marcar</span></button>
+                    <button class="timer-btn submit-btn" id="submitBtn" onclick="confirmSubmit()">✅ <span id="submitBtnText">Finalizar</span></button>
+                </div>
+            </div>
+
+            <div class="exam-layout">
+                <!-- Question Area -->
+                <div class="question-area" id="questionArea">
+                    <!-- Rendered dynamically -->
+                </div>
+
+                <!-- Nav Sidebar -->
+                <div class="nav-sidebar">
+                    <h4 id="navTitle">Questões</h4>
+                    <div class="nav-grid" id="navGrid">
+                        <!-- Rendered dynamically -->
+                    </div>
+                    <div class="nav-legend" id="navLegend">
+                        <div class="nav-legend-item"><div class="nav-legend-dot" style="background:var(--nav-current)"></div> <span>Atual</span></div>
+                        <div class="nav-legend-item"><div class="nav-legend-dot" style="background:var(--nav-answered)"></div> <span>Respondida</span></div>
+                        <div class="nav-legend-item"><div class="nav-legend-dot" style="background:var(--nav-flagged);border:2px solid var(--nav-flagged)"></div> <span>Marcada</span></div>
+                        <div class="nav-legend-item"><div class="nav-legend-dot" style="background:var(--nav-unanswered)"></div> <span>Não respondida</span></div>
+                    </div>
+                    <div class="nav-summary" id="navSummary">
+                        <div><strong id="answeredCount">0</strong>/50 <span>respondidas</span></div>
+                        <div><strong id="flaggedCount">0</strong> <span>marcadas</span></div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Question nav buttons -->
+            <div class="question-nav-buttons" style="max-width:calc(100% - 224px);">
+                <button class="q-nav-btn prev" id="qPrevBtn" onclick="navigateQuestion(-1)">← <span id="prevText">Anterior</span></button>
+                <button class="q-nav-btn next" id="qNextBtn" onclick="navigateQuestion(1)"><span id="nextText">Próxima</span> →</button>
+            </div>
+        </div>
+
+        <!-- ============ SCREEN: RESULTS ============ -->
+        <div class="screen" id="screen-results">
+            <div class="results-card" id="resultsCard">
+                <!-- Rendered dynamically by renderScoreReport() -->
+            </div>
+
+            <!-- Review section -->
+            <div class="results-card" id="reviewCard" style="display:none;">
+                <h2 id="reviewTitle" style="color:var(--text-primary);margin-bottom:24px;">📖 Revisão das Questões</h2>
+                <div class="review-filters" id="reviewFilters">
+                    <!-- Rendered dynamically -->
+                </div>
+                <div id="reviewContainer">
+                    <!-- Rendered dynamically -->
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-author">
+            Desenvolvido por <span>Edenilson Bila</span> © 2026 sob Licença MIT<br>
+            <a href="https://github.com/edenilsonbila" target="_blank" rel="noopener noreferrer" style="color:var(--accent);text-decoration:none;font-weight:500;margin-top:8px;display:inline-block;">
+                🔗 GitHub: @edenilsonbila
+            </a>
+        </div>
+    </footer>
+
+    <script>
+        // ============================================================
+        // PLACEHOLDER: Phase 2-5 will be inserted here
+        // ============================================================
+
+        // --- TRANSLATIONS ---
+        const translations = {
+            pt: {
+                subtitle: "Prova simulada combinando todas as áreas de ambas certificações",
+                introTitle: "🎯 Simulado Final — Prova Completa",
+                introDesc: 'Este simulado reproduz o formato real das provas de certificação Microsoft, combinando questões de <strong>AB-731 (AI Transformation Leader)</strong> e <strong>AB-900 (M365 Copilot & Agent Admin Fundamentals)</strong>. As questões são mais difíceis que os exercícios dos módulos e cobrem cenários realistas de negócio.',
+                infoQuestions: "Questões", infoTime: "Tempo Limite", infoPass: "Pontuação para Aprovação (de 1000)", infoDomains: "Domínios Avaliados",
+                domainBreakdownTitle: "📋 Domínios Avaliados",
+                rulesTitle: "⚠️ Regras do Simulado",
+                rules: [
+                    'O timer inicia ao clicar em "Iniciar Simulado" e não pode ser pausado',
+                    "Você pode navegar entre questões livremente e marcar questões para revisão",
+                    "Questões de múltipla seleção indicam quantas respostas selecionar",
+                    "Não há pontuação negativa — responda todas as questões",
+                    "Ao finalizar, você verá um relatório detalhado por domínio no estilo Microsoft",
+                    "O simulado é salvo automaticamente — você pode fechar e voltar"
+                ],
+                startBtn: "Iniciar Simulado", resumeBtn: "Retomar Simulado",
+                flagBtn: "Marcar", flaggedBtn: "Marcada",
+                submitBtn: "Finalizar",
+                questionOf: "Questão {0} de {1}",
+                navTitle: "Questões",
+                legendCurrent: "Atual", legendAnswered: "Respondida", legendFlagged: "Marcada", legendUnanswered: "Não respondida",
+                answered: "respondidas", flagged: "marcadas",
+                prevBtn: "Anterior", nextBtn: "Próxima",
+                selectN: "Selecione {0} respostas",
+                confirmTitle: "Finalizar Simulado?",
+                confirmMsg: "Você respondeu {0} de {1} questões. Deseja finalizar?",
+                confirmYes: "Sim, Finalizar", confirmNo: "Voltar ao Simulado",
+                unansweredWarning: "⚠️ Você tem {0} questões não respondidas!",
+                // Results
+                scoreLabel: "SUA PONTUAÇÃO",
+                passed: "✅ APROVADO", failed: "❌ REPROVADO",
+                passMsg: "Parabéns! Você atingiu a pontuação mínima de 700.",
+                failMsg: "Você não atingiu a pontuação mínima de 700. Revise as áreas com baixo desempenho.",
+                statsCorrect: "Corretas", statsIncorrect: "Incorretas", statsUnanswered: "Não Respondidas", statsTime: "Tempo",
+                domainResultsTitle: "📊 Desempenho por Domínio",
+                recsTitle: "📋 Recomendações de Estudo",
+                recExcellent: "Excelente! Continue assim.",
+                recGood: "Bom desempenho. Revise os pontos específicos que errou.",
+                recNeedsWork: "Precisa melhorar. Estude novamente o módulo correspondente no minicurso.",
+                reviewBtn: "📖 Revisar Questões", retryBtn: "🔄 Refazer Simulado", backBtn: "← Voltar ao Resultado",
+                reviewTitle: "📖 Revisão das Questões",
+                filterAll: "Todas", filterCorrect: "✅ Corretas", filterIncorrect: "❌ Incorretas",
+                correct: "Correta", incorrect: "Incorreta",
+                yourAnswer: "Sua resposta", correctAnswer: "Resposta correta",
+                min: "min"
+            },
+            en: {
+                subtitle: "Simulated exam combining all areas from both certifications",
+                introTitle: "🎯 Final Simulation — Full Exam",
+                introDesc: 'This simulation reproduces the real format of Microsoft certification exams, combining questions from <strong>AB-731 (AI Transformation Leader)</strong> and <strong>AB-900 (M365 Copilot & Agent Admin Fundamentals)</strong>. Questions are harder than module exercises and cover realistic business scenarios.',
+                infoQuestions: "Questions", infoTime: "Time Limit", infoPass: "Passing Score (out of 1000)", infoDomains: "Domains Assessed",
+                domainBreakdownTitle: "📋 Assessed Domains",
+                rulesTitle: "⚠️ Simulation Rules",
+                rules: [
+                    'The timer starts when you click "Start Simulation" and cannot be paused',
+                    "You can navigate between questions freely and flag questions for review",
+                    "Multiple-select questions indicate how many answers to select",
+                    "There is no negative scoring — answer all questions",
+                    "Upon finishing, you will see a detailed domain report in Microsoft style",
+                    "The simulation is saved automatically — you can close and return"
+                ],
+                startBtn: "Start Simulation", resumeBtn: "Resume Simulation",
+                flagBtn: "Flag", flaggedBtn: "Flagged",
+                submitBtn: "Submit",
+                questionOf: "Question {0} of {1}",
+                navTitle: "Questions",
+                legendCurrent: "Current", legendAnswered: "Answered", legendFlagged: "Flagged", legendUnanswered: "Unanswered",
+                answered: "answered", flagged: "flagged",
+                prevBtn: "Previous", nextBtn: "Next",
+                selectN: "Select {0} answers",
+                confirmTitle: "Submit Simulation?",
+                confirmMsg: "You answered {0} of {1} questions. Submit now?",
+                confirmYes: "Yes, Submit", confirmNo: "Back to Simulation",
+                unansweredWarning: "⚠️ You have {0} unanswered questions!",
+                scoreLabel: "YOUR SCORE",
+                passed: "✅ PASSED", failed: "❌ FAILED",
+                passMsg: "Congratulations! You reached the minimum score of 700.",
+                failMsg: "You did not reach the minimum score of 700. Review the low-performing areas.",
+                statsCorrect: "Correct", statsIncorrect: "Incorrect", statsUnanswered: "Unanswered", statsTime: "Time",
+                domainResultsTitle: "📊 Performance by Domain",
+                recsTitle: "📋 Study Recommendations",
+                recExcellent: "Excellent! Keep it up.",
+                recGood: "Good performance. Review the specific points you missed.",
+                recNeedsWork: "Needs improvement. Study the corresponding module in the minicourse again.",
+                reviewBtn: "📖 Review Questions", retryBtn: "🔄 Retry Simulation", backBtn: "← Back to Results",
+                reviewTitle: "📖 Question Review",
+                filterAll: "All", filterCorrect: "✅ Correct", filterIncorrect: "❌ Incorrect",
+                correct: "Correct", incorrect: "Incorrect",
+                yourAnswer: "Your answer", correctAnswer: "Correct answer",
+                min: "min"
+            }
+        };
+
+        let currentLang = 'pt';
+
+        // ============================================================
+        // EXAM DOMAINS
+        // ============================================================
+        const EXAM_DOMAINS = [
+            { id: 0, name: "Valor de Negócio da IA Generativa", nameEn: "Business Value of Generative AI", cert: "AB-731", weight: 18, color: "#6366f1", icon: "🧠", questions: 9 },
+            { id: 1, name: "Apps e Serviços de IA da Microsoft", nameEn: "Microsoft AI Apps & Services", cert: "AB-731", weight: 18, color: "#8b5cf6", icon: "🤖", questions: 9 },
+            { id: 2, name: "Implementação e Adoção de IA", nameEn: "AI Implementation & Adoption", cert: "AB-731", weight: 10, color: "#a855f7", icon: "🚀", questions: 5 },
+            { id: 3, name: "Recursos e Objetos do M365", nameEn: "M365 Core Features & Objects", cert: "AB-900", weight: 16, color: "#0ea5e9", icon: "☁️", questions: 8 },
+            { id: 4, name: "Proteção de Dados e Governança", nameEn: "Data Protection & Governance", cert: "AB-900", weight: 20, color: "#06b6d4", icon: "🛡️", questions: 10 },
+            { id: 5, name: "Admin de Copilot e Agentes", nameEn: "Copilot & Agent Administration", cert: "AB-900", weight: 18, color: "#14b8a6", icon: "⚙️", questions: 9 }
+        ];
+
+        // ============================================================
+        // EXAM QUESTIONS — 50 questions (harder, scenario-based, exam-faithful)
+        // ============================================================
+        const EXAM_QUESTIONS = [
+            // ===== DOMAIN 0: Valor de Negócio da IA Generativa (AB-731) — 9 questions =====
+            {
+                domain: 0, type: "single",
+                scenario: "Uma empresa de seguros está avaliando a adoção de IA generativa para automatizar a análise de sinistros. O CTO precisa apresentar ao board os riscos e desafios antes de aprovar o investimento.",
+                question: "Qual dos seguintes NÃO é um desafio reconhecido da IA generativa que o CTO deve incluir na apresentação?",
+                options: [
+                    "Fabricações (hallucinations) — o modelo pode gerar informações falsas com alta confiança",
+                    "Viés nos dados de treinamento que pode gerar discriminação em análises de sinistros",
+                    "Incapacidade de processar e gerar texto em linguagem natural",
+                    "Riscos de privacidade e segurança de dados sensíveis dos segurados"
+                ],
+                correct: 2,
+                explanation: "<strong>Processar linguagem natural é a capacidade central da IA generativa!</strong><br><br>✅ A IA generativa é excelente em processar e gerar texto em linguagem natural — isso não é um desafio, é sua principal competência<br><br>❌ Fabricações: desafio real — o modelo pode inventar dados de sinistros<br>❌ Viés: desafio real — dados históricos podem conter discriminação<br>❌ Privacidade: desafio real — dados de segurados são sensíveis (LGPD/GDPR)"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "Uma rede hospitalar quer implementar IA generativa para auxiliar médicos na elaboração de laudos radiológicos. O sistema deve consultar protocolos internos e guidelines atualizados para evitar erros.",
+                question: "Qual abordagem tecnológica é MAIS adequada para garantir que a IA baseie suas respostas nos protocolos internos do hospital?",
+                options: [
+                    "Fine-tuning do modelo com dados públicos da Wikipedia sobre radiologia",
+                    "Aumentar significativamente o número de tokens no prompt para incluir mais contexto",
+                    "RAG (Retrieval-Augmented Generation) conectado à base de conhecimento interna do hospital",
+                    "Usar um modelo pré-treinado sem modificações e confiar em seu conhecimento base"
+                ],
+                correct: 2,
+                explanation: "<strong>RAG — Retrieval-Augmented Generation!</strong><br><br>✅ RAG busca nos documentos reais da organização e ancora as respostas em dados confiáveis e atualizados<br><br>❌ Fine-tuning com dados públicos: não resolve — precisa dos protocolos INTERNOS, não dados genéricos da Wikipedia<br>❌ Mais tokens: aumenta custo sem garantir acesso aos protocolos corretos; tem limite de contexto<br>❌ Modelo pré-treinado puro: pode fabricar informações médicas perigosas e não conhece protocolos internos<br><br>🔑 RAG = a prova com consulta da IA. Busca → Aumenta contexto → Gera resposta fundamentada"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Um modelo de IA generativa gerou um contrato jurídico com cláusulas que parecem juridicamente válidas mas contêm referências a leis que não existem. Esse fenômeno é conhecido como:",
+                options: [
+                    "Underfitting — o modelo não aprendeu suficientemente os dados jurídicos",
+                    "Fabrication (hallucination) — o modelo gerou conteúdo falso com aparência de verdadeiro",
+                    "Bias — o modelo tem viés contra determinadas cláusulas contratuais",
+                    "Overfitting — o modelo memorizou demais os dados de treinamento jurídico"
+                ],
+                correct: 1,
+                explanation: "<strong>Fabrication / Hallucination!</strong><br><br>✅ Fabricações são informações geradas pela IA que parecem corretas e confiantes mas são completamente inventadas<br><br>❌ Underfitting: conceito de ML — modelo que não aprendeu padrões suficientes<br>❌ Bias: tendência sistemática, não invenção de fatos específicos<br>❌ Overfitting: conceito de ML — modelo que memoriza dados de treino e não generaliza"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "O CFO de uma empresa de tecnologia precisa estimar os custos operacionais de usar Azure OpenAI Service para um chatbot de atendimento ao cliente que processará aproximadamente 100.000 interações por mês.",
+                question: "Qual é o principal fator que determinará o custo mensal do serviço?",
+                options: [
+                    "O número de usuários registrados na plataforma de atendimento",
+                    "O número total de tokens processados (input + output) em todas as interações",
+                    "O horário de pico em que os clientes mais utilizam o chatbot",
+                    "O número de agentes humanos que também atendem simultaneamente"
+                ],
+                correct: 1,
+                explanation: "<strong>Tokens processados!</strong><br><br>✅ Azure OpenAI Service cobra por token processado — tanto de entrada (prompt) quanto de saída (resposta gerada). Mais interações = mais tokens = mais custo<br><br>❌ Usuários registrados: não é fator direto de custo de processamento de IA<br>❌ Horário de pico: não afeta o preço por token (não tem tarifa diferenciada por horário)<br>❌ Agentes humanos: custo de pessoal, não de API de IA<br><br>🔑 TOKEN = TÁXI — cobra por quilômetro (token) rodado, não por quantas pessoas estão esperando!"
+            },
+            {
+                domain: 0, type: "multi",
+                question: "Uma empresa farmacêutica quer usar IA generativa para acelerar pesquisas. Quais são desafios REAIS que devem ser considerados? (Selecione 2)",
+                options: [
+                    "O modelo pode fabricar resultados de estudos clínicos que parecem legítimos",
+                    "A IA generativa não consegue processar dados tabulares ou estruturados",
+                    "Dados de pacientes usados no treinamento podem violar regulamentações de privacidade",
+                    "O modelo é incapaz de gerar texto técnico-científico"
+                ],
+                correct: [0, 2],
+                explanation: "<strong>Fabricações e Privacidade são desafios reais!</strong><br><br>✅ Fabricações: a IA pode gerar dados de pesquisa falsos que parecem legítimos — perigoso em pesquisa farmacêutica<br>✅ Privacidade: dados de pacientes são regulados por HIPAA/LGPD — usar no treinamento pode violar leis<br><br>❌ Dados tabulares: modelos modernos processam dados estruturados sim<br>❌ Texto técnico: LLMs são excelentes em gerar texto técnico-científico"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "Uma consultoria quer que sua IA interna entenda a terminologia específica de auditoria financeira e as normas IFRS de forma nativa, sem necessidade de fornecer contexto em cada prompt.",
+                question: "Qual abordagem é MAIS adequada para que o modelo internalize esse conhecimento especializado?",
+                options: [
+                    "Usar RAG para buscar normas IFRS a cada consulta",
+                    "Fine-tuning do modelo base com dados de auditoria e normas IFRS",
+                    "Criar prompts muito longos com todas as normas incluídas",
+                    "Usar um modelo pré-treinado genérico sem adaptações"
+                ],
+                correct: 1,
+                explanation: "<strong>Fine-tuning!</strong><br><br>✅ Fine-tuning ajusta os pesos do modelo com dados específicos do domínio — o modelo INTERNALIZA o conhecimento e não precisa de contexto extra a cada consulta<br><br>❌ RAG: funciona mas exige busca a cada consulta — a questão pede internalização SEM contexto adicional<br>❌ Prompts longos: limitados pelo tamanho máximo de contexto e aumentam custo a cada chamada<br>❌ Modelo genérico: não conhece terminologia específica de auditoria/IFRS<br><br>🔑 PRÉ-TREINADO = generalista | FINE-TUNED = especialista"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Em prompt engineering, qual técnica consiste em fornecer ao modelo 2-3 exemplos de input/output desejado dentro do próprio prompt para guiar o formato e estilo da resposta?",
+                options: [
+                    "Zero-shot prompting — sem nenhum exemplo",
+                    "Chain-of-thought prompting — raciocínio passo a passo",
+                    "Few-shot prompting — poucos exemplos no prompt",
+                    "Temperature tuning — ajuste da criatividade do modelo"
+                ],
+                correct: 2,
+                explanation: "<strong>Few-shot prompting!</strong><br><br>✅ Few-shot inclui 2-3 exemplos de input→output no prompt para que o modelo entenda o padrão desejado<br><br>❌ Zero-shot: é quando NÃO se fornece exemplos — apenas a instrução<br>❌ Chain-of-thought: pede ao modelo que raciocine passo a passo, não usa exemplos de formato<br>❌ Temperature: é um parâmetro de configuração do modelo, não uma técnica de prompt<br><br>🔑 Zero = 0 exemplos | Few = poucos exemplos | Many = muitos exemplos"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "Uma empresa de e-commerce está considerando três abordagens de IA: (A) usar um modelo pré-treinado diretamente, (B) fine-tuning de um modelo existente, ou (C) treinar um modelo do zero com dados proprietários.",
+                question: "Qual é a ordem CORRETA do menor para o maior investimento de recursos (dados, tempo e custo)?",
+                options: [
+                    "C → B → A (modelo do zero é mais barato que pré-treinado)",
+                    "A → B → C (pré-treinado < fine-tuning < treinar do zero)",
+                    "B → A → C (fine-tuning é sempre a opção mais barata)",
+                    "A → C → B (fine-tuning é mais caro que treinar do zero)"
+                ],
+                correct: 1,
+                explanation: "<strong>Pré-treinado < Fine-tuning < Do Zero!</strong><br><br>✅ A ordem lógica de investimento crescente:<br>1️⃣ <strong>Pré-treinado (A):</strong> menor custo — modelo pronto, só usa via API<br>2️⃣ <strong>Fine-tuning (B):</strong> custo médio — ajusta modelo existente com dados do domínio<br>3️⃣ <strong>Do zero (C):</strong> maior custo — requer enorme volume de dados, GPUs e tempo<br><br>🔑 Na prova, lembre: quanto mais customização → mais custo"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Qual conceito descreve a prática de fornecer dados atualizados e específicos ao modelo de IA no momento da inferência para melhorar a qualidade e precisão das respostas?",
+                options: [
+                    "Transfer Learning",
+                    "Grounding",
+                    "Tokenização",
+                    "Backpropagation"
+                ],
+                correct: 1,
+                explanation: "<strong>Grounding!</strong><br><br>✅ Grounding é ancorar as respostas da IA em dados reais e atualizados, fornecidos no momento da consulta. RAG é uma técnica de grounding.<br><br>❌ Transfer Learning: transferir conhecimento entre modelos (conceito de ML)<br>❌ Tokenização: processo de dividir texto em tokens para processamento<br>❌ Backpropagation: algoritmo de treinamento de redes neurais"
+            },
+
+            // ===== DOMAIN 1: Apps e Serviços de IA da Microsoft (AB-731) — 9 questions =====
+            {
+                domain: 1, type: "single",
+                scenario: "Um gerente de marketing quer que a IA analise dados de vendas no Excel, crie apresentações no PowerPoint e resuma threads longas no Teams — tudo dentro das ferramentas que já usa diariamente.",
+                question: "Qual solução da Microsoft atende a TODOS esses cenários?",
+                options: [
+                    "Microsoft Copilot (versão gratuita no Bing)",
+                    "Microsoft 365 Copilot (integrado às apps do Microsoft 365)",
+                    "Azure OpenAI Service",
+                    "Copilot Studio"
+                ],
+                correct: 1,
+                explanation: "<strong>Microsoft 365 Copilot!</strong><br><br>✅ M365 Copilot é integrado nativamente ao Word, Excel, PowerPoint, Teams, Outlook — exatamente o cenário descrito<br><br>❌ Copilot gratuito (Bing): não tem acesso aos dados corporativos nem integração com apps M365<br>❌ Azure OpenAI: é uma plataforma de API para desenvolvedores, não uma ferramenta de produtividade<br>❌ Copilot Studio: é para CRIAR agentes/bots personalizados, não para produtividade pessoal"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual componente do ecossistema Microsoft permite que o Copilot acesse dados organizacionais como emails, calendários, documentos e pessoas para fornecer respostas contextualizadas?",
+                options: [
+                    "Azure Active Directory (Entra ID)",
+                    "Microsoft Graph",
+                    "SharePoint Online",
+                    "Microsoft Purview"
+                ],
+                correct: 1,
+                explanation: "<strong>Microsoft Graph!</strong><br><br>✅ Microsoft Graph é a API unificada que conecta dados de todo o ecossistema M365. O Copilot usa o Graph para acessar emails, calendários, documentos, contatos e muito mais<br><br>❌ Entra ID: gerencia identidade e acesso, não dados de produtividade<br>❌ SharePoint: é UMA das fontes de dados — o Graph conecta TODAS<br>❌ Purview: é para governança e compliance de dados, não acesso do Copilot"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Uma empresa de logística quer criar um assistente virtual que responda perguntas sobre políticas de frete usando documentos internos, e que possa ser publicado no Teams e no site da empresa.",
+                question: "Qual ferramenta da Microsoft é MAIS adequada para criar esse assistente SEM necessidade de código?",
+                options: [
+                    "Azure OpenAI Service com desenvolvimento customizado",
+                    "Microsoft 365 Copilot com plugins",
+                    "Copilot Studio (anteriormente Power Virtual Agents)",
+                    "Azure Bot Framework SDK"
+                ],
+                correct: 2,
+                explanation: "<strong>Copilot Studio!</strong><br><br>✅ Copilot Studio permite criar agentes/assistentes personalizados com interface low-code/no-code, conectar a fontes de dados internas e publicar em múltiplos canais (Teams, web, etc.)<br><br>❌ Azure OpenAI: requer desenvolvimento de código customizado<br>❌ M365 Copilot: é para produtividade pessoal, não para criar assistentes para clientes<br>❌ Bot Framework SDK: requer desenvolvimento de código avançado"
+            },
+            {
+                domain: 1, type: "multi",
+                question: "Quais são funcionalidades do Microsoft Foundry (anteriormente Azure AI Studio)? (Selecione 2)",
+                options: [
+                    "Gerenciar licenças de usuários do Microsoft 365",
+                    "Criar, treinar e implantar modelos de IA com interface unificada",
+                    "Orquestrar fluxos de prompt com avaliação e monitoramento",
+                    "Substituir o Microsoft Entra ID para autenticação de usuários"
+                ],
+                correct: [1, 2],
+                explanation: "<strong>Criar/implantar modelos e orquestrar prompts!</strong><br><br>✅ Foundry é a plataforma unificada para desenvolvimento de IA — permite criar, treinar, avaliar e implantar modelos<br>✅ Foundry inclui prompt flow para orquestrar fluxos de prompt com avaliação e monitoramento integrados<br><br>❌ Gerenciar licenças: isso é feito no Microsoft 365 Admin Center<br>❌ Substituir Entra ID: Foundry usa Entra ID para autenticação, não o substitui"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Um desenvolvedor está construindo uma aplicação que precisa extrair texto de documentos digitalizados (OCR), detectar rostos em imagens e traduzir texto para 100 idiomas.",
+                question: "Qual serviço Azure agrupa TODOS esses recursos de IA pré-construídos?",
+                options: [
+                    "Azure Machine Learning",
+                    "Azure AI Services (anteriormente Cognitive Services)",
+                    "Azure OpenAI Service",
+                    "Microsoft Foundry"
+                ],
+                correct: 1,
+                explanation: "<strong>Azure AI Services!</strong><br><br>✅ Azure AI Services (antigo Cognitive Services) agrupa APIs pré-construídas de Visão (OCR, Face), Fala, Linguagem (Tradutor) e Decisão — exatamente o cenário descrito<br><br>❌ Azure ML: é para treinar seus próprios modelos de ML, não APIs pré-construídas<br>❌ Azure OpenAI: é especificamente para modelos de linguagem generativa (GPT, DALL-E)<br>❌ Foundry: é uma plataforma de desenvolvimento de IA, não os serviços cognitivos em si"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual recurso do Microsoft 365 Copilot foi projetado para realizar pesquisas aprofundadas na web e em dados organizacionais, gerando relatórios detalhados com referências?",
+                options: [
+                    "Copilot Studio",
+                    "Copilot Researcher",
+                    "Copilot Analyst",
+                    "Microsoft Graph Explorer"
+                ],
+                correct: 1,
+                explanation: "<strong>Copilot Researcher!</strong><br><br>✅ Researcher é o recurso do M365 Copilot especializado em pesquisas aprofundadas — busca na web e em dados organizacionais, gera relatórios com citações<br><br>❌ Copilot Studio: é para CRIAR agentes, não para pesquisar<br>❌ Copilot Analyst: é focado em análise de dados/números, não pesquisa qualitativa<br>❌ Graph Explorer: é uma ferramenta de desenvolvedor para testar APIs do Graph"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Uma organização quer ESTENDER as capacidades do Microsoft 365 Copilot para acessar dados de seu sistema CRM interno (Salesforce). Qual abordagem é recomendada?",
+                options: [
+                    "Substituir o Salesforce pelo Dynamics 365",
+                    "Criar um plugin/conector para o Microsoft 365 Copilot",
+                    "Usar Azure OpenAI Service separadamente do Copilot",
+                    "Migrar todos os dados do CRM para o SharePoint"
+                ],
+                correct: 1,
+                explanation: "<strong>Plugin/Conector para M365 Copilot!</strong><br><br>✅ O M365 Copilot suporta extensibilidade via plugins e conectores que permitem acessar dados de sistemas externos (CRM, ERP, etc.) sem substituí-los<br><br>❌ Substituir Salesforce: é uma mudança massiva e desnecessária<br>❌ Azure OpenAI separado: perde a integração com o ecossistema M365<br>❌ Migrar para SharePoint: dados de CRM têm estrutura diferente de documentos"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Uma empresa está avaliando o conceito 'Build, Buy, or Extend' para sua estratégia de IA.",
+                question: "Qual cenário representa a abordagem 'Extend' (estender)?",
+                options: [
+                    "Desenvolver um modelo de IA do zero usando Azure Machine Learning",
+                    "Adquirir uma licença do Microsoft 365 Copilot para produtividade",
+                    "Adicionar plugins personalizados ao Microsoft 365 Copilot para acessar dados internos",
+                    "Contratar uma empresa de consultoria para operar a IA"
+                ],
+                correct: 2,
+                explanation: "<strong>Extend = adicionar funcionalidades a um produto existente!</strong><br><br>✅ Estender o Copilot com plugins/conectores personalizados é o exemplo clássico de 'Extend'<br><br>❌ Modelo do zero: isso é 'Build' — construir do zero<br>❌ Licença do Copilot: isso é 'Buy' — comprar uma solução pronta<br>❌ Contratar consultoria: isso é outsourcing, não está no framework Build/Buy/Extend<br><br>🔑 Build = construir do zero | Buy = comprar pronto | Extend = personalizar o existente"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual serviço da Microsoft permite buscar informações em grandes volumes de dados não estruturados usando IA para indexação semântica, sendo frequentemente usado junto com RAG?",
+                options: [
+                    "Microsoft Purview",
+                    "Azure AI Search (anteriormente Cognitive Search)",
+                    "SharePoint Search",
+                    "Microsoft Defender for Cloud"
+                ],
+                correct: 1,
+                explanation: "<strong>Azure AI Search!</strong><br><br>✅ Azure AI Search oferece indexação semântica alimentada por IA, vetorização e busca híbrida — é o componente de 'Retrieval' mais usado em arquiteturas RAG<br><br>❌ Purview: é para governança e compliance, não busca semântica<br>❌ SharePoint Search: busca básica em documentos do SharePoint, não tem capacidades de IA avançada<br>❌ Defender for Cloud: é para segurança de infraestrutura cloud"
+            },
+
+            // ===== DOMAIN 2: Implementação e Adoção de IA (AB-731) — 5 questions =====
+            {
+                domain: 2, type: "single",
+                scenario: "Uma multinacional está criando um framework de governança de IA. O CISO insiste que toda implementação de IA deve passar por revisão ética antes do deployment.",
+                question: "Qual estrutura organizacional da Microsoft é recomendada para garantir revisão ética e responsável de projetos de IA?",
+                options: [
+                    "Criar um AI Center of Excellence (CoE) apenas técnico",
+                    "Formar um AI Council multidisciplinar com stakeholders de ética, jurídico, TI e negócios",
+                    "Delegar toda responsabilidade ética ao time de desenvolvimento",
+                    "Usar apenas as configurações padrão do Azure sem revisão adicional"
+                ],
+                correct: 1,
+                explanation: "<strong>AI Council multidisciplinar!</strong><br><br>✅ A Microsoft recomenda um AI Council com representantes de múltiplas áreas (ética, jurídico, TI, negócios, compliance) para revisar e aprovar implementações de IA<br><br>❌ CoE apenas técnico: falta a perspectiva ética e de negócios<br>❌ Delegar ao time de dev: desenvolvedores sozinhos não têm visão completa de riscos éticos/jurídicos<br>❌ Configurações padrão: não substituem revisão humana de questões éticas"
+            },
+            {
+                domain: 2, type: "multi",
+                question: "Quais são princípios do framework de IA Responsável da Microsoft? (Selecione 2)",
+                options: [
+                    "Maximizar lucro em todas as implementações",
+                    "Fairness (Equidade) — garantir que a IA não discrimine",
+                    "Reliability & Safety (Confiabilidade e Segurança)",
+                    "Velocidade de deployment acima de tudo"
+                ],
+                correct: [1, 2],
+                explanation: "<strong>Fairness e Reliability & Safety!</strong><br><br>✅ Os 6 princípios de IA Responsável da Microsoft são:<br>1️⃣ Fairness (Equidade)<br>2️⃣ Reliability & Safety (Confiabilidade e Segurança)<br>3️⃣ Privacy & Security (Privacidade e Segurança)<br>4️⃣ Inclusiveness (Inclusão)<br>5️⃣ Transparency (Transparência)<br>6️⃣ Accountability (Responsabilidade)<br><br>❌ Maximizar lucro e velocidade de deployment NÃO são princípios de IA Responsável"
+            },
+            {
+                domain: 2, type: "single",
+                scenario: "Uma empresa de 5.000 funcionários quer adotar o Microsoft 365 Copilot. O plano de adoção prevê um grupo inicial de 200 'early adopters' que ajudarão a evangelizar a ferramenta.",
+                question: "Como é chamado esse grupo no framework de adoção da Microsoft?",
+                options: [
+                    "AI Council — comitê de governança de IA",
+                    "Champions Program — programa de campeões/evangelistas",
+                    "Center of Excellence (CoE) — centro de excelência",
+                    "Executive Sponsors — patrocinadores executivos"
+                ],
+                correct: 1,
+                explanation: "<strong>Champions Program!</strong><br><br>✅ O Champions Program identifica early adopters entusiastas que usam a ferramenta primeiro, compartilham melhores práticas e ajudam colegas na adoção<br><br>❌ AI Council: é o comitê de governança/ética, não evangelistas<br>❌ CoE: é o time técnico de referência, não os usuários de negócio<br>❌ Executive Sponsors: são os líderes que aprovam/financiam, não os evangelistas do dia a dia"
+            },
+            {
+                domain: 2, type: "single",
+                question: "Qual modelo de licenciamento do Microsoft 365 Copilot é mais adequado para uma equipe de 20 consultores que usam a ferramenta intensivamente todos os dias?",
+                options: [
+                    "Pay-as-you-go (pagar por uso, por mensagem)",
+                    "Licença mensal por usuário (seat-based)",
+                    "Licença gratuita incluída no Microsoft 365 E3",
+                    "Licença única de compra perpétua"
+                ],
+                correct: 1,
+                explanation: "<strong>Licença mensal por usuário!</strong><br><br>✅ Para uso intensivo e diário, a licença mensal por usuário (seat-based) é mais econômica e previsível que pay-as-you-go<br><br>❌ Pay-as-you-go: melhor para uso esporádico/ocasional, não para uso diário intensivo (custo imprevisível)<br>❌ Gratuita no E3: o Copilot NÃO está incluído gratuitamente no E3 — é uma licença add-on<br>❌ Compra perpétua: o Copilot não oferece modelo de licença perpétua"
+            },
+            {
+                domain: 2, type: "single",
+                question: "Ao planejar a adoção de IA em uma organização, qual é considerada a MAIOR barreira para adoção bem-sucedida?",
+                options: [
+                    "Custo das licenças de software",
+                    "Limitações técnicas da infraestrutura de rede",
+                    "Resistência à mudança e falta de habilidades dos usuários (change management)",
+                    "Incompatibilidade entre navegadores web"
+                ],
+                correct: 2,
+                explanation: "<strong>Change management — resistência à mudança!</strong><br><br>✅ Estudos consistentemente mostram que o fator humano (resistência, medo, falta de skills) é a maior barreira para adoção de IA, não questões técnicas<br><br>❌ Custo: é um fator, mas não o maior — muitas vezes o ROI justifica<br>❌ Infraestrutura: para soluções cloud como M365 Copilot, é raramente um bloqueio<br>❌ Navegadores: irrelevante para soluções SaaS modernas"
+            },
+
+            // ===== DOMAIN 3: Recursos e Objetos do M365 (AB-900) — 8 questions =====
+            {
+                domain: 3, type: "single",
+                scenario: "Um administrador de TI precisa gerenciar centralizadamente as configurações de email, SharePoint, Teams e segurança para os 2.000 funcionários da empresa.",
+                question: "Qual portal centralizado permite gerenciar TODOS esses serviços do Microsoft 365?",
+                options: [
+                    "Azure Portal (portal.azure.com)",
+                    "Microsoft 365 Admin Center (admin.microsoft.com)",
+                    "Microsoft Entra Admin Center",
+                    "Microsoft Purview Compliance Portal"
+                ],
+                correct: 1,
+                explanation: "<strong>Microsoft 365 Admin Center!</strong><br><br>✅ O M365 Admin Center é o portal centralizado para gerenciar usuários, licenças e todos os serviços M365 (Exchange, SharePoint, Teams, etc.)<br><br>❌ Azure Portal: para serviços de infraestrutura Azure (VMs, Storage, etc.)<br>❌ Entra Admin Center: especificamente para identidade e acesso (AAD)<br>❌ Purview: especificamente para compliance e governança de dados"
+            },
+            {
+                domain: 3, type: "single",
+                question: "Qual princípio de segurança assume que nenhum usuário ou dispositivo deve ser automaticamente confiável, mesmo estando dentro da rede corporativa?",
+                options: [
+                    "Defense in Depth — múltiplas camadas de segurança",
+                    "Least Privilege — mínimo privilégio necessário",
+                    "Zero Trust — nunca confiar, sempre verificar",
+                    "Network Perimeter Security — segurança no perímetro da rede"
+                ],
+                correct: 2,
+                explanation: "<strong>Zero Trust!</strong><br><br>✅ Zero Trust assume que violações podem acontecer a qualquer momento e exige verificação explícita de toda identidade, dispositivo e requisição<br><br>❌ Defense in Depth: é sobre múltiplas camadas, não sobre desconfiança por padrão<br>❌ Least Privilege: é um componente do Zero Trust, não o princípio completo<br>❌ Network Perimeter: é o modelo ANTIGO que o Zero Trust veio SUBSTITUIR"
+            },
+            {
+                domain: 3, type: "single",
+                scenario: "Uma empresa quer que funcionários com dispositivos não-gerenciados (BYOD) só acessem o email corporativo se o dispositivo tiver PIN e criptografia habilitados.",
+                question: "Qual recurso do Microsoft Entra implementa esse requisito?",
+                options: [
+                    "Microsoft Defender for Endpoint",
+                    "Conditional Access Policies (Políticas de Acesso Condicional)",
+                    "Microsoft Intune App Protection",
+                    "Azure Information Protection"
+                ],
+                correct: 1,
+                explanation: "<strong>Conditional Access!</strong><br><br>✅ Conditional Access permite criar regras 'se-então': SE o dispositivo não atende aos requisitos (PIN, criptografia) → ENTÃO bloqueia ou restringe o acesso<br><br>❌ Defender for Endpoint: detecta ameaças, não controla acesso baseado em compliance<br>❌ Intune App Protection: protege dados dentro dos apps, mas a política de acesso é do Conditional Access<br>❌ Azure Information Protection: classifica e protege documentos, não controla acesso a serviços"
+            },
+            {
+                domain: 3, type: "single",
+                question: "Uma empresa precisa garantir que administradores de TI só tenham acesso privilegiado quando realmente necessário, e que esse acesso expire automaticamente após 8 horas. Qual recurso é MAIS adequado?",
+                options: [
+                    "Conditional Access com restrição por horário",
+                    "Microsoft Defender XDR com auto-investigation",
+                    "Privileged Identity Management (PIM) com ativação Just-In-Time",
+                    "Azure AD Identity Protection com detecção de risco"
+                ],
+                correct: 2,
+                explanation: "<strong>PIM — Privileged Identity Management!</strong><br><br>✅ PIM permite ativação Just-In-Time (JIT) de roles administrativos com tempo de expiração definido — acesso privilegiado temporário e auditado<br><br>❌ Conditional Access: controla QUANDO/COMO acessar, não temporalidade de roles administrativos<br>❌ Defender XDR: investiga ameaças, não gerencia privilégios<br>❌ Identity Protection: detecta riscos de identidade, não gerencia ativação temporária de roles"
+            },
+            {
+                domain: 3, type: "multi",
+                question: "Quais serviços fazem parte do Microsoft Defender XDR (Extended Detection and Response)? (Selecione 2)",
+                options: [
+                    "Microsoft Defender for Endpoint (proteção de dispositivos)",
+                    "Microsoft Purview DLP (prevenção de perda de dados)",
+                    "Microsoft Defender for Office 365 (proteção de email)",
+                    "Microsoft Entra Conditional Access"
+                ],
+                correct: [0, 2],
+                explanation: "<strong>Defender for Endpoint e Defender for Office 365!</strong><br><br>✅ Microsoft Defender XDR integra: Defender for Endpoint, Defender for Office 365, Defender for Identity e Defender for Cloud Apps<br><br>❌ Purview DLP: é parte do Purview (compliance), não do Defender XDR<br>❌ Conditional Access: é parte do Entra ID (identidade), não do Defender XDR<br><br>🔑 Defender XDR = proteção UNIFICADA contra ameaças em endpoints, email, identidade e apps cloud"
+            },
+            {
+                domain: 3, type: "single",
+                question: "Qual é o serviço de identidade e acesso baseado em nuvem da Microsoft que substituiu o Azure Active Directory?",
+                options: [
+                    "Microsoft Purview",
+                    "Microsoft Entra ID",
+                    "Microsoft Intune",
+                    "Microsoft Sentinel"
+                ],
+                correct: 1,
+                explanation: "<strong>Microsoft Entra ID!</strong><br><br>✅ Microsoft Entra ID é o novo nome do Azure Active Directory (Azure AD). É o serviço de identidade e acesso da Microsoft para autenticação, SSO, MFA e Conditional Access<br><br>❌ Purview: governança de dados e compliance<br>❌ Intune: gerenciamento de dispositivos (MDM/MAM)<br>❌ Sentinel: SIEM/SOAR — monitoramento e resposta a incidentes de segurança"
+            },
+            {
+                domain: 3, type: "single",
+                scenario: "Um administrador precisa configurar o Exchange Online para que emails externos com anexos .exe sejam automaticamente bloqueados antes de chegarem às caixas de entrada dos usuários.",
+                question: "Em qual admin center especializado essa configuração deve ser feita?",
+                options: [
+                    "Microsoft 365 Admin Center geral",
+                    "Exchange Admin Center (admin do Exchange)",
+                    "Microsoft Entra Admin Center",
+                    "SharePoint Admin Center"
+                ],
+                correct: 1,
+                explanation: "<strong>Exchange Admin Center!</strong><br><br>✅ Configurações específicas de email (regras de transporte, filtros de anexo, anti-spam) são gerenciadas no Exchange Admin Center, que é o admin center especializado para Exchange Online<br><br>❌ M365 Admin Center geral: permite tarefas básicas mas configurações avançadas de email ficam no Exchange Admin Center<br>❌ Entra Admin Center: gerencia identidade, não regras de email<br>❌ SharePoint Admin Center: gerencia sites e documentos, não email"
+            },
+            {
+                domain: 3, type: "single",
+                question: "Qual mecanismo permite que um usuário faça login uma única vez e acesse automaticamente múltiplos aplicativos (SharePoint, Teams, Outlook) sem precisar digitar a senha novamente?",
+                options: [
+                    "Multi-Factor Authentication (MFA)",
+                    "Single Sign-On (SSO)",
+                    "Privileged Identity Management (PIM)",
+                    "Role-Based Access Control (RBAC)"
+                ],
+                correct: 1,
+                explanation: "<strong>Single Sign-On (SSO)!</strong><br><br>✅ SSO permite autenticação única — o usuário faz login uma vez e navega entre apps sem re-autenticação<br><br>❌ MFA: é fator ADICIONAL de autenticação, não login único<br>❌ PIM: gerencia acesso privilegiado temporário<br>❌ RBAC: define QUAIS recursos cada role pode acessar, não como faz login"
+            },
+
+            // ===== DOMAIN 4: Proteção de Dados e Governança (AB-900) — 10 questions =====
+            {
+                domain: 4, type: "single",
+                scenario: "Uma empresa financeira precisa garantir que documentos contendo números de cartão de crédito NÃO sejam enviados por email para fora da organização.",
+                question: "Qual solução do Microsoft Purview implementa essa proteção?",
+                options: [
+                    "Information Protection (rótulos de sensibilidade)",
+                    "Data Loss Prevention (DLP) com políticas de email",
+                    "Insider Risk Management",
+                    "Communication Compliance"
+                ],
+                correct: 1,
+                explanation: "<strong>DLP — Data Loss Prevention!</strong><br><br>✅ DLP detecta automaticamente informações sensíveis (como números de cartão) e pode BLOQUEAR o compartilhamento externo por email, Teams, etc.<br><br>❌ Information Protection: classifica e rotula documentos, mas não BLOQUEIA envio automaticamente<br>❌ Insider Risk: detecta comportamentos suspeitos de funcionários, não bloqueia envio em tempo real<br>❌ Communication Compliance: monitora conteúdo de comunicações para compliance regulatório, não dados sensíveis"
+            },
+            {
+                domain: 4, type: "single",
+                question: "O que acontece quando o Microsoft 365 Copilot tenta acessar um documento do SharePoint que o usuário NÃO tem permissão para visualizar?",
+                options: [
+                    "O Copilot usa permissões de administrador para acessar o documento",
+                    "O Copilot acessa o documento mas remove informações sensíveis automaticamente",
+                    "O Copilot NÃO consegue acessar o documento — respeita as mesmas permissões do usuário",
+                    "O Copilot solicita aprovação do proprietário do documento"
+                ],
+                correct: 2,
+                explanation: "<strong>O Copilot respeita as permissões do usuário!</strong><br><br>✅ O Copilot opera com as mesmas permissões do usuário que o está usando. Se o usuário não tem acesso a um documento, o Copilot também não consegue acessá-lo — isso é fundamental para segurança<br><br>❌ Permissões de admin: o Copilot NUNCA eleva privilégios<br>❌ Remove info sensível: ele simplesmente não acessa o documento<br>❌ Solicita aprovação: não há fluxo de aprovação — é simplesmente negado<br><br>🔑 Copilot = espelho do usuário. Mesmas permissões, mesmos acessos."
+            },
+            {
+                domain: 4, type: "single",
+                scenario: "Após implantar o Microsoft 365 Copilot, a equipe de segurança descobriu que o Copilot está retornando informações de documentos que deveriam estar restritos a diretores. A investigação revelou que as permissões do SharePoint estavam muito amplas.",
+                question: "Esse problema é conhecido como:",
+                options: [
+                    "Data exfiltration — vazamento de dados para fora da organização",
+                    "Oversharing — compartilhamento excessivo de dados internamente",
+                    "Insider threat — ameaça interna intencional",
+                    "Fabrication — a IA inventou dados que não existem"
+                ],
+                correct: 1,
+                explanation: "<strong>Oversharing!</strong><br><br>✅ Oversharing ocorre quando permissões são muito amplas, permitindo que usuários (e consequentemente o Copilot) acessem dados que não deveriam. É um dos maiores riscos ao implantar o Copilot<br><br>❌ Data exfiltration: é dados saindo da organização, não acesso interno excessivo<br>❌ Insider threat: é ação intencional maliciosa, não erro de configuração<br>❌ Fabrication: é a IA inventando dados, não acessando dados reais com permissões erradas"
+            },
+            {
+                domain: 4, type: "multi",
+                question: "Quais soluções do Microsoft Purview ajudam a identificar e mitigar o problema de oversharing ANTES de implantar o Copilot? (Selecione 2)",
+                options: [
+                    "Data Security Posture Management (DSPM) for AI",
+                    "Microsoft Defender for Endpoint",
+                    "SharePoint Advanced Management — relatórios de acesso a dados",
+                    "Azure Monitor com Application Insights"
+                ],
+                correct: [0, 2],
+                explanation: "<strong>DSPM for AI e SharePoint Advanced Management!</strong><br><br>✅ DSPM for AI: analisa a postura de segurança de dados especificamente para cenários de IA, identificando dados overexpostos<br>✅ SharePoint Advanced Management: gera relatórios de governança de acesso a dados, mostrando sites com permissões muito amplas<br><br>❌ Defender for Endpoint: protege dispositivos contra malware, não analisa permissões<br>❌ Azure Monitor: monitora performance de aplicações, não governança de dados"
+            },
+            {
+                domain: 4, type: "single",
+                question: "Qual solução do Microsoft Purview classifica automaticamente documentos com rótulos como 'Confidencial', 'Interno' ou 'Público', e pode aplicar criptografia e restrições de acesso?",
+                options: [
+                    "Data Loss Prevention (DLP)",
+                    "Information Protection (Proteção de Informações)",
+                    "Insider Risk Management",
+                    "Data Lifecycle Management (Retenção)"
+                ],
+                correct: 1,
+                explanation: "<strong>Information Protection!</strong><br><br>✅ Information Protection permite criar e aplicar rótulos de sensibilidade (sensitivity labels) que classificam e protegem documentos com criptografia, marcas d'água e restrições de acesso<br><br>❌ DLP: detecta e previne COMPARTILHAMENTO de dados sensíveis, não classifica documentos<br>❌ Insider Risk: detecta comportamentos de risco de funcionários<br>❌ Data Lifecycle: gerencia retenção e exclusão de dados, não classificação"
+            },
+            {
+                domain: 4, type: "single",
+                scenario: "O departamento jurídico identificou que um funcionário pode estar vazando informações confidenciais de fusões e aquisições. Eles precisam monitorar padrões de comportamento suspeito como downloads excessivos e envio para emails pessoais.",
+                question: "Qual solução do Microsoft Purview detecta esses padrões comportamentais?",
+                options: [
+                    "Communication Compliance",
+                    "eDiscovery",
+                    "Insider Risk Management",
+                    "Data Loss Prevention (DLP)"
+                ],
+                correct: 2,
+                explanation: "<strong>Insider Risk Management!</strong><br><br>✅ Insider Risk Management usa ML para detectar padrões de comportamento suspeito como downloads massivos, envio para emails pessoais, cópia para USB — correlaciona atividades ao longo do tempo<br><br>❌ Communication Compliance: monitora CONTEÚDO de mensagens (linguagem inadequada, etc.)<br>❌ eDiscovery: busca e preserva dados para investigações legais DEPOIS do fato<br>❌ DLP: previne compartilhamento baseado em CONTEÚDO sensível, não em padrão COMPORTAMENTAL"
+            },
+            {
+                domain: 4, type: "single",
+                question: "Qual ferramenta do Microsoft Purview permite realizar buscas em emails, documentos e mensagens de Teams para fins de investigação legal e processos judiciais?",
+                options: [
+                    "Compliance Manager",
+                    "eDiscovery",
+                    "Audit Logs",
+                    "Data Classification"
+                ],
+                correct: 1,
+                explanation: "<strong>eDiscovery!</strong><br><br>✅ eDiscovery permite buscar, preservar e exportar conteúdo eletrônico (emails, documentos, chats) para investigações legais e processos judiciais<br><br>❌ Compliance Manager: avalia postura de compliance e sugere ações de melhoria<br>❌ Audit Logs: registra ATIVIDADES (quem fez o quê e quando), não busca em conteúdo<br>❌ Data Classification: identifica e classifica tipos de dados sensíveis"
+            },
+            {
+                domain: 4, type: "single",
+                question: "Uma empresa precisa reter emails de funcionários por 7 anos para compliance regulatório e, após esse período, excluí-los automaticamente. Qual solução implementa isso?",
+                options: [
+                    "Information Protection com rótulos de sensibilidade",
+                    "Data Lifecycle Management com políticas de retenção",
+                    "Data Loss Prevention com regras de expiração",
+                    "Insider Risk Management com ações automáticas"
+                ],
+                correct: 1,
+                explanation: "<strong>Data Lifecycle Management!</strong><br><br>✅ Políticas de retenção permitem definir por quanto tempo manter dados (retenção) e quando excluí-los automaticamente — perfeito para compliance regulatório<br><br>❌ Information Protection: classifica e protege, não gerencia ciclo de vida<br>❌ DLP: previne compartilhamento, não gerencia retenção/exclusão<br>❌ Insider Risk: detecta comportamentos suspeitos, não gerencia retenção"
+            },
+            {
+                domain: 4, type: "single",
+                scenario: "A equipe de compliance quer uma visão geral de quão aderente a organização está a regulamentações como GDPR, HIPAA e ISO 27001, com uma pontuação e ações recomendadas.",
+                question: "Qual ferramenta do Microsoft Purview fornece essa visão?",
+                options: [
+                    "Compliance Manager com Compliance Score",
+                    "eDiscovery Premium",
+                    "Audit Log Search",
+                    "Data Classification Explorer"
+                ],
+                correct: 0,
+                explanation: "<strong>Compliance Manager!</strong><br><br>✅ Compliance Manager fornece um Compliance Score numérico, avalia a postura de compliance contra múltiplas regulamentações e sugere ações de melhoria priorizadas<br><br>❌ eDiscovery Premium: para investigações legais, não avaliação de compliance<br>❌ Audit Log Search: busca em logs de atividade, não avalia compliance<br>❌ Data Classification Explorer: mostra dados classificados, não avalia aderência a regulamentações"
+            },
+            {
+                domain: 4, type: "single",
+                question: "Qual solução do Microsoft Purview monitora mensagens do Teams e emails para detectar linguagem inapropriada, assédio e violações de políticas de comunicação corporativa?",
+                options: [
+                    "Insider Risk Management",
+                    "Data Loss Prevention (DLP)",
+                    "Communication Compliance",
+                    "Information Barriers"
+                ],
+                correct: 2,
+                explanation: "<strong>Communication Compliance!</strong><br><br>✅ Communication Compliance usa classificadores de ML para detectar linguagem inapropriada, assédio, discriminação e violações de políticas em emails e mensagens de Teams<br><br>❌ Insider Risk: detecta padrões COMPORTAMENTAIS, não conteúdo de mensagens<br>❌ DLP: detecta DADOS SENSÍVEIS (CPF, cartão), não linguagem inapropriada<br>❌ Information Barriers: impede comunicação entre departamentos, não monitora conteúdo"
+            },
+
+            // ===== DOMAIN 5: Admin de Copilot e Agentes (AB-900) — 9 questions =====
+            {
+                domain: 5, type: "single",
+                scenario: "Uma organização quer que 50 funcionários do marketing usem o Microsoft 365 Copilot, mas o orçamento é limitado. O administrador precisa atribuir as licenças apenas para esses 50 usuários específicos.",
+                question: "Onde o administrador realiza a atribuição de licenças do Copilot?",
+                options: [
+                    "Copilot Studio → Gerenciamento de Licenças",
+                    "Microsoft 365 Admin Center → Usuários → Licenças",
+                    "Azure Portal → Subscriptions",
+                    "Microsoft Entra Admin Center → Enterprise Applications"
+                ],
+                correct: 1,
+                explanation: "<strong>Microsoft 365 Admin Center!</strong><br><br>✅ Licenças do Microsoft 365 Copilot são atribuídas a usuários individuais no M365 Admin Center, na seção de gerenciamento de usuários e licenças<br><br>❌ Copilot Studio: é para criar agentes, não gerenciar licenças<br>❌ Azure Portal: gerencia subscrições Azure, não licenças M365<br>❌ Entra Admin Center: gerencia identidade e acesso, não atribuição de licenças de produto"
+            },
+            {
+                domain: 5, type: "single",
+                question: "Qual modelo de cobrança permite que uma organização pague pelo uso do Copilot apenas quando os funcionários efetivamente o utilizam, sem custo mensal fixo por usuário?",
+                options: [
+                    "Licença E5 que inclui Copilot gratuitamente",
+                    "Pay-as-you-go (consumo baseado em uso)",
+                    "Licença mensal per-seat com desconto anual",
+                    "Licença trial de 30 dias"
+                ],
+                correct: 1,
+                explanation: "<strong>Pay-as-you-go!</strong><br><br>✅ Pay-as-you-go cobra apenas pelo uso efetivo — ideal para equipes com uso esporádico ou para testar antes de comprometer com licenças fixas<br><br>❌ E5 com Copilot grátis: o Copilot NÃO está incluído gratuitamente em nenhuma licença E5<br>❌ Licença mensal: é custo fixo por usuário, independente do uso<br>❌ Trial: é temporário e limitado, não é modelo de cobrança"
+            },
+            {
+                domain: 5, type: "single",
+                scenario: "O gestor de TI quer monitorar como os funcionários estão usando o Microsoft 365 Copilot: quantos o usam ativamente, quais apps (Word, Teams, Excel) são mais usados com Copilot, e o impacto na produtividade.",
+                question: "Qual ferramenta fornece esses insights de adoção e uso do Copilot?",
+                options: [
+                    "Microsoft Purview Audit Logs",
+                    "Microsoft 365 Admin Center → Relatórios de Uso / Copilot Dashboard",
+                    "Azure Monitor com Log Analytics",
+                    "Microsoft Defender XDR Dashboard"
+                ],
+                correct: 1,
+                explanation: "<strong>M365 Admin Center — Copilot Dashboard!</strong><br><br>✅ O M365 Admin Center inclui relatórios de uso e um Copilot Dashboard que mostra métricas de adoção: usuários ativos, apps mais usados, tendências de uso e impacto<br><br>❌ Purview Audit Logs: registra atividades para compliance, não métricas de adoção<br>❌ Azure Monitor: monitora infraestrutura e apps Azure, não uso do M365 Copilot<br>❌ Defender XDR: monitora segurança e ameaças, não adoção de ferramentas"
+            },
+            {
+                domain: 5, type: "single",
+                scenario: "Uma analista de RH criou um agente personalizado no Copilot Studio que responde perguntas sobre políticas de benefícios. Antes de disponibilizar para toda a empresa, o agente precisa passar por aprovação.",
+                question: "Quem tipicamente aprova a publicação de agentes criados no Copilot Studio para uso organizacional?",
+                options: [
+                    "O próprio criador do agente faz self-publish",
+                    "O administrador de TI / admin do M365 através do processo de aprovação",
+                    "A Microsoft revisa e aprova todos os agentes automaticamente",
+                    "Os usuários finais votam para aprovar o agente"
+                ],
+                correct: 1,
+                explanation: "<strong>Administrador de TI aprova!</strong><br><br>✅ Agentes criados no Copilot Studio passam por um processo de aprovação onde o admin de TI revisa e aprova antes da publicação para uso organizacional — isso garante governança e segurança<br><br>❌ Self-publish: em ambientes governados, não é permitido publicar sem aprovação<br>❌ Microsoft revisa: a Microsoft fornece a plataforma, mas não revisa agentes individuais<br>❌ Votação de usuários: não existe esse mecanismo de aprovação"
+            },
+            {
+                domain: 5, type: "multi",
+                question: "Quais são capacidades nativas do Microsoft 365 Copilot (sem necessidade de extensões)? (Selecione 2)",
+                options: [
+                    "Resumir threads longas de email no Outlook",
+                    "Acessar dados de sistemas ERP externos como SAP",
+                    "Gerar apresentações a partir de documentos do Word no PowerPoint",
+                    "Substituir completamente analistas de dados humanos"
+                ],
+                correct: [0, 2],
+                explanation: "<strong>Resumir emails e gerar apresentações!</strong><br><br>✅ Resumir threads no Outlook: capacidade nativa do Copilot integrado ao Outlook<br>✅ Gerar apresentações do Word no PowerPoint: capacidade nativa de cross-app do M365 Copilot<br><br>❌ Acessar SAP: requer plugins/conectores — não é nativo<br>❌ Substituir analistas: Copilot AUGMENTA humanos, não os substitui"
+            },
+            {
+                domain: 5, type: "single",
+                question: "Um administrador quer controlar quais usuários podem criar agentes no Copilot Studio e quais fontes de dados esses agentes podem acessar. Onde isso é configurado?",
+                options: [
+                    "Diretamente no código-fonte de cada agente",
+                    "Power Platform Admin Center / Copilot Studio Admin Settings",
+                    "Microsoft Purview Data Classification",
+                    "Azure Key Vault"
+                ],
+                correct: 1,
+                explanation: "<strong>Power Platform Admin Center / Copilot Studio Admin!</strong><br><br>✅ As configurações administrativas de quem pode criar agentes, quais conectores podem ser usados, e políticas de dados são gerenciadas no Power Platform Admin Center e nas configurações admin do Copilot Studio<br><br>❌ Código-fonte: agentes no Copilot Studio são low-code/no-code, não têm código-fonte editável<br>❌ Purview Data Classification: classifica dados, não controla criação de agentes<br>❌ Key Vault: armazena segredos/chaves criptográficas, não gerencia permissões de criação"
+            },
+            {
+                domain: 5, type: "single",
+                scenario: "Uma organização combina 100 licenças mensais do Copilot para heavy users e pay-as-you-go para os demais 500 funcionários ocasionais. O CFO quer entender como monitorar os custos de pay-as-you-go.",
+                question: "Onde o administrador pode acompanhar os custos de consumo pay-as-you-go do Copilot?",
+                options: [
+                    "Microsoft 365 Admin Center → Billing (Faturamento)",
+                    "Azure Cost Management é o ÚNICO lugar",
+                    "Copilot Studio → Analytics",
+                    "Não é possível monitorar custos de pay-as-you-go separadamente"
+                ],
+                correct: 0,
+                explanation: "<strong>M365 Admin Center → Billing!</strong><br><br>✅ O faturamento e acompanhamento de custos do M365 Copilot (incluindo pay-as-you-go) são gerenciados no M365 Admin Center, na seção de Billing (Faturamento)<br><br>❌ Azure Cost Management: gerencia custos de serviços AZURE, não de licenças M365<br>❌ Copilot Studio Analytics: mostra uso de agentes, não custos de licenciamento<br>❌ É possível sim monitorar — a afirmação é falsa"
+            },
+            {
+                domain: 5, type: "single",
+                question: "Qual é a funcionalidade do Copilot Analyst no Microsoft 365?",
+                options: [
+                    "Pesquisar informações na web e gerar relatórios com referências",
+                    "Analisar dados complexos, criar visualizações e gerar insights a partir de planilhas e bancos de dados",
+                    "Gerenciar licenças e configurações administrativas do Copilot",
+                    "Criar agentes personalizados para atendimento ao cliente"
+                ],
+                correct: 1,
+                explanation: "<strong>Copilot Analyst analisa dados!</strong><br><br>✅ Copilot Analyst é especializado em análise de dados — processa planilhas, cria visualizações, identifica tendências e gera insights<br><br>❌ Pesquisar e gerar relatórios com referências: isso é o Copilot Researcher<br>❌ Gerenciar licenças: isso é feito no M365 Admin Center<br>❌ Criar agentes: isso é feito no Copilot Studio"
+            },
+            {
+                domain: 5, type: "single",
+                scenario: "Após a publicação de um agente de atendimento ao cliente no Teams, o administrador precisa monitorar se o agente está respondendo corretamente e se os usuários estão satisfeitos.",
+                question: "Qual ferramenta permite monitorar a performance e satisfação de um agente publicado?",
+                options: [
+                    "Microsoft Forms para coletar feedback manual",
+                    "Copilot Studio Analytics — dashboards de performance, sessões e satisfação",
+                    "Azure Application Insights",
+                    "Microsoft Teams Admin Center — relatórios de uso"
+                ],
+                correct: 1,
+                explanation: "<strong>Copilot Studio Analytics!</strong><br><br>✅ Copilot Studio inclui dashboards de analytics que mostram métricas de performance do agente: número de sessões, taxa de resolução, satisfação do usuário e tópicos mais acessados<br><br>❌ Forms: requer criação manual de pesquisa, não é integrado<br>❌ Application Insights: monitora aplicações Azure, não agentes do Copilot Studio<br>❌ Teams Admin Center: mostra uso do Teams em geral, não métricas específicas de agentes"
+            }
+        ];
+
+        // --- THEME ---
+        function toggleTheme() {
+            const html = document.documentElement;
+            const current = html.getAttribute('data-theme');
+            const next = current === 'dark' ? 'light' : 'dark';
+            html.setAttribute('data-theme', next);
+            document.getElementById('themeToggle').textContent = next === 'dark' ? '☀️' : '🌙';
+            localStorage.setItem('simulado_final_theme', next);
+        }
+
+        function loadTheme() {
+            const saved = localStorage.getItem('simulado_final_theme');
+            if (saved) {
+                document.documentElement.setAttribute('data-theme', saved);
+                document.getElementById('themeToggle').textContent = saved === 'dark' ? '☀️' : '🌙';
+            }
+        }
+
+        // --- LANGUAGE ---
+        function toggleLanguage() {
+            currentLang = currentLang === 'pt' ? 'en' : 'pt';
+            document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+            document.getElementById('langToggle').textContent = currentLang === 'pt' ? '🇧🇷 PT' : '🇺🇸 EN';
+            localStorage.setItem('simulado_final_lang', currentLang);
+            applyTranslations();
+        }
+
+        function loadLanguage() {
+            const saved = localStorage.getItem('simulado_final_lang');
+            if (saved) {
+                currentLang = saved;
+                document.documentElement.lang = currentLang === 'pt' ? 'pt-BR' : 'en';
+                document.getElementById('langToggle').textContent = currentLang === 'pt' ? '🇧🇷 PT' : '🇺🇸 EN';
+            }
+        }
+
+        function applyTranslations() {
+            const t = translations[currentLang];
+            document.getElementById('headerSubtitle').textContent = t.subtitle;
+            document.getElementById('introTitle').textContent = t.introTitle;
+            document.getElementById('introDesc').innerHTML = t.introDesc;
+            document.getElementById('domainBreakdownTitle').textContent = t.domainBreakdownTitle;
+            document.getElementById('rulesTitle').textContent = t.rulesTitle;
+            const rulesList = document.getElementById('rulesList');
+            rulesList.innerHTML = t.rules.map(r => `<li>${r}</li>`).join('');
+            document.getElementById('startBtnText').textContent = examState.started ? t.resumeBtn : t.startBtn;
+            document.getElementById('flagBtnText').textContent = t.flagBtn;
+            document.getElementById('submitBtnText').textContent = t.submitBtn;
+            document.getElementById('navTitle').textContent = t.navTitle;
+            document.getElementById('prevText').textContent = t.prevBtn;
+            document.getElementById('nextText').textContent = t.nextBtn;
+            // Update legend
+            const legendItems = document.querySelectorAll('#navLegend .nav-legend-item span');
+            if (legendItems.length >= 4) {
+                legendItems[0].textContent = t.legendCurrent;
+                legendItems[1].textContent = t.legendAnswered;
+                legendItems[2].textContent = t.legendFlagged;
+                legendItems[3].textContent = t.legendUnanswered;
+            }
+            // Re-render dynamic content if exam is active
+            if (examState.started && !examState.finished) {
+                renderCurrentQuestion();
+                updateNavGrid();
+            }
+            if (examState.finished) {
+                renderScoreReport();
+            }
+            // Update info labels
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                if (t[el.dataset.i18n]) el.textContent = t[el.dataset.i18n];
+            });
+        }
+
+        // --- SCREENS ---
+        function showScreen(screenId) {
+            document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+            document.getElementById(screenId).classList.add('active');
+        }
+
+        // ============================================================
+        // EXAM STATE
+        // ============================================================
+        const STORAGE_PREFIX = 'simulado_final_';
+        const TIME_LIMIT = 45 * 60; // 45 minutes in seconds
+        const PASS_SCORE = 700;
+
+        let examState = {
+            started: false,
+            finished: false,
+            currentQuestion: 0,
+            answers: {},       // { questionIndex: selectedOptionIndex } for single, { questionIndex: [indices] } for multi
+            flagged: new Set(),
+            startTime: null,
+            remainingTime: TIME_LIMIT,
+            questionOrder: [],  // shuffled indices
+            results: null
+        };
+
+        let timerInterval = null;
+
+        // ============================================================
+        // PERSISTENCE
+        // ============================================================
+        function saveExamState() {
+            const data = {
+                started: examState.started,
+                finished: examState.finished,
+                currentQuestion: examState.currentQuestion,
+                answers: examState.answers,
+                flagged: Array.from(examState.flagged),
+                startTime: examState.startTime,
+                remainingTime: examState.remainingTime,
+                questionOrder: examState.questionOrder,
+                results: examState.results
+            };
+            localStorage.setItem(STORAGE_PREFIX + 'state', JSON.stringify(data));
+        }
+
+        function loadExamState() {
+            const saved = localStorage.getItem(STORAGE_PREFIX + 'state');
+            if (!saved) return false;
+            try {
+                const data = JSON.parse(saved);
+                examState.started = data.started || false;
+                examState.finished = data.finished || false;
+                examState.currentQuestion = data.currentQuestion || 0;
+                examState.answers = data.answers || {};
+                examState.flagged = new Set(data.flagged || []);
+                examState.startTime = data.startTime || null;
+                examState.remainingTime = data.remainingTime || TIME_LIMIT;
+                examState.questionOrder = data.questionOrder || [];
+                examState.results = data.results || null;
+                return true;
+            } catch (e) { return false; }
+        }
+
+        function clearExamState() {
+            localStorage.removeItem(STORAGE_PREFIX + 'state');
+        }
+
+        // ============================================================
+        // SHUFFLE
+        // ============================================================
+        function shuffleArray(arr) {
+            const a = [...arr];
+            for (let i = a.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [a[i], a[j]] = [a[j], a[i]];
+            }
+            return a;
+        }
+
+        // ============================================================
+        // INTRO SCREEN — render domain tags
+        // ============================================================
+        function renderIntro() {
+            const container = document.getElementById('domainTagsContainer');
+            const lang = currentLang;
+            container.innerHTML = EXAM_DOMAINS.map(d => `
+                <span class="domain-tag">
+                    <span class="tag-dot" style="background:${d.color}"></span>
+                    ${d.icon} ${lang === 'pt' ? d.name : d.nameEn}
+                    <span class="tag-cert">${d.cert}</span>
+                    <span style="opacity:0.6;font-size:0.85em">(${d.questions}q)</span>
+                </span>
+            `).join('');
+
+            // Update start button text
+            const t = translations[currentLang];
+            document.getElementById('startBtnText').textContent = examState.started && !examState.finished ? t.resumeBtn : t.startBtn;
+        }
+
+        // ============================================================
+        // START / RESUME EXAM
+        // ============================================================
+        function startExam() {
+            if (!examState.started) {
+                // Fresh start
+                examState.started = true;
+                examState.finished = false;
+                examState.currentQuestion = 0;
+                examState.answers = {};
+                examState.flagged = new Set();
+                examState.startTime = Date.now();
+                examState.remainingTime = TIME_LIMIT;
+                examState.questionOrder = shuffleArray(Array.from({ length: EXAM_QUESTIONS.length }, (_, i) => i));
+                examState.results = null;
+                saveExamState();
+            }
+            // If resuming, recalculate remaining time
+            if (examState.startTime && !examState.finished) {
+                const elapsed = Math.floor((Date.now() - examState.startTime) / 1000);
+                const totalElapsed = TIME_LIMIT - examState.remainingTime + elapsed;
+                examState.remainingTime = Math.max(0, TIME_LIMIT - totalElapsed);
+                examState.startTime = Date.now();
+            }
+            showScreen('screen-exam');
+            renderNavGrid();
+            renderCurrentQuestion();
+            startTimer();
+        }
+
+        // ============================================================
+        // TIMER
+        // ============================================================
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+            updateTimerDisplay();
+            timerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - examState.startTime) / 1000);
+                examState.remainingTime = Math.max(0, examState.remainingTime - 1);
+                
+                updateTimerDisplay();
+
+                // Save periodically (every 10 seconds)
+                if (examState.remainingTime % 10 === 0) {
+                    examState.startTime = Date.now();
+                    saveExamState();
+                }
+
+                if (examState.remainingTime <= 0) {
+                    clearInterval(timerInterval);
+                    endExam();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+        }
+
+        function updateTimerDisplay() {
+            const minutes = Math.floor(examState.remainingTime / 60);
+            const seconds = examState.remainingTime % 60;
+            const clock = document.getElementById('timerClock');
+            clock.textContent = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+
+            const timerBar = document.getElementById('timerBar');
+            if (examState.remainingTime <= 300) { // 5 minutes
+                timerBar.classList.add('danger');
+            } else {
+                timerBar.classList.remove('danger');
+            }
+
+            const t = translations[currentLang];
+            const total = EXAM_QUESTIONS.length;
+            const current = examState.currentQuestion + 1;
+            document.getElementById('timerProgress').textContent = t.questionOf.replace('{0}', current).replace('{1}', total);
+        }
+
+        // ============================================================
+        // QUESTION RENDERING
+        // ============================================================
+        function getQuestion(displayIndex) {
+            const realIndex = examState.questionOrder[displayIndex];
+            return { ...EXAM_QUESTIONS[realIndex], realIndex };
+        }
+
+        function renderCurrentQuestion() {
+            const q = getQuestion(examState.currentQuestion);
+            const t = translations[currentLang];
+            const domain = EXAM_DOMAINS[q.domain];
+            const displayNum = examState.currentQuestion + 1;
+            const total = EXAM_QUESTIONS.length;
+            const isMulti = q.type === 'multi';
+            const inputType = isMulti ? 'checkbox' : 'radio';
+            const selectCount = isMulti ? q.correct.length : null;
+
+            // Current answer
+            const currentAnswer = examState.answers[examState.currentQuestion];
+
+            let html = `
+                <div class="question-header">
+                    <div class="question-number">${t.questionOf.replace('{0}', displayNum).replace('{1}', total)}</div>
+                    <div class="question-domain-badge">
+                        <span class="badge-dot" style="background:${domain.color}"></span>
+                        ${domain.icon} ${currentLang === 'pt' ? domain.name : domain.nameEn}
+                        <span style="background:${domain.color};color:white;padding:2px 6px;border-radius:4px;font-size:0.8em;font-weight:700;">${domain.cert}</span>
+                    </div>
+                </div>
+            `;
+
+            if (q.scenario) {
+                html += `<div class="question-scenario">${q.scenario}</div>`;
+            }
+
+            html += `<div class="question-text">${q.question}</div>`;
+
+            if (isMulti) {
+                html += `<div class="question-instruction">${t.selectN.replace('{0}', selectCount)}</div>`;
+            }
+
+            html += `<ul class="options-list">`;
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+            q.options.forEach((option, i) => {
+                let selected = false;
+                if (isMulti) {
+                    selected = Array.isArray(currentAnswer) && currentAnswer.includes(i);
+                } else {
+                    selected = currentAnswer === i;
+                }
+                const selectedClass = selected ? ' selected' : '';
+                const checked = selected ? ' checked' : '';
+
+                html += `
+                    <li class="option-item${selectedClass}" onclick="selectExamOption(${examState.currentQuestion}, ${i})">
+                        <span class="option-letter">${letters[i]}</span>
+                        <input type="${inputType}" name="q-${examState.currentQuestion}" value="${i}" id="opt-${examState.currentQuestion}-${i}"${checked}>
+                        <label for="opt-${examState.currentQuestion}-${i}">${option}</label>
+                    </li>
+                `;
+            });
+            html += `</ul>`;
+
+            document.getElementById('questionArea').innerHTML = html;
+
+            // Update timer progress text
+            document.getElementById('timerProgress').textContent = t.questionOf.replace('{0}', displayNum).replace('{1}', total);
+
+            // Update flag button
+            const flagBtn = document.getElementById('flagBtn');
+            const isFlagged = examState.flagged.has(examState.currentQuestion);
+            flagBtn.className = isFlagged ? 'timer-btn flag-active' : 'timer-btn';
+            document.getElementById('flagBtnText').textContent = isFlagged ? t.flaggedBtn : t.flagBtn;
+
+            // Update prev/next buttons
+            document.getElementById('qPrevBtn').disabled = examState.currentQuestion === 0;
+            document.getElementById('qNextBtn').disabled = examState.currentQuestion === total - 1;
+
+            updateNavGrid();
+        }
+
+        // ============================================================
+        // OPTION SELECTION
+        // ============================================================
+        function selectExamOption(questionIndex, optionIndex) {
+            const q = getQuestion(questionIndex);
+            const isMulti = q.type === 'multi';
+
+            if (isMulti) {
+                let current = examState.answers[questionIndex];
+                if (!Array.isArray(current)) current = [];
+                
+                const idx = current.indexOf(optionIndex);
+                if (idx >= 0) {
+                    current.splice(idx, 1);
+                } else {
+                    // Limit to correct count
+                    if (current.length >= q.correct.length) {
+                        current.shift(); // remove oldest
+                    }
+                    current.push(optionIndex);
+                }
+                examState.answers[questionIndex] = current;
+            } else {
+                examState.answers[questionIndex] = optionIndex;
+            }
+
+            saveExamState();
+            renderCurrentQuestion();
+        }
+
+        // ============================================================
+        // NAVIGATION
+        // ============================================================
+        function navigateQuestion(direction) {
+            const newIndex = examState.currentQuestion + direction;
+            if (newIndex >= 0 && newIndex < EXAM_QUESTIONS.length) {
+                examState.currentQuestion = newIndex;
+                saveExamState();
+                renderCurrentQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function jumpToQuestion(index) {
+            if (index >= 0 && index < EXAM_QUESTIONS.length) {
+                examState.currentQuestion = index;
+                saveExamState();
+                renderCurrentQuestion();
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        }
+
+        function toggleFlag() {
+            const idx = examState.currentQuestion;
+            if (examState.flagged.has(idx)) {
+                examState.flagged.delete(idx);
+            } else {
+                examState.flagged.add(idx);
+            }
+            saveExamState();
+            renderCurrentQuestion();
+        }
+
+        // ============================================================
+        // NAVIGATION GRID
+        // ============================================================
+        function renderNavGrid() {
+            const grid = document.getElementById('navGrid');
+            let html = '';
+            for (let i = 0; i < EXAM_QUESTIONS.length; i++) {
+                html += `<button class="nav-grid-btn" id="nav-btn-${i}" onclick="jumpToQuestion(${i})">${i + 1}</button>`;
+            }
+            grid.innerHTML = html;
+            updateNavGrid();
+        }
+
+        function updateNavGrid() {
+            const total = EXAM_QUESTIONS.length;
+            let answeredCount = 0;
+            let flaggedCount = 0;
+
+            for (let i = 0; i < total; i++) {
+                const btn = document.getElementById(`nav-btn-${i}`);
+                if (!btn) continue;
+                btn.className = 'nav-grid-btn';
+
+                const hasAnswer = examState.answers[i] !== undefined && 
+                    (Array.isArray(examState.answers[i]) ? examState.answers[i].length > 0 : true);
+                const isFlagged = examState.flagged.has(i);
+                const isCurrent = i === examState.currentQuestion;
+
+                if (isCurrent) btn.classList.add('current');
+                else if (hasAnswer) btn.classList.add('answered');
+                if (isFlagged) btn.classList.add('flagged');
+
+                if (hasAnswer) answeredCount++;
+                if (isFlagged) flaggedCount++;
+            }
+
+            document.getElementById('answeredCount').textContent = answeredCount;
+            document.getElementById('flaggedCount').textContent = flaggedCount;
+        }
+
+        // ============================================================
+        // SUBMIT EXAM
+        // ============================================================
+        function confirmSubmit() {
+            const t = translations[currentLang];
+            const total = EXAM_QUESTIONS.length;
+            let answeredCount = 0;
+            for (let i = 0; i < total; i++) {
+                const a = examState.answers[i];
+                if (a !== undefined && (Array.isArray(a) ? a.length > 0 : true)) answeredCount++;
+            }
+
+            const unanswered = total - answeredCount;
+            let msg = t.confirmMsg.replace('{0}', answeredCount).replace('{1}', total);
+            if (unanswered > 0) {
+                msg += '\n\n' + t.unansweredWarning.replace('{0}', unanswered);
+            }
+
+            if (confirm(t.confirmTitle + '\n\n' + msg)) {
+                endExam();
+            }
+        }
+
+        function endExam() {
+            stopTimer();
+            examState.finished = true;
+            examState.results = calculateResults();
+            saveExamState();
+            showScreen('screen-results');
+            renderScoreReport();
+        }
+
+        // ============================================================
+        // SCORE CALCULATION
+        // ============================================================
+        function calculateResults() {
+            const total = EXAM_QUESTIONS.length;
+            let totalCorrect = 0;
+            let totalIncorrect = 0;
+            let totalUnanswered = 0;
+            const domainStats = {};
+
+            EXAM_DOMAINS.forEach(d => {
+                domainStats[d.id] = { correct: 0, total: 0, incorrect: 0 };
+            });
+
+            for (let i = 0; i < total; i++) {
+                const realIndex = examState.questionOrder[i];
+                const q = EXAM_QUESTIONS[realIndex];
+                const answer = examState.answers[i];
+                domainStats[q.domain].total++;
+
+                if (answer === undefined || (Array.isArray(answer) && answer.length === 0)) {
+                    totalUnanswered++;
+                    domainStats[q.domain].incorrect++;
+                    continue;
+                }
+
+                let isCorrect = false;
+                if (q.type === 'multi') {
+                    // Must match exactly — all correct, no extras
+                    const sorted = [...(Array.isArray(answer) ? answer : [])].sort();
+                    const expected = [...q.correct].sort();
+                    isCorrect = sorted.length === expected.length && sorted.every((v, idx) => v === expected[idx]);
+                } else {
+                    isCorrect = answer === q.correct;
+                }
+
+                if (isCorrect) {
+                    totalCorrect++;
+                    domainStats[q.domain].correct++;
+                } else {
+                    totalIncorrect++;
+                    domainStats[q.domain].incorrect++;
+                }
+            }
+
+            // Calculate overall score (scaled to 1000)
+            // Weighted by domain
+            let weightedScore = 0;
+            let totalWeight = 0;
+            EXAM_DOMAINS.forEach(d => {
+                const ds = domainStats[d.id];
+                if (ds.total > 0) {
+                    const pct = ds.correct / ds.total;
+                    weightedScore += pct * d.weight;
+                    totalWeight += d.weight;
+                }
+            });
+
+            const rawPct = totalWeight > 0 ? weightedScore / totalWeight : 0;
+            // Scale: 200 base + 800 * rawPct (so 0% = 200, 100% = 1000)
+            const scaledScore = Math.round(200 + 800 * rawPct);
+            const passed = scaledScore >= PASS_SCORE;
+            const timeUsed = TIME_LIMIT - examState.remainingTime;
+
+            return {
+                score: scaledScore,
+                passed,
+                totalCorrect,
+                totalIncorrect,
+                totalUnanswered,
+                domainStats,
+                timeUsed
+            };
+        }
+
+        // ============================================================
+        // SCORE REPORT (Microsoft-style)
+        // ============================================================
+        function renderScoreReport() {
+            const r = examState.results;
+            const t = translations[currentLang];
+            if (!r) return;
+
+            const total = EXAM_QUESTIONS.length;
+            const timeMin = Math.floor(r.timeUsed / 60);
+            const timeSec = r.timeUsed % 60;
+
+            let html = `
+                <div class="score-hero">
+                    <div class="score-label">${t.scoreLabel}</div>
+                    <div class="score-value">${r.score}</div>
+                    <div class="score-max">/ 1000</div>
+                    <div class="score-badge ${r.passed ? 'pass' : 'fail'}">
+                        ${r.passed ? t.passed : t.failed}
+                    </div>
+                    <p style="margin-top:16px;color:var(--text-secondary);font-size:0.95em;">
+                        ${r.passed ? t.passMsg : t.failMsg}
+                    </p>
+                </div>
+
+                <div class="score-stats">
+                    <div class="score-stat">
+                        <div class="stat-value" style="color:var(--success)">${r.totalCorrect}</div>
+                        <div class="stat-label">${t.statsCorrect}</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="stat-value" style="color:var(--danger)">${r.totalIncorrect}</div>
+                        <div class="stat-label">${t.statsIncorrect}</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="stat-value" style="color:var(--text-muted)">${r.totalUnanswered}</div>
+                        <div class="stat-label">${t.statsUnanswered}</div>
+                    </div>
+                    <div class="score-stat">
+                        <div class="stat-value">${timeMin}:${String(timeSec).padStart(2, '0')}</div>
+                        <div class="stat-label">${t.statsTime}</div>
+                    </div>
+                </div>
+
+                <div class="domain-results">
+                    <h3>${t.domainResultsTitle}</h3>
+            `;
+
+            EXAM_DOMAINS.forEach(d => {
+                const ds = r.domainStats[d.id];
+                const pct = ds.total > 0 ? Math.round((ds.correct / ds.total) * 100) : 0;
+                let barColor = 'var(--bar-needs-work)';
+                if (pct >= 80) barColor = 'var(--bar-excellent)';
+                else if (pct >= 60) barColor = 'var(--bar-good)';
+
+                html += `
+                    <div class="domain-result-row">
+                        <div class="domain-result-name">
+                            <span class="dr-dot" style="background:${d.color}"></span>
+                            <span class="dr-cert">${d.cert}</span>
+                            ${d.icon} ${currentLang === 'pt' ? d.name : d.nameEn}
+                        </div>
+                        <div class="domain-bar-container">
+                            <div class="domain-bar-fill" style="width:${Math.max(pct, 5)}%;background:${barColor};">${ds.correct}/${ds.total}</div>
+                        </div>
+                        <div class="domain-result-pct">${pct}%</div>
+                    </div>
+                `;
+            });
+
+            html += `</div>`;
+
+            // Recommendations
+            html += `<div class="recommendations"><h3>${t.recsTitle}</h3>`;
+            EXAM_DOMAINS.forEach(d => {
+                const ds = r.domainStats[d.id];
+                const pct = ds.total > 0 ? Math.round((ds.correct / ds.total) * 100) : 0;
+                let recClass, recIcon, recText;
+                if (pct >= 80) {
+                    recClass = 'excellent'; recIcon = '🌟'; recText = t.recExcellent;
+                } else if (pct >= 60) {
+                    recClass = 'good'; recIcon = '👍'; recText = t.recGood;
+                } else {
+                    recClass = 'needs-work'; recIcon = '📚'; recText = t.recNeedsWork;
+                }
+
+                html += `
+                    <div class="rec-item ${recClass}">
+                        <span class="rec-icon">${recIcon}</span>
+                        <div class="rec-text">
+                            <strong>${d.icon} ${currentLang === 'pt' ? d.name : d.nameEn} (${d.cert}) — ${pct}%</strong>
+                            ${recText}
+                        </div>
+                    </div>
+                `;
+            });
+            html += `</div>`;
+
+            // Action buttons
+            html += `
+                <div class="results-actions">
+                    <button class="results-btn primary" onclick="showReview()">${t.reviewBtn}</button>
+                    <button class="results-btn danger" onclick="retryExam()">${t.retryBtn}</button>
+                </div>
+            `;
+
+            document.getElementById('resultsCard').innerHTML = html;
+
+            // Animate bars
+            setTimeout(() => {
+                document.querySelectorAll('.domain-bar-fill').forEach(bar => {
+                    const w = bar.style.width;
+                    bar.style.width = '0%';
+                    requestAnimationFrame(() => { bar.style.width = w; });
+                });
+            }, 100);
+        }
+
+        // ============================================================
+        // REVIEW MODE
+        // ============================================================
+        let currentFilter = 'all';
+
+        function showReview() {
+            const reviewCard = document.getElementById('reviewCard');
+            reviewCard.style.display = 'block';
+            currentFilter = 'all';
+            renderReviewFilters();
+            renderReviewQuestions();
+            reviewCard.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function hideReview() {
+            document.getElementById('reviewCard').style.display = 'none';
+            document.getElementById('resultsCard').scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function renderReviewFilters() {
+            const t = translations[currentLang];
+            const total = EXAM_QUESTIONS.length;
+            const r = examState.results;
+
+            const filters = [
+                { key: 'all', label: `${t.filterAll} (${total})` },
+                { key: 'correct', label: `${t.filterCorrect} (${r.totalCorrect})` },
+                { key: 'incorrect', label: `${t.filterIncorrect} (${r.totalIncorrect + r.totalUnanswered})` }
+            ];
+
+            document.getElementById('reviewFilters').innerHTML = filters.map(f => `
+                <button class="review-filter-btn${f.key === currentFilter ? ' active' : ''}" onclick="setReviewFilter('${f.key}')">
+                    ${f.label}
+                </button>
+            `).join('') + `<button class="review-filter-btn" onclick="hideReview()" style="margin-left:auto;">${t.backBtn}</button>`;
+        }
+
+        function setReviewFilter(filter) {
+            currentFilter = filter;
+            renderReviewFilters();
+            renderReviewQuestions();
+        }
+
+        function renderReviewQuestions() {
+            const t = translations[currentLang];
+            const container = document.getElementById('reviewContainer');
+            let html = '';
+            const letters = ['A', 'B', 'C', 'D', 'E', 'F'];
+
+            for (let i = 0; i < EXAM_QUESTIONS.length; i++) {
+                const realIndex = examState.questionOrder[i];
+                const q = EXAM_QUESTIONS[realIndex];
+                const domain = EXAM_DOMAINS[q.domain];
+                const answer = examState.answers[i];
+                const isMulti = q.type === 'multi';
+
+                // Check correctness
+                let isCorrect = false;
+                const hasAnswer = answer !== undefined && (Array.isArray(answer) ? answer.length > 0 : true);
+                if (hasAnswer) {
+                    if (isMulti) {
+                        const sorted = [...(Array.isArray(answer) ? answer : [])].sort();
+                        const expected = [...q.correct].sort();
+                        isCorrect = sorted.length === expected.length && sorted.every((v, idx) => v === expected[idx]);
+                    } else {
+                        isCorrect = answer === q.correct;
+                    }
+                }
+
+                // Filter
+                if (currentFilter === 'correct' && !isCorrect) continue;
+                if (currentFilter === 'incorrect' && isCorrect) continue;
+
+                const statusClass = isCorrect ? 'rq-correct' : 'rq-incorrect';
+                const statusBadge = isCorrect
+                    ? `<span class="rq-result correct">✅ ${t.correct}</span>`
+                    : `<span class="rq-result incorrect">❌ ${t.incorrect}</span>`;
+
+                html += `
+                    <div class="review-question ${statusClass}">
+                        <div class="rq-header">
+                            <span class="rq-number">${i + 1}. 
+                                <span class="question-domain-badge" style="display:inline-flex;vertical-align:middle;">
+                                    <span class="badge-dot" style="background:${domain.color}"></span>
+                                    ${domain.icon} ${domain.cert}
+                                </span>
+                            </span>
+                            ${statusBadge}
+                        </div>
+                `;
+
+                if (q.scenario) {
+                    html += `<div class="question-scenario" style="margin-bottom:16px;">${q.scenario}</div>`;
+                }
+
+                html += `<div class="question-text" style="margin-bottom:16px;">${q.question}</div>`;
+
+                html += `<ul class="options-list" style="pointer-events:none;">`;
+                q.options.forEach((option, oi) => {
+                    let optClass = '';
+                    let suffix = '';
+
+                    const isOptionCorrect = isMulti ? q.correct.includes(oi) : q.correct === oi;
+                    const isUserSelected = isMulti
+                        ? (Array.isArray(answer) && answer.includes(oi))
+                        : (answer === oi);
+
+                    if (isOptionCorrect) {
+                        optClass = ' review-correct';
+                        suffix = ` <em style="color:var(--success);font-size:0.85em;">— ${t.correctAnswer}</em>`;
+                    }
+                    if (isUserSelected && !isOptionCorrect) {
+                        optClass = ' review-incorrect';
+                        suffix = ` <em style="color:var(--danger);font-size:0.85em;">— ${t.yourAnswer}</em>`;
+                    }
+                    if (isUserSelected && isOptionCorrect) {
+                        suffix = ` <em style="color:var(--success);font-size:0.85em;">— ✅ ${t.yourAnswer}</em>`;
+                    }
+
+                    html += `
+                        <li class="option-item${optClass}" style="cursor:default;">
+                            <span class="option-letter">${letters[oi]}</span>
+                            <label>${option}${suffix}</label>
+                        </li>
+                    `;
+                });
+                html += `</ul>`;
+
+                html += `<div class="review-explanation">${q.explanation}</div>`;
+                html += `</div>`;
+            }
+
+            container.innerHTML = html || `<p style="text-align:center;color:var(--text-muted);padding:40px;">🎉</p>`;
+        }
+
+        // ============================================================
+        // RETRY
+        // ============================================================
+        function retryExam() {
+            if (confirm(currentLang === 'pt' ? 'Tem certeza que deseja refazer o simulado? Todo o progresso será perdido.' : 'Are you sure you want to retry? All progress will be lost.')) {
+                stopTimer();
+                clearExamState();
+                examState = {
+                    started: false, finished: false, currentQuestion: 0,
+                    answers: {}, flagged: new Set(), startTime: null,
+                    remainingTime: TIME_LIMIT, questionOrder: [], results: null
+                };
+                document.getElementById('reviewCard').style.display = 'none';
+                showScreen('screen-intro');
+                renderIntro();
+            }
+        }
+
+        // ============================================================
+        // MAIN INIT
+        // ============================================================
+        loadTheme();
+        loadLanguage();
+
+        // Check for saved state
+        const hasState = loadExamState();
+        if (hasState && examState.finished) {
+            showScreen('screen-results');
+            renderScoreReport();
+        } else if (hasState && examState.started) {
+            showScreen('screen-intro');
+            renderIntro();
+            // Show resume button text
+        } else {
+            showScreen('screen-intro');
+        }
+
+        renderIntro();
+        applyTranslations();
+    </script>
+</body>
+</html>

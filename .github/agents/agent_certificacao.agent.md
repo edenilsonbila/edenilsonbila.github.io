@@ -38,6 +38,7 @@ Use o MCP `microsoft-learn` para obter dados oficiais:
   - Nome completo da certificação
   - Nível (Fundamentals, Associate, Expert)
   - Skills measured com **percentuais de peso** de cada domínio
+  - Número oficial de questões e tempo do exame
   - Learning paths recomendados
 - Use `#tool:microsoft-learn_microsoft_code_sample_search` se a certificação envolver código (ex: AI-102, AZ-204)
 - Complemente com busca web para:
@@ -47,9 +48,33 @@ Use o MCP `microsoft-learn` para obter dados oficiais:
 
 **IMPORTANTE:** Os módulos do curso DEVEM ser baseados nos domínios dos "skills measured" oficiais, respeitando os pesos percentuais para determinar a profundidade de cada módulo.
 
+#### 2b. Pesquisar Simulados Reais (Obrigatório para as Questões do Simulado)
+
+Antes de escrever as questões do simulado, pesquise padrões de questões reais do exame:
+
+- Use busca web: `"{CERT_CODE} exam questions site:examtopics.com OR site:whizlabs.com OR site:measureup.com"`
+- Use busca web: `"{CERT_CODE} exam experience reddit site:reddit.com/r/AzureCertification"`
+- Use busca web: `"{CERT_CODE} practice test questions 2024 2025"`
+- Use busca web para vídeos: `"{CERT_CODE} exam walkthrough questions YouTube"`
+
+**Objetivo:** Entender o estilo real das questões — distractores típicos, cenários frequentes, tópicos com maior peso, armadilhas comuns reportadas pela comunidade. As questões do simulado DEVEM refletir a dificuldade e o estilo do exame real, não ser inventadas.
+
+**Qualidade obrigatória das questões do simulado:**
+1. **Baseadas em padrões reais** — estudar questões do ExamTopics, Whizlabs, MeasureUp e relatos da comunidade
+2. **Dificuldade real** — não facilitar artificialmente; replicar o nível do exame
+3. **Distractores plausíveis** — as opções erradas devem parecer razoáveis (como no exame real)
+4. **Cenários de empresa** — "Uma empresa de varejo precisa..." (formato típico Microsoft)
+5. **Cobertura dos tópicos quentes** — priorizar áreas mais frequentes nos relatos da comunidade
+6. **Contagem variável** — pesquisar o número oficial de questões do exame e usar esse valor em `SIMULADO_CONFIG.questionCount` (padrão 40-60, mas validar)
+
 ### 3. Ler o Template
 
-Leia o arquivo `agent_certificacao/template.html` para obter o CSS, JS e HTML skeleton atualizados. Este é o template canônico — copie CSS e JS **integralmente**.
+Leia o arquivo `agent_certificacao/template.html`. Este template já contém o CSS, JS e o engine de simulado completos — **não é necessário copiar o engine do AB-731.html**.
+
+Ao gerar o novo arquivo:
+- **Copie o CSS integralmente** (do `<style>` até `</style>`) — já inclui `.sim-*` engine styles
+- **Copie o JS integralmente** (do `<script>` até `</script>`) — já inclui todas as funções do engine
+- **Preencha os placeholders** marcados com `// SUBSTITUIR` e `{PLACEHOLDER}`
 
 ### 4. Gerar o Arquivo HTML
 
@@ -59,10 +84,13 @@ Gere o arquivo `{CERT-CODE}.html` na raiz do workspace seguindo TODAS as regras 
 
 Verifique que o arquivo gerado:
 - Tem todos os módulos baseados nos skills measured
-- Segue o schema do `courseData` corretamente
-- Tem CSS e JS copiados integralmente do template
+- Segue o schema do `COURSE_STRUCTURE` + `courseText` corretamente
+- Tem CSS e JS copiados integralmente do template (incluindo engine simulado)
 - Tem exercícios em cada módulo de conteúdo (mín. 5)
 - Os placeholders foram todos substituídos
+- `SIMULADO_CONFIG.questionCount` reflete o número real de questões do exame
+- `SIMULADO_QUESTIONS` tem pelo menos 1 questão de cada tipo drag (match, order, categorize)
+- `SIM_STORAGE_KEY` usa o prefixo correto da certificação (ex: `'dp900_simulado_state'`)
 
 ---
 
@@ -78,13 +106,18 @@ O curso é um **arquivo HTML único e autossuficiente** — sem dependências ex
 | `<html lang>` | `pt-BR` ou `en` conforme idioma escolhido |
 | Header `<h1>` | `<span class="icon">{EMOJI}</span>Minicurso {CERT}: {Nome}` |
 | Prefixo localStorage | `{cert_lower}_` (ex: `dp900_`, `az900_`) |
-| `courseData.modules[]` | Todo o conteúdo da certificação |
+| `COURSE_STRUCTURE.modules[]` | Definir nº de módulos, durações e índices `correct` |
+| `SIMULADO_CONFIG` | Tempo, nota de aprovação, nº de questões reais |
+| `SIMULADO_DOMAINS` | Domínios dos skills measured oficiais |
+| `SIMULADO_QUESTIONS` | 40+ questões baseadas em simulados reais |
+| `courseText.pt` e `courseText.en` | Todo o conteúdo bilíngue dos módulos |
+| `SIM_STORAGE_KEY` | `'{cert_lower}_simulado_state'` |
 | Licença MIT (comment) | Nome da certificação |
 
 ### O Que NÃO Muda
 
-- **CSS inteiro** — copiar verbatim do template (inclui dark theme + responsive)
-- **JS inteiro** (funções + translations) — copiar verbatim do template
+- **CSS inteiro** — copiar verbatim do template (inclui dark theme + responsive + `.sim-*`)
+- **JS inteiro** (engine functions + translations) — copiar verbatim do template
 - **HTML skeleton** — mesma estrutura de containers (inclui toggle buttons)
 
 ### Placeholders Para Substituir
@@ -103,41 +136,81 @@ O curso é um **arquivo HTML único e autossuficiente** — sem dependências ex
 
 ---
 
-## Estrutura do courseData
+## Arquitetura DRY do Conteúdo (COURSE_STRUCTURE + courseText)
+
+O template usa uma arquitetura DRY que separa estrutura de conteúdo e elimina duplicação entre idiomas:
 
 ```javascript
-const courseData = {
+// 1. COURSE_STRUCTURE: define a espinha dorsal (sem texto, só estrutura)
+const COURSE_STRUCTURE = {
     modules: [
-        {
-            id: 0,                              // Inteiro sequencial começando em 0
-            title: "0. Introdução ao Curso",    // Prefixo numérico + nome descritivo
-            duration: "15 min",                 // Estimativa de tempo legível
-            lessons: [
-                {
-                    title: "Título da Lição",
-                    content: `HTML bruto`        // Template literal com HTML
-                }
-            ],
-            exercises: [                        // Array (pode ser [])
-                {
-                    question: "Texto da pergunta",
-                    options: ["A", "B", "C", "D"],  // SEMPRE 4 opções
-                    correct: 1,                      // Índice 0-based
-                    explanation: "HTML com explicação"
-                }
-            ]
-        }
+        { id: 0, duration: "15 min", lessonCount: 1, exercises: [] },
+        { id: 1, duration: "45 min", lessonCount: 2, exercises: [
+            { correct: 1 }, { correct: 2 }, { correct: 0 }, { correct: 3 }, { correct: 1 }
+        ]},
+        // ... mais módulos ...
+        { id: N, duration: "45 min", lessonCount: 1, exercises: [], isSimulado: true }  // SEMPRE último
     ]
 };
+
+// 2. courseText: conteúdo bilíngue (sem "correct" — fica no COURSE_STRUCTURE)
+const courseText = {
+    pt: [
+        { title: "0. Introdução", lessons: [...], exercises: [] },
+        { title: "1. Módulo X", lessons: [...], exercises: [
+            { question: "...", options: [...], explanation: "..." },  // SEM correct
+            // ...
+        ]},
+        { title: "📝 Revisão Final", lessons: [...], exercises: [] },
+        { title: "🎯 Simulado Final", lessons: [{ title: "...", content: `` }], exercises: [] }
+    ],
+    en: [
+        // Espelho exato do PT, mesma estrutura, conteúdo em inglês
+    ]
+};
+
+// 3. buildCourseData: mescla os dois (NÃO MODIFICAR)
+function buildCourseData(lang) { ... }
+```
+
+**Regras críticas:**
+- O nº de módulos em `courseText.pt`, `courseText.en` e `COURSE_STRUCTURE.modules` DEVEM ser iguais
+- O nº de exercises em `courseText[lang][i].exercises` DEVE igualar `COURSE_STRUCTURE.modules[i].exercises.length`
+- O módulo com `isSimulado: true` DEVE ser o último — seu `lessons[0].content` fica vazio (renderizado pelo engine)
+
+---
+
+## Estrutura dos Módulos (courseText)
+
+```javascript
+// Cada entrada em courseText.pt[i] e courseText.en[i]:
+{
+    title: "1. Nome do Módulo",          // Prefixo numérico + nome descritivo
+    lessons: [
+        {
+            title: "Título da Lição",
+            content: `HTML bruto`        // Template literal com HTML
+        }
+    ],
+    exercises: [                         // Array (pode ser [])
+        {
+            // NÃO incluir "correct" aqui — fica em COURSE_STRUCTURE.modules[i].exercises[j].correct
+            question: "Texto da pergunta",
+            options: ["A", "B", "C", "D"],  // SEMPRE 4 opções
+            explanation: "HTML com explicação"
+        }
+    ]
+}
 ```
 
 ### Mapa de Módulos Padrão
 
-| Posição | Tipo | Lições | Exercícios |
-|---------|------|--------|------------|
-| **Módulo 0** — Introdução | Landing page com componentes especiais | 1 | `[]` |
-| **Módulos 1 a N** — Conteúdo | Baseados nos skills measured oficiais | 2-3 por módulo | 5-15 por módulo |
-| **Último Módulo** — Revisão Final | Guia rápido / cheat-sheet | 1 | `[]` |
+| Posição | Tipo | Lições | Exercícios | COURSE_STRUCTURE |
+|---------|------|--------|------------|------------------|
+| **Módulo 0** — Introdução | Landing page com componentes especiais | 1 | `[]` | `{ id: 0, duration: "15 min", lessonCount: 1, exercises: [] }` |
+| **Módulos 1 a N** — Conteúdo | Baseados nos skills measured oficiais | 2-3 por módulo | 5-15 por módulo | `{ id: N, duration: "X min", lessonCount: Y, exercises: [{correct:0}, ...] }` |
+| **Penúltimo Módulo** — Revisão Final | Guia rápido / cheat-sheet | 1 | `[]` | `{ id: N, duration: "20 min", lessonCount: 1, exercises: [] }` |
+| **Último Módulo** — Simulado Final | Engine de prova completa | 1 (conteúdo vazio) | `[]` | `{ id: N, duration: "45 min", lessonCount: 1, exercises: [], isSimulado: true }` |
 
 ---
 
@@ -200,7 +273,229 @@ Cada classe tem um significado pedagógico **fixo e obrigatório**. NUNCA trocar
 
 ---
 
-## Padrão Pedagógico por Tópico
+## Módulo Simulado Final (Obrigatório)
+
+Todo curso gerado DEVE incluir um módulo final de simulado completo — prova no estilo real da Microsoft, embutida no próprio arquivo HTML.
+
+### 1. COURSE_STRUCTURE — Adicionar Entrada com Flag
+
+No array `COURSE_STRUCTURE.modules`, após o módulo de Revisão Final:
+
+```javascript
+{ id: N, duration: "45 min", lessonCount: 1, exercises: [], isSimulado: true }
+```
+
+A flag `isSimulado: true` faz `renderModules()` delegar para `initSimuladoModule()` em vez do rendering normal.
+
+### 2. courseText PT e EN — Título do Módulo
+
+```javascript
+// courseText.pt:
+{ title: "🎯 N. Simulado Final — Prova Completa", lessons: [{ title: "Simulado Oficial {CERT}", content: `` }], exercises: [] }
+
+// courseText.en:
+{ title: "🎯 N. Final Exam — Full Practice Test", lessons: [{ title: "Official {CERT} Practice Exam", content: `` }], exercises: [] }
+```
+
+O `content` fica vazio — a tela é renderizada 100% via JS pelo exam engine.
+
+### 3. SIMULADO_CONFIG
+
+```javascript
+const SIMULADO_CONFIG = {
+    timeLimit: 45,          // minutos (use o tempo real do exame)
+    passScore: 700,         // pontuação de aprovação (padrão Microsoft: 700/1000)
+    totalScore: 1000,       // pontuação máxima
+    questionCount: 40       // número de questões
+};
+```
+
+### 4. SIMULADO_DOMAINS
+
+Mapeie os domínios dos **skills measured** oficiais da certificação:
+
+```javascript
+const SIMULADO_DOMAINS = [
+    { id: 0, pt: "Nome do Domínio em PT", en: "Domain Name in EN", weight: "35–40%", color: "#3182ce", icon: "💡" },
+    { id: 1, pt: "...", en: "...", weight: "35–40%", color: "#48bb78", icon: "🔧" },
+    { id: 2, pt: "...", en: "...", weight: "20–25%", color: "#ed8936", icon: "🚀" }
+];
+```
+
+- **Cores sugeridas:** `#3182ce` (azul), `#48bb78` (verde), `#ed8936` (laranja), `#9f7aea` (roxo), `#e53e3e` (vermelho)
+- O peso de cada domínio guia a **distribuição de questões**
+
+### 5. SIMULADO_QUESTIONS — 40 questões
+
+Distribua as 40 questões proporcionalmente ao peso de cada domínio. Mix obrigatório de tipos:
+
+| Tipo | Qtd mínima | Qtd máxima | Quando usar |
+|------|-----------|------------|-------------|
+| `single` | 20 | 26 | Sempre — base da prova |
+| `multi` | 4 | 8 | "Selecione 2 respostas" — exige múltiplos corretos |
+| `match` | 2 | 4 | Relacionar 4 pares conceito/definição |
+| `order` | 2 | 4 | Sequência de etapas/processo |
+| `categorize` | 1 | 2 | Classificar 4-6 itens em 2-3 categorias |
+
+#### Schema de Cada Tipo
+
+```javascript
+// SINGLE — escolha única
+{
+    id: 1, domain: 0,    // domain = índice em SIMULADO_DOMAINS
+    type: 'single',
+    scenario: `Contexto opcional...`,   // omitir se desnecessário
+    question: "Uma empresa precisa... Qual serviço é mais adequado?",
+    options: ["Opção A", "Opção B", "Opção C", "Opção D"],
+    correct: 2,          // índice 0-based da opção correta
+    explanation: "A opção C está correta porque... A é incorreta pois... B é incorreta pois..."
+}
+
+// MULTI — múltipla escolha
+{
+    id: 9, domain: 1,
+    type: 'multi',
+    question: "Quais DUAS afirmações sobre X são verdadeiras?",
+    options: ["A", "B", "C", "D"],
+    correct: [1, 3],     // array de índices 0-based
+    explanation: "B e D estão corretas porque..."
+}
+
+// MATCH — arrastar pares
+{
+    id: 11, domain: 0,
+    type: 'match',
+    question: "Associe cada técnica ao seu objetivo:",
+    pairs: [
+        { id: 0, source: "Prompt Engineering", target: "Moldar o comportamento do modelo sem treino" },
+        { id: 1, source: "Fine-tuning",         target: "Ajustar pesos do modelo com dados próprios" },
+        { id: 2, source: "RAG",                 target: "Fundamentar respostas em dados externos" },
+        { id: 3, source: "Token",               target: "Unidade mínima de processamento do modelo" }
+    ],
+    explanation: "Prompt Engineering usa instruções no contexto. Fine-tuning retreina o modelo..."
+}
+
+// ORDER — ordenar etapas
+{
+    id: 14, domain: 0,
+    type: 'order',
+    question: "Ordene as etapas do ciclo de vida de um modelo de ML:",
+    items: [
+        { id: 0, text: "Coletar e preparar dados" },
+        { id: 1, text: "Definir o problema" },
+        { id: 2, text: "Treinar o modelo" },
+        { id: 3, text: "Avaliar e validar" },
+        { id: 4, text: "Implantar e monitorar" }
+    ],
+    correctOrder: [1, 0, 2, 3, 4],   // ids na ordem correta
+    explanation: "O ciclo começa com definição do problema, seguida de coleta de dados..."
+}
+
+// CATEGORIZE — classificar em categorias
+{
+    id: 26, domain: 1,
+    type: 'categorize',
+    question: "Classifique cada produto na sua categoria correta:",
+    categories: [
+        { id: "m365", label: "Microsoft 365 Copilot" },
+        { id: "studio", label: "Copilot Studio" },
+        { id: "foundry", label: "Azure AI Foundry" }
+    ],
+    items: [
+        { id: 0, text: "Word Copilot", correctCategory: "m365" },
+        { id: 1, text: "Criar agente personalizado", correctCategory: "studio" },
+        { id: 2, text: "Deploy de LLM customizado", correctCategory: "foundry" },
+        { id: 3, text: "Teams Copilot", correctCategory: "m365" },
+        { id: 4, text: "Automatizar fluxo com AI", correctCategory: "studio" },
+        { id: 5, text: "Avaliação de modelos", correctCategory: "foundry" }
+    ],
+    explanation: "M365 Copilot integra-se aos apps do Office. Copilot Studio cria agentes..."
+}
+```
+
+#### Regras de Qualidade das Questões
+
+1. **Dificuldade superior** aos exercícios dos módulos — questões de simulado são mais difíceis
+2. **Cenários reais de empresa** — "Uma empresa de varejo precisa..."
+3. **Distractores plausíveis** — as opções erradas devem parecer razoáveis
+4. **Questões negativas** — inclua 2-4 questões com "qual NÃO é", "EXCETO"
+5. **Cobertura transversal** — algumas questões misturam 2 domínios
+6. **Explicações completas** — cada `explanation` deve justificar a correta E as incorretas
+7. **IDs sequenciais** de 1 a 40
+8. **Distribuição por domínio** proporcional ao peso (ex: domínio 35-40% → ~16 questões de 40)
+
+### 6. Traduções — Adicionar Chaves de Simulado
+
+As funções `translations.pt` e `translations.en` devem incluir estas chaves (copiar do AB-731.html como canônico):
+
+```javascript
+// Chaves obrigatórias (já no engine):
+sim_tab, sim_title, sim_subtitle, sim_start, sim_q_of, sim_q_label, sim_flag, sim_unflag,
+sim_prev, sim_next, sim_submit, sim_submit_confirm, sim_time_up,
+sim_score_title, sim_pass, sim_fail, sim_pass_score, sim_correct_count, sim_wrong_count,
+sim_skipped_count, sim_time_taken, sim_domain_chart_title, sim_domain_chart_sub,
+sim_verdict_excellent, sim_verdict_good, sim_verdict_improve, sim_verdict_critical,
+sim_rec_title, sim_review_btn, sim_retry_btn, sim_review_title,
+sim_filter_all, sim_filter_correct, sim_filter_wrong, sim_filter_skipped, sim_back_results,
+sim_type_single, sim_type_multi, sim_type_match, sim_type_order, sim_type_categorize,
+sim_drag_source, sim_drag_targets, sim_drag_placeholder, sim_order_instruction, sim_categorize_pool_label,
+sim_multi_select_hint, sim_domain_passing_note, sim_answer_correct, sim_answer_wrong,
+sim_correct_answer, sim_skipped_label, sim_meta_time, sim_meta_questions, sim_meta_pass,
+sim_meta_score, sim_meta_min, sim_instructions_title, sim_instructions
+```
+
+### 7. Engine JS — Já Embutido no template.html
+
+O engine completo (CSS `.sim-*` + todas as funções JS do simulado) já está embutido no `agent_certificacao/template.html`. **Ao copiar o template integralmente, o engine vem incluso — não é mais necessário copiar do AB-731.html.**
+
+Os placeholders do engine que o agente DEVE preencher são:
+
+| Placeholder | Onde | Exemplo |
+|-------------|------|---------|
+| `SIMULADO_CONFIG` | JS | `{ timeLimit: 45, passScore: 700, totalScore: 1000, questionCount: 40 }` |
+| `SIMULADO_DOMAINS` | JS | Array com domínios do exame |
+| `SIMULADO_QUESTIONS` | JS | Array com 40+ questões reais |
+| `SIM_STORAGE_KEY` | JS | `'dp900_simulado_state'` |
+| `sim_title` em translations | JS | `"Simulado Oficial DP-900"` |
+| `sim_instructions` em translations | JS | Array com instruções (usar tempo/qtd reais) |
+
+O `renderModules()` do template já inclui a detecção `isSimulado: true` com a ordem correta:
+```javascript
+// CRITICAL: appendChild BEFORE initSimuladoModule
+if (COURSE_STRUCTURE.modules[moduleIndex].isSimulado) {
+    modulesContainer.appendChild(moduleDiv);
+    initSimuladoModule(moduleDiv);
+    return;
+}
+```
+
+### 8. Revisão de Questões — Comportamento Obrigatório para Drag Types
+
+A função `showExamReview` DEVE exibir a resposta do usuário nas questões de arrastar (match, order, categorize), não apenas a resposta correta. Padrão obrigatório:
+
+- **Se INCORRETA:** mostra bloco vermelho com a resposta do usuário (item a item com ✅/❌) + bloco verde com a resposta correta abaixo
+- **Se CORRETA:** mostra apenas bloco verde com a resposta do usuário — não duplica a resposta correta
+- **Se não respondida:** mostra bloco cinza com texto "Não respondida"
+
+Detalhes por tipo:
+
+| Tipo | Como exibir resposta do usuário |
+|------|---------------------------------|
+| `order` | Lista numerada com ✅ na posição certa, ❌ na posição errada |
+| `match` | Cada par: `✅/❌ [item colocado] → [alvo]` |
+| `categorize` | Cada item: `✅/❌/⬜ [item] → [categoria onde foi colocado]` (⬜ = não classificado) |
+
+Este comportamento já está implementado no AB-731.html — ao copiar o engine integralmente, ele vem incluso. **Não simplifique** removendo a exibição da resposta do usuário.
+
+### 9. STORAGE_KEY para Simulado
+
+Use prefixo específico da cert para evitar conflito entre cursos:
+
+```javascript
+const SIM_STORAGE_KEY = '{cert_lower}_simulado_state';  // ex: 'dp900_simulado_state'
+```
+
+---
 
 Cada conceito dentro de uma lição DEVE seguir este padrão:
 
@@ -397,4 +692,6 @@ Ao gerar o curso, NÃO modifique o CSS nem o JS — eles já suportam ambos os t
 - NÃO invente serviços ou recursos que não existem
 - NÃO gere exercícios triviais — sempre baseados em cenário
 - NÃO omita os pesos dos skills measured nos módulos
+- NÃO omita o módulo Simulado Final — é obrigatório em todo curso gerado
 - SEMPRE leia o `agent_certificacao/template.html` antes de gerar
+- SEMPRE copie o exam engine (CSS + JS) do AB-731.html para o novo curso

@@ -1147,6 +1147,330 @@
         }
 
         /* ==========================================
+           SIMULADO FINAL — EXAM ENGINE STYLES
+           ========================================== */
+
+        /* --- Screens --- */
+        .sim-screen { display: none; }
+        .sim-screen.active { display: block; }
+
+        /* --- Intro Screen --- */
+        .sim-intro-hero {
+            background: linear-gradient(135deg, #1a365d 0%, #2c5282 100%);
+            color: white; padding: 40px; border-radius: 12px; margin-bottom: 32px; text-align: center;
+        }
+        .sim-intro-hero h2 { color: white; font-size: 1.8em; margin-bottom: 8px; }
+        .sim-intro-hero p { color: rgba(255,255,255,0.88); font-size: 1.1em; margin: 0; }
+        .sim-meta-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+            gap: 16px; margin: 28px 0;
+        }
+        .sim-meta-item {
+            background: var(--bg-card-alt); border: 1px solid var(--border);
+            border-radius: 10px; padding: 20px 16px; text-align: center;
+        }
+        .sim-meta-item .sim-meta-icon { font-size: 1.8em; margin-bottom: 8px; }
+        .sim-meta-item .sim-meta-value { font-size: 1.3em; font-weight: 700; color: var(--text-primary); }
+        .sim-meta-item .sim-meta-label { font-size: 0.8em; color: var(--text-muted); margin-top: 2px; }
+        .sim-domains-list { margin: 24px 0; }
+        .sim-domain-item {
+            display: flex; align-items: center; gap: 14px;
+            background: var(--bg-card-alt); border: 1px solid var(--border);
+            border-radius: 8px; padding: 14px 18px; margin-bottom: 10px;
+        }
+        .sim-domain-dot { width: 12px; height: 12px; border-radius: 50%; flex-shrink: 0; }
+        .sim-domain-name { font-weight: 600; color: var(--text-body); flex: 1; }
+        .sim-domain-weight { font-size: 0.85em; color: var(--text-muted); font-weight: 500; }
+        .sim-instructions { background: var(--tip-bg); border-left: 4px solid var(--tip-border); border-radius: 8px; padding: 20px 24px; margin: 24px 0; color: var(--tip-text); }
+        .sim-instructions ul { margin: 10px 0 0 20px; }
+        .sim-instructions li { margin-bottom: 6px; font-size: 0.95em; }
+        .sim-start-btn {
+            background: linear-gradient(135deg, #2c5282 0%, #3182ce 100%);
+            color: white; border: none; padding: 18px 60px; border-radius: 10px;
+            font-size: 1.15em; font-weight: 700; cursor: pointer; display: block;
+            margin: 32px auto 0; box-shadow: 0 4px 14px rgba(49,130,206,0.35);
+            transition: all 0.2s ease;
+        }
+        .sim-start-btn:hover { transform: translateY(-2px); box-shadow: 0 6px 20px rgba(49,130,206,0.45); }
+
+        /* --- Exam Screen --- */
+        .sim-exam-header {
+            display: flex; align-items: center; justify-content: space-between;
+            background: var(--bg-card-alt); border: 1px solid var(--border);
+            border-radius: 10px; padding: 14px 20px; margin-bottom: 20px; gap: 16px;
+        }
+        .sim-timer {
+            font-size: 1.25em; font-weight: 700; color: var(--accent);
+            font-variant-numeric: tabular-nums; min-width: 70px; text-align: center;
+        }
+        .sim-timer.warning { color: var(--danger); animation: pulse 1s infinite; }
+        @keyframes pulse { 0%,100% { opacity: 1; } 50% { opacity: 0.5; } }
+        .sim-q-counter { color: var(--text-muted); font-size: 0.9em; font-weight: 500; }
+        .sim-flag-btn {
+            background: none; border: 1.5px solid var(--border); border-radius: 6px;
+            padding: 6px 12px; cursor: pointer; color: var(--text-muted); font-size: 0.85em;
+            transition: all 0.2s; display: flex; align-items: center; gap: 5px;
+        }
+        .sim-flag-btn.flagged { border-color: var(--warning-accent); color: var(--warning-accent); background: var(--recall-bg); }
+        .sim-flag-btn:hover { border-color: var(--warning-accent); color: var(--warning-accent); }
+
+        /* Timer progress bar */
+        .sim-timer-bar { height: 4px; background: var(--border); border-radius: 2px; margin-bottom: 20px; overflow: hidden; }
+        .sim-timer-fill { height: 100%; background: var(--accent); transition: width 1s linear; border-radius: 2px; }
+        .sim-timer-fill.warning { background: var(--danger); }
+
+        /* Question area */
+        .sim-question-area { margin-bottom: 24px; }
+        .sim-question-type-badge {
+            display: inline-flex; align-items: center; gap: 5px;
+            background: var(--bg-input); border: 1px solid var(--border);
+            border-radius: 20px; padding: 4px 12px; font-size: 0.78em;
+            font-weight: 600; color: var(--text-muted); margin-bottom: 14px;
+        }
+        .sim-scenario {
+            background: var(--example-bg); border-left: 4px solid var(--example-border);
+            border-radius: 8px; padding: 18px 22px; margin-bottom: 18px;
+            color: var(--example-text); font-size: 0.95em; line-height: 1.7;
+        }
+        .sim-scenario::before { content: "📋 CENÁRIO"; display: block; font-weight: 700; font-size: 0.82em; margin-bottom: 8px; color: var(--example-border); letter-spacing: 0.5px; }
+        .sim-q-text { font-weight: 600; font-size: 1.05em; color: var(--text-body); margin-bottom: 18px; line-height: 1.6; }
+        .sim-multi-hint { font-size: 0.82em; color: var(--accent); font-weight: 600; margin-bottom: 12px; }
+
+        /* Options (single/multi) */
+        .sim-options { list-style: none; margin: 0; }
+        .sim-option {
+            display: flex; align-items: flex-start; gap: 12px;
+            background: var(--bg-card); border: 2px solid var(--border);
+            border-radius: 8px; padding: 14px 18px; margin-bottom: 10px;
+            cursor: pointer; transition: all 0.2s; line-height: 1.55;
+        }
+        .sim-option:hover { border-color: var(--accent); background: var(--bg-hover); }
+        .sim-option.selected { border-color: var(--accent); background: var(--tip-bg); }
+        .sim-option input { width: 18px; height: 18px; flex-shrink: 0; margin-top: 2px; cursor: pointer; accent-color: var(--accent); }
+        .sim-option label { cursor: pointer; flex: 1; color: var(--text-body); }
+
+        /* --- Drag-and-Drop --- */
+        /* Match type */
+        .sim-match-container { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 8px 0; }
+        .sim-match-pool-label, .sim-match-targets-label { font-size: 0.82em; font-weight: 700; color: var(--text-muted); letter-spacing: 0.5px; margin-bottom: 8px; text-transform: uppercase; }
+        .sim-match-pool { display: flex; flex-direction: column; gap: 8px; }
+        .sim-match-item {
+            background: var(--bg-card); border: 2px solid var(--accent);
+            border-radius: 8px; padding: 10px 14px; cursor: grab; user-select: none;
+            touch-action: none; font-size: 0.92em; font-weight: 500; color: var(--text-body);
+            transition: box-shadow 0.15s, opacity 0.15s; min-height: 44px;
+            display: flex; align-items: center;
+        }
+        .sim-match-item:hover { box-shadow: 0 2px 8px var(--accent-shadow); }
+        .sim-match-item.dragging { opacity: 0.35; cursor: grabbing; }
+        .sim-match-item.placed { border-color: var(--success); background: var(--example-bg); color: var(--example-text); }
+        .sim-match-targets { display: flex; flex-direction: column; gap: 8px; }
+        .sim-match-target-row { display: flex; flex-direction: column; gap: 4px; }
+        .sim-match-target-label { font-size: 0.82em; color: var(--text-secondary); font-weight: 500; line-height: 1.4; }
+        .sim-match-slot {
+            min-height: 44px; border: 2px dashed var(--border); border-radius: 8px;
+            padding: 6px; transition: border-color 0.15s, background 0.15s;
+            display: flex; align-items: center;
+        }
+        .sim-match-slot.over { border-color: var(--accent); background: var(--tip-bg); border-style: solid; }
+        .sim-match-slot.filled { border-style: solid; border-color: var(--success); background: var(--example-bg); }
+        .sim-match-slot-placeholder { color: var(--text-muted); font-size: 0.82em; padding: 4px 8px; font-style: italic; }
+
+        /* Order type */
+        .sim-order-list { display: flex; flex-direction: column; gap: 8px; margin: 8px 0; }
+        .sim-order-item {
+            display: flex; align-items: center; gap: 12px;
+            background: var(--bg-card); border: 2px solid var(--border);
+            border-radius: 8px; padding: 12px 16px; cursor: grab; user-select: none;
+            touch-action: none; transition: box-shadow 0.15s, opacity 0.15s; min-height: 44px;
+        }
+        .sim-order-item:hover { border-color: var(--border-hover); box-shadow: var(--shadow-sm); }
+        .sim-order-item.dragging { opacity: 0.35; cursor: grabbing; }
+        .sim-order-handle { color: var(--text-muted); font-size: 1.1em; flex-shrink: 0; user-select: none; }
+        .sim-order-num { font-weight: 700; color: var(--accent); font-size: 0.95em; min-width: 22px; flex-shrink: 0; }
+        .sim-order-text { flex: 1; color: var(--text-body); font-size: 0.95em; line-height: 1.5; }
+        .sim-order-drop-indicator { height: 3px; background: var(--accent); border-radius: 2px; margin: -4px 0; opacity: 0; transition: opacity 0.15s; pointer-events: none; }
+        .sim-order-drop-indicator.visible { opacity: 1; }
+
+        /* Categorize type */
+        .sim-categorize-pool {
+            display: flex; flex-wrap: wrap; gap: 8px; margin-bottom: 20px;
+            min-height: 52px; padding: 10px; border: 2px dashed var(--border);
+            border-radius: 10px; background: var(--bg-card-alt);
+        }
+        .sim-categorize-pool.over { border-color: var(--accent); background: var(--tip-bg); }
+        .sim-categorize-item {
+            background: var(--bg-card); border: 2px solid var(--accent);
+            border-radius: 6px; padding: 8px 14px; cursor: grab; user-select: none;
+            touch-action: none; font-size: 0.88em; font-weight: 500; color: var(--text-body);
+            transition: box-shadow 0.15s, opacity 0.15s; min-height: 44px;
+            display: flex; align-items: center;
+        }
+        .sim-categorize-item:hover { box-shadow: 0 2px 6px var(--accent-shadow); }
+        .sim-categorize-item.dragging { opacity: 0.35; cursor: grabbing; }
+        .sim-categorize-buckets { display: grid; grid-template-columns: repeat(auto-fit, minmax(180px, 1fr)); gap: 14px; }
+        .sim-bucket {
+            border: 2px solid var(--border); border-radius: 10px; min-height: 100px;
+            transition: border-color 0.15s, background 0.15s;
+        }
+        .sim-bucket.over { border-color: var(--accent); background: var(--tip-bg); }
+        .sim-bucket-header {
+            padding: 10px 14px; font-weight: 700; font-size: 0.88em;
+            background: var(--bg-card-alt); border-bottom: 1px solid var(--border);
+            border-radius: 8px 8px 0 0; color: var(--text-body);
+        }
+        .sim-bucket-body { padding: 10px; display: flex; flex-direction: column; gap: 6px; min-height: 60px; }
+
+        /* Ghost element during drag */
+        .sim-drag-ghost {
+            position: fixed; pointer-events: none; z-index: 9999; opacity: 0.9;
+            transform: rotate(2deg) scale(1.04);
+            box-shadow: 0 8px 24px rgba(0,0,0,0.18); border-radius: 8px;
+        }
+
+        /* --- Nav Grid --- */
+        .sim-nav-section { margin-bottom: 20px; }
+        .sim-nav-label { font-size: 0.82em; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 0.5px; margin-bottom: 10px; }
+        .sim-nav-grid { display: flex; flex-wrap: wrap; gap: 6px; }
+        .sim-nav-btn {
+            width: 36px; height: 36px; border-radius: 6px; border: 1.5px solid var(--border);
+            background: var(--bg-card-alt); color: var(--text-muted); font-size: 0.78em;
+            font-weight: 600; cursor: pointer; transition: all 0.15s; display: flex;
+            align-items: center; justify-content: center;
+        }
+        .sim-nav-btn:hover { border-color: var(--accent); color: var(--accent); }
+        .sim-nav-btn.answered { background: var(--accent); border-color: var(--accent); color: white; }
+        .sim-nav-btn.flagged { background: var(--recall-bg); border-color: var(--warning-accent); color: var(--warning-accent); }
+        .sim-nav-btn.current { box-shadow: 0 0 0 3px var(--accent-shadow); border-color: var(--accent); font-weight: 700; }
+        .sim-nav-btn.answered.flagged { background: var(--warning-accent); border-color: var(--warning-accent); color: white; }
+
+        /* --- Exam Navigation Buttons --- */
+        .sim-exam-nav { display: flex; gap: 12px; margin-top: 24px; padding-top: 20px; border-top: 1px solid var(--border); flex-wrap: wrap; }
+        .sim-nav-prev, .sim-nav-next {
+            flex: 1; padding: 13px 20px; border: none; border-radius: 8px; font-weight: 600;
+            font-size: 0.95em; cursor: pointer; transition: all 0.2s; min-width: 100px;
+        }
+        .sim-nav-prev { background: var(--border); color: var(--text-secondary); }
+        .sim-nav-prev:hover { background: var(--border-hover); }
+        .sim-nav-prev:disabled { opacity: 0.35; cursor: not-allowed; }
+        .sim-nav-next { background: var(--accent); color: white; }
+        .sim-nav-next:hover { background: var(--accent-hover); }
+        .sim-submit-btn {
+            background: var(--success); color: white; border: none; padding: 13px 28px;
+            border-radius: 8px; font-weight: 700; font-size: 0.95em; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .sim-submit-btn:hover { background: var(--success-hover); }
+
+        /* --- Score Report --- */
+        .sim-report-hero {
+            text-align: center; padding: 40px 24px; border-radius: 12px; margin-bottom: 32px;
+        }
+        .sim-report-hero.pass { background: linear-gradient(135deg, #1c4532 0%, #276749 100%); }
+        .sim-report-hero.fail { background: linear-gradient(135deg, #63171b 0%, #9b2c2c 100%); }
+        .sim-score-value { font-size: 4em; font-weight: 800; color: white; line-height: 1; }
+        .sim-score-max { font-size: 1.3em; color: rgba(255,255,255,0.7); margin-bottom: 16px; }
+        .sim-pass-badge {
+            display: inline-block; padding: 8px 28px; border-radius: 30px;
+            font-size: 1.1em; font-weight: 700; letter-spacing: 0.5px;
+        }
+        .sim-pass-badge.pass { background: rgba(255,255,255,0.2); color: white; border: 2px solid rgba(255,255,255,0.5); }
+        .sim-pass-badge.fail { background: rgba(255,255,255,0.15); color: rgba(255,255,255,0.9); border: 2px solid rgba(255,255,255,0.4); }
+        .sim-report-stats { display: flex; gap: 12px; justify-content: center; flex-wrap: wrap; margin-top: 20px; }
+        .sim-report-stat { color: rgba(255,255,255,0.8); font-size: 0.9em; }
+        .sim-report-stat span { font-weight: 700; color: white; }
+
+        /* Domain chart section */
+        .sim-domain-chart { margin-bottom: 32px; }
+        .sim-domain-chart h3 { font-size: 1.15em; font-weight: 700; color: var(--text-primary); margin-bottom: 6px; }
+        .sim-domain-chart-subtitle { font-size: 0.88em; color: var(--text-muted); margin-bottom: 20px; }
+        .sim-domain-row { margin-bottom: 20px; }
+        .sim-domain-row-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 8px; gap: 12px; }
+        .sim-domain-row-name { font-weight: 600; color: var(--text-body); font-size: 0.95em; display: flex; align-items: center; gap: 8px; }
+        .sim-domain-row-pct { font-size: 0.88em; font-weight: 700; color: var(--text-muted); white-space: nowrap; }
+        .sim-domain-bar-bg { height: 18px; background: var(--border); border-radius: 9px; overflow: hidden; }
+        .sim-domain-bar-fill { height: 100%; border-radius: 9px; transition: width 0.8s cubic-bezier(0.4,0,0.2,1); }
+        .sim-domain-verdict { font-size: 0.82em; margin-top: 5px; font-weight: 500; }
+        .sim-domain-verdict.good { color: var(--success); }
+        .sim-domain-verdict.ok { color: var(--warning-accent); }
+        .sim-domain-verdict.bad { color: var(--danger); }
+        .sim-domain-passing-note {
+            font-size: 0.82em; color: var(--text-muted); text-align: center;
+            margin-top: 12px; padding: 12px; background: var(--bg-card-alt); border-radius: 8px;
+        }
+
+        /* Recommendations */
+        .sim-recommendations { margin-bottom: 28px; }
+        .sim-recommendations h3 { font-size: 1.1em; font-weight: 700; color: var(--text-primary); margin-bottom: 14px; }
+        .sim-rec-item {
+            display: flex; align-items: flex-start; gap: 12px;
+            background: var(--warning-bg); border-left: 4px solid var(--danger);
+            border-radius: 8px; padding: 14px 18px; margin-bottom: 10px;
+        }
+        .sim-rec-item.ok { background: var(--example-bg); border-left-color: var(--success); }
+        .sim-rec-icon { font-size: 1.2em; flex-shrink: 0; }
+        .sim-rec-text { font-size: 0.9em; color: var(--text-body); line-height: 1.6; }
+        .sim-rec-text strong { color: var(--text-primary); }
+
+        /* Report actions */
+        .sim-report-actions { display: flex; gap: 14px; flex-wrap: wrap; margin-bottom: 32px; }
+        .sim-review-btn {
+            flex: 1; background: var(--accent); color: white; border: none; padding: 14px 24px;
+            border-radius: 8px; font-weight: 600; font-size: 1em; cursor: pointer; transition: all 0.2s; min-width: 160px;
+        }
+        .sim-review-btn:hover { background: var(--accent-hover); }
+        .sim-retry-btn {
+            flex: 1; background: var(--bg-card-alt); color: var(--text-body); border: 2px solid var(--border);
+            padding: 14px 24px; border-radius: 8px; font-weight: 600; font-size: 1em;
+            cursor: pointer; transition: all 0.2s; min-width: 160px;
+        }
+        .sim-retry-btn:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* Review section */
+        .sim-review-header { display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 12px; margin-bottom: 20px; }
+        .sim-review-title { font-size: 1.15em; font-weight: 700; color: var(--text-primary); }
+        .sim-review-filters { display: flex; gap: 8px; flex-wrap: wrap; }
+        .sim-filter-btn {
+            padding: 7px 16px; border-radius: 6px; border: 1.5px solid var(--border);
+            background: var(--bg-card-alt); color: var(--text-secondary); font-size: 0.85em;
+            font-weight: 600; cursor: pointer; transition: all 0.15s;
+        }
+        .sim-filter-btn:hover, .sim-filter-btn.active { border-color: var(--accent); color: var(--accent); background: var(--tip-bg); }
+        .sim-review-card {
+            background: var(--bg-card-alt); border: 2px solid var(--border);
+            border-radius: 10px; padding: 24px; margin-bottom: 20px;
+        }
+        .sim-review-card.correct { border-color: var(--success); }
+        .sim-review-card.incorrect { border-color: var(--danger); }
+        .sim-review-card.skipped { border-color: var(--text-muted); opacity: 0.75; }
+        .sim-review-q-header { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+        .sim-review-q-num { font-size: 0.78em; font-weight: 700; padding: 3px 10px; border-radius: 20px; flex-shrink: 0; margin-top: 2px; }
+        .sim-review-q-num.correct { background: var(--example-bg); color: var(--success); }
+        .sim-review-q-num.incorrect { background: var(--warning-bg); color: var(--danger); }
+        .sim-review-q-num.skipped { background: var(--bg-input); color: var(--text-muted); }
+        .sim-review-domain-tag {
+            font-size: 0.72em; font-weight: 700; padding: 2px 10px; border-radius: 20px;
+            background: var(--bg-input); color: var(--text-muted); margin-left: auto; white-space: nowrap;
+        }
+        .sim-review-q-text { font-weight: 600; font-size: 0.98em; color: var(--text-body); line-height: 1.55; }
+        .sim-review-options { margin: 14px 0; }
+        .sim-review-option { display: flex; align-items: flex-start; gap: 10px; padding: 10px 14px; border-radius: 6px; margin-bottom: 6px; font-size: 0.9em; color: var(--text-secondary); border: 1.5px solid transparent; }
+        .sim-review-option.user-correct { background: var(--example-bg); border-color: var(--success); color: var(--example-text); }
+        .sim-review-option.user-wrong { background: var(--warning-bg); border-color: var(--danger); color: var(--warning-text); }
+        .sim-review-option.missed-correct { background: var(--example-bg); border-color: var(--success); color: var(--example-text); opacity: 0.7; }
+        .sim-review-option-icon { font-size: 1em; flex-shrink: 0; }
+        .sim-review-explanation {
+            margin-top: 14px; padding: 14px 18px; background: var(--explanation-bg);
+            border-left: 4px solid var(--explanation-border); border-radius: 6px;
+            font-size: 0.9em; color: var(--text-body); line-height: 1.65;
+        }
+        .sim-review-explanation::before { content: "💬 EXPLICAÇÃO"; display: block; font-weight: 700; color: var(--accent); margin-bottom: 8px; font-size: 0.82em; letter-spacing: 0.5px; }
+        /* Drag review in review cards */
+        .sim-review-drag-answer { font-size: 0.9em; color: var(--text-body); padding: 12px 16px; background: var(--bg-card); border-radius: 8px; margin: 10px 0; border: 1.5px solid var(--border); }
+        .sim-review-drag-answer.correct { border-color: var(--success); background: var(--example-bg); color: var(--example-text); }
+        .sim-review-drag-answer.incorrect { border-color: var(--danger); background: var(--warning-bg); color: var(--warning-text); }
+
+        /* ==========================================
            RESPONSIVE
            ========================================== */
         @media (max-width: 768px) {
@@ -1193,6 +1517,14 @@
             .mark-complete {
                 width: 100%;
             }
+
+            /* Simulado responsive */
+            .sim-match-container { grid-template-columns: 1fr; }
+            .sim-meta-grid { grid-template-columns: repeat(2, 1fr); }
+            .sim-score-value { font-size: 3em; }
+            .sim-exam-nav { flex-direction: column; }
+            .sim-nav-prev, .sim-nav-next, .sim-submit-btn { width: 100%; }
+            .sim-report-actions { flex-direction: column; }
         }
     </style>
 </head>
@@ -1203,6 +1535,7 @@
             <div class="header-controls">
                 <button class="toggle-btn" id="themeToggle" onclick="toggleTheme()" title="Toggle theme">🌙</button>
                 <button class="toggle-btn" id="langToggle" onclick="toggleLanguage()" title="Toggle language">🇧🇷 PT</button>
+                <button class="toggle-btn" onclick="clearProgress()" title="Resetar todo o progresso" style="color:var(--danger);border-color:var(--danger)">🔄 Reset</button>
             </div>
             <h1><span class="icon">🧠</span>Minicurso AB-731: AI Transformation Leader</h1>
             <p class="subtitle" data-i18n="subtitle">Tudo que você precisa para passar na certificação - Resumido e Focado!</p>
@@ -1249,9 +1582,357 @@
                     { correct: 1 }, { correct: 1 }, { correct: 2 }, { correct: 1 },
                     { correct: 2 }, { correct: 1 }
                 ]},
-                { id: 4, duration: "20 min", lessonCount: 1, exercises: [] }
+                { id: 4, duration: "20 min", lessonCount: 1, exercises: [] },
+                { id: 5, duration: "45 min", lessonCount: 1, exercises: [], isSimulado: true }
             ]
         };
+
+        // ============================================================
+        // SIMULADO FINAL — CONFIG, DOMAINS & QUESTIONS
+        // ============================================================
+        const SIMULADO_CONFIG = { timeLimit: 45, passScore: 700, totalScore: 1000, questionCount: 40 };
+
+        const SIMULADO_DOMAINS = [
+            { id: 0, pt: "Valor de Negócio da IA Generativa", en: "Business Value of Generative AI", weight: "35–40%", color: "#3182ce", icon: "💡" },
+            { id: 1, pt: "Apps e Serviços de IA da Microsoft", en: "Microsoft AI Apps & Services",      weight: "35–40%", color: "#48bb78", icon: "🔧" },
+            { id: 2, pt: "Implementação e Adoção",            en: "Implementation & Adoption",          weight: "20–25%", color: "#ed8936", icon: "🚀" }
+        ];
+
+        const SIMULADO_QUESTIONS = [
+            // ── DOMÍNIO 0: Valor de Negócio da IA Generativa (16 questões) ─────────────────
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa de seguros deseja automaticamente redigir cartas de negação de sinistro personalizadas, explicando os motivos com base nas apólices do cliente. Qual abordagem de IA é a mais adequada?",
+                options: ["Machine Learning classificatório para categorizar os tipos de sinistro", "IA Generativa para criar texto original com base nos dados do cliente", "RPA (Robotic Process Automation) para preencher formulários automaticamente", "IA de visão computacional para analisar documentos físicos"],
+                correct: 1,
+                explanation: "<strong>IA Generativa!</strong><br><br>✅ Gera texto novo e personalizado com base nos dados específicos de cada cliente e apólice.<br><br>❌ ML classificatório: categoriza, não escreve cartas<br>❌ RPA: preenche formulários com dados fixos, não cria conteúdo dinâmico<br>❌ Visão computacional: analisa imagens, não redige texto"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Qual é a principal diferença entre um modelo de IA pré-treinado (pretrained) e um modelo fine-tuned?",
+                options: ["Modelos pré-treinados são gratuitos; fine-tuned sempre têm custo", "Modelos pré-treinados são genéricos e treinados em dados amplos; fine-tuned são ajustados com dados específicos do domínio", "Modelos pré-treinados só funcionam em inglês; fine-tuned suportam outros idiomas", "Fine-tuned substituem completamente o modelo base e o reescrevem do zero"],
+                correct: 1,
+                explanation: "<strong>Pré-treinado = genérico, Fine-tuned = especialista!</strong><br><br>✅ Fine-tuning parte de um modelo base e o adapta com dados de domínio específico — terminologia médica, jurídica, técnica, etc.<br><br>❌ Custo não é o critério de diferenciação<br>❌ Idioma não define a diferença<br>❌ Fine-tuning não reescreve do zero — ajusta os pesos existentes"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "Uma startup desenvolveu um assistente de IA que responde perguntas de clientes. Nos primeiros meses, vários usuários relataram que o sistema apresentou informações de preços e datas de lançamento incorretas, apresentadas com alta confiança.",
+                question: "Qual fenômeno descreve esse comportamento da IA?",
+                options: ["Bias (viés algorítmico)", "Underfitting do modelo", "Fabricação / Alucinação (Hallucination)", "Overfitting aos dados de treinamento"],
+                correct: 2,
+                explanation: "<strong>Fabricação / Hallucination!</strong><br><br>✅ A IA gera informações que parecem plausíveis mas são falsas — especialmente problemático para dados numéricos como preços e datas.<br><br>❌ Bias: tendência sistemática, não invenção de fatos específicos<br>❌ Underfitting: modelo que não aprendeu o suficiente (conceito de ML)<br>❌ Overfitting: modelo que memorizou dados de treinamento (conceito de ML)"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma organização quer que seu chatbot responda perguntas sobre políticas internas usando apenas os documentos oficiais da empresa, evitando informações inventadas. Qual técnica resolve isso?",
+                options: ["Few-shot prompting com exemplos gerais", "Fine-tuning do modelo com dados públicos da internet", "RAG (Retrieval-Augmented Generation) com os documentos internos", "Zero-shot prompting com instruções detalhadas"],
+                correct: 2,
+                explanation: "<strong>RAG — Retrieval-Augmented Generation!</strong><br><br>✅ RAG busca nos documentos reais da empresa antes de gerar a resposta, ancorando o output em fontes confiáveis e evitando fabricações.<br><br>❌ Few-shot/Zero-shot: técnicas de prompting que não acessam documentos externos<br>❌ Fine-tuning com dados públicos: não incorpora os documentos internos da empresa"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa recebe uma fatura de API de IA muito mais alta do que esperava. Após análise, identificou que os prompts enviados ao modelo eram extremamente longos. Qual é o principal mecanismo de custo em serviços de IA generativa?",
+                options: ["Número de usuários conectados simultaneamente", "Quantidade de tokens processados (input + output)", "Número de modelos diferentes acessados", "Velocidade de resposta do servidor"],
+                correct: 1,
+                explanation: "<strong>Tokens!</strong><br><br>✅ APIs de IA generativa cobram por token — cada ~4 caracteres em inglês equivale a 1 token. Prompts longos + respostas longas = custo alto.<br><br>❌ Usuários simultâneos: não é o driver primário de custo de API<br>❌ Número de modelos: cada modelo tem preço por token, não por acesso<br>❌ Velocidade: não afeta custo, apenas latência"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa de RH quer usar IA para triagem de currículos. Após implantação, percebem que o sistema rejeita sistematicamente candidatas mulheres para cargos de engenharia. O que está acontecendo?",
+                options: ["Fabricação (hallucination) do modelo", "Bias (viés) nos dados de treinamento", "Underfitting do modelo de classificação", "Problema de latência no processamento"],
+                correct: 1,
+                explanation: "<strong>Bias nos dados de treinamento!</strong><br><br>✅ Se os dados históricos de contratação refletem desigualdade de gênero, o modelo aprende e replica esse padrão — gerando discriminação sistemática.<br><br>❌ Fabricação: inventar informações, não padrão de rejeição<br>❌ Underfitting: modelo que não aprendeu, não que aprendeu errado<br>❌ Latência: problema de desempenho técnico"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Ao criar um prompt para IA generativa, um analista inclui três exemplos de input/output antes de fazer sua pergunta real. Como se chama essa técnica?",
+                options: ["Zero-shot prompting", "Chain-of-thought prompting", "Few-shot prompting", "System prompting"],
+                correct: 2,
+                explanation: "<strong>Few-shot prompting!</strong><br><br>✅ Few-shot = incluir alguns exemplos (few = poucos) de input→output no prompt para guiar o comportamento da IA.<br>• Zero-shot = sem exemplos<br>• One-shot = um exemplo<br>• Few-shot = 2-5 exemplos<br><br>❌ Chain-of-thought: pede que a IA explique o raciocínio passo a passo<br>❌ System prompting: configura o comportamento geral do assistente"
+            },
+            {
+                domain: 0, type: "multi",
+                question: "Selecione DUAS técnicas que ajudam a reduzir fabricações (hallucinations) em sistemas de IA generativa:",
+                options: ["RAG (Retrieval-Augmented Generation)", "Aumentar o parâmetro de temperatura do modelo", "Grounding com fontes de dados verificadas", "Usar modelos com mais parâmetros"],
+                correct: [0, 2],
+                explanation: "<strong>RAG e Grounding!</strong><br><br>✅ RAG: busca informações reais antes de gerar resposta<br>✅ Grounding: ancora as respostas em fontes verificáveis e confiáveis<br><br>❌ Temperatura maior: aumenta criatividade, mas também aumenta fabricações<br>❌ Modelos maiores: não garantem menos fabricações — apenas mais fluência"
+            },
+            {
+                domain: 0, type: "single",
+                scenario: "Uma empresa de manufatura deseja criar um modelo de IA que identifique defeitos em peças de produção através de imagens. O modelo precisa distinguir entre 12 tipos diferentes de defeitos.",
+                question: "Este caso de uso descreve qual tipo de IA?",
+                options: ["IA Generativa com processamento de imagens", "IA Discriminativa / Machine Learning para classificação", "Large Language Model (LLM) com visão multimodal", "Robotic Process Automation com OCR"],
+                correct: 1,
+                explanation: "<strong>IA Discriminativa / ML para Classificação!</strong><br><br>✅ Classificar imagens em categorias existentes (12 tipos de defeitos) é uma tarefa discriminativa — analisa e categoriza dados existentes, não cria conteúdo novo.<br><br>❌ IA Generativa: cria conteúdo novo — não classifica defeitos<br>❌ LLM multimodal: poderia descrever defeitos em texto, mas não é a abordagem ideal para classificação industrial<br>❌ RPA com OCR: lida com texto em documentos, não imagens de peças"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa quer implementar IA generativa mas preocupa-se com a privacidade dos dados dos clientes. Qual característica de segurança é fundamental para garantir que os dados não sejam usados para treinar modelos externos?",
+                options: ["Usar apenas modelos open source", "Implementar criptografia end-to-end nos prompts", "Garantir que os dados não saiam do tenant da organização (data residency)", "Desabilitar o histórico de conversas"],
+                correct: 2,
+                explanation: "<strong>Data Residency / Dados no tenant da organização!</strong><br><br>✅ Garantir que os dados fiquem dentro do ambiente controlado da empresa (Azure tenant) impede que sejam usados para treinar modelos de terceiros.<br><br>❌ Open source: não garante controle de dados<br>❌ Criptografia end-to-end: protege em trânsito, mas não impede uso para treinamento<br>❌ Desabilitar histórico: limita funcionalidade, não é solução de privacidade"
+            },
+            {
+                domain: 0, type: "match",
+                question: "Associe cada conceito de IA generativa à sua descrição correta:",
+                pairs: [
+                    { id: "a", source: "Prompt Engineering",          target: "Técnica de elaborar instruções eficazes para guiar a saída da IA" },
+                    { id: "b", source: "Fine-tuning",                  target: "Ajustar um modelo pré-treinado com dados específicos do domínio" },
+                    { id: "c", source: "RAG",                          target: "Combinar busca em documentos externos com geração de texto" },
+                    { id: "d", source: "Token",                        target: "Unidade básica de texto que define o custo de uso de APIs de IA" }
+                ],
+                explanation: "<strong>Conceitos fundamentais de IA Generativa:</strong><br>• Prompt Engineering: arte de criar instruções para a IA<br>• Fine-tuning: especializar um modelo base com seus dados<br>• RAG: buscar informações reais antes de gerar resposta<br>• Token: ~4 caracteres, unidade de cobrança das APIs"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Qual das seguintes afirmações sobre modelos de linguagem grande (LLMs) é INCORRETA?",
+                options: ["LLMs são treinados em grandes volumes de texto da internet e outras fontes", "LLMs podem gerar texto, código, traduções e resumos", "LLMs têm conhecimento perfeito e atualizado de todos os fatos do mundo", "LLMs podem ser fine-tuned para domínios específicos"],
+                correct: 2,
+                explanation: "<strong>LLMs NÃO têm conhecimento perfeito e atualizado!</strong><br><br>✅ LLMs têm um 'knowledge cutoff' — data de corte do treinamento. Informações posteriores não estão disponíveis sem RAG ou grounding.<br>Além disso, LLMs podem fabricar informações — não são enciclopédias infalíveis.<br><br>✅ As outras opções são verdadeiras: LLMs são treinados em big data, geram vários tipos de conteúdo e podem ser fine-tuned"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa quer garantir que sua solução de IA generativa responda apenas sobre tópicos relacionados ao negócio da empresa, recusando perguntas fora do escopo. Qual técnica de prompting resolve isso?",
+                options: ["Few-shot prompting com exemplos de respostas corretas", "System prompt com instruções de escopo e comportamento", "Aumentar o tamanho do contexto (context window)", "Fine-tuning com dados de perguntas fora do escopo"],
+                correct: 1,
+                explanation: "<strong>System Prompt!</strong><br><br>✅ O system prompt (prompt de sistema) é executado antes de cada conversa e define o comportamento, personalidade e restrições do assistente — ideal para limitar escopo.<br><br>❌ Few-shot: mostra exemplos, não define restrições de escopo globais<br>❌ Context window maior: aumenta memória, não restringe tópicos<br>❌ Fine-tuning: ajusta conhecimento, não define escopo de resposta diretamente"
+            },
+            {
+                domain: 0, type: "order",
+                question: "Organize as etapas do ciclo de vida de uma solução de Machine Learning na ordem correta:",
+                items: [
+                    { id: 0, text: "Definir o problema de negócio e os critérios de sucesso" },
+                    { id: 1, text: "Coletar e preparar os dados de treinamento" },
+                    { id: 2, text: "Treinar e avaliar o modelo" },
+                    { id: 3, text: "Implantar o modelo em produção" },
+                    { id: 4, text: "Monitorar o desempenho e retreinar quando necessário" }
+                ],
+                correctOrder: [0, 1, 2, 3, 4],
+                explanation: "<strong>Ciclo de vida de ML:</strong><br>1️⃣ Definir problema → 2️⃣ Coletar dados → 3️⃣ Treinar/Avaliar → 4️⃣ Implantar → 5️⃣ Monitorar/Retreinar<br><br>Sem uma definição clara do problema, nenhuma outra etapa faz sentido. O monitoramento fecha o loop — modelos degradam com o tempo e precisam ser atualizados."
+            },
+            {
+                domain: 0, type: "single",
+                question: "Uma empresa calcula o ROI de sua solução de IA generativa. Quais fatores são considerados custos DIRETOS de execução?",
+                options: ["Satisfação dos funcionários e adoção cultural", "Custo de tokens de API, hospedagem e armazenamento de dados", "Economia de tempo dos colaboradores em tarefas manuais", "Redução de erros humanos nos processos"],
+                correct: 1,
+                explanation: "<strong>Custo de tokens, hospedagem e armazenamento!</strong><br><br>✅ Esses são custos técnicos diretos e mensuráveis de operação de uma solução de IA:<br>• Tokens de API: custo por uso<br>• Hospedagem: servidores/cloud<br>• Armazenamento: dados e vectorstores<br><br>❌ Satisfação, economia de tempo, redução de erros: são BENEFÍCIOS (lado do ROI positivo), não custos"
+            },
+            {
+                domain: 0, type: "single",
+                question: "Qual técnica de prompting solicita que a IA explique seu raciocínio passo a passo antes de dar a resposta final, melhorando a precisão em problemas complexos?",
+                options: ["Few-shot prompting", "Zero-shot prompting", "Chain-of-thought prompting", "System prompting"],
+                correct: 2,
+                explanation: "<strong>Chain-of-Thought (CoT) Prompting!</strong><br><br>✅ CoT pede que a IA 'pense em voz alta' — explique cada etapa do raciocínio antes da conclusão. Isso melhora drasticamente a precisão em questões matemáticas, lógicas e de múltiplos passos.<br><br>❌ Few-shot: exemplos de input/output<br>❌ Zero-shot: sem exemplos<br>❌ System: define comportamento geral"
+            },
+
+            // ── DOMÍNIO 1: Apps e Serviços de IA da Microsoft (16 questões) ─────────────────
+            {
+                domain: 1, type: "single",
+                question: "Qual é a principal diferença entre Microsoft Copilot (gratuito) e Microsoft 365 Copilot (pago)?",
+                options: ["Microsoft Copilot usa GPT-3; M365 Copilot usa GPT-4", "Microsoft Copilot acessa dados públicos da web; M365 Copilot acessa os dados organizacionais via Microsoft Graph", "Microsoft Copilot está disponível apenas no Teams; M365 Copilot funciona em todos os apps", "Não há diferença técnica — apenas diferença de preço"],
+                correct: 1,
+                explanation: "<strong>Microsoft Graph é a chave!</strong><br><br>✅ M365 Copilot usa o Microsoft Graph para acessar emails, documentos, chats, calendários e dados organizacionais do usuário — o que o Copilot gratuito não faz.<br><br>❌ Versão do GPT não é o critério de diferenciação oficial<br>❌ Disponibilidade no Teams: ambos estão no Teams<br>❌ Há diferença técnica fundamental: acesso a dados organizacionais"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Uma empresa de varejo deseja criar um assistente de IA personalizado que responda perguntas sobre o catálogo de produtos, políticas de devolução e status de pedidos, integrado ao site e WhatsApp da empresa.",
+                question: "Qual ferramenta Microsoft é mais adequada para construir essa solução?",
+                options: ["Microsoft 365 Copilot", "Azure OpenAI Service diretamente", "Microsoft Copilot Studio", "Microsoft Fabric"],
+                correct: 2,
+                explanation: "<strong>Microsoft Copilot Studio!</strong><br><br>✅ Copilot Studio permite criar copilots personalizados sem código, com conectores para sistemas externos, ideal para chatbots em múltiplos canais (web, WhatsApp, Teams).<br><br>❌ M365 Copilot: assistente para produtividade interna, não para clientes externos<br>❌ Azure OpenAI direto: requer desenvolvimento técnico extenso<br>❌ Microsoft Fabric: plataforma de análise de dados, não criação de chatbots"
+            },
+            {
+                domain: 1, type: "single",
+                question: "O Microsoft Graph é uma API fundamental para o Microsoft 365 Copilot. O que ela representa?",
+                options: ["Uma ferramenta de visualização de dados analíticos do Microsoft Azure", "A 'tecelagem' que conecta dados do usuário em todo o ecossistema Microsoft 365 (emails, chats, arquivos, calendário)", "Um banco de dados de grafos para armazenar relações entre entidades", "Uma API exclusiva para integrar aplicativos de terceiros ao Azure"],
+                correct: 1,
+                explanation: "<strong>Microsoft Graph = ecossistema de dados do M365!</strong><br><br>✅ O Graph é a camada que conecta e dá acesso programático a todos os dados do M365: Outlook, Teams, SharePoint, OneDrive, Calendário — permitindo que o Copilot tenha contexto completo do trabalho do usuário.<br><br>❌ Não é para visualização de dados analíticos<br>❌ Não é um banco de dados de grafos como Neo4j<br>❌ Não é exclusivo para terceiros — é fundamental para os próprios serviços Microsoft"
+            },
+            {
+                domain: 1, type: "match",
+                question: "Associe cada ferramenta Microsoft ao seu principal caso de uso:",
+                pairs: [
+                    { id: "a", source: "Microsoft 365 Copilot",  target: "Aumentar produtividade em Word, Excel, Teams e Outlook com IA" },
+                    { id: "b", source: "Copilot Studio",          target: "Criar copilots e chatbots personalizados sem código" },
+                    { id: "c", source: "Microsoft Foundry",       target: "Desenvolver e implantar soluções de IA em escala para desenvolvedores" },
+                    { id: "d", source: "Azure AI Search",         target: "Indexar e buscar conhecimento empresarial para soluções RAG" }
+                ],
+                explanation: "<strong>Mapa de ferramentas Microsoft AI:</strong><br>• M365 Copilot → produtividade pessoal/organizacional<br>• Copilot Studio → chatbots personalizados low-code<br>• Microsoft Foundry → plataforma de desenvolvimento de IA (antes Azure AI Studio + serviços unificados)<br>• Azure AI Search → motor de busca vetorial para RAG"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual é a função do Copilot Researcher no Microsoft 365?",
+                options: ["Pesquisar apenas em documentos internos da organização via SharePoint", "Realizar pesquisas profundas na web e em dados organizacionais, produzindo relatórios detalhados", "Substituir o Bing Search para consultas simples", "Criar agentes autônomos para automatizar tarefas de pesquisa repetitivas"],
+                correct: 1,
+                explanation: "<strong>Researcher = pesquisa profunda e relatórios!</strong><br><br>✅ O Copilot Researcher realiza investigações aprofundadas combinando fontes da web e dados organizacionais, produzindo relatórios completos com citações — similar a um analista de pesquisa.<br><br>❌ Não se limita a documentos internos<br>❌ Não é um substituto simples do Bing<br>❌ Researcher é uma capacidade de pesquisa, não um orquestrador de agentes"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Um desenvolvedor precisa escolher entre 'Build' (construir do zero), 'Buy' (comprar produto pronto) ou 'Extend' (estender solução existente) para uma necessidade de IA. Quando 'Extend' é a melhor escolha?",
+                options: ["Quando a empresa precisa de controle total sobre o modelo de IA", "Quando existe uma solução Microsoft pronta que atende 80% das necessidades, mas faltam personalizações específicas", "Quando o orçamento é extremamente limitado e não permite licenças", "Quando a necessidade é completamente única e sem precedentes no mercado"],
+                correct: 1,
+                explanation: "<strong>Extend = personalizar sobre base existente!</strong><br><br>✅ 'Extend' é ideal quando uma solução Microsoft (como M365 Copilot ou Copilot Studio) já resolve a maior parte da necessidade, mas requer conectores, plugins ou personalizações adicionais.<br><br>❌ Controle total → Build<br>❌ Orçamento limitado → Buy (mais barato que Build)<br>❌ Necessidade única → Build"
+            },
+            {
+                domain: 1, type: "multi",
+                question: "Selecione DOIS serviços incluídos no portfólio Azure AI Services (antigos Cognitive Services):",
+                options: ["Azure AI Vision (análise de imagens)", "Microsoft Fabric (análise de dados)", "Azure AI Language (processamento de linguagem natural)", "Power Automate (automação de fluxos)"],
+                correct: [0, 2],
+                explanation: "<strong>Azure AI Vision e Azure AI Language!</strong><br><br>✅ Azure AI Vision: análise de imagens, OCR, detecção de objetos/faces<br>✅ Azure AI Language: análise de sentimento, extração de entidades, tradução, resumo<br><br>❌ Microsoft Fabric: plataforma de analytics (não Azure AI Services)<br>❌ Power Automate: automação de workflows (não AI Services)"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Uma organização bancária precisa de uma solução que permita ao time de compliance fazer perguntas em linguagem natural sobre uma base de dados de milhares de regulamentos internos, relatórios e emails, recebendo respostas precisas com citações das fontes.",
+                question: "Qual combinação de tecnologias Microsoft resolve esse cenário?",
+                options: ["Microsoft 365 Copilot + Microsoft Teams", "Azure AI Search + Azure OpenAI Service (padrão RAG)", "Copilot Studio + Power Automate", "Microsoft Fabric + Power BI"],
+                correct: 1,
+                explanation: "<strong>Azure AI Search + Azure OpenAI = RAG Enterprise!</strong><br><br>✅ Azure AI Search indexa e vetoriza os documentos; Azure OpenAI gera respostas baseadas nos documentos recuperados — padrão RAG clássico para bases de conhecimento grandes.<br><br>❌ M365 Copilot + Teams: acessa dados M365, não bases de regulamentos personalizadas<br>❌ Copilot Studio: ideal para chatbots, mas o cenário requer arquitetura RAG customizada<br>❌ Fabric + Power BI: análise de dados estruturados, não busca em documentos"
+            },
+            {
+                domain: 1, type: "single",
+                question: "O Microsoft Foundry (antes Azure AI Studio) serve principalmente para qual finalidade?",
+                options: ["Gerenciar licenças do Microsoft 365 Copilot para usuários da organização", "Desenvolver, testar, implantar e monitorar soluções de IA de ponta a ponta (plataforma para desenvolvedores)", "Criar fluxos de trabalho automatizados com IA sem necessidade de código", "Analisar dados de adoção do Copilot em dashboards executivos"],
+                correct: 1,
+                explanation: "<strong>Microsoft Foundry = plataforma de desenvolvimento de IA!</strong><br><br>✅ Foundry é o hub central para desenvolvedores de IA: acesso a modelos (OpenAI, Meta, Mistral), ferramentas de prompt flow, avaliação, fine-tuning, RAG, segurança e deployment.<br><br>❌ Gerenciar licenças: Microsoft 365 Admin Center<br>❌ Fluxos sem código: Copilot Studio ou Power Automate<br>❌ Dashboards de adoção: Microsoft Viva Insights ou Copilot Analytics"
+            },
+            {
+                domain: 1, type: "categorize",
+                question: "Classifique cada recurso no produto Microsoft correto:",
+                categories: [
+                    { id: "m365", label: "Microsoft 365 Copilot" },
+                    { id: "studio", label: "Microsoft Copilot Studio" },
+                    { id: "foundry", label: "Microsoft Foundry" }
+                ],
+                items: [
+                    { id: 0, text: "Resumir thread de emails no Outlook",           correctCategory: "m365" },
+                    { id: 1, text: "Criar chatbot para atendimento ao cliente",      correctCategory: "studio" },
+                    { id: 2, text: "Fine-tuning de modelo de linguagem customizado",  correctCategory: "foundry" },
+                    { id: 3, text: "Gerar slides no PowerPoint com IA",              correctCategory: "m365" },
+                    { id: 4, text: "Publicar copilot no Microsoft Teams via canal",  correctCategory: "studio" },
+                    { id: 5, text: "Avaliar e comparar modelos de IA em prompt flow", correctCategory: "foundry" }
+                ],
+                explanation: "<strong>Mapa de produtos:</strong><br>• M365 Copilot → produtividade nos apps Office (email, slides, docs, meetings)<br>• Copilot Studio → criar e publicar copilots personalizados em canais<br>• Microsoft Foundry → desenvolvimento técnico de IA (fine-tuning, prompt flow, deployment)"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual serviço Azure é especificamente projetado para adicionar capacidades de busca inteligente a aplicações, incluindo busca vetorial semântica?",
+                options: ["Azure Cosmos DB", "Azure AI Search", "Azure SQL Database", "Azure Blob Storage"],
+                correct: 1,
+                explanation: "<strong>Azure AI Search!</strong><br><br>✅ Azure AI Search (antes Azure Cognitive Search) oferece busca semântica, vetorial, full-text e híbrida — essencial para implementar RAG em aplicações empresariais.<br><br>❌ Cosmos DB: banco de dados NoSQL distribuído<br>❌ Azure SQL: banco relacional tradicional<br>❌ Blob Storage: armazenamento de arquivos/objetos"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Um usuário do Microsoft 365 Copilot usa o recurso no Microsoft Excel. Qual tarefa o Copilot pode realizar nesse contexto?",
+                options: ["Escrever macros VBA e executar scripts automaticamente na planilha", "Analisar dados, identificar tendências, criar fórmulas e gerar gráficos com linguagem natural", "Integrar dados de APIs externas automaticamente via conectores embutidos", "Criar painéis de Power BI diretamente dentro do Excel"],
+                correct: 1,
+                explanation: "<strong>Analisar dados com linguagem natural no Excel!</strong><br><br>✅ No Excel, o Copilot ajuda a: analisar datasets, sugerir fórmulas, identificar padrões, criar tabelas dinâmicas e gráficos — tudo via linguagem natural.<br><br>❌ VBA/macros: o Copilot pode sugerir código, mas não executa scripts automaticamente por segurança<br>❌ APIs externas: requer configuração manual ou Power Query<br>❌ Power BI: produto separado"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual das seguintes afirmações descreve corretamente o Copilot Analyst (antes chamado de Advanced Data Analysis)?",
+                options: ["É uma versão premium do Copilot que substitui o Microsoft Power BI", "Realiza análise avançada de dados, executa Python e gera visualizações a partir de uploads de arquivos", "É um agente autônomo que coleta dados de múltiplas fontes sem supervisão humana", "Processa apenas dados armazenados no SharePoint da organização"],
+                correct: 1,
+                explanation: "<strong>Copilot Analyst = análise avançada de dados com Python!</strong><br><br>✅ O Analyst executa código Python em sandbox, processa arquivos carregados pelo usuário, faz análises estatísticas e gera visualizações — poderoso para analistas de dados.<br><br>❌ Não substitui Power BI — complementa para análises ad hoc<br>❌ Não é agente autônomo — requer interação do usuário<br>❌ Pode processar arquivos carregados diretamente, não apenas do SharePoint"
+            },
+            {
+                domain: 1, type: "single",
+                scenario: "Um diretor de TI precisa apresentar para a liderança executiva as opções disponíveis para adotar IA na empresa. Ele precisa explicar quando a empresa deve 'comprar' uma solução pronta versus 'construir' uma do zero.",
+                question: "Segundo o framework Microsoft Buy → Extend → Build, quando é mais apropriado optar por 'Build'?",
+                options: ["Quando o orçamento é ilimitado e a empresa quer o máximo controle possível", "Quando nenhuma solução existente atende à necessidade única e diferenciadora do negócio, justificando o investimento", "Quando a empresa tem menos de 100 funcionários e não precisa de personalização", "Quando a Microsoft não oferece soluções para o setor da empresa"],
+                correct: 1,
+                explanation: "<strong>Build = necessidade única e diferenciadora!</strong><br><br>✅ 'Build' é justificado quando a necessidade é tão específica e estratégica que nenhuma solução de mercado resolve — geralmente cases competitivos que criam vantagem diferencial.<br><br>❌ Orçamento ilimitado sozinho não justifica Build — muitas vezes Buy é mais rápido<br>❌ Tamanho da empresa não determina a escolha<br>❌ A Microsoft cobre a maioria dos setores; 'Build' é sobre necessidade única, não ausência de oferta"
+            },
+            {
+                domain: 1, type: "single",
+                question: "Qual recurso do Microsoft 365 Copilot é EXCLUSIVO para usuários com a licença Microsoft 365 Copilot paga, e NÃO está disponível no Copilot gratuito?",
+                options: ["Geração de texto em linguagem natural", "Acesso a dados organizacionais como emails e documentos via Microsoft Graph", "Resumo de páginas web no Microsoft Edge", "Criação de imagens com DALL-E"],
+                correct: 1,
+                explanation: "<strong>Acesso ao Microsoft Graph = exclusivo do M365 Copilot!</strong><br><br>✅ O acesso aos dados organizacionais (emails do Outlook, chats do Teams, documentos do SharePoint, calendário) via Microsoft Graph é o diferencial exclusivo da licença M365 Copilot.<br><br>❌ Geração de texto: disponível em ambos<br>❌ Resumo de páginas no Edge: disponível no Copilot gratuito via Bing<br>❌ DALL-E: disponível em algumas versões gratuitas do Copilot"
+            },
+            {
+                domain: 1, type: "order",
+                question: "Organize as etapas para criar e publicar um copilot personalizado com Microsoft Copilot Studio:",
+                items: [
+                    { id: 0, text: "Acessar o Copilot Studio e criar um novo copilot" },
+                    { id: 1, text: "Definir os tópicos e fluxos de conversa" },
+                    { id: 2, text: "Configurar fontes de conhecimento (SharePoint, sites, documentos)" },
+                    { id: 3, text: "Testar o copilot no ambiente de desenvolvimento" },
+                    { id: 4, text: "Publicar e adicionar canais (Teams, site, WhatsApp)" }
+                ],
+                correctOrder: [0, 1, 2, 3, 4],
+                explanation: "<strong>Processo de criação no Copilot Studio:</strong><br>1️⃣ Criar o copilot<br>2️⃣ Definir tópicos (o que o bot sabe falar)<br>3️⃣ Configurar conhecimento (conectar às fontes de dados)<br>4️⃣ Testar (identificar problemas antes de publicar)<br>5️⃣ Publicar nos canais desejados<br><br>Testar ANTES de publicar é fundamental para garantir qualidade."
+            },
+
+            // ── DOMÍNIO 2: Implementação e Adoção (8 questões) ──────────────────────────────
+            {
+                domain: 2, type: "single",
+                question: "Quais são os 6 princípios de IA Responsável da Microsoft?",
+                options: ["Eficiência, Escalabilidade, Segurança, Confiabilidade, Privacidade e Inovação", "Fairness, Reliability & Safety, Privacy & Security, Inclusiveness, Transparency e Accountability", "Velocidade, Precisão, Custo, Impacto, Escalabilidade e Sustentabilidade", "Ética, Legalidade, Privacidade, Segurança, Governança e Auditabilidade"],
+                correct: 1,
+                explanation: "<strong>FRIPITA — os 6 princípios de IA Responsável:</strong><br>• <strong>F</strong>airness (Equidade)<br>• <strong>R</strong>eliability & Safety (Confiabilidade e Segurança)<br>• <strong>I</strong>nclusiveness (Inclusão)<br>• <strong>P</strong>rivacy & Security (Privacidade e Segurança)<br>• <strong>I</strong>accountability (Responsabilização)<br>• <strong>T</strong>ransparency (Transparência)<br><br>Macete: <strong>FRIPITA</strong> — Fairness, Reliability, Inclusiveness, Privacy, I(Accountability), Transparency"
+            },
+            {
+                domain: 2, type: "single",
+                scenario: "Uma empresa está planejando sua estratégia de adoção de IA. O CTO propõe criar um AI Council. O CEO não entende por que essa estrutura é necessária.",
+                question: "Qual é o principal propósito de um AI Council (Conselho de IA)?",
+                options: ["Substituir o departamento de TI nas decisões técnicas sobre infraestrutura", "Fornecer supervisão estratégica, governança e garantir alinhamento da IA com princípios éticos e objetivos de negócio", "Aprovar todas as compras de licenças de software de IA da organização", "Treinar os funcionários nos produtos Microsoft de IA"],
+                correct: 1,
+                explanation: "<strong>AI Council = governança e supervisão estratégica!</strong><br><br>✅ O AI Council define políticas de uso responsável, avalia riscos, garante alinhamento ético e estratégico, e supervisiona o portfólio de iniciativas de IA da organização.<br><br>❌ Não substitui o TI nas decisões técnicas<br>❌ Aprovação de compras: função do procurement/finance<br>❌ Treinamento: função de L&D, não do conselho"
+            },
+            {
+                domain: 2, type: "single",
+                question: "Qual é a diferença entre a licença Microsoft 365 Copilot (por assento/usuário) e o modelo Pay-as-You-Go para Azure AI?",
+                options: ["A licença por assento é mensal e cobre todos os apps M365; Pay-as-You-Go é cobrado por uso/token, ideal para workloads variáveis", "A licença por assento é mais barata em todos os cenários", "Pay-as-You-Go é exclusivo para grandes empresas com contratos Enterprise", "Não há diferença prática — apenas nomenclatura diferente"],
+                correct: 0,
+                explanation: "<strong>Assinatura vs Consumo:</strong><br><br>✅ Licença por assento: previsível, valor fixo por usuário/mês, cobre M365 Copilot em todos os apps<br>✅ Pay-as-You-Go: paga pelo uso real (tokens/API calls), ideal para volume variável ou projetos com Azure AI Services<br><br>Escolha assinatura para heavy users; Pay-as-You-Go para uso esporádico ou alto volume com picos."
+            },
+            {
+                domain: 2, type: "match",
+                question: "Associe cada princípio de IA Responsável da Microsoft ao seu significado correto:",
+                pairs: [
+                    { id: "a", source: "Fairness (Equidade)",           target: "Sistemas de IA devem tratar todas as pessoas de forma justa, sem discriminação" },
+                    { id: "b", source: "Transparency (Transparência)",  target: "As pessoas devem entender como os sistemas de IA tomam decisões" },
+                    { id: "c", source: "Accountability (Responsabilização)", target: "As pessoas devem ser responsáveis pelo funcionamento e impacto dos sistemas de IA" },
+                    { id: "d", source: "Inclusiveness (Inclusão)",      target: "Os sistemas de IA devem capacitar e engajar todos os grupos de pessoas" }
+                ],
+                explanation: "<strong>Princípios de IA Responsável (FRIPITA):</strong><br>• Fairness: sem discriminação por raça, gênero, idade, etc.<br>• Transparency: explicabilidade das decisões de IA<br>• Accountability: humanos responsáveis pelas decisões de IA<br>• Inclusiveness: IA acessível e benéfica para todos"
+            },
+            {
+                domain: 2, type: "order",
+                question: "Organize as etapas recomendadas para implementar uma estratégia de adoção de IA em uma organização:",
+                items: [
+                    { id: 0, text: "Identificar casos de uso prioritários e potencial de ROI" },
+                    { id: 1, text: "Estabelecer um AI Council e política de IA responsável" },
+                    { id: 2, text: "Selecionar e capacitar AI Champions nas áreas de negócio" },
+                    { id: 3, text: "Executar projetos piloto com grupos menores" },
+                    { id: 4, text: "Escalar para toda a organização com gestão de mudança" }
+                ],
+                correctOrder: [0, 1, 2, 3, 4],
+                explanation: "<strong>Jornada de adoção de IA:</strong><br>1️⃣ Identificar oportunidades (onde a IA gera valor)<br>2️⃣ Governança primeiro (AI Council e políticas antes de implantar)<br>3️⃣ Champions (embaixadores que multiplicam internamente)<br>4️⃣ Piloto (validar antes de escalar)<br>5️⃣ Escalar com suporte de mudança organizacional"
+            },
+            {
+                domain: 2, type: "single",
+                question: "Qual é o papel dos AI Champions (Campeões de IA) em uma estratégia de adoção?",
+                options: ["São especialistas técnicos contratados pela Microsoft para apoiar a implementação", "São funcionários internos entusiastas que promovem, treinam e apoiam colegas na adoção de IA na sua área de negócio", "São gerentes de projeto responsáveis pela entrega técnica de soluções de IA", "São representantes do fornecedor que monitoram o uso das licenças"],
+                correct: 1,
+                explanation: "<strong>AI Champions = embaixadores internos da IA!</strong><br><br>✅ Champions são funcionários (não contratados externos) que têm entusiasmo por IA, recebem treinamento adicional e se tornam referência para os colegas da sua área — multiplicadores de adoção de dentro para fora.<br><br>❌ Não são especialistas técnicos externos<br>❌ Não são gerentes de projeto<br>❌ Não são representantes do fornecedor"
+            },
+            {
+                domain: 2, type: "multi",
+                question: "Selecione DUAS barreiras comuns à adoção de IA em organizações:",
+                options: ["Resistência cultural e medo de substituição por IA", "Custo excessivo de hardware para executar modelos de IA localmente", "Falta de dados relevantes e de qualidade para treinar ou alimentar os modelos", "Impossibilidade técnica de integrar IA com sistemas legados"],
+                correct: [0, 2],
+                explanation: "<strong>Resistência cultural e falta de dados!</strong><br><br>✅ Resistência cultural: funcionários com medo do desconhecido ou de perder o emprego é uma das maiores barreiras<br>✅ Falta de dados: sem dados de qualidade, RAG não funciona bem e fine-tuning é inviável<br><br>❌ Hardware: IA generativa usa APIs cloud, não hardware local na maioria dos casos<br>❌ Integração com legado: tecnicamente desafiador mas possível com conectores e APIs"
+            },
+            {
+                domain: 2, type: "single",
+                scenario: "Uma empresa completou a fase piloto do Microsoft 365 Copilot com sucesso. O CEO quer agora escalar para todos os 5.000 funcionários. O CTO avisa que 'implantar tecnologia não é suficiente'.",
+                question: "O que o CTO está sinalizando que é necessário para uma implantação bem-sucedida em escala?",
+                options: ["Aumentar a capacidade dos servidores antes do rollout", "Incluir gestão de mudança organizacional: comunicação, treinamento, suporte e medição de adoção", "Contratar uma equipe de suporte técnico dedicada exclusivamente ao Copilot", "Aguardar que os usuários descubram os benefícios naturalmente com o tempo"],
+                correct: 1,
+                explanation: "<strong>Gestão de Mudança Organizacional!</strong><br><br>✅ Tecnologia sozinha não gera adoção. É preciso:<br>• Comunicação clara dos benefícios<br>• Treinamento adequado por perfil<br>• AI Champions como suporte peer-to-peer<br>• Medição de adoção e ajuste contínuo<br><br>❌ Capacidade de servidor: questão técnica que já deve estar resolvida<br>❌ Equipe de suporte só: complementar, não suficiente<br>❌ Descoberta natural: resulta em adoção lenta e superficial"
+            }
+        ];
 
         // ============================================================
         // BILINGUAL COURSE CONTENT (text only - no structural duplication)
@@ -2339,6 +3020,18 @@ Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então f
                         }
                     ],
                     exercises: []
+                },
+
+                // Módulo 5 - Simulado Final
+                {
+                    title: "🎯 5. Simulado Final — Prova Completa",
+                    lessons: [
+                        {
+                            title: "Simulado Oficial AB-731",
+                            content: ``
+                        }
+                    ],
+                    exercises: []
                 }
             ],
             en: [
@@ -3423,6 +4116,18 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
                         }
                     ],
                     exercises: []
+                },
+
+                // Module 5 - Final Exam
+                {
+                    title: "🎯 5. Final Exam — Full Practice Test",
+                    lessons: [
+                        {
+                            title: "Official AB-731 Practice Exam",
+                            content: ``
+                        }
+                    ],
+                    exercises: []
                 }
             ]
         };
@@ -3467,10 +4172,78 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
                 progressComplete: "Completo",
                 progressOf: "de",
                 progressLessons: "lições",
-                resetConfirm: "Deseja resetar todo o progresso do curso?",
+                resetConfirm: "Resetar TUDO? Isso apaga módulos concluídos, exercícios respondidos e o progresso do simulado. Esta ação não pode ser desfeita.",
                 footerDev: "Desenvolvido por",
                 footerLicense: "sob Licença MIT",
-                langLabel: "🇧🇷 PT"
+                langLabel: "🇧🇷 PT",
+                // Simulado strings
+                sim_tab: "🎯 Simulado Final",
+                sim_title: "Simulado Oficial AB-731",
+                sim_subtitle: "Prova completa no estilo oficial Microsoft",
+                sim_start: "🚀 Iniciar Simulado",
+                sim_q_of: "de",
+                sim_q_label: "Questão",
+                sim_flag: "🚩 Marcar",
+                sim_unflag: "🚩 Desmarcada",
+                sim_prev: "← Anterior",
+                sim_next: "Próxima →",
+                sim_submit: "✅ Finalizar Prova",
+                sim_submit_confirm: "Tem certeza que deseja finalizar? Questões não respondidas serão contadas como erradas.",
+                sim_time_up: "⏰ Tempo esgotado! A prova foi enviada automaticamente.",
+                sim_score_title: "Resultado do Simulado",
+                sim_pass: "✅ APROVADO",
+                sim_fail: "❌ REPROVADO",
+                sim_pass_score: "Nota de aprovação: 700",
+                sim_correct_count: "Corretas",
+                sim_wrong_count: "Erradas",
+                sim_skipped_count: "Não respondidas",
+                sim_time_taken: "Tempo",
+                sim_domain_chart_title: "Desempenho por Área",
+                sim_domain_chart_sub: "As barras mostram seu desempenho relativo em cada domínio do exame",
+                sim_verdict_excellent: "✅ Excelente",
+                sim_verdict_good: "✅ Bom",
+                sim_verdict_improve: "⚠️ Precisa melhorar",
+                sim_verdict_critical: "❌ Área crítica",
+                sim_rec_title: "📚 Recomendações de Estudo",
+                sim_review_btn: "🔍 Revisar Questões",
+                sim_retry_btn: "🔄 Refazer Simulado",
+                sim_review_title: "Revisão das Questões",
+                sim_filter_all: "Todas",
+                sim_filter_correct: "✅ Corretas",
+                sim_filter_wrong: "❌ Erradas",
+                sim_filter_skipped: "⏭️ Puladas",
+                sim_back_results: "← Voltar aos Resultados",
+                sim_type_single: "Múltipla escolha",
+                sim_type_multi: "Múltipla seleção",
+                sim_type_match: "Associação (arrastar)",
+                sim_type_order: "Ordenação (arrastar)",
+                sim_type_categorize: "Classificação (arrastar)",
+                sim_drag_source: "ITENS",
+                sim_drag_targets: "PARES",
+                sim_drag_placeholder: "Arraste um item aqui",
+                sim_order_instruction: "Arraste os itens para ordenar corretamente",
+                sim_categorize_pool_label: "Arraste os itens abaixo para as categorias",
+                sim_multi_select_hint: (n) => `Selecione ${n} respostas`,
+                sim_domain_passing_note: "⚠️ Nota: A aprovação final baseia-se na pontuação total ponderada, não em cada domínio individualmente.",
+                sim_answer_correct: "Sua resposta: CORRETA ✅",
+                sim_answer_wrong: "Sua resposta: INCORRETA ❌",
+                sim_correct_answer: "Resposta correta:",
+                sim_skipped_label: "Não respondida",
+                sim_meta_time: "Duração",
+                sim_meta_questions: "Questões",
+                sim_meta_pass: "Aprovação",
+                sim_meta_score: "Pontuação",
+                sim_meta_min: "minutos",
+                sim_instructions_title: "📋 Instruções",
+                sim_instructions: [
+                    "Você terá 45 minutos para responder 40 questões",
+                    "Questões com múltipla seleção indicam quantas respostas selecionar",
+                    "Questões de arrastar: mova os itens para a posição correta",
+                    "Use o botão 🚩 para marcar questões para revisão posterior",
+                    "Use a grade de navegação para pular entre questões",
+                    "A prova é enviada automaticamente ao término do tempo",
+                    "Pontuação aprovação: 700 de 1000 (escala Microsoft)"
+                ]
             },
             en: {
                 subtitle: "Everything you need to pass the certification - Summarized and Focused!",
@@ -3487,10 +4260,78 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
                 progressComplete: "Complete",
                 progressOf: "of",
                 progressLessons: "lessons",
-                resetConfirm: "Do you want to reset all course progress?",
+                resetConfirm: "Reset EVERYTHING? This clears completed modules, exercise answers and exam progress. This cannot be undone.",
                 footerDev: "Developed by",
                 footerLicense: "under MIT License",
-                langLabel: "🇺🇸 EN"
+                langLabel: "🇺🇸 EN",
+                // Simulado strings
+                sim_tab: "🎯 Final Exam",
+                sim_title: "Official AB-731 Practice Exam",
+                sim_subtitle: "Full exam in the official Microsoft style",
+                sim_start: "🚀 Start Exam",
+                sim_q_of: "of",
+                sim_q_label: "Question",
+                sim_flag: "🚩 Flag",
+                sim_unflag: "🚩 Unflagged",
+                sim_prev: "← Previous",
+                sim_next: "Next →",
+                sim_submit: "✅ Submit Exam",
+                sim_submit_confirm: "Are you sure you want to submit? Unanswered questions will be marked as wrong.",
+                sim_time_up: "⏰ Time's up! The exam was submitted automatically.",
+                sim_score_title: "Exam Results",
+                sim_pass: "✅ PASSED",
+                sim_fail: "❌ FAILED",
+                sim_pass_score: "Passing score: 700",
+                sim_correct_count: "Correct",
+                sim_wrong_count: "Wrong",
+                sim_skipped_count: "Unanswered",
+                sim_time_taken: "Time",
+                sim_domain_chart_title: "Performance by Area",
+                sim_domain_chart_sub: "Bars show your relative performance in each exam domain",
+                sim_verdict_excellent: "✅ Excellent",
+                sim_verdict_good: "✅ Good",
+                sim_verdict_improve: "⚠️ Needs improvement",
+                sim_verdict_critical: "❌ Critical area",
+                sim_rec_title: "📚 Study Recommendations",
+                sim_review_btn: "🔍 Review Questions",
+                sim_retry_btn: "🔄 Retake Exam",
+                sim_review_title: "Question Review",
+                sim_filter_all: "All",
+                sim_filter_correct: "✅ Correct",
+                sim_filter_wrong: "❌ Wrong",
+                sim_filter_skipped: "⏭️ Skipped",
+                sim_back_results: "← Back to Results",
+                sim_type_single: "Multiple choice",
+                sim_type_multi: "Multiple select",
+                sim_type_match: "Matching (drag)",
+                sim_type_order: "Ordering (drag)",
+                sim_type_categorize: "Categorize (drag)",
+                sim_drag_source: "ITEMS",
+                sim_drag_targets: "PAIRS",
+                sim_drag_placeholder: "Drag an item here",
+                sim_order_instruction: "Drag the items into the correct order",
+                sim_categorize_pool_label: "Drag the items below into the correct categories",
+                sim_multi_select_hint: (n) => `Select ${n} answers`,
+                sim_domain_passing_note: "⚠️ Note: Final passing is based on the total weighted score, not individual domains.",
+                sim_answer_correct: "Your answer: CORRECT ✅",
+                sim_answer_wrong: "Your answer: INCORRECT ❌",
+                sim_correct_answer: "Correct answer:",
+                sim_skipped_label: "Not answered",
+                sim_meta_time: "Duration",
+                sim_meta_questions: "Questions",
+                sim_meta_pass: "Passing",
+                sim_meta_score: "Score",
+                sim_meta_min: "minutes",
+                sim_instructions_title: "📋 Instructions",
+                sim_instructions: [
+                    "You have 45 minutes to answer 40 questions",
+                    "Multiple-select questions indicate how many answers to choose",
+                    "Drag questions: move items to the correct position",
+                    "Use the 🚩 button to flag questions for later review",
+                    "Use the navigation grid to jump between questions",
+                    "The exam submits automatically when time runs out",
+                    "Passing score: 700 out of 1000 (Microsoft scale)"
+                ]
             }
         };
 
@@ -3677,6 +4518,7 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
                 localStorage.removeItem(STORAGE_KEY_SCROLL);
                 localStorage.removeItem(STORAGE_KEY_THEME);
                 localStorage.removeItem(STORAGE_KEY_LANG);
+                localStorage.removeItem(SIM_STORAGE_KEY);
                 location.reload();
             }
         }
@@ -3731,6 +4573,13 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
                 const moduleDiv = document.createElement('div');
                 moduleDiv.className = `module ${moduleIndex === 0 ? 'active' : ''}`;
                 moduleDiv.id = `module-${moduleIndex}`;
+
+                // ── Simulado module: delegate to exam engine ──
+                if (COURSE_STRUCTURE.modules[moduleIndex] && COURSE_STRUCTURE.modules[moduleIndex].isSimulado) {
+                    modulesContainer.appendChild(moduleDiv);
+                    initSimuladoModule(moduleDiv);
+                    return;
+                }
 
                 let lessonsHTML = '';
                 module.lessons.forEach((lesson, lessonIndex) => {
@@ -3979,6 +4828,802 @@ Then I thought: if I had known this earlier, I would have done it much sooner! S
             scoreDiv.classList.add('show');
 
             scoreDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+        }
+
+        // ============================================================
+        // SIMULADO FINAL — EXAM ENGINE
+        // ============================================================
+
+        // ── State ───────────────────────────────────────────────────
+        let examState = {
+            started: false, finished: false, currentQ: 0,
+            answers: {}, flagged: new Set(), shuffledOrder: [],
+            startTime: null, elapsedSeconds: 0, autoSubmitted: false
+        };
+        let examTimerInterval = null;
+        const SIM_STORAGE_KEY = 'ab731_simulado_state';
+
+        // ── Save / Load State ────────────────────────────────────────
+        function saveExamState() {
+            try {
+                const s = { ...examState, flagged: [...examState.flagged] };
+                localStorage.setItem(SIM_STORAGE_KEY, JSON.stringify(s));
+            } catch(e) {}
+        }
+        function loadExamState() {
+            try {
+                const raw = localStorage.getItem(SIM_STORAGE_KEY);
+                if (!raw) return false;
+                const s = JSON.parse(raw);
+                examState = { ...s, flagged: new Set(s.flagged || []) };
+                return true;
+            } catch(e) { return false; }
+        }
+        function clearExamState() {
+            try { localStorage.removeItem(SIM_STORAGE_KEY); } catch(e) {}
+            examState = { started: false, finished: false, currentQ: 0, answers: {}, flagged: new Set(), shuffledOrder: [], startTime: null, elapsedSeconds: 0, autoSubmitted: false };
+        }
+
+        // ── Module Init ──────────────────────────────────────────────
+        function initSimuladoModule(moduleDiv) {
+            moduleDiv.innerHTML = `
+                <div class="simulado-container">
+                    <div class="sim-screen sim-intro active" id="sim-screen-intro"></div>
+                    <div class="sim-screen sim-exam" id="sim-screen-exam"></div>
+                    <div class="sim-screen sim-results" id="sim-screen-results"></div>
+                </div>
+            `;
+            renderSimIntro(moduleDiv);
+            // Restore in-progress exam if any
+            const hasState = loadExamState();
+            if (hasState && examState.started && !examState.finished) {
+                try {
+                    renderExamScreen();
+                    showSimScreen('exam');
+                    renderExamQuestion(examState.currentQ);
+                    updateExamNavGrid();
+                    startExamTimer();
+                } catch(e) {
+                    // Corrupt state — reset and show intro
+                    clearExamState();
+                    renderSimIntro(moduleDiv);
+                    showSimScreen('intro');
+                }
+            } else if (hasState && examState.finished) {
+                try {
+                    renderExamResults();
+                    showSimScreen('results');
+                } catch(e) {
+                    clearExamState();
+                    showSimScreen('intro');
+                }
+            }
+        }
+
+        function showSimScreen(name) {
+            ['intro','exam','results'].forEach(n => {
+                const el = document.getElementById(`sim-screen-${n}`);
+                if (el) el.classList.toggle('active', n === name);
+            });
+        }
+
+        // ── Intro Screen ─────────────────────────────────────────────
+        function renderSimIntro(moduleDiv) {
+            const t = translations[currentLang];
+            const el = document.getElementById('sim-screen-intro');
+            if (!el) return;
+            const domainsHTML = SIMULADO_DOMAINS.map(d => `
+                <div class="sim-domain-item">
+                    <div class="sim-domain-dot" style="background:${d.color}"></div>
+                    <span class="sim-domain-name">${d.icon} ${d[currentLang] || d.pt}</span>
+                    <span class="sim-domain-weight">${d.weight}</span>
+                </div>
+            `).join('');
+            const instrHTML = (t.sim_instructions || []).map(i => `<li>${i}</li>`).join('');
+            el.innerHTML = `
+                <div class="sim-intro-hero">
+                    <h2>🎯 ${t.sim_title || 'Simulado Oficial AB-731'}</h2>
+                    <p>${t.sim_subtitle || 'Prova completa no estilo oficial Microsoft'}</p>
+                </div>
+                <div class="sim-meta-grid">
+                    <div class="sim-meta-item"><div class="sim-meta-icon">⏱️</div><div class="sim-meta-value">45</div><div class="sim-meta-label">${t.sim_meta_min || 'minutos'}</div></div>
+                    <div class="sim-meta-item"><div class="sim-meta-icon">📝</div><div class="sim-meta-value">${SIMULADO_CONFIG.questionCount}</div><div class="sim-meta-label">${t.sim_meta_questions || 'Questões'}</div></div>
+                    <div class="sim-meta-item"><div class="sim-meta-icon">🎯</div><div class="sim-meta-value">${SIMULADO_CONFIG.passScore}</div><div class="sim-meta-label">${t.sim_meta_pass || 'Aprovação'}</div></div>
+                    <div class="sim-meta-item"><div class="sim-meta-icon">📊</div><div class="sim-meta-value">${SIMULADO_CONFIG.totalScore}</div><div class="sim-meta-label">${t.sim_meta_score || 'Pontuação'}</div></div>
+                </div>
+                <div class="sim-domains-list">${domainsHTML}</div>
+                <div class="sim-instructions">
+                    <strong>${t.sim_instructions_title || '📋 Instruções'}</strong>
+                    <ul style="margin-top:10px">${instrHTML}</ul>
+                </div>
+                <button class="sim-start-btn" onclick="startExam()">${t.sim_start || '🚀 Iniciar Simulado'}</button>
+            `;
+        }
+
+        // ── Start Exam ───────────────────────────────────────────────
+        function startExam() {
+            clearExamState();
+            const order = SIMULADO_QUESTIONS.map((_, i) => i);
+            // Fisher-Yates shuffle
+            for (let i = order.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [order[i], order[j]] = [order[j], order[i]];
+            }
+            examState.started = true;
+            examState.shuffledOrder = order;
+            examState.currentQ = 0;
+            examState.startTime = Date.now();
+            saveExamState();
+            renderExamScreen();
+            renderExamQuestion(0);
+            updateExamNavGrid();
+            startExamTimer();
+            showSimScreen('exam');
+        }
+
+        // ── Exam Screen shell ────────────────────────────────────────
+        function renderExamScreen() {
+            const t = translations[currentLang];
+            const navBtns = examState.shuffledOrder.map((_, i) => `
+                <button class="sim-nav-btn" id="sim-navbtn-${i}" onclick="jumpToQuestion(${i})">${i+1}</button>
+            `).join('');
+            document.getElementById('sim-screen-exam').innerHTML = `
+                <div class="sim-timer-bar"><div class="sim-timer-fill" id="sim-timer-fill" style="width:100%"></div></div>
+                <div class="sim-exam-header">
+                    <div class="sim-timer" id="sim-timer-display">45:00</div>
+                    <div class="sim-q-counter" id="sim-q-counter">${t.sim_q_label||'Questão'} 1 ${t.sim_q_of||'de'} ${SIMULADO_CONFIG.questionCount}</div>
+                    <button class="sim-flag-btn" id="sim-flag-btn" onclick="flagCurrentQuestion()">${t.sim_flag||'🚩 Marcar'}</button>
+                </div>
+                <div id="sim-question-area" class="sim-question-area"></div>
+                <div class="sim-exam-nav">
+                    <button class="sim-nav-prev" id="sim-prev-btn" onclick="navigateExam(-1)">${t.sim_prev||'← Anterior'}</button>
+                    <button class="sim-submit-btn" onclick="confirmSubmitExam()">${t.sim_submit||'✅ Finalizar Prova'}</button>
+                    <button class="sim-nav-next" id="sim-next-btn" onclick="navigateExam(1)">${t.sim_next||'Próxima →'}</button>
+                </div>
+                <div class="sim-nav-section" style="margin-top:24px">
+                    <div class="sim-nav-label">Navegação</div>
+                    <div class="sim-nav-grid" id="sim-nav-grid">${navBtns}</div>
+                </div>
+            `;
+        }
+
+        // ── Render Single Question ────────────────────────────────────
+        function renderExamQuestion(qi) {
+            examState.currentQ = qi;
+            saveExamState();
+            const t = translations[currentLang];
+            const realIdx = examState.shuffledOrder[qi];
+            const q = SIMULADO_QUESTIONS[realIdx];
+            const area = document.getElementById('sim-question-area');
+            if (!area) return;
+
+            updateExamNavGrid();
+            // Update counter
+            const counter = document.getElementById('sim-q-counter');
+            if (counter) counter.textContent = `${t.sim_q_label||'Questão'} ${qi+1} ${t.sim_q_of||'de'} ${SIMULADO_CONFIG.questionCount}`;
+            // Update flag btn
+            const flagBtn = document.getElementById('sim-flag-btn');
+            if (flagBtn) {
+                const isFlagged = examState.flagged.has(qi);
+                flagBtn.textContent = isFlagged ? (t.sim_unflag||'🚩 Desmarcada') : (t.sim_flag||'🚩 Marcar');
+                flagBtn.classList.toggle('flagged', isFlagged);
+            }
+            // Update nav btns
+            const prevBtn = document.getElementById('sim-prev-btn');
+            const nextBtn = document.getElementById('sim-next-btn');
+            if (prevBtn) prevBtn.disabled = qi === 0;
+            if (nextBtn) nextBtn.disabled = qi === examState.shuffledOrder.length - 1;
+
+            // Type badge
+            const typeLabels = { single: t.sim_type_single, multi: t.sim_type_multi, match: t.sim_type_match, order: t.sim_type_order, categorize: t.sim_type_categorize };
+            const typeBadge = `<div class="sim-question-type-badge">📋 ${typeLabels[q.type] || q.type} &nbsp;·&nbsp; ${SIMULADO_DOMAINS[q.domain][currentLang]||SIMULADO_DOMAINS[q.domain].pt}</div>`;
+            const scenarioHTML = q.scenario ? `<div class="sim-scenario">${q.scenario}</div>` : '';
+
+            if (q.type === 'single' || q.type === 'multi') {
+                const multiHint = q.type === 'multi' ? `<div class="sim-multi-hint">${typeof t.sim_multi_select_hint === 'function' ? t.sim_multi_select_hint(Array.isArray(q.correct)?q.correct.length:2) : 'Selecione as respostas corretas'}</div>` : '';
+                const inputType = q.type === 'multi' ? 'checkbox' : 'radio';
+                const currentAns = examState.answers[qi];
+                const optionsHTML = q.options.map((opt, oi) => {
+                    let isChecked = false;
+                    if (q.type === 'single') isChecked = currentAns === oi;
+                    else isChecked = Array.isArray(currentAns) && currentAns.includes(oi);
+                    return `<li class="sim-option ${isChecked?'selected':''}" onclick="selectExamOption(${oi})">
+                        <input type="${inputType}" id="sim-opt-${oi}" name="sim-q" value="${oi}" ${isChecked?'checked':''} style="pointer-events:none" />
+                        <label for="sim-opt-${oi}">${opt}</label>
+                    </li>`;
+                }).join('');
+                area.innerHTML = `${typeBadge}${scenarioHTML}<div class="sim-q-text">${qi+1}. ${q.question}</div>${multiHint}<ul class="sim-options">${optionsHTML}</ul>`;
+            } else if (q.type === 'match') {
+                renderMatchQuestion(qi, q, area, typeBadge, scenarioHTML);
+            } else if (q.type === 'order') {
+                renderOrderQuestion(qi, q, area, typeBadge, scenarioHTML);
+            } else if (q.type === 'categorize') {
+                renderCategorizeQuestion(qi, q, area, typeBadge, scenarioHTML);
+            }
+        }
+
+        // ── Select Option (single/multi) ─────────────────────────────
+        function selectExamOption(oi) {
+            const qi = examState.currentQ;
+            const realIdx = examState.shuffledOrder[qi];
+            const q = SIMULADO_QUESTIONS[realIdx];
+            if (q.type === 'single') {
+                examState.answers[qi] = oi;
+                document.querySelectorAll('.sim-option').forEach((el, i) => {
+                    el.classList.toggle('selected', i === oi);
+                    const inp = el.querySelector('input');
+                    if (inp) inp.checked = i === oi;
+                });
+            } else {
+                let arr = Array.isArray(examState.answers[qi]) ? [...examState.answers[qi]] : [];
+                const idx = arr.indexOf(oi);
+                if (idx >= 0) arr.splice(idx, 1); else arr.push(oi);
+                examState.answers[qi] = arr;
+                document.querySelectorAll('.sim-option').forEach((el, i) => {
+                    el.classList.toggle('selected', arr.includes(i));
+                    const inp = el.querySelector('input');
+                    if (inp) inp.checked = arr.includes(i);
+                });
+            }
+            updateExamNavGrid();
+            saveExamState();
+        }
+
+        // ── Flag Question ────────────────────────────────────────────
+        function flagCurrentQuestion() {
+            const qi = examState.currentQ;
+            const t = translations[currentLang];
+            if (examState.flagged.has(qi)) {
+                examState.flagged.delete(qi);
+            } else {
+                examState.flagged.add(qi);
+            }
+            const flagBtn = document.getElementById('sim-flag-btn');
+            if (flagBtn) {
+                const isFlagged = examState.flagged.has(qi);
+                flagBtn.textContent = isFlagged ? (t.sim_unflag||'🚩 Desmarcada') : (t.sim_flag||'🚩 Marcar');
+                flagBtn.classList.toggle('flagged', isFlagged);
+            }
+            updateExamNavGrid();
+            saveExamState();
+        }
+
+        // ── Navigate ─────────────────────────────────────────────────
+        function navigateExam(dir) {
+            const next = examState.currentQ + dir;
+            if (next >= 0 && next < examState.shuffledOrder.length) {
+                renderExamQuestion(next);
+            }
+        }
+        function jumpToQuestion(qi) {
+            renderExamQuestion(qi);
+        }
+
+        // ── Nav Grid ─────────────────────────────────────────────────
+        function updateExamNavGrid() {
+            examState.shuffledOrder.forEach((_, i) => {
+                const btn = document.getElementById(`sim-navbtn-${i}`);
+                if (!btn) return;
+                btn.className = 'sim-nav-btn';
+                const hasAnswer = examState.answers[i] !== undefined && examState.answers[i] !== null && !(Array.isArray(examState.answers[i]) && examState.answers[i].length === 0);
+                if (hasAnswer) btn.classList.add('answered');
+                if (examState.flagged.has(i)) btn.classList.add('flagged');
+                if (i === examState.currentQ) btn.classList.add('current');
+            });
+        }
+
+        // ── Timer ────────────────────────────────────────────────────
+        function startExamTimer() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examTimerInterval = setInterval(() => {
+                const elapsed = Math.floor((Date.now() - examState.startTime) / 1000) + (examState.elapsedSeconds || 0);
+                const remaining = SIMULADO_CONFIG.timeLimit * 60 - elapsed;
+                if (remaining <= 0) {
+                    clearInterval(examTimerInterval);
+                    examState.autoSubmitted = true;
+                    const t = translations[currentLang];
+                    alert(t.sim_time_up || '⏰ Tempo esgotado!');
+                    finishExam();
+                    return;
+                }
+                const mm = String(Math.floor(remaining / 60)).padStart(2, '0');
+                const ss = String(remaining % 60).padStart(2, '0');
+                const display = document.getElementById('sim-timer-display');
+                const fill = document.getElementById('sim-timer-fill');
+                const pct = (remaining / (SIMULADO_CONFIG.timeLimit * 60)) * 100;
+                const isWarning = remaining <= 300;
+                if (display) { display.textContent = `${mm}:${ss}`; display.classList.toggle('warning', isWarning); }
+                if (fill) { fill.style.width = pct + '%'; fill.classList.toggle('warning', isWarning); }
+            }, 1000);
+        }
+
+        // ── Submit ────────────────────────────────────────────────────
+        function confirmSubmitExam() {
+            const t = translations[currentLang];
+            if (confirm(t.sim_submit_confirm || 'Deseja finalizar a prova?')) finishExam();
+        }
+        function finishExam() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            examState.finished = true;
+            examState.elapsedSeconds = Math.floor((Date.now() - examState.startTime) / 1000);
+            saveExamState();
+            renderExamResults();
+            showSimScreen('results');
+        }
+
+        // ── Calculate Results ─────────────────────────────────────────
+        function calculateExamResults() {
+            let domainStats = SIMULADO_DOMAINS.map(d => ({ id: d.id, correct: 0, total: 0 }));
+            let totalCorrect = 0;
+            examState.shuffledOrder.forEach((realIdx, qi) => {
+                const q = SIMULADO_QUESTIONS[realIdx];
+                const ans = examState.answers[qi];
+                domainStats[q.domain].total++;
+                if (isAnswerCorrect(q, ans)) { domainStats[q.domain].correct++; totalCorrect++; }
+            });
+            // Scale to 1000: weighted by domain question count
+            const totalQ = SIMULADO_CONFIG.questionCount;
+            let scaledScore = Math.round((totalCorrect / totalQ) * SIMULADO_CONFIG.totalScore);
+            scaledScore = Math.max(100, scaledScore); // minimum 100 on Microsoft scale
+            return { domainStats, totalCorrect, totalQ, scaledScore };
+        }
+
+        function isAnswerCorrect(q, ans) {
+            if (ans === undefined || ans === null) return false;
+            if (q.type === 'single') return ans === q.correct;
+            if (q.type === 'multi') {
+                if (!Array.isArray(ans) || !Array.isArray(q.correct)) return false;
+                return ans.length === q.correct.length && [...q.correct].every(c => ans.includes(c));
+            }
+            if (q.type === 'match') {
+                if (!ans || typeof ans !== 'object') return false;
+                return q.pairs.every(p => ans[p.id] === p.id);
+            }
+            if (q.type === 'order') {
+                if (!Array.isArray(ans)) return false;
+                return JSON.stringify(ans) === JSON.stringify(q.correctOrder);
+            }
+            if (q.type === 'categorize') {
+                if (!ans || typeof ans !== 'object') return false;
+                return q.items.every(item => ans[item.id] === item.correctCategory);
+            }
+            return false;
+        }
+
+        // ── Render Results ────────────────────────────────────────────
+        function renderExamResults() {
+            const t = translations[currentLang];
+            const { domainStats, totalCorrect, totalQ, scaledScore } = calculateExamResults();
+            const passed = scaledScore >= SIMULADO_CONFIG.passScore;
+            const totalSeconds = examState.elapsedSeconds || 0;
+            const mm = String(Math.floor(totalSeconds / 60)).padStart(2, '0');
+            const ss = String(totalSeconds % 60).padStart(2, '0');
+            const skipped = examState.shuffledOrder.filter((_, qi) => {
+                const ans = examState.answers[qi];
+                return ans === undefined || ans === null || (Array.isArray(ans) && ans.length === 0);
+            }).length;
+
+            const domainsHTML = domainStats.map((ds, i) => {
+                const d = SIMULADO_DOMAINS[i];
+                const pct = ds.total > 0 ? Math.round((ds.correct / ds.total) * 100) : 0;
+                let verdict, verdictClass;
+                if (pct >= 85) { verdict = t.sim_verdict_excellent||'✅ Excelente'; verdictClass = 'good'; }
+                else if (pct >= 70) { verdict = t.sim_verdict_good||'✅ Bom'; verdictClass = 'good'; }
+                else if (pct >= 50) { verdict = t.sim_verdict_improve||'⚠️ Precisa melhorar'; verdictClass = 'ok'; }
+                else { verdict = t.sim_verdict_critical||'❌ Área crítica'; verdictClass = 'bad'; }
+                return `<div class="sim-domain-row">
+                    <div class="sim-domain-row-header">
+                        <div class="sim-domain-row-name"><span style="color:${d.color}">${d.icon}</span> ${d[currentLang]||d.pt} <small style="color:var(--text-muted);font-weight:400">(${d.weight})</small></div>
+                        <div class="sim-domain-row-pct">${ds.correct}/${ds.total}</div>
+                    </div>
+                    <div class="sim-domain-bar-bg"><div class="sim-domain-bar-fill" style="width:${pct}%;background:${d.color}"></div></div>
+                    <div class="sim-domain-verdict ${verdictClass}">${verdict} — ${pct}%</div>
+                </div>`;
+            }).join('');
+
+            const recsHTML = domainStats.map((ds, i) => {
+                const d = SIMULADO_DOMAINS[i];
+                const pct = ds.total > 0 ? Math.round((ds.correct / ds.total) * 100) : 0;
+                if (pct >= 70) {
+                    return `<div class="sim-rec-item ok"><div class="sim-rec-icon">✅</div><div class="sim-rec-text"><strong>${d[currentLang]||d.pt}</strong> — Bom desempenho! Continue revisando para manter o nível.</div></div>`;
+                } else {
+                    return `<div class="sim-rec-item"><div class="sim-rec-icon">📖</div><div class="sim-rec-text"><strong>${d[currentLang]||d.pt}</strong> — ${pct}% de acerto. Revise o Módulo ${i+1} do minicurso e refaça os exercícios desta área.</div></div>`;
+                }
+            }).join('');
+
+            document.getElementById('sim-screen-results').innerHTML = `
+                <div class="sim-report-hero ${passed?'pass':'fail'}">
+                    <div class="sim-score-value">${scaledScore}</div>
+                    <div class="sim-score-max">/ ${SIMULADO_CONFIG.totalScore}</div>
+                    <div class="sim-pass-badge ${passed?'pass':'fail'}">${passed ? (t.sim_pass||'✅ APROVADO') : (t.sim_fail||'❌ REPROVADO')}</div>
+                    <div class="sim-report-stats">
+                        <span class="sim-report-stat">${t.sim_correct_count||'Corretas'}: <span>${totalCorrect}</span></span> &nbsp;·&nbsp;
+                        <span class="sim-report-stat">${t.sim_wrong_count||'Erradas'}: <span>${totalQ - totalCorrect - skipped}</span></span> &nbsp;·&nbsp;
+                        <span class="sim-report-stat">${t.sim_skipped_count||'Não respondidas'}: <span>${skipped}</span></span> &nbsp;·&nbsp;
+                        <span class="sim-report-stat">${t.sim_time_taken||'Tempo'}: <span>${mm}:${ss}</span></span>
+                    </div>
+                    <div style="color:rgba(255,255,255,0.7);font-size:0.85em;margin-top:12px">${t.sim_pass_score||'Nota de aprovação: 700'}</div>
+                </div>
+
+                <div class="sim-domain-chart">
+                    <h3>${t.sim_domain_chart_title||'Desempenho por Área'}</h3>
+                    <p class="sim-domain-chart-subtitle">${t.sim_domain_chart_sub||'As barras mostram seu desempenho em cada domínio'}</p>
+                    ${domainsHTML}
+                    <p class="sim-domain-passing-note">${t.sim_domain_passing_note||'⚠️ A aprovação baseia-se na pontuação total ponderada.'}</p>
+                </div>
+
+                <div class="sim-recommendations">
+                    <h3>${t.sim_rec_title||'📚 Recomendações de Estudo'}</h3>
+                    ${recsHTML}
+                </div>
+
+                <div class="sim-report-actions">
+                    <button class="sim-review-btn" onclick="showExamReview('all')">${t.sim_review_btn||'🔍 Revisar Questões'}</button>
+                    <button class="sim-retry-btn" onclick="resetExam()">${t.sim_retry_btn||'🔄 Refazer Simulado'}</button>
+                </div>
+            `;
+        }
+
+        // ── Review ────────────────────────────────────────────────────
+        function showExamReview(filter) {
+            const t = translations[currentLang];
+            const filters = [
+                { key: 'all', label: t.sim_filter_all||'Todas' },
+                { key: 'correct', label: t.sim_filter_correct||'✅ Corretas' },
+                { key: 'wrong', label: t.sim_filter_wrong||'❌ Erradas' },
+                { key: 'skipped', label: t.sim_filter_skipped||'⏭️ Puladas' }
+            ];
+            const filterBtns = filters.map(f => `<button class="sim-filter-btn ${filter===f.key?'active':''}" onclick="showExamReview('${f.key}')">${f.label}</button>`).join('');
+
+            const cards = examState.shuffledOrder.map((realIdx, qi) => {
+                const q = SIMULADO_QUESTIONS[realIdx];
+                const ans = examState.answers[qi];
+                const correct = isAnswerCorrect(q, ans);
+                const skipped = ans === undefined || ans === null || (Array.isArray(ans) && ans.length === 0);
+                if (filter === 'correct' && !correct) return '';
+                if (filter === 'wrong' && (correct || skipped)) return '';
+                if (filter === 'skipped' && !skipped) return '';
+
+                const cardClass = skipped ? 'skipped' : (correct ? 'correct' : 'incorrect');
+                const numClass = skipped ? 'skipped' : (correct ? 'correct' : 'incorrect');
+                const domainName = SIMULADO_DOMAINS[q.domain][currentLang] || SIMULADO_DOMAINS[q.domain].pt;
+                const scenarioHTML = q.scenario ? `<div class="sim-scenario" style="margin-bottom:12px">${q.scenario}</div>` : '';
+
+                let answerHTML = '';
+                if (q.type === 'single' || q.type === 'multi') {
+                    answerHTML = `<div class="sim-review-options">${q.options.map((opt, oi) => {
+                        const correctArr = Array.isArray(q.correct) ? q.correct : [q.correct];
+                        const userArr = Array.isArray(ans) ? ans : (ans !== undefined ? [ans] : []);
+                        const isCorrectOpt = correctArr.includes(oi);
+                        const isUserOpt = userArr.includes(oi);
+                        let cls = '', icon = '';
+                        if (isUserOpt && isCorrectOpt) { cls = 'user-correct'; icon = '✅'; }
+                        else if (isUserOpt && !isCorrectOpt) { cls = 'user-wrong'; icon = '❌'; }
+                        else if (!isUserOpt && isCorrectOpt) { cls = 'missed-correct'; icon = '✓'; }
+                        return `<div class="sim-review-option ${cls}"><span class="sim-review-option-icon">${icon||'○'}</span>${opt}</div>`;
+                    }).join('')}</div>`;
+                } else {
+                    let correctText = '', userText = '';
+                    if (q.type === 'match') {
+                        correctText = q.pairs.map(p => `${p.source} → ${p.target}`).join('<br>');
+                        if (!skipped && ans && typeof ans === 'object') {
+                            userText = q.pairs.map(p => {
+                                const placedId = ans[p.id];
+                                const placedSource = placedId !== undefined ? q.pairs.find(x => x.id === placedId)?.source : null;
+                                const icon = placedId === p.id ? '✅' : '❌';
+                                return `${icon} ${placedSource || '<em>vazio</em>'} → ${p.target}`;
+                            }).join('<br>');
+                        }
+                    }
+                    if (q.type === 'order') {
+                        correctText = q.items.slice().sort((a,b) => q.correctOrder.indexOf(a.id) - q.correctOrder.indexOf(b.id)).map((item,i) => `${i+1}. ${item.text}`).join('<br>');
+                        if (!skipped && Array.isArray(ans) && ans.length > 0) {
+                            userText = ans.map((id, i) => {
+                                const item = q.items.find(it => it.id === id);
+                                const isCorrectPos = q.correctOrder[i] === id;
+                                return `${isCorrectPos ? '✅' : '❌'} ${i+1}. ${item ? item.text : '?'}`;
+                            }).join('<br>');
+                        }
+                    }
+                    if (q.type === 'categorize') {
+                        correctText = q.items.map(item => { const cat = q.categories.find(c => c.id === item.correctCategory); return `${item.text} → ${cat ? cat.label : '?'}`; }).join('<br>');
+                        if (!skipped && ans && typeof ans === 'object') {
+                            userText = q.items.map(item => {
+                                const userCatId = ans[item.id];
+                                const userCat = userCatId ? q.categories.find(c => c.id === userCatId) : null;
+                                const isCorrect = userCatId === item.correctCategory;
+                                return `${isCorrect ? '✅' : (userCat ? '❌' : '⬜')} ${item.text} → ${userCat ? userCat.label : '<em>não classificado</em>'}`;
+                            }).join('<br>');
+                        }
+                    }
+                    const userBlock = skipped
+                        ? `<div class="sim-review-drag-answer"><strong>${t.sim_skipped_label||'Não respondida'}</strong></div>`
+                        : `<div class="sim-review-drag-answer ${correct ? 'correct' : 'incorrect'}">
+                               <strong>${correct ? (t.sim_answer_correct||'Sua resposta: CORRETA ✅') : (t.sim_answer_wrong||'Sua resposta: INCORRETA ❌')}</strong>
+                               ${userText ? `<div style="margin-top:8px;line-height:1.8">${userText}</div>` : ''}
+                           </div>`;
+                    answerHTML = `
+                        ${userBlock}
+                        ${!correct && !skipped ? `<div class="sim-review-drag-answer correct">
+                            <strong>${t.sim_correct_answer||'Resposta correta:'}</strong>
+                            <div style="margin-top:8px;line-height:1.8">${correctText}</div>
+                        </div>` : ''}`;
+                }
+
+                return `<div class="sim-review-card ${cardClass}">
+                    <div class="sim-review-q-header">
+                        <span class="sim-review-q-num ${numClass}">Q${qi+1}</span>
+                        <div class="sim-review-q-text">${q.question}</div>
+                        <span class="sim-review-domain-tag">${domainName}</span>
+                    </div>
+                    ${scenarioHTML}
+                    ${answerHTML}
+                    <div class="sim-review-explanation">${q.explanation}</div>
+                </div>`;
+            }).join('');
+
+            document.getElementById('sim-screen-results').innerHTML = `
+                <div class="sim-review-header">
+                    <div class="sim-review-title">${t.sim_review_title||'Revisão das Questões'}</div>
+                    <div class="sim-review-filters">${filterBtns}</div>
+                </div>
+                <div style="margin-bottom:16px">
+                    <button class="sim-retry-btn" style="margin-right:8px" onclick="renderExamResults();showSimScreen('results');">${t.sim_back_results||'← Voltar aos Resultados'}</button>
+                </div>
+                ${cards || '<p style="color:var(--text-muted);text-align:center;padding:40px">Nenhuma questão nesta categoria.</p>'}
+            `;
+        }
+
+        // ── Reset ─────────────────────────────────────────────────────
+        function resetExam() {
+            if (examTimerInterval) clearInterval(examTimerInterval);
+            clearExamState();
+            showSimScreen('intro');
+            const introEl = document.getElementById('sim-screen-intro');
+            if (introEl) renderSimIntro(null);
+        }
+
+        // ── Drag Engine (Pointer Events) ──────────────────────────────
+        function initDragEngine(container, itemSel, dropSel, onDrop, onHover) {
+            let drag = null;
+            function getDropTarget(x, y) {
+                for (const el of container.querySelectorAll(dropSel)) {
+                    const r = el.getBoundingClientRect();
+                    if (x >= r.left && x <= r.right && y >= r.top && y <= r.bottom) return el;
+                }
+                return null;
+            }
+            container.addEventListener('pointerdown', e => {
+                const item = e.target.closest(itemSel);
+                if (!item) return;
+                e.preventDefault();
+                item.setPointerCapture(e.pointerId);
+                const rect = item.getBoundingClientRect();
+                const ghost = item.cloneNode(true);
+                ghost.className = item.className + ' sim-drag-ghost';
+                ghost.style.cssText = `position:fixed;width:${rect.width}px;left:${rect.left}px;top:${rect.top}px;pointer-events:none;`;
+                document.body.appendChild(ghost);
+                drag = { item, ghost, ox: e.clientX - rect.left, oy: e.clientY - rect.top, pid: e.pointerId };
+                item.classList.add('dragging');
+            }, { passive: false });
+
+            container.addEventListener('pointermove', e => {
+                if (!drag || e.pointerId !== drag.pid) return;
+                drag.ghost.style.left = (e.clientX - drag.ox) + 'px';
+                drag.ghost.style.top = (e.clientY - drag.oy) + 'px';
+                container.querySelectorAll(dropSel).forEach(el => el.classList.remove('over'));
+                const target = getDropTarget(e.clientX, e.clientY);
+                if (target) { target.classList.add('over'); if (onHover) onHover(drag.item, target); }
+            });
+
+            container.addEventListener('pointerup', e => {
+                if (!drag || e.pointerId !== drag.pid) return;
+                drag.ghost.remove();
+                drag.item.classList.remove('dragging');
+                container.querySelectorAll(dropSel).forEach(el => el.classList.remove('over'));
+                const target = getDropTarget(e.clientX, e.clientY);
+                onDrop(drag.item, target);
+                drag = null;
+            });
+        }
+
+        // ── Match Question ────────────────────────────────────────────
+        function renderMatchQuestion(qi, q, area, typeBadge, scenarioHTML) {
+            const t = translations[currentLang];
+            const saved = examState.answers[qi] || {};
+            // Shuffle pairs display order
+            const shuffledPairs = [...q.pairs].sort(() => Math.random() - 0.5);
+            const poolItems = shuffledPairs.map(p => {
+                const placed = Object.values(saved).includes(p.id);
+                return `<div class="sim-match-item ${placed?'placed':''}" data-pair-id="${p.id}">${p.source}</div>`;
+            }).join('');
+            const targetRows = q.pairs.map(p => {
+                const placedId = Object.keys(saved).find(k => saved[k] === p.id && k === p.id);
+                const placedSource = placedId ? q.pairs.find(x=>x.id===placedId)?.source : null;
+                const slotContent = placedSource ? `<div class="sim-match-item placed" data-pair-id="${p.id}">${placedSource}</div>` : `<span class="sim-match-slot-placeholder">${t.sim_drag_placeholder||'Arraste aqui'}</span>`;
+                return `<div class="sim-match-target-row">
+                    <div class="sim-match-target-label">${p.target}</div>
+                    <div class="sim-match-slot ${placedSource?'filled':''}" data-slot-id="${p.id}">${slotContent}</div>
+                </div>`;
+            }).join('');
+
+            area.innerHTML = `${typeBadge}${scenarioHTML}
+                <div class="sim-q-text">${qi+1}. ${q.question}</div>
+                <div class="sim-match-container">
+                    <div>
+                        <div class="sim-match-pool-label">${t.sim_drag_source||'ITENS'}</div>
+                        <div class="sim-match-pool" id="sim-match-pool">${poolItems}</div>
+                    </div>
+                    <div>
+                        <div class="sim-match-targets-label">${t.sim_drag_targets||'PARES'}</div>
+                        <div class="sim-match-targets" id="sim-match-targets">${targetRows}</div>
+                    </div>
+                </div>`;
+
+            const container = area.querySelector('.sim-match-container');
+            initDragEngine(container, '.sim-match-item', '.sim-match-slot,.sim-match-pool', (item, target) => {
+                const pairId = item.dataset.pairId;
+                // Remove from current slot
+                container.querySelectorAll('.sim-match-slot').forEach(slot => {
+                    if (slot.contains(item)) { slot.innerHTML = `<span class="sim-match-slot-placeholder">${t.sim_drag_placeholder||'Arraste aqui'}</span>`; slot.classList.remove('filled'); }
+                });
+                // Remove from pool if there
+                const pool = container.querySelector('#sim-match-pool');
+                if (pool && pool.contains(item)) pool.removeChild(item);
+
+                if (target && target.classList.contains('sim-match-slot')) {
+                    // Return old item in slot to pool if any
+                    const existing = target.querySelector('.sim-match-item');
+                    if (existing) { existing.classList.remove('placed'); pool.appendChild(existing); }
+                    // Place new item
+                    target.innerHTML = '';
+                    item.classList.add('placed');
+                    target.appendChild(item);
+                    target.classList.add('filled');
+                } else {
+                    // Return to pool
+                    item.classList.remove('placed');
+                    pool.appendChild(item);
+                }
+                // Save answer
+                const ans = {};
+                container.querySelectorAll('.sim-match-slot').forEach(slot => {
+                    const placedItem = slot.querySelector('.sim-match-item');
+                    if (placedItem) ans[slot.dataset.slotId] = placedItem.dataset.pairId;
+                });
+                examState.answers[qi] = ans;
+                updateExamNavGrid();
+                saveExamState();
+            });
+        }
+
+        // ── Order Question ────────────────────────────────────────────
+        function renderOrderQuestion(qi, q, area, typeBadge, scenarioHTML) {
+            const t = translations[currentLang];
+            const saved = examState.answers[qi];
+            let currentOrder;
+            if (saved && Array.isArray(saved) && saved.length === q.items.length) {
+                currentOrder = saved.map(id => q.items.find(it => it.id === id));
+            } else {
+                // Shuffle for display
+                currentOrder = [...q.items].sort(() => Math.random() - 0.5);
+            }
+
+            function buildList() {
+                return currentOrder.map((item, i) => `
+                    <div class="sim-order-item" data-item-id="${item.id}">
+                        <span class="sim-order-handle">⠿</span>
+                        <span class="sim-order-num">${i+1}.</span>
+                        <span class="sim-order-text">${item.text}</span>
+                    </div>
+                `).join('');
+            }
+
+            area.innerHTML = `${typeBadge}${scenarioHTML}
+                <div class="sim-q-text">${qi+1}. ${q.question}</div>
+                <p style="font-size:0.83em;color:var(--text-muted);margin-bottom:12px">${t.sim_order_instruction||'Arraste os itens para ordenar corretamente'}</p>
+                <div class="sim-order-list" id="sim-order-list">${buildList()}</div>`;
+
+            const list = area.querySelector('#sim-order-list');
+            let draggingEl = null, placeholder = null;
+
+            list.querySelectorAll('.sim-order-item').forEach(item => {
+                item.style.touchAction = 'none';
+            });
+
+            function saveOrder() {
+                const ids = [...list.querySelectorAll('.sim-order-item')].map(el => parseInt(el.dataset.itemId));
+                examState.answers[qi] = ids;
+                updateExamNavGrid();
+                saveExamState();
+                // Update numbers
+                list.querySelectorAll('.sim-order-item').forEach((el, i) => {
+                    el.querySelector('.sim-order-num').textContent = `${i+1}.`;
+                });
+            }
+
+            list.addEventListener('pointerdown', e => {
+                draggingEl = e.target.closest('.sim-order-item');
+                if (!draggingEl) return;
+                e.preventDefault();
+                draggingEl.setPointerCapture(e.pointerId);
+                draggingEl.classList.add('dragging');
+                placeholder = document.createElement('div');
+                placeholder.className = 'sim-order-item';
+                placeholder.style.opacity = '0'; placeholder.style.height = draggingEl.offsetHeight + 'px';
+                draggingEl.parentNode.insertBefore(placeholder, draggingEl.nextSibling);
+            }, { passive: false });
+
+            list.addEventListener('pointermove', e => {
+                if (!draggingEl) return;
+                const items = [...list.querySelectorAll('.sim-order-item:not(.dragging)')].filter(el => el !== placeholder);
+                for (const item of items) {
+                    const rect = item.getBoundingClientRect();
+                    if (e.clientY < rect.top + rect.height / 2) {
+                        list.insertBefore(placeholder, item);
+                        break;
+                    } else if (item === items[items.length - 1]) {
+                        list.appendChild(placeholder);
+                    }
+                }
+            });
+
+            list.addEventListener('pointerup', e => {
+                if (!draggingEl) return;
+                draggingEl.classList.remove('dragging');
+                list.insertBefore(draggingEl, placeholder);
+                placeholder.remove();
+                draggingEl = null;
+                saveOrder();
+            });
+        }
+
+        // ── Categorize Question ───────────────────────────────────────
+        function renderCategorizeQuestion(qi, q, area, typeBadge, scenarioHTML) {
+            const t = translations[currentLang];
+            const saved = examState.answers[qi] || {};
+            const poolItems = q.items.filter(item => !saved[item.id]).map(item =>
+                `<div class="sim-categorize-item" data-item-id="${item.id}">${item.text}</div>`
+            ).join('');
+            const bucketsHTML = q.categories.map(cat => {
+                const catItems = q.items.filter(item => saved[item.id] === cat.id).map(item =>
+                    `<div class="sim-categorize-item" data-item-id="${item.id}" data-cat="${cat.id}">${item.text}</div>`
+                ).join('');
+                return `<div class="sim-bucket" data-cat-id="${cat.id}">
+                    <div class="sim-bucket-header">${cat.label}</div>
+                    <div class="sim-bucket-body" data-cat-id="${cat.id}">${catItems}</div>
+                </div>`;
+            }).join('');
+
+            area.innerHTML = `${typeBadge}${scenarioHTML}
+                <div class="sim-q-text">${qi+1}. ${q.question}</div>
+                <p style="font-size:0.83em;color:var(--text-muted);margin-bottom:12px">${t.sim_categorize_pool_label||'Arraste os itens para as categorias'}</p>
+                <div class="sim-categorize-pool" id="sim-cat-pool">${poolItems}</div>
+                <div class="sim-categorize-buckets" id="sim-cat-buckets">${bucketsHTML}</div>`;
+
+            const container = area;
+            function saveCategories() {
+                const ans = {};
+                container.querySelectorAll('.sim-bucket-body').forEach(body => {
+                    const catId = body.dataset.catId;
+                    body.querySelectorAll('.sim-categorize-item').forEach(item => {
+                        ans[item.dataset.itemId] = catId;
+                    });
+                });
+                examState.answers[qi] = ans;
+                updateExamNavGrid();
+                saveExamState();
+            }
+            initDragEngine(container, '.sim-categorize-item', '.sim-bucket,.sim-categorize-pool', (item, target) => {
+                if (!target) { document.getElementById('sim-cat-pool').appendChild(item); }
+                else if (target.classList.contains('sim-categorize-pool')) { target.appendChild(item); }
+                else {
+                    // target is .sim-bucket — append to its body child
+                    const body = target.querySelector('.sim-bucket-body') || target;
+                    body.appendChild(item);
+                }
+                saveCategories();
+            });
         }
 
         // Initialize on load
