@@ -2065,6 +2065,7 @@ Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então f
                 progressOf: "de",
                 progressLessons: "lições",
                 resetConfirm: "Resetar TUDO? Isso apaga módulos concluídos, exercícios respondidos e o progresso do simulado. Esta ação não pode ser desfeita.",
+                skipExercisesConfirm: "Este módulo tem exercícios que ainda não foram verificados. Deseja avançar mesmo assim?",
                 footerDev: "Desenvolvido por",
                 footerLicense: "sob Licença MIT",
                 langLabel: "🇧🇷 PT",
@@ -2153,6 +2154,7 @@ Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então f
                 progressOf: "of",
                 progressLessons: "lessons",
                 resetConfirm: "Reset EVERYTHING? This clears completed modules, exercise answers and exam progress. This cannot be undone.",
+                skipExercisesConfirm: "This module has exercises that haven't been checked yet. Do you want to continue anyway?",
                 footerDev: "Developed by",
                 footerLicense: "under MIT License",
                 langLabel: "🇺🇸 EN",
@@ -2589,11 +2591,37 @@ Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então f
 
         // Navigate between modules
         function navigateModule(direction) {
+            if (direction === 1) {
+                const module = courseData.modules[currentModule];
+                const hasExercises = module.exercises && module.exercises.length > 0;
+                const scoreDiv = document.getElementById(`score-${currentModule}`);
+                const exercisesChecked = scoreDiv && scoreDiv.classList.contains('show');
+                if (hasExercises && !exercisesChecked) {
+                    if (!confirm(translations[currentLang].skipExercisesConfirm)) return;
+                }
+                autoCompleteModule(currentModule);
+            }
             const newIndex = currentModule + direction;
             if (newIndex >= 0 && newIndex < courseData.modules.length) {
                 saveScrollPosition();
                 loadModule(newIndex);
             }
+        }
+
+        function autoCompleteModule(moduleIndex) {
+            const t = translations[currentLang];
+            const module = courseData.modules[moduleIndex];
+            module.lessons.forEach((_, lessonIndex) => {
+                const lessonId = `${moduleIndex}-${lessonIndex}`;
+                if (!completedLessons.has(lessonId)) {
+                    completedLessons.add(lessonId);
+                    const button = document.querySelector(`[data-lesson="${lessonId}"]`);
+                    if (button) { button.classList.add('completed'); button.textContent = t.completed; }
+                }
+            });
+            checkModuleCompletion();
+            updateProgress();
+            saveProgress();
         }
 
         // Update navigation buttons
@@ -2741,6 +2769,7 @@ Depois pensei: se eu soubesse disso antes, teria feito muito mais cedo! Então f
                 ${percentage >= 70 ? t.congratulations : t.tryAgain}
             `;
             scoreDiv.classList.add('show');
+            autoCompleteModule(moduleIndex);
 
             scoreDiv.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
         }
