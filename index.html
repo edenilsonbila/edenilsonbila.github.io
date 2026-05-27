@@ -1,0 +1,370 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Minicursos de Certificação Microsoft · Edenilson Bila</title>
+  <meta name="description" content="Minicursos interativos de certificação Microsoft — AI-900, AB-730, AB-731, AB-900, GH-900. Estude com módulos, exercícios e simulados no estilo da prova oficial." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg:          #0f1117;
+      --bg2:         #1a1d27;
+      --bg3:         #21253a;
+      --border:      #2d3150;
+      --text:        #e8eaf6;
+      --text-muted:  #8892b0;
+      --accent:      #5c6bc0;
+      --radius:      14px;
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      min-height: 100vh;
+    }
+
+    /* ── HEADER ── */
+    header {
+      text-align: center;
+      padding: 64px 24px 48px;
+      background: linear-gradient(160deg, #0f1117 0%, #1a1d27 60%, #12162e 100%);
+      border-bottom: 1px solid var(--border);
+      position: relative;
+      overflow: hidden;
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: radial-gradient(ellipse 70% 50% at 50% -10%, rgba(92,107,192,.18) 0%, transparent 70%);
+      pointer-events: none;
+    }
+    .header-badge {
+      display: inline-block;
+      background: rgba(92,107,192,.15);
+      border: 1px solid rgba(92,107,192,.4);
+      color: #a5b4fc;
+      font-size: .75rem;
+      font-weight: 600;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      padding: 5px 14px;
+      border-radius: 100px;
+      margin-bottom: 20px;
+    }
+    header h1 {
+      font-size: clamp(1.8rem, 4vw, 2.8rem);
+      font-weight: 800;
+      line-height: 1.2;
+      background: linear-gradient(120deg, #c7d2fe 0%, #818cf8 50%, #a5b4fc 100%);
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 14px;
+    }
+    header p {
+      color: var(--text-muted);
+      font-size: 1rem;
+      max-width: 520px;
+      margin: 0 auto 28px;
+      line-height: 1.6;
+    }
+    .header-stats {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      flex-wrap: wrap;
+    }
+    .stat {
+      text-align: center;
+    }
+    .stat-n {
+      font-size: 1.4rem;
+      font-weight: 700;
+      color: #a5b4fc;
+    }
+    .stat-l {
+      font-size: .75rem;
+      color: var(--text-muted);
+      margin-top: 2px;
+    }
+
+    /* ── MAIN ── */
+    main {
+      max-width: 1120px;
+      margin: 0 auto;
+      padding: 48px 24px 72px;
+    }
+    .section-label {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .12em;
+      text-transform: uppercase;
+      color: var(--text-muted);
+      margin-bottom: 24px;
+    }
+
+    /* ── GRID ── */
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+      gap: 20px;
+    }
+
+    /* ── CARD ── */
+    .card {
+      background: var(--bg2);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      display: flex;
+      flex-direction: column;
+      gap: 16px;
+      text-decoration: none;
+      color: inherit;
+      transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease;
+      position: relative;
+      overflow: hidden;
+    }
+    .card::before {
+      content: '';
+      position: absolute;
+      top: 0; left: 0; right: 0;
+      height: 3px;
+      background: var(--card-accent, #5c6bc0);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+    .card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 12px 40px rgba(0,0,0,.4);
+      border-color: var(--card-accent, #5c6bc0);
+    }
+
+    .card-head {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 10px;
+    }
+    .card-icon {
+      width: 48px; height: 48px;
+      border-radius: 12px;
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.5rem;
+      background: rgba(255,255,255,.05);
+      flex-shrink: 0;
+    }
+    .card-code {
+      font-size: .7rem;
+      font-weight: 700;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      background: rgba(255,255,255,.07);
+      border: 1px solid rgba(255,255,255,.1);
+      padding: 4px 10px;
+      border-radius: 100px;
+      color: var(--text-muted);
+    }
+
+    .card-title {
+      font-size: 1rem;
+      font-weight: 700;
+      line-height: 1.35;
+      color: var(--text);
+    }
+    .card-desc {
+      font-size: .85rem;
+      color: var(--text-muted);
+      line-height: 1.55;
+      flex: 1;
+    }
+
+    .card-meta {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+    }
+    .tag {
+      font-size: .7rem;
+      font-weight: 600;
+      padding: 3px 10px;
+      border-radius: 100px;
+      background: rgba(255,255,255,.06);
+      border: 1px solid rgba(255,255,255,.1);
+      color: var(--text-muted);
+    }
+    .tag.level   { color: #86efac; border-color: rgba(134,239,172,.3); background: rgba(134,239,172,.08); }
+    .tag.price   { color: #fde68a; border-color: rgba(253,230,138,.3); background: rgba(253,230,138,.08); }
+    .tag.time    { color: #bfdbfe; border-color: rgba(191,219,254,.3); background: rgba(191,219,254,.08); }
+    .tag.vendor  { color: #e9d5ff; border-color: rgba(233,213,255,.3); background: rgba(233,213,255,.08); }
+
+    .card-cta {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-top: 12px;
+      border-top: 1px solid var(--border);
+      font-size: .83rem;
+      font-weight: 600;
+      color: var(--card-accent, #818cf8);
+      gap: 8px;
+    }
+    .card-cta span { flex: 1; }
+    .cta-arrow {
+      width: 28px; height: 28px;
+      border-radius: 8px;
+      background: rgba(255,255,255,.06);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1rem;
+      transition: background .15s;
+    }
+    .card:hover .cta-arrow {
+      background: var(--card-accent, #5c6bc0);
+      color: #fff;
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      text-align: center;
+      padding: 24px;
+      border-top: 1px solid var(--border);
+      font-size: .78rem;
+      color: var(--text-muted);
+    }
+    footer a { color: #a5b4fc; text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+
+<header>
+  <div class="header-badge">📚 Certification Hub</div>
+  <h1>Minicursos de Certificação</h1>
+  <p>Preparação interativa para exames Microsoft &amp; GitHub — módulos, flashcards e simulados no estilo da prova oficial.</p>
+  <div class="header-stats">
+    <div class="stat"><div class="stat-n">5</div><div class="stat-l">Certificações</div></div>
+    <div class="stat"><div class="stat-n">200+</div><div class="stat-l">Questões de Simulado</div></div>
+    <div class="stat"><div class="stat-n">PT / EN</div><div class="stat-l">Bilíngue</div></div>
+    <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Gratuito</div></div>
+  </div>
+</header>
+
+<main>
+  <p class="section-label">Escolha seu curso</p>
+  <div class="grid">
+
+    <!-- AI-900 -->
+    <a class="card" href="AI-900.html" style="--card-accent:#38bdf8">
+      <div class="card-head">
+        <div class="card-icon">🧠</div>
+        <span class="card-code">AI-900</span>
+      </div>
+      <div class="card-title">Azure AI Fundamentals</div>
+      <div class="card-desc">Conceitos de IA e Machine Learning no Azure: serviços cognitivos, visão computacional, NLP, IA generativa e responsável.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">Microsoft Azure</span>
+        <span class="tag price">USD 99</span>
+        <span class="tag time">60 min · 700/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- AB-730 -->
+    <a class="card" href="AB-730.html" style="--card-accent:#a78bfa">
+      <div class="card-head">
+        <div class="card-icon">💼</div>
+        <span class="card-code">AB-730</span>
+      </div>
+      <div class="card-title">AI Business Professional</div>
+      <div class="card-desc">Uso estratégico do Microsoft 365 Copilot no dia a dia profissional: prompts, agentes, IA responsável e proteção de dados.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">Microsoft 365</span>
+        <span class="tag price">USD 99</span>
+        <span class="tag time">45 min · 700/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- AB-731 -->
+    <a class="card" href="AB-731.html" style="--card-accent:#fb923c">
+      <div class="card-head">
+        <div class="card-icon">🚀</div>
+        <span class="card-code">AB-731</span>
+      </div>
+      <div class="card-title">AI Transformation Leader</div>
+      <div class="card-desc">Liderança em transformação de IA: estratégia de adoção, governança, gestão de mudança e ROI do Copilot no contexto organizacional.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">Microsoft 365</span>
+        <span class="tag price">USD 99</span>
+        <span class="tag time">45 min · 700/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- AB-900 -->
+    <a class="card" href="AB-900.html" style="--card-accent:#34d399">
+      <div class="card-head">
+        <div class="card-icon">🤖</div>
+        <span class="card-code">AB-900</span>
+      </div>
+      <div class="card-title">M365 Copilot &amp; Agent Administration Fundamentals</div>
+      <div class="card-desc">Administração do M365 Copilot: governança, proteção de dados com Microsoft Purview e gestão de agentes de IA na organização.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">Microsoft 365</span>
+        <span class="tag price">USD 99</span>
+        <span class="tag time">50 min · 700/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- GH-900 -->
+    <a class="card" href="GH-900.html" style="--card-accent:#4ade80">
+      <div class="card-head">
+        <div class="card-icon">🐙</div>
+        <span class="card-code">GH-900</span>
+      </div>
+      <div class="card-title">GitHub Foundations</div>
+      <div class="card-desc">Fundamentos do GitHub: Git, repositórios, colaboração, GitHub Actions, Copilot e boas práticas de desenvolvimento moderno.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">GitHub</span>
+        <span class="tag price">USD 99</span>
+        <span class="tag time">120 min · 750/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+  </div>
+</main>
+
+<footer>
+  Criado por <a href="https://github.com/edenilsonbila" target="_blank">Edenilson Bila</a> · Licença MIT ·
+  <a href="https://github.com/edenilsonbila/Certificacoes" target="_blank">Ver no GitHub</a>
+</footer>
+
+</body>
+</html>
