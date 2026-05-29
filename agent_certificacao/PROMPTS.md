@@ -52,6 +52,58 @@ Cada exercício deve:
 
 ---
 
+## Diretrizes de Estilo para o Simulado Final (40 questões)
+
+### Distribuição de Tipos de Questão (obrigatório)
+| Tipo | Quantidade | % |
+|------|-----------|---|
+| single (múltipla escolha) | 23 | 57.5% |
+| multi (múltipla seleção) | 7 | 17.5% |
+| match (associação/drag) | 3 | 7.5% |
+| order (ordenação/drag) | 3 | 7.5% |
+| categorize (classificação/drag) | 4 | 10% |
+
+### Distribuição de Estilos de Pergunta (NÃO fazer tudo use-case!)
+| Estilo | Qtd | Exemplo |
+|--------|-----|---------|
+| "Complete a frase: ___ é..." | 6 | "Complete: O Copilot usa ___ para ancorar respostas em fontes verificadas." |
+| "Qual NÃO é / INCORRETO" (negativa) | 6 | "Qual dos seguintes NÃO é um risco oficial de IA Generativa?" |
+| "Qual descreve CORRETAMENTE" (conceito) | 6 | "Qual afirmação descreve CORRETAMENTE a diferença entre chat e agente?" |
+| Cenário/Use-case | 8 | "Um gerente precisa [task]. Qual ferramenta..." |
+| "Selecione 2+ que se aplicam" (multi) | 7 | "Selecione DUAS afirmações CORRETAS sobre..." |
+| Drag-based (match/order/categorize) | 10 | "Associe cada conceito à sua definição correta:" |
+
+### Regras de Estilo das Questões
+1. **Máximo 20-25% use-case puro** — exames Fundamentals Microsoft são balanceados
+2. **Questões negativas** devem ter a palavra "NÃO" ou "INCORRETA" em MAIÚSCULAS e negrito
+3. **Complete a frase** usa ___ (3 underscores) como placeholder
+4. **Multi-select** deve indicar quantas respostas ("Selecione DUAS...")
+5. **Explicações** devem referenciar mnemônicos do curso quando aplicável
+6. **Armadilhas clássicas** (Exam Traps) devem ser sinalizadas com ⚠️
+
+### Distribuição por Domínio (baseada nos Skills Measured)
+- Use os pesos oficiais do Study Guide da certificação
+- Exemplo AB-730: D0=25-30%, D1=35-40%, D2=25-30%
+- Tolerância: ±3% do peso oficial
+
+### Referência de Formato
+```javascript
+// Formato obrigatório de cada questão:
+{
+    id: N, domain: 0-2, type: 'single|multi|match|order|categorize',
+    scenario: "...",  // opcional — apenas para cenários longos
+    question: "...",
+    options: [...],   // para single/multi
+    pairs: [...],     // para match
+    items: [...],     // para order/categorize
+    categories: [...], // para categorize
+    correct: N | [N,N], // index(es) ou correctOrder/correctCategory
+    explanation: "✅ ... <br><br>❌ ..."
+}
+```
+
+---
+
 ## Checklist de Placeholders para Substituir
 
 Ao gerar um novo curso, substituir TODOS estes placeholders:
