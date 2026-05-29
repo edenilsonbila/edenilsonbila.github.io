@@ -1632,485 +1632,499 @@
         // ============================================================
         // SIMULADO FINAL — QUESTIONS
         // SUBSTITUIR: 40 questões (ajustar ao questionCount acima)
-        // Mix obrigatório: single(20-26), multi(4-8), match(2-4), order(2-4), categorize(1-2)
-        // Distribuir proporcionalmente aos pesos dos domínios
-        // Basear em simulados reais, ExamTopics, Whizlabs e Microsoft Learn
+        // Mix: single(23), multi(7), match(3), order(3), categorize(4) = 40
+        // Estilos: Complete-a-frase(6), NÃO/INCORRETO(6), Conceito(6), Cenário(8), Multi(7), Drag(10) ≈ 43 slots (sobreposição)
+        // Distribuição: D0=11(27.5%), D1=16(40%), D2=13(32.5%)
+        // Referência: Microsoft Exam Sandbox + Practice Assessment AB-730
         // ============================================================
         const SIMULADO_QUESTIONS = [
-            // ── Q1–Q20 ────────────────────────────────────────────────────────
+            // ── Q1–Q11: DOMÍNIO 0 — Fundamentos de IA Generativa (27.5%) ─────
             {
                 id: 1, domain: 0, type: 'single',
-                question: "Uma organização precisa garantir que os dados processados pelo Microsoft 365 Copilot não saiam do ambiente controlado da empresa. Qual afirmação descreve corretamente como o Copilot protege esses dados?",
+                question: "Complete a frase: O Microsoft 365 Copilot opera dentro do ___, garantindo que os dados do cliente não sejam usados para treinar modelos públicos de IA.",
                 options: [
-                    "O Copilot envia dados para servidores externos da Microsoft para processamento e os retorna após anonimização",
-                    "O Copilot pode enviar dados para treinar modelos públicos, mas apenas com consentimento do administrador",
-                    "O Copilot opera dentro dos limites de conformidade do Microsoft 365 — os dados do tenant não são usados para treinar modelos públicos e permanecem no ambiente seguro",
-                    "Os dados ficam no tenant por 90 dias e depois são automaticamente excluídos pela Microsoft"
+                    "Azure Active Directory Tenant Isolation",
+                    "Microsoft 365 Trust Boundary",
+                    "Microsoft Defender for Cloud perimeter",
+                    "Microsoft Entra Zero Trust framework"
                 ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O Microsoft 365 Copilot opera dentro do Microsoft 365 Trust Boundary. Os dados do cliente não saem para treinar modelos públicos e são processados respeitando todos os controles de conformidade do tenant.<br><br>❌ A: O processamento ocorre dentro do trust boundary, não em servidores externos.<br>❌ B: Dados de clientes nunca são usados para treinar modelos públicos, nem com consentimento.<br>❌ D: A Microsoft não exclui automaticamente dados de tenant após 90 dias por inatividade."
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O conceito oficial é <strong>Microsoft 365 Trust Boundary</strong> — os dados do cliente não saem deste perímetro de confiança, não são usados para treinar modelos públicos e seguem todos os controles de conformidade do tenant.<br><br>❌ A: AAD Tenant Isolation é conceito de identidade, não de proteção de dados do Copilot.<br>❌ C: Defender for Cloud é ferramenta de segurança de infraestrutura, não o modelo de confiança do Copilot.<br>❌ D: Zero Trust é um framework de acesso, não o boundary específico dos dados do Copilot."
             },
             {
                 id: 2, domain: 0, type: 'single',
-                question: "Qual é a principal característica que define um modelo de linguagem grande (LLM) como o que alimenta o Microsoft 365 Copilot?",
+                question: "Qual afirmação descreve CORRETAMENTE como um Large Language Model (LLM) gera respostas?",
                 options: [
-                    "Ele pesquisa respostas em tempo real na internet e as apresenta ao usuário",
-                    "Ele processa e gera texto prevendo os tokens mais prováveis com base em padrões aprendidos durante o treinamento",
-                    "Ele consulta uma base de dados estruturada de respostas pré-aprovadas pela Microsoft",
-                    "Ele executa algoritmos matemáticos determinísticos para encontrar a resposta exata"
+                    "Consulta um banco de dados de respostas pré-aprovadas e seleciona a mais relevante",
+                    "Pesquisa na internet em tempo real e apresenta os resultados como texto formatado",
+                    "Prevê os tokens mais prováveis com base em padrões estatísticos aprendidos durante o treinamento",
+                    "Executa algoritmos determinísticos que sempre produzem a mesma resposta para a mesma pergunta"
                 ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>LLMs (Large Language Models) funcionam prevendo os tokens mais prováveis baseados em padrões estatísticos aprendidos em bilhões de exemplos durante o treinamento. Não consultam internet em tempo real nem banco de dados de respostas fixas.<br><br>❌ A: LLMs por padrão não buscam na internet em tempo real (isso requer plugins).<br>❌ C: Não há base de dados de respostas pré-aprovadas — o modelo gera texto dinamicamente.<br>❌ D: O processo é probabilístico, não determinístico — a mesma pergunta pode gerar respostas diferentes."
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>LLMs funcionam prevendo os tokens mais prováveis baseados em padrões estatísticos aprendidos em bilhões de exemplos. O processo é probabilístico — a mesma pergunta pode gerar respostas ligeiramente diferentes.<br><br>❌ A: Não há banco de dados de respostas fixas — o modelo gera texto dinamicamente.<br>❌ B: LLMs por padrão não buscam na internet (isso requer plugins/grounding).<br>❌ D: O processo é probabilístico, não determinístico."
             },
             {
                 id: 3, domain: 0, type: 'single',
-                question: "Uma profissional de RH usa o Copilot para gerar uma proposta de benefícios e percebe que os valores percentuais apresentados são precisos e convincentes, mas completamente inventados. Qual ação representa a prática mais adequada de IA Responsável?",
+                question: "Qual dos seguintes NÃO é um risco oficialmente reconhecido da IA Generativa no Microsoft 365 Copilot?",
                 options: [
-                    "Reiniciar o Copilot e refazer a pergunta com mais contexto para obter valores corretos",
-                    "Reportar o incidente ao time de TI como falha de segurança do sistema",
-                    "Verificar todas as informações críticas em fontes primárias antes de usar o conteúdo gerado",
-                    "Evitar usar o Copilot para qualquer tarefa relacionada a benefícios no futuro"
+                    "Fabricação (hallucination) — geração de informações plausíveis mas factualmente incorretas",
+                    "Injeção de prompt — manipulação do modelo via conteúdo malicioso em documentos",
+                    "Substituição autônoma de decisões humanas — o Copilot toma decisões sem aprovação do usuário",
+                    "Over-reliance — dependência excessiva nas respostas do modelo sem verificação humana"
                 ],
                 correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>A fabricação (hallucination) é um risco inerente a LLMs — o modelo pode gerar dados estatisticamente plausíveis mas factualmente incorretos. O princípio de IA Responsável exige sempre verificar informações críticas em fontes primárias antes do uso.<br><br>❌ A: Refazer a pergunta não garante dados corretos — o problema é estrutural no LLM.<br>❌ B: Fabricação não é falha de segurança — é característica conhecida dos LLMs.<br>❌ D: A solução não é evitar o Copilot, mas usá-lo com verificação humana adequada."
+                explanation: "✅ <strong>C NÃO é um risco oficial!</strong><br>Os 3 riscos oficialmente listados pela Microsoft para IA Generativa são: <strong>Fabricação</strong> (A), <strong>Injeção de Prompt</strong> (B) e <strong>Over-reliance</strong> (D). O Copilot NUNCA toma decisões autônomas sem aprovação — o humano sempre permanece no controle.<br><br>⚠️ Memorize: <strong>FIO 🧵</strong> = Fabricação + Injeção + Over-reliance"
             },
             {
                 id: 4, domain: 0, type: 'single',
-                question: "A Microsoft define 6 princípios de IA Responsável. Uma empresa descobre que seu modelo de análise de candidatos a emprego sistematicamente desfavorece mulheres com mais de 40 anos, perpetuando vieses dos dados históricos. Qual princípio de IA Responsável está sendo violado?",
+                question: "A Microsoft define 6 princípios de IA Responsável. Um sistema de análise de currículos desfavorece sistematicamente candidatos de uma região específica. Qual princípio está sendo violado?",
                 options: [
-                    "Confiabilidade e Segurança — o modelo não funciona de forma consistente",
-                    "Equidade (Fairness) — o sistema discrimina grupos de pessoas de forma injusta",
-                    "Privacidade e Segurança — dados pessoais estão sendo usados indevidamente",
-                    "Transparência — o processo de tomada de decisão não é explicável"
+                    "Transparência — o processo de decisão não é explicável aos candidatos",
+                    "Equidade (Fairness) — o sistema discrimina um grupo de pessoas de forma injusta",
+                    "Confiabilidade e Segurança — o modelo apresenta comportamento inconsistente",
+                    "Inclusão — o sistema não é acessível a pessoas com deficiência"
                 ],
                 correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O princípio de Equidade (Fairness) exige que sistemas de IA tratem todas as pessoas de forma justa, sem discriminação baseada em características protegidas como gênero, idade, raça ou etnia. Um modelo que sistematicamente desfavorece grupos específicos viola este princípio, mesmo que seja resultado de viés nos dados históricos.<br><br>❌ A: Confiabilidade trata de consistência de funcionamento, não de viés.<br>❌ C: Privacidade trata de proteção de dados pessoais, não de discriminação algorítmica.<br>❌ D: Transparência é um problema relacionado mas não é o princípio primário violado aqui."
+                explanation: "✅ <strong>Opção B correta!</strong><br>O princípio de Equidade (Fairness) exige que sistemas de IA tratem todas as pessoas justamente, sem discriminação baseada em características protegidas como origem geográfica, gênero, idade ou etnia.<br><br>❌ A: Transparência trata de explicabilidade, não de viés.<br>❌ C: Confiabilidade trata de consistência funcional.<br>❌ D: Inclusão trata de acessibilidade, não de discriminação algorítmica."
             },
             {
                 id: 5, domain: 0, type: 'single',
-                question: "Um analista de inteligência de mercado precisa investigar profundamente as tendências de consolidação no setor de energia renovável, sintetizando informações de relatórios setoriais, notícias e publicações acadêmicas. Qual agente especializado do M365 Copilot é mais adequado para esta tarefa?",
+                question: "Complete a frase: Quando o Microsoft 365 Copilot usa dados de arquivos do SharePoint e emails do usuário para fundamentar suas respostas, esta técnica é chamada de ___.",
                 options: [
-                    "Copilot Chat (BizChat) — para pesquisas gerais usando o contexto de emails e arquivos do usuário",
-                    "Copilot Researcher — especializado em investigação aprofundada e síntese de múltiplas fontes complexas",
-                    "Copilot Analyst — especializado em análise quantitativa de dados estruturados como planilhas",
-                    "Copilot no Teams — otimizado para pesquisas colaborativas durante reuniões"
+                    "Fine-tuning",
+                    "Grounding",
+                    "Prompt engineering",
+                    "Retrieval-Augmented Training"
                 ],
                 correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot Researcher é projetado para investigações aprofundadas — pesquisa em múltiplas fontes heterogêneas, síntese de informações complexas e análise de tópicos que requerem raciocínio extenso e conexão entre conceitos de diferentes fontes.<br><br>❌ A: BizChat é um assistente geral sem especialização em pesquisa aprofundada multifonte.<br>❌ C: Copilot Analyst é especializado em dados estruturados (planilhas), não em pesquisa qualitativa multifonte.<br>❌ D: Copilot no Teams é otimizado para contexto de reuniões, não para pesquisa aprofundada."
+                explanation: "✅ <strong>Opção B correta!</strong><br><strong>Grounding</strong> é a técnica de ancorar as respostas do LLM em fontes de dados específicas e verificadas (arquivos SharePoint, emails, reuniões). Reduz fabricação ao fornecer contexto factual ao modelo.<br><br>❌ A: Fine-tuning é re-treinamento do modelo (não ocorre com dados do cliente no M365).<br>❌ C: Prompt engineering é a técnica do USUÁRIO para criar prompts, não do sistema.<br>❌ D: Não existe 'Retrieval-Augmented Training' — o termo correto seria RAG (Retrieval-Augmented Generation), mas a Microsoft usa 'Grounding' oficialmente."
             },
             {
                 id: 6, domain: 0, type: 'single',
-                scenario: "Um gerente de projetos usa o Copilot para analisar um documento de contrato enviado por um fornecedor externo. Ao processar o arquivo, o Copilot começa a executar instruções não solicitadas, como tentar acessar emails confidenciais do usuário.",
-                question: "Qual tipo de ataque de segurança de IA este cenário descreve?",
+                scenario: "Um gerente de projetos usa o Copilot para analisar um contrato de fornecedor externo. O Copilot começa a executar instruções não solicitadas ocultas no documento, como tentar acessar emails confidenciais.",
+                question: "Qual tipo de ataque de segurança este cenário descreve?",
                 options: [
                     "Fabricação adversarial — o modelo inventou instruções para parecer mais útil",
-                    "Violação de conformidade do tenant pelo fornecedor externo",
-                    "Excesso de permissões do usuário no Microsoft 365",
-                    "Injeção de prompt (prompt injection) via conteúdo malicioso no documento"
+                    "Phishing via Copilot — engenharia social direcionada ao modelo de IA",
+                    "Over-reliance exploit — exploração da confiança excessiva do usuário no modelo",
+                    "Injeção de prompt (prompt injection) — instruções maliciosas ocultas no conteúdo processado"
                 ],
                 correct: 3,
-                explanation: "✅ <strong>Opção D correta!</strong><br>A Injeção de Prompt ocorre quando conteúdo malicioso incorporado em um documento ou input tenta manipular o modelo de IA para executar ações não autorizadas, revelar dados sensíveis ou desviar do comportamento esperado. É um vetor de ataque crítico ao usar IA com documentos externos.<br><br>❌ A: Fabricação é geração de dados incorretos, não execução de instruções maliciosas.<br>❌ B e C: O problema é o conteúdo malicioso no documento, não configurações de tenant ou permissões."
+                explanation: "✅ <strong>Opção D correta!</strong><br>A <strong>Injeção de Prompt</strong> ocorre quando conteúdo malicioso incorporado em documentos ou inputs tenta manipular o modelo para executar ações não autorizadas. É um dos 3 riscos oficiais de IA Generativa (FIO).<br><br>❌ A: Fabricação é geração de dados incorretos, não execução de instruções.<br>❌ B: Phishing via Copilot não é uma categoria oficial de risco.<br>❌ C: Over-reliance é sobre o usuário confiar demais, não sobre exploração externa."
             },
             {
-                id: 7, domain: 1, type: 'single',
-                question: "Um gerente de projetos quer criar um cronograma de implementação de ERP de 8 meses com o Copilot. Qual dos prompts abaixo produzirá o resultado mais útil e profissional?",
+                id: 7, domain: 0, type: 'single',
+                question: "Qual dos seguintes fatores NÃO influencia diretamente a qualidade das respostas do Microsoft 365 Copilot?",
                 options: [
-                    "Crie um cronograma de projeto",
-                    "Preciso de um cronograma de ERP, pode ajudar?",
-                    "Crie um cronograma de implementação para projeto de migração de ERP de 8 meses, com fases (planejamento, configuração, testes UAT, treinamento, go-live), incluindo dependências entre fases e marcos mensais, no formato de tabela com colunas: Fase, Duração, Responsável, Dependências, Marco",
-                    "Ajude a organizar as fases de um projeto de ERP em uma tabela"
+                    "O conteúdo e clareza do prompt escrito pelo usuário",
+                    "Os arquivos e dados do M365 disponíveis no contexto do usuário (grounding)",
+                    "O aplicativo M365 em que o Copilot está sendo usado (Word, Teams, Outlook...)",
+                    "O hardware e velocidade de processador do computador do usuário"
                 ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O prompt mais eficaz especifica todos os elementos necessários: contexto (migração de ERP, 8 meses), estrutura esperada (fases nomeadas), conteúdo de cada fase (dependências, marcos) e formato de saída (tabela com colunas específicas). Um prompt completo = resultado de qualidade profissional sem necessidade de iterações.<br><br>❌ A e B: São vagos demais — o Copilot gerará um resultado genérico que exigirá múltiplas iterações.<br>❌ D: Especifica o formato (tabela) mas não o conteúdo esperado, resultando em estrutura incompleta."
+                correct: 3,
+                explanation: "✅ <strong>D NÃO influencia!</strong><br>O processamento do Copilot ocorre na nuvem da Microsoft — o hardware local do usuário não afeta a qualidade das respostas. Os 3 fatores que influenciam são: <strong>qualidade do prompt</strong> (A), <strong>dados disponíveis para grounding</strong> (B) e <strong>contexto do app</strong> (C) — cada app tem capacidades diferentes.<br><br>⚠️ Na prova real: questões sobre 'o que afeta a resposta' são comuns. Lembre: Prompt + Contexto/Dados + App = qualidade da resposta."
             },
             {
-                id: 8, domain: 1, type: 'single',
-                question: "Uma analista deseja que o Copilot compare dados de um relatório de vendas no Excel com metas em um documento Word, ambos salvos no SharePoint. Como ela deve referenciar os dois arquivos no mesmo prompt?",
+                id: 8, domain: 0, type: 'multi',
+                question: "Selecione DUAS afirmações que descrevem corretamente como o Microsoft 365 Copilot protege dados corporativos:",
                 options: [
-                    "Copiar e colar o conteúdo de ambos os arquivos no campo de texto antes da pergunta",
-                    "Usar o símbolo / seguido do nome de cada arquivo para referenciar ambos diretamente no prompt",
-                    "Exportar ambos para PDF e fazer upload no campo de chat do Copilot",
-                    "Abrir os dois arquivos simultaneamente — o Copilot os detectará e processará automaticamente"
-                ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O símbolo / no Microsoft 365 Copilot abre o seletor nativo de arquivos do M365. A analista pode digitar /[nome do Excel] e /[nome do Word] no mesmo prompt para referenciar ambos os arquivos, permitindo análise cruzada de dados com contexto completo.<br><br>❌ A: Copiar e colar perde a referência nativa e pode ser impraticável para arquivos grandes.<br>❌ C: Upload de PDF não aproveita a integração nativa do M365 e perde a conexão com os arquivos originais.<br>❌ D: O Copilot não detecta arquivos automaticamente — a referência explícita com / é necessária."
-            },
-            {
-                id: 9, domain: 1, type: 'single',
-                question: "Um consultor usa um prompt complexo toda semana para analisar relatórios de clientes. Após salvar o prompt no Copilot, qual é a forma mais rápida de reutilizá-lo na semana seguinte?",
-                options: [
-                    "Acessar o histórico de conversas e copiar o prompt da sessão anterior",
-                    "Abrir as configurações do Copilot, localizar o prompt e copiá-lo antes de cada uso",
-                    "Acessar os prompts salvos diretamente da interface do Copilot e executar com um clique",
-                    "Exportar o prompt como arquivo .txt e importá-lo na próxima sessão"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>Prompts salvos no Microsoft 365 Copilot ficam acessíveis diretamente na interface de prompt — o consultor pode visualizar todos os seus prompts salvos e executar o desejado com um clique, sem redigitar, copiar ou navegar por configurações.<br><br>❌ A: Buscar no histórico de conversas é menos eficiente que acessar os prompts salvos diretamente.<br>❌ B: Não é necessário ir às configurações — prompts salvos estão acessíveis na interface principal.<br>❌ D: Não há funcionalidade de exportar/importar prompts como arquivo .txt."
-            },
-            {
-                id: 10, domain: 1, type: 'single',
-                question: "Uma empresa quer que o Copilot gere automaticamente um relatório de status de projetos toda sexta-feira às 17h, sem intervenção manual recorrente. Qual recurso do Microsoft 365 Copilot permite implementar isso?",
-                options: [
-                    "Criar um agente no Copilot Studio com gatilho de calendário automático",
-                    "Configurar um fluxo no Power Automate para chamar o Copilot semanalmente via API",
-                    "Agendar o prompt no Copilot para execução automática recorrente na data e hora definidas",
-                    "Usar uma macro do Outlook para disparar o prompt semanalmente via regra de email"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O Microsoft 365 Copilot permite agendar prompts para execução automática em dias e horários específicos — sem precisar de Power Automate, agentes ou macros. O prompt executa automaticamente na frequência configurada.<br><br>❌ A: Copilot Studio com gatilho de calendário é uma solução mais complexa e desnecessária para este caso.<br>❌ B: Power Automate requer configuração de conectores adicionais e é mais complexo que o agendamento nativo.<br>❌ D: Macros do Outlook não têm capacidade nativa de executar prompts do Copilot."
-            },
-            {
-                id: 11, domain: 1, type: 'single',
-                question: "Uma coordenadora de onboarding criou um prompt para gerar cartas de boas-vindas personalizadas. Ela quer que os 8 membros da equipe de RH usem exatamente este prompt, sem risco de modificações acidentais. O que ela deve fazer?",
-                options: [
-                    "Criar um documento Word com o prompt e distribuir por email para a equipe",
-                    "Adicionar o prompt como mensagem fixada no canal do Teams de RH",
-                    "Compartilhar o prompt diretamente pelo Copilot com os membros específicos da equipe",
-                    "Criar um formulário no Microsoft Forms com o texto do prompt para os funcionários copiarem"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O compartilhamento nativo de prompts do Copilot garante que todos os membros acessem exatamente a mesma versão centralizada — sem riscos de cópias desatualizadas ou modificações não intencionais. Alterações feitas pela coordenadora são refletidas automaticamente para todos que têm acesso.<br><br>❌ A: Email com documento Word cria cópias descentralizadas sujeitas a modificações.<br>❌ B: Fixar no Teams é uma solução manual sem integração nativa com o Copilot.<br>❌ D: Forms exige cópia manual — cada membro pode copiar errado ou modificar acidentalmente."
-            },
-            {
-                id: 12, domain: 1, type: 'single',
-                question: "Uma analista jurídica precisa que o Copilot redija pareceres no estilo formal com linguagem técnica jurídica, citações ABNT e estrutura fixa: Ementa, Fatos, Análise Jurídica e Conclusão. Qual é o elemento MAIS crítico para incluir no prompt?",
-                options: [
-                    "O nome completo do cliente para personalização automática do documento",
-                    "A legislação e jurisprudência específicas que o Copilot deve consultar",
-                    "Todas as especificações de formato, estilo e estrutura esperados para o parecer",
-                    "O número do processo judicial para que o Copilot busque dados automaticamente"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O elemento mais crítico é especificar detalhadamente o formato e estrutura: estilo formal, linguagem técnica jurídica, padrão ABNT e estrutura fixa (Ementa, Fatos, Análise, Conclusão). O Copilot seguirá rigorosamente as instruções de formato especificadas no prompt.<br><br>❌ A: Nome do cliente é personalização, não o elemento estrutural mais crítico.<br>❌ B: Legislação e jurisprudência são conteúdo, não estrutura — importante mas não o MAIS crítico para garantir o formato correto.<br>❌ D: O Copilot não busca dados de processos automaticamente por número."
-            },
-            {
-                id: 13, domain: 2, type: 'single',
-                question: "Um gerente de marketing tem bullets dispersos em emails e notas de reunião no M365 e precisa criar um plano de lançamento de produto no Word. Qual é a abordagem mais eficiente com o Copilot?",
-                options: [
-                    "Criar o plano manualmente no Word e depois pedir ao Copilot para revisar o texto",
-                    "Referenciar os emails e notas no prompt do Copilot e solicitar a geração do plano estruturado com base nesse material",
-                    "Exportar todos os emails como PDF e fazer upload no campo de chat do Copilot no Word",
-                    "Pedir ao Copilot para pesquisar planos de lançamento de produto genéricos e depois adaptar manualmente"
-                ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>A abordagem mais eficiente é referenciar os materiais existentes (emails e notas do M365) usando / no prompt e solicitar ao Copilot que sintetize e estruture o plano. O Copilot transforma inputs dispersos em um documento coeso e estruturado sem intervenção manual intensiva.<br><br>❌ A: Criar manualmente e depois revisar não aproveita a capacidade generativa do Copilot.<br>❌ C: Exportar para PDF perde a integração nativa do M365 e é desnecessário.<br>❌ D: Pesquisar conteúdo genérico ignora o material específico da empresa já disponível."
-            },
-            {
-                id: 14, domain: 2, type: 'single',
-                question: "Uma diretora de operações tem um relatório Word de 80 páginas com análise de processos e precisa apresentar os 5 principais insights ao conselho em 10 minutos. Qual é a abordagem mais eficiente usando o Copilot no PowerPoint?",
-                options: [
-                    "Copiar manualmente os insights do Word e criar os slides no PowerPoint um por um",
-                    "Usar o Copilot no PowerPoint referenciando o documento Word para gerar automaticamente uma apresentação com os insights extraídos",
-                    "Salvar o relatório Word como PDF e importar para o PowerPoint como imagens de cada página",
-                    "Usar o Word Copilot para criar um novo documento de 2 páginas primeiro e depois ir para o PowerPoint"
-                ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no PowerPoint pode gerar automaticamente uma apresentação baseada em um documento Word existente — extraindo e sintetizando os pontos principais em slides formatados profissionalmente. É a abordagem mais eficiente para criar apresentações executivas a partir de relatórios longos.<br><br>❌ A: Copiar manualmente 80 páginas é trabalhoso e perde os benefícios da IA.<br>❌ C: Importar como imagens não é editável e não beneficia das capacidades do Copilot.<br>❌ D: Criar documento intermediário adiciona um passo desnecessário."
-            },
-            {
-                id: 15, domain: 0, type: 'multi',
-                question: "Quais DUAS afirmações descrevem corretamente como o Microsoft 365 Copilot protege a privacidade dos dados corporativos?",
-                options: [
-                    "O Copilot usa dados de todas as organizações para treinar continuamente o modelo base",
-                    "O Copilot respeita as permissões de acesso existentes do M365 — não exibe conteúdo que o usuário não tem permissão de ver",
-                    "Os dados do cliente são processados dentro dos limites de conformidade do Microsoft 365 e não são usados para treinar modelos públicos",
-                    "O Copilot armazena todas as conversas em servidores externos para análise de qualidade da Microsoft"
+                    "Os dados do tenant são usados para melhorar continuamente o modelo base da Microsoft para todos os clientes",
+                    "O Copilot respeita todas as permissões de acesso existentes no M365 — não exibe conteúdo restrito ao usuário",
+                    "Os dados do cliente permanecem no Trust Boundary do M365 e não treinam modelos públicos",
+                    "O Copilot desativa automaticamente a criptografia de dados para processar documentos mais rapidamente"
                 ],
                 correct: [1, 2],
-                explanation: "✅ <strong>Opções B e C corretas:</strong><br>• <strong>B:</strong> O Copilot herda e respeita todas as permissões do M365 — não eleva acesso nem revela conteúdo restrito ao usuário.<br>• <strong>C:</strong> Os dados permanecem no Microsoft 365 Trust Boundary e não são usados para treinar modelos públicos de IA.<br><br>❌ A: Dados de clientes nunca treinam modelos públicos — cada tenant é isolado.<br>❌ D: Conversas não são enviadas a servidores externos para análise de qualidade."
+                explanation: "✅ <strong>B e C corretas:</strong><br>• <strong>B:</strong> O Copilot herda e respeita TODAS as permissões do M365 — nunca eleva acesso.<br>• <strong>C:</strong> Os dados permanecem no Trust Boundary e nunca treinam modelos públicos.<br><br>❌ A: Dados de clientes NUNCA treinam modelos públicos — cada tenant é isolado.<br>❌ D: A criptografia não é desativada — os dados são processados mantendo os controles de segurança."
             },
             {
-                id: 16, domain: 1, type: 'multi',
-                question: "Quais DUAS ações são suportadas nativamente com prompts salvos no Microsoft 365 Copilot?",
+                id: 9, domain: 0, type: 'single',
+                question: "Qual afirmação descreve CORRETAMENTE a diferença entre uma experiência de chat e uma experiência de agente no Microsoft 365 Copilot?",
                 options: [
-                    "Executar o prompt com um clique sem precisar redigitar o texto",
-                    "Modificar automaticamente o prompt com base no histórico de conversas anteriores via IA",
-                    "Compartilhar o prompt com membros específicos da equipe diretamente pelo Copilot",
-                    "Integrar o prompt diretamente a um sistema CRM externo para execução automática"
+                    "O chat usa LLM e o agente usa Machine Learning tradicional — são tecnologias completamente diferentes",
+                    "O chat é um assistente geral com contexto amplo do M365; o agente é especializado com fontes de conhecimento e comportamento definidos pela organização",
+                    "O chat funciona offline e o agente requer conexão à internet — por isso o agente é mais limitado",
+                    "O chat e o agente são idênticos em funcionalidade — a diferença é apenas visual na interface"
                 ],
-                correct: [0, 2],
-                explanation: "✅ <strong>Opções A e C corretas:</strong><br>• <strong>A:</strong> Prompts salvos podem ser executados com um clique diretamente da interface do Copilot, sem redigitar.<br>• <strong>C:</strong> Prompts salvos podem ser compartilhados com membros específicos da equipe pelo Copilot, garantindo uso consistente.<br><br>❌ B: O Copilot não modifica prompts automaticamente com base em histórico — o usuário controla o conteúdo do prompt.<br>❌ D: Não há integração automática nativa com sistemas CRM externos."
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>• <strong>Chat (BizChat):</strong> Assistente geral com acesso transversal ao M365 do usuário — emails, arquivos, reuniões.<br>• <strong>Agente:</strong> Assistente especializado com fontes de conhecimento restritas, instruções específicas e comportamento definido pela organização para um domínio particular.<br><br>❌ A: Ambos usam LLM — o agente adiciona grounding e instruções, não muda a tecnologia base.<br>❌ C: Ambos requerem nuvem — não há modo offline.<br>❌ D: São experiências funcionalmente distintas."
             },
             {
-                id: 17, domain: 2, type: 'multi',
-                question: "Quais DUAS capacidades o Copilot no Microsoft Teams oferece nativamente em relação a reuniões transcrevidas?",
+                id: 10, domain: 0, type: 'single',
+                question: "Uma profissional de RH gerou uma proposta de benefícios com o Copilot. Os valores percentuais são convincentes mas completamente inventados. Qual verificação é MAIS adequada segundo as práticas de IA Responsável?",
                 options: [
-                    "Gerar resumos automáticos com pontos principais, decisões e itens de ação identificados",
-                    "Substituir completamente a necessidade de participação humana em reuniões de tomada de decisão",
-                    "Responder perguntas específicas sobre o conteúdo discutido em reuniões anteriores transcrevidas",
-                    "Agendar automaticamente reuniões de follow-up com os responsáveis pelos itens de ação"
+                    "Refazer o prompt com mais contexto para que o Copilot corrija os valores automaticamente",
+                    "Reportar o incidente ao time de TI como falha de segurança do sistema",
+                    "Verificar todas as informações factuais em fontes primárias antes de usar o conteúdo gerado (citation check + human review)",
+                    "Desativar o Copilot para tarefas que envolvam dados numéricos no futuro"
                 ],
-                correct: [0, 2],
-                explanation: "✅ <strong>Opções A e C corretas:</strong><br>• <strong>A:</strong> O Copilot no Teams gera automaticamente resumos, identifica decisões e lista itens de ação com responsáveis baseado na transcrição.<br>• <strong>C:</strong> É possível perguntar ao Copilot sobre conteúdo específico de reuniões anteriores transcrevidas: 'O que foi decidido sobre X?'<br><br>❌ B: O Copilot assiste e sintetiza — nunca substitui a participação humana em decisões.<br>❌ D: O Copilot identifica itens de ação mas não agenda reuniões automaticamente."
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>A fabricação (hallucination) é risco inerente a LLMs. A prática correta de IA Responsável inclui: <strong>citation checks</strong> (verificar fontes citadas) + <strong>human review</strong> (revisão humana de dados críticos) antes de usar conteúdo gerado.<br><br>❌ A: Refazer o prompt não garante dados corretos — fabricação é característica do LLM.<br>❌ B: Fabricação não é falha de segurança — é comportamento esperado que requer mitigação.<br>❌ D: A solução é verificar, não evitar o Copilot."
             },
             {
-                id: 18, domain: 0, type: 'match',
-                question: "Associe cada conceito de IA Generativa ao seu significado correto:",
+                id: 11, domain: 0, type: 'match',
+                question: "Associe cada conceito de IA Generativa à sua definição correta:",
                 pairs: [
                     { id: 0, source: "Fabricação (Hallucination)", target: "Geração de informação plausível mas factualmente incorreta pelo modelo" },
-                    { id: 1, source: "Injeção de Prompt", target: "Ataque que insere instruções maliciosas no conteúdo processado pela IA" },
-                    { id: 2, source: "Grounding", target: "Técnica de ancorar respostas do modelo em fontes de dados verificadas" },
-                    { id: 3, source: "Token", target: "Unidade mínima de texto processada pelo modelo — parte de palavra, palavra ou pontuação" }
+                    { id: 1, source: "Injeção de Prompt", target: "Ataque via instruções maliciosas ocultas no conteúdo processado pela IA" },
+                    { id: 2, source: "Grounding", target: "Ancoragem das respostas do modelo em fontes de dados verificadas do tenant" },
+                    { id: 3, source: "Token", target: "Unidade mínima de texto processada pelo LLM — fragmento de palavra, palavra ou pontuação" }
                 ],
-                explanation: "✅ <strong>Conceitos fundamentais de LLM:</strong><br>• <strong>Fabricação:</strong> O modelo gera dados convincentes mas incorretos — risco que exige verificação humana.<br>• <strong>Injeção de Prompt:</strong> Ataque via conteúdo malicioso em documentos externos.<br>• <strong>Grounding:</strong> Ancoragem em fontes confiáveis reduz fabricação.<br>• <strong>Token:</strong> Unidade mínima de processamento do LLM — 'IA' pode ser 1 token; 'Microsoft' pode ser 1 ou 2."
+                explanation: "✅ <strong>Conceitos fundamentais de LLM:</strong><br>• <strong>Fabricação:</strong> Dados convincentes mas incorretos — exige verificação humana.<br>• <strong>Injeção de Prompt:</strong> Vetor de ataque via documentos/inputs externos maliciosos.<br>• <strong>Grounding:</strong> Ancoragem em fontes confiáveis (SharePoint, emails) para reduzir fabricação.<br>• <strong>Token:</strong> Unidade mínima de processamento — 'IA' pode ser 1 token; 'Microsoft' pode ser 1 ou 2."
+            },
+            // ── Q12–Q27: DOMÍNIO 1 — Gerenciar prompts e conversas (40%) ──────
+            {
+                id: 12, domain: 1, type: 'single',
+                question: "Complete a frase: Para referenciar um arquivo do SharePoint diretamente em um prompt do Microsoft 365 Copilot, o usuário deve digitar o caractere ___ seguido do nome do arquivo.",
+                options: [
+                    "@ (arroba)",
+                    "/ (barra)",
+                    "# (hashtag)",
+                    "& (e-comercial)"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O caractere <strong>/</strong> abre o seletor nativo de arquivos do M365 no prompt do Copilot. O usuário digita / seguido do nome do arquivo para referenciá-lo diretamente, permitindo grounding contextual nas respostas.<br><br>❌ A: @ é usado para mencionar pessoas em Teams/Outlook, não para referenciar arquivos no Copilot.<br>❌ C: # é usado para canais no Teams, não para arquivos.<br>❌ D: & não tem função especial no Copilot."
             },
             {
-                id: 19, domain: 1, type: 'order',
-                question: "Ordene os elementos que devem compor um prompt eficaz no Microsoft 365 Copilot, da estrutura mais fundamental à mais específica:",
+                id: 13, domain: 1, type: 'single',
+                question: "Qual dos prompts abaixo é o MAIS eficaz para gerar um resultado profissional com o Copilot?",
+                options: [
+                    "Faça um cronograma de projeto",
+                    "Preciso de ajuda com planejamento de ERP",
+                    "Crie um cronograma de implementação de ERP de 8 meses com fases (planejamento, configuração, testes UAT, treinamento, go-live), incluindo dependências entre fases, no formato de tabela com colunas: Fase, Duração, Responsável, Marco",
+                    "Ajude a organizar um projeto de TI em formato visual"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>O prompt eficaz inclui: <strong>Objetivo</strong> (cronograma ERP 8 meses), <strong>Contexto</strong> (fases nomeadas), <strong>Fontes/Conteúdo</strong> (dependências, marcos) e <strong>Formato</strong> (tabela com colunas específicas). Quanto mais elementos, melhor o resultado sem iterações.<br><br>❌ A e B: Vagos demais — resultado genérico que exigirá múltiplas iterações.<br>❌ D: Especifica apenas formato sem definir conteúdo esperado."
+            },
+            {
+                id: 14, domain: 1, type: 'single',
+                question: "Qual das opções a seguir NÃO é uma funcionalidade nativa de gerenciamento de prompts no Microsoft 365 Copilot?",
+                options: [
+                    "Salvar um prompt para uso pessoal recorrente com um clique",
+                    "Compartilhar um prompt diretamente com membros específicos da equipe",
+                    "Converter automaticamente o prompt em um script de Power Automate executável",
+                    "Agendar um prompt para execução automática em data e hora definidas"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>C NÃO é funcionalidade nativa!</strong><br>O Copilot não converte prompts automaticamente em scripts de Power Automate. As funcionalidades nativas de gerenciamento são: <strong>Salvar</strong> (A), <strong>Compartilhar</strong> (B) e <strong>Agendar</strong> (D).<br><br>⚠️ Armadilha de prova: confundir funcionalidades nativas do Copilot com integrações que requerem configuração adicional."
+            },
+            {
+                id: 15, domain: 1, type: 'single',
+                question: "Complete a frase: Ao contrário de uma conversa nova que começa do zero, o recurso de ___ no Copilot permite que o usuário retome sessões anteriores sem perder o contexto acumulado.",
+                options: [
+                    "Memória persistente",
+                    "Histórico de conversas",
+                    "Cache de prompts",
+                    "Contexto transferido"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O <strong>Histórico de conversas</strong> permite navegar, retomar, renomear, excluir e exportar sessões anteriores. O usuário pode retomar uma análise feita semanas atrás sem perder o contexto acumulado naquela sessão.<br><br>❌ A: Memória persistente é um recurso diferente — armazena preferências/fatos sobre o usuário.<br>❌ C: 'Cache de prompts' não é um recurso oficial do Copilot.<br>❌ D: 'Contexto transferido' não é a terminologia correta."
+            },
+            {
+                id: 16, domain: 1, type: 'single',
+                question: "Uma equipe de vendas precisa que todos usem exatamente o mesmo prompt para gerar propostas comerciais padronizadas. Qual é a abordagem MAIS adequada no Microsoft 365 Copilot?",
+                options: [
+                    "Enviar o prompt por email para todos copiarem manualmente",
+                    "Fixar o prompt como mensagem no canal do Teams da equipe",
+                    "Compartilhar o prompt diretamente pelo Copilot com os membros da equipe para versão centralizada e atualizada",
+                    "Criar um documento Word com o prompt para os membros copiarem quando necessário"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>O compartilhamento nativo de prompts garante versão centralizada — alterações feitas pelo criador são refletidas automaticamente para todos. Sem risco de cópias desatualizadas ou modificações acidentais.<br><br>❌ A, B, D: Todas criam cópias descentralizadas sujeitas a desatualização e modificação não intencional."
+            },
+            {
+                id: 17, domain: 1, type: 'single',
+                question: "Qual afirmação é INCORRETA sobre o agendamento de prompts no Microsoft 365 Copilot?",
+                options: [
+                    "Prompts podem ser agendados para execução automática em dias e horários específicos",
+                    "O agendamento elimina a necessidade de intervenção manual recorrente",
+                    "É necessário configurar um fluxo no Power Automate para que o agendamento funcione",
+                    "Prompts agendados podem ter recorrência definida (diária, semanal, etc.)"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>C está INCORRETA!</strong><br>O agendamento de prompts é funcionalidade <strong>nativa</strong> do Microsoft 365 Copilot — NÃO requer Power Automate. O usuário configura a recorrência diretamente na interface do Copilot.<br><br>✅ A, B e D descrevem corretamente funcionalidades reais do agendamento nativo."
+            },
+            {
+                id: 18, domain: 1, type: 'single',
+                question: "Um funcionário encontrou um agente útil de RH no Agent Store da organização. Seu colega quer criar um agente novo para o departamento de vendas. Complete a frase: O Agent Store é usado para ___, enquanto o Copilot Studio é usado para ___.",
+                options: [
+                    "criar agentes; publicar agentes",
+                    "descobrir e usar agentes existentes; criar e configurar novos agentes",
+                    "testar agentes em desenvolvimento; monitorar agentes em produção",
+                    "gerenciar permissões de agentes; configurar fontes de dados"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>• <strong>Agent Store:</strong> Catálogo para descobrir e usar agentes publicados pela organização — como uma 'loja de apps' interna para assistentes de IA.<br>• <strong>Copilot Studio:</strong> Ferramenta para criar, configurar e publicar novos agentes com fontes de conhecimento e instruções personalizadas.<br><br>❌ A: Agent Store não cria — apenas exibe agentes já criados no Copilot Studio.<br>❌ C e D: Não correspondem às funções reais de cada componente."
+            },
+            {
+                id: 19, domain: 1, type: 'single',
+                question: "Ao criar um agente no Copilot Studio, qual configuração garante que o agente responda SOMENTE com base em documentos internos da empresa?",
+                options: [
+                    "Desabilitar o acesso à internet nas configurações do agente",
+                    "Conectar sites do SharePoint e arquivos específicos como fontes de conhecimento do agente",
+                    "Treinar o agente com centenas de exemplos de perguntas e respostas corretas",
+                    "Configurar um firewall no tenant para bloquear fontes externas"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>No Copilot Studio, as <strong>Knowledge Sources</strong> (fontes de conhecimento) permitem conectar SharePoint, arquivos e outros repositórios internos. Combinado com instruções explícitas ('responda somente com base nas fontes configuradas'), o agente fica restrito ao conteúdo corporativo.<br><br>❌ A: Não há configuração de 'acesso à internet' no Copilot Studio — o controle é via fontes de conhecimento.<br>❌ C: Copilot Studio usa LLM com grounding, não ML de treinamento tradicional.<br>❌ D: Firewall de tenant não controla o comportamento do agente."
+            },
+            {
+                id: 20, domain: 1, type: 'single',
+                scenario: "Um agente criado no Copilot Studio responde perguntas com informações que não existem nos documentos SharePoint configurados — como se estivesse 'inventando' políticas da empresa.",
+                question: "Qual é a causa mais provável deste comportamento?",
+                options: [
+                    "O modelo LLM do agente está desatualizado e precisa ser atualizado pela Microsoft",
+                    "O agente está usando o conhecimento geral do LLM por falta de grounding adequado — as instruções devem reforçar 'responder somente com base nas fontes configuradas'",
+                    "O SharePoint está fora do ar e o agente busca informações alternativas automaticamente",
+                    "O agente precisa de mais semanas de treinamento para aprender as políticas corretas"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>Quando um agente 'inventa' informações fora das fontes configuradas, o <strong>grounding</strong> não está funcionando corretamente. Solução: verificar indexação das fontes + adicionar instrução explícita nas configurações do agente para responder exclusivamente com base no conhecimento configurado.<br><br>❌ A: O modelo LLM não é gerenciado pelo usuário no Copilot Studio.<br>❌ C: Se o SharePoint estivesse fora do ar, o agente informaria a indisponibilidade.<br>❌ D: Copilot Studio não usa 'treinamento' tradicional — usa grounding em documentos."
+            },
+            {
+                id: 21, domain: 1, type: 'multi',
+                question: "Selecione DUAS afirmações CORRETAS sobre agentes criados no Microsoft Copilot Studio:",
+                options: [
+                    "Agentes podem ser configurados com fontes de conhecimento específicas para restringir respostas ao escopo desejado",
+                    "Agentes só funcionam dentro do Microsoft Teams — não há outros canais de publicação",
+                    "Agentes podem ser publicados no Agent Store da organização para uso geral dos funcionários",
+                    "Cada agente requer um modelo LLM dedicado separado com custos adicionais por instância"
+                ],
+                correct: [0, 2],
+                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Fontes de conhecimento (SharePoint, arquivos) restringem o agente ao escopo desejado.<br>• <strong>C:</strong> Agentes publicados no Agent Store ficam acessíveis a toda a organização no M365 Copilot.<br><br>❌ B: Agentes podem ser publicados em Teams, SharePoint, Copilot Chat, sites externos e outros canais.<br>❌ D: Todos os agentes compartilham o LLM da Microsoft — sem custos adicionais por modelo."
+            },
+            {
+                id: 22, domain: 1, type: 'multi',
+                question: "Quais DUAS funcionalidades o Microsoft 365 Copilot oferece nativamente para gerenciar o histórico de conversas?",
+                options: [
+                    "Renomear uma conversa anterior para facilitar sua localização futura",
+                    "Compartilhar automaticamente todo o histórico de conversas com o gestor do usuário",
+                    "Excluir conversas individuais que não são mais necessárias",
+                    "Exportar conversas como templates reutilizáveis no Power Automate"
+                ],
+                correct: [0, 2],
+                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Conversas podem ser renomeadas para organização pessoal (ex: 'Análise Q4 2025').<br>• <strong>C:</strong> Conversas individuais podem ser excluídas quando não são mais necessárias.<br><br>Outras ações do histórico: navegar (browse), retomar, exportar.<br><br>❌ B: O histórico é estritamente pessoal — nunca compartilhado automaticamente.<br>❌ D: Exportação para Power Automate como template não é funcionalidade nativa."
+            },
+            {
+                id: 23, domain: 1, type: 'match',
+                question: "Associe cada modo ou agente do M365 Copilot à sua especialidade principal:",
+                pairs: [
+                    { id: 0, source: "Copilot Chat (BizChat)", target: "Assistente geral com acesso transversal ao contexto completo do M365" },
+                    { id: 1, source: "Copilot Researcher", target: "Investigação aprofundada com síntese de múltiplas fontes complexas" },
+                    { id: 2, source: "Copilot Analyst", target: "Análise quantitativa de dados estruturados com insights e visualizações" },
+                    { id: 3, source: "Agente (Copilot Studio)", target: "Assistente especializado com fontes de conhecimento definidas pela organização" }
+                ],
+                explanation: "✅ <strong>Mapa dos modos — BRA² 🇧🇷:</strong><br>• <strong>BizChat:</strong> Contexto transversal — emails + arquivos + reuniões + Teams.<br>• <strong>Researcher:</strong> Investigação profunda multifonte — análise setorial, pesquisa complexa.<br>• <strong>Analyst:</strong> Dados estruturados — Excel, tabelas, tendências quantitativas.<br>• <strong>Agente:</strong> Especialista customizado — escopo e conhecimento definidos pela empresa."
+            },
+            {
+                id: 24, domain: 1, type: 'match',
+                question: "Associe cada ação de gerenciamento de conversa à sua descrição correta:",
+                pairs: [
+                    { id: 0, source: "Navegar no histórico", target: "Localizar e abrir conversas anteriores por título ou data" },
+                    { id: 1, source: "Retomar conversa", target: "Continuar uma sessão anterior mantendo todo o contexto acumulado" },
+                    { id: 2, source: "Renomear conversa", target: "Alterar o título para facilitar organização e busca futura" },
+                    { id: 3, source: "Exportar conversa", target: "Salvar o conteúdo em formato acessível fora do Copilot (ex: OneNote)" }
+                ],
+                explanation: "✅ <strong>Gerenciamento de histórico — NARRE! 📖:</strong><br>• <strong>Navegar:</strong> Acesse conversas passadas rapidamente.<br>• <strong>Retomar:</strong> Continue de onde parou sem perder contexto.<br>• <strong>Renomear:</strong> Organize com títulos descritivos.<br>• <strong>Exportar:</strong> Preserve conteúdo valioso em outros apps (OneNote, etc.)."
+            },
+            {
+                id: 25, domain: 1, type: 'order',
+                question: "Ordene os elementos de um prompt eficaz no Microsoft 365 Copilot, do mais fundamental ao mais específico:",
                 items: [
-                    { id: 0, text: "Especificar o formato e estrutura da resposta esperada (tabela, lista, email...)" },
-                    { id: 1, text: "Definir o objetivo claro da tarefa" },
-                    { id: 2, text: "Fornecer o contexto relevante (quem, o quê, por quê)" },
-                    { id: 3, text: "Referenciar arquivos e fontes de dados com /" },
-                    { id: 4, text: "Incluir instruções de tom e estilo (formal, técnico, conciso...)" }
+                    { id: 0, text: "Formato e estrutura da resposta (tabela, lista, email...)" },
+                    { id: 1, text: "Objetivo claro da tarefa (o que você quer)" },
+                    { id: 2, text: "Contexto relevante (quem, o quê, por quê)" },
+                    { id: 3, text: "Referências a arquivos e fontes com /" },
+                    { id: 4, text: "Tom e estilo da comunicação (formal, técnico, conciso...)" }
                 ],
                 correctOrder: [1, 2, 3, 0, 4],
-                explanation: "✅ <strong>Anatomia do prompt eficaz:</strong><br>1️⃣ <strong>Objetivo</strong> — o 'o quê' sem ambiguidade<br>2️⃣ <strong>Contexto</strong> — o 'porquê' e para quem<br>3️⃣ <strong>Fontes</strong> — dados e arquivos relevantes com /<br>4️⃣ <strong>Formato</strong> — como estruturar a resposta<br>5️⃣ <strong>Tom/Estilo</strong> — refinamento da comunicação<br><br>Um prompt com todos esses elementos raramente precisa de iteração."
+                explanation: "✅ <strong>Anatomia do prompt — COFE ☕:</strong><br>1️⃣ <strong>Objetivo</strong> — o 'o quê' sem ambiguidade<br>2️⃣ <strong>Contexto</strong> — o 'porquê' e para quem<br>3️⃣ <strong>Fontes</strong> — arquivos e dados com /<br>4️⃣ <strong>Formato/Expectativas</strong> — como estruturar a saída<br>5️⃣ <strong>Tom/Estilo</strong> — refinamento final<br><br>Prompt com todos esses elementos raramente precisa de iteração."
             },
             {
-                id: 20, domain: 1, type: 'categorize',
-                question: "Classifique cada funcionalidade na categoria correta de gerenciamento de prompts no Microsoft 365 Copilot:",
+                id: 26, domain: 1, type: 'categorize',
+                question: "Classifique cada funcionalidade na categoria correta de gerenciamento de prompts:",
                 categories: [
                     { id: "save", label: "💾 Salvar e Reutilizar" },
                     { id: "share", label: "🔗 Compartilhar" },
                     { id: "automate", label: "⏰ Automatizar" }
                 ],
                 items: [
-                    { id: 0, text: "Salvar um prompt para uso pessoal recorrente", correctCategory: "save" },
-                    { id: 1, text: "Distribuir um prompt para toda a equipe de vendas", correctCategory: "share" },
-                    { id: 2, text: "Configurar execução automática todo dia útil às 8h", correctCategory: "automate" },
-                    { id: 3, text: "Acessar prompt salvo com um clique na próxima sessão", correctCategory: "save" },
-                    { id: 4, text: "Publicar prompt no repositório da organização para acesso geral", correctCategory: "share" },
+                    { id: 0, text: "Executar um prompt recorrente com um clique pessoal", correctCategory: "save" },
+                    { id: 1, text: "Distribuir um prompt para toda equipe de vendas", correctCategory: "share" },
+                    { id: 2, text: "Configurar execução todo dia útil às 8h sem intervenção", correctCategory: "automate" },
+                    { id: 3, text: "Acessar prompt favorito na próxima sessão sem redigitar", correctCategory: "save" },
+                    { id: 4, text: "Publicar prompt no repositório organizacional", correctCategory: "share" },
                     { id: 5, text: "Definir recorrência semanal para geração de relatório", correctCategory: "automate" }
                 ],
-                explanation: "✅ <strong>💾 Salvar e Reutilizar:</strong> Acesso pessoal rápido a prompts frequentes sem redigitar<br>✅ <strong>🔗 Compartilhar:</strong> Distribuição para equipes e organização com versão centralizada<br>✅ <strong>⏰ Automatizar:</strong> Execução programada sem intervenção manual recorrente<br><br>Os 3 recursos juntos compõem o ciclo completo de produtividade com prompts no M365 Copilot."
-            },
-            // ── Q21–Q40 ────────────────────────────────────────────────────────
-            {
-                id: 21, domain: 0, type: 'single',
-                question: "Uma analista de negócios precisa analisar 50.000 linhas de dados de vendas no Excel para identificar tendências por região e gerar visualizações comparativas. Qual agente especializado do M365 Copilot é mais adequado?",
-                options: [
-                    "Copilot Researcher — para investigação profunda de dados e síntese de fontes externas",
-                    "Copilot Analyst — especializado em análise quantitativa de dados estruturados com insights e visualizações",
-                    "Copilot Chat (BizChat) — para consultas gerais usando o contexto do M365 do usuário",
-                    "Copilot no OneNote — para organizar os dados em notas estruturadas e tags"
-                ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot Analyst é projetado especificamente para análise quantitativa — processa dados estruturados de planilhas Excel, identifica padrões, gera insights estatísticos e cria visualizações. É a escolha certa para análise de grandes volumes de dados numéricos.<br><br>❌ A: Researcher foca em pesquisa multifonte qualitativa, não análise de dados estruturados.<br>❌ C: BizChat é o assistente geral — sem a especialização analítica de dados do Analyst.<br>❌ D: OneNote Copilot é para organização de notas, não análise quantitativa."
+                explanation: "✅ <strong>💾 Salvar:</strong> Acesso pessoal rápido a prompts frequentes.<br>✅ <strong>🔗 Compartilhar:</strong> Distribuição para equipes com versão centralizada.<br>✅ <strong>⏰ Automatizar:</strong> Execução programada sem intervenção manual."
             },
             {
-                id: 22, domain: 0, type: 'single',
-                question: "Uma empresa implementou IA para aprovação automática de empréstimos. Quando um cliente é recusado, o sistema não fornece nenhuma explicação sobre o motivo da decisão. Um fiscal regulatório identifica isso como violação de qual princípio de IA Responsável da Microsoft?",
-                options: [
-                    "Equidade — o sistema trata os clientes de forma desigual com base em características pessoais",
-                    "Inclusão — o sistema não é acessível a todos os perfis de usuário",
-                    "Transparência — o sistema toma decisões sem fornecer explicações compreensíveis aos afetados",
-                    "Privacidade — os dados pessoais do cliente não estão sendo devidamente protegidos"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O princípio de Transparência exige que sistemas de IA sejam compreensíveis — os usuários devem conseguir entender como o sistema funciona e por que tomou uma determinada decisão. Um sistema que nega empréstimos sem qualquer explicação viola diretamente este princípio.<br><br>❌ A: Equidade trata de discriminação por grupos — não há indicação disso aqui.<br>❌ B: Inclusão trata de acessibilidade do produto, não de explicabilidade das decisões.<br>❌ D: Privacidade trata de proteção de dados, não de transparência decisória."
-            },
-            {
-                id: 23, domain: 0, type: 'single',
-                question: "Qual das afirmativas abaixo NÃO descreve corretamente uma capacidade padrão do Microsoft 365 Copilot?",
-                options: [
-                    "Resumir emails extensos em pontos principais e ações recomendadas",
-                    "Gerar rascunhos de documentos com base em instruções textuais do usuário",
-                    "Acessar dados financeiros de mercados externos em tempo real para embasar respostas automaticamente",
-                    "Referenciar e sintetizar conteúdo de arquivos do SharePoint do tenant do usuário"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>C está INCORRETA — é a resposta certa!</strong><br>Por padrão, o M365 Copilot NÃO acessa dados de mercados financeiros externos em tempo real. O Copilot opera dentro do Microsoft 365 Trust Boundary, usando o contexto do tenant. Acesso a fontes externas requer conectores ou plugins específicos configurados pelo administrador.<br><br>✅ A, B e D descrevem capacidades reais e padrão do M365 Copilot.<br><br>⚠️ Armadilha clássica: confundir o escopo do Copilot M365 (contexto do tenant) com ferramentas de busca em tempo real na internet."
-            },
-            {
-                id: 24, domain: 1, type: 'single',
-                question: "Uma redatora está trabalhando em um documento Word e quer que o Copilot reescreva um parágrafo específico tornando-o mais persuasivo, sem precisar sair do documento. Qual é a forma correta de usar o Copilot neste cenário?",
-                options: [
-                    "Abrir o Copilot Chat (BizChat) em nova janela, colar o parágrafo e pedir a reescrita",
-                    "Salvar o documento, fechar o Word e acessar o Copilot pelo Microsoft 365 Home",
-                    "Selecionar o parágrafo diretamente no Word e usar o Copilot integrado ao Word para reescrita contextual inline",
-                    "Exportar o parágrafo como arquivo .txt e enviá-lo para o Copilot pelo Outlook"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O Copilot está integrado diretamente no Word — a redatora pode selecionar o texto e usar o Copilot inline para reescrita contextual sem sair do documento. Esta integração nativa é mais eficiente que copiar para o BizChat e mantém o fluxo de trabalho unificado.<br><br>❌ A: Funciona mas é menos eficiente — exige copiar/colar e perde o contexto inline do documento.<br>❌ B e D: Desnecessariamente complexos — o Copilot no Word já tem esta capacidade integrada."
-            },
-            {
-                id: 25, domain: 1, type: 'single',
-                question: "Um executivo quer preparar-se para uma reunião importante e precisa compilar rapidamente: emails trocados com o cliente nos últimos 30 dias, arquivos compartilhados e itens de ação de reuniões anteriores — tudo em um resumo unificado. Qual recurso do Copilot é ideal?",
-                options: [
-                    "Copilot no Outlook — para buscar apenas os emails do cliente nos últimos 30 dias",
-                    "Copilot no Teams — para acessar apenas os registros de reuniões com o cliente",
-                    "Microsoft 365 Copilot Chat (BizChat) — para consultas transversais que combinam contexto de emails, arquivos e reuniões em uma única pesquisa",
-                    "Copilot no SharePoint — para buscar arquivos compartilhados com o cliente"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>O Microsoft 365 Copilot Chat (BizChat) tem acesso ao contexto completo do M365 do usuário — emails do Outlook, arquivos do SharePoint/OneDrive, reuniões do Teams e mensagens do Teams Chat. É ideal para compilar informações de múltiplas fontes em um único resultado coeso.<br><br>❌ A, B e D: Cada app do M365 com Copilot inline tem acesso apenas ao contexto daquele app específico — nenhum deles, isoladamente, cobre todas as fontes necessárias."
-            },
-            {
-                id: 26, domain: 1, type: 'single',
-                question: "Uma empresa quer criar um agente de IA no Copilot Studio que responda perguntas dos funcionários sobre políticas de RH, usando documentos internos como única base de conhecimento. Qual configuração é essencial no agente?",
-                options: [
-                    "Configurar o agente para pesquisar respostas na internet e filtrar por relevância para RH",
-                    "Treinar o agente com exemplos de perguntas e respostas usando algoritmos de Machine Learning",
-                    "Conectar o agente a sites do SharePoint e arquivos específicos de políticas de RH como fontes de conhecimento",
-                    "Integrar o agente ao sistema de HRIS via API REST para acesso direto ao banco de dados de RH"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>Opção C correta!</strong><br>No Copilot Studio, as Knowledge Sources (fontes de conhecimento) permitem conectar o agente a sites do SharePoint, arquivos e outras fontes internas. O agente responde baseado exclusivamente nestas fontes — garantindo respostas precisas, atualizadas e dentro do escopo corporativo de RH.<br><br>❌ A: Internet traz informações genéricas, não as políticas específicas da empresa.<br>❌ B: Copilot Studio não usa ML tradicional de treinamento — usa LLM com grounding em documentos.<br>❌ D: API para HRIS é opção avançada mas mais complexa — fontes de conhecimento via SharePoint são a abordagem padrão."
-            },
-            {
-                id: 27, domain: 1, type: 'single',
-                scenario: "Um agente de RH criado no Copilot Studio começa a responder perguntas com informações sobre políticas que não existem nos documentos SharePoint configurados como fontes de conhecimento — como se estivesse usando conhecimento externo ao invés dos documentos internos.",
-                question: "Qual é a causa mais provável e como corrigi-la? (Reforço: grounding = técnica de ancorar respostas em fontes verificadas)",
-                options: [
-                    "O modelo de LLM do Copilot Studio está desatualizado e precisa ser atualizado pela Microsoft",
-                    "As fontes de conhecimento estão desindexadas ou o agente está usando o conhecimento geral do LLM — revisar indexação e reforçar nas instruções do agente que deve responder somente com base nas fontes configuradas",
-                    "O agente precisa de mais exemplos de treinamento para aprender as políticas corretas da empresa",
-                    "O Copilot Studio requer VPN corporativa para acessar documentos do SharePoint interno"
-                ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>Quando um agente responde com informações fora das fontes configuradas, o grounding não está funcionando. Solução: verificar se as fontes de conhecimento estão indexadas e adicionar instrução explícita ao agente para 'responder somente com base nas fontes de conhecimento configuradas'.<br><br>🔄 <strong>Reforço — Grounding:</strong> Técnica de ancorar respostas do LLM em fontes de dados específicas e verificadas (Módulo 1). Sem grounding, o LLM usa seu conhecimento geral — o que pode trazer informações incorretas ou inventadas.<br><br>❌ A: A versão do LLM não é gerenciada pelo usuário.<br>❌ C: Copilot Studio não usa ML de treinamento tradicional.<br>❌ D: SharePoint é acessado via autenticação M365, não VPN."
-            },
-            {
-                id: 28, domain: 1, type: 'multi',
-                question: "Quais DUAS afirmações descrevem corretamente as capacidades de agentes criados no Microsoft Copilot Studio?",
-                options: [
-                    "Agentes podem ser configurados com fontes de conhecimento específicas para restringir respostas a tópicos definidos",
-                    "Agentes do Copilot Studio só funcionam dentro do Microsoft Teams, sem outros canais de distribuição",
-                    "Agentes podem ser publicados no Agent Store da organização para uso de todos os funcionários",
-                    "Cada agente requer um modelo de LLM dedicado separado, gerando custos adicionais por agente criado"
-                ],
-                correct: [0, 2],
-                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Fontes de conhecimento específicas (SharePoint, arquivos) limitam o agente ao escopo desejado — ideal para casos como suporte de RH ou TI.<br>• <strong>C:</strong> Agentes publicados no Agent Store tornam-se acessíveis a toda a organização diretamente no Microsoft 365 Copilot.<br><br>❌ B: Agentes podem ser publicados em múltiplos canais: Teams, SharePoint, Copilot Chat, sites externos e outros.<br>❌ D: Todos os agentes compartilham o modelo de LLM da Microsoft — sem LLM dedicado por agente."
-            },
-            {
-                id: 29, domain: 1, type: 'match',
-                question: "Associe cada modo ou agente do Microsoft 365 Copilot à sua especialidade principal:",
-                pairs: [
-                    { id: 0, source: "Copilot Chat (BizChat)", target: "Assistente geral com acesso transversal ao contexto completo do M365 do usuário" },
-                    { id: 1, source: "Copilot Researcher", target: "Investigação aprofundada com síntese de múltiplas fontes complexas e heterogêneas" },
-                    { id: 2, source: "Copilot Analyst", target: "Análise quantitativa de dados estruturados com geração de insights e visualizações" },
-                    { id: 3, source: "Agente (Copilot Studio)", target: "Assistente especializado com fontes de conhecimento e comportamento definidos pela organização" }
-                ],
-                explanation: "✅ <strong>Mapa dos modos do Copilot M365:</strong><br>• <strong>BizChat:</strong> Contexto transversal — emails + arquivos + reuniões + Teams.<br>• <strong>Researcher:</strong> Investigação profunda multifonte — ideal para análise setorial e pesquisa complexa.<br>• <strong>Analyst:</strong> Dados estruturados — Excel, tabelas, tendências quantitativas.<br>• <strong>Agente:</strong> Especialista customizado — escopo e conhecimento definidos pela empresa para casos de uso específicos."
-            },
-            {
-                id: 30, domain: 1, type: 'categorize',
-                question: "Classifique cada cenário de uso pelo tipo de interação com o Copilot mais adequado:",
+                id: 27, domain: 1, type: 'categorize',
+                question: "Classifique cada cenário pelo tipo de interação com o Copilot mais adequado:",
                 categories: [
                     { id: "inline", label: "🖊️ Copilot Inline (dentro do app)" },
-                    { id: "bizchat", label: "💬 BizChat (contexto transversal)" },
+                    { id: "bizchat", label: "💬 BizChat (transversal)" },
                     { id: "agent", label: "🤖 Agente Especializado" }
                 ],
                 items: [
-                    { id: 0, text: "Reescrever um parágrafo específico dentro de um documento Word aberto", correctCategory: "inline" },
-                    { id: 1, text: "Compilar emails + reuniões + arquivos sobre um cliente em um resumo único", correctCategory: "bizchat" },
-                    { id: 2, text: "Responder dúvidas de funcionários sobre políticas internas de RH", correctCategory: "agent" },
-                    { id: 3, text: "Gerar slides no PowerPoint baseados em um relatório Word existente", correctCategory: "inline" },
-                    { id: 4, text: "Pesquisar em todos os canais M365 antes de uma reunião executiva importante", correctCategory: "bizchat" },
-                    { id: 5, text: "Atender solicitações de suporte de TI usando a base de conhecimento interna", correctCategory: "agent" }
+                    { id: 0, text: "Reescrever um parágrafo no Word para tom mais formal", correctCategory: "inline" },
+                    { id: 1, text: "Compilar emails + reuniões + arquivos sobre um cliente", correctCategory: "bizchat" },
+                    { id: 2, text: "Responder perguntas de funcionários sobre políticas de RH", correctCategory: "agent" },
+                    { id: 3, text: "Gerar slides no PowerPoint a partir de relatório Word", correctCategory: "inline" },
+                    { id: 4, text: "Preparar briefing para reunião com contexto de múltiplas fontes M365", correctCategory: "bizchat" },
+                    { id: 5, text: "Atender tickets de suporte de TI com base em KB interna", correctCategory: "agent" }
                 ],
-                explanation: "✅ <strong>🖊️ Inline:</strong> Ações contextuais dentro de um app específico aberto — Word, PowerPoint, Outlook, Teams.<br>✅ <strong>💬 BizChat:</strong> Consultas que precisam cruzar múltiplos apps M365 simultaneamente.<br>✅ <strong>🤖 Agente:</strong> Assistentes especializados com escopo restrito e fontes de conhecimento corporativas."
+                explanation: "✅ <strong>🖊️ Inline:</strong> Ações contextuais dentro de um app aberto (Word, PPT, Outlook, Teams).<br>✅ <strong>💬 BizChat:</strong> Consultas cruzando múltiplos apps M365.<br>✅ <strong>🤖 Agente:</strong> Assistentes com escopo restrito e fontes corporativas."
+            },
+            // ── Q28–Q40: DOMÍNIO 2 — Redigir e analisar conteúdo (32.5%) ─────
+            {
+                id: 28, domain: 2, type: 'single',
+                question: "Complete a frase: O Copilot no Word pode ___ um documento existente, transformando-o em formato diferente (ex: relatório técnico → FAQ executiva) sem criar um arquivo separado.",
+                options: [
+                    "traduzir",
+                    "reescrever / transformar",
+                    "criptografar",
+                    "versionar"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no Word pode <strong>reescrever e transformar</strong> conteúdo existente — mudar tom, estilo, formato ou estrutura. Exemplos: relatório técnico → resumo executivo, lista → narrativa, linguagem formal → informal, documento longo → FAQ.<br><br>❌ A: Tradução é uma capacidade, mas não descreve a transformação de formato/estrutura.<br>❌ C: Criptografia não é função do Copilot no Word.<br>❌ D: Versionamento é do SharePoint, não do Copilot."
+            },
+            {
+                id: 29, domain: 2, type: 'single',
+                question: "Qual das opções NÃO é uma capacidade nativa do Copilot no Microsoft Teams para reuniões?",
+                options: [
+                    "Gerar resumos automáticos com pontos principais e decisões tomadas",
+                    "Responder perguntas sobre conteúdo de reuniões anteriores transcrevidas",
+                    "Substituir a participação humana tomando decisões automaticamente durante a reunião",
+                    "Identificar itens de ação com responsáveis e prazos mencionados"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>C NÃO é capacidade do Copilot no Teams!</strong><br>O Copilot NUNCA substitui participação humana nem toma decisões automaticamente. Ele assiste, resume e organiza informações — o humano sempre decide.<br><br>✅ A, B e D são capacidades reais do Copilot no Teams.<br><br>⚠️ Pré-requisito obrigatório: O Copilot no Teams requer <strong>transcrição ativa</strong> para funcionar em reuniões."
+            },
+            {
+                id: 30, domain: 2, type: 'single',
+                question: "Qual afirmação descreve CORRETAMENTE o Copilot Pages?",
+                options: [
+                    "É uma ferramenta para criar sites SharePoint automaticamente com o Copilot",
+                    "É um recurso que transforma conteúdo gerado pelo Copilot em páginas colaborativas editáveis em tempo real pela equipe",
+                    "É um módulo de treinamento online da Microsoft sobre o Copilot",
+                    "É um add-in do OneNote para integrar respostas do Copilot em cadernos existentes"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br><strong>Copilot Pages</strong> é a ponte entre geração individual e colaboração em equipe — transforma saídas do Copilot em páginas editáveis em tempo real que toda a equipe pode acessar, editar e enriquecer colaborativamente.<br><br>❌ A: Não cria sites SharePoint — é um canvas colaborativo próprio.<br>❌ C: Não é módulo de treinamento — é funcionalidade de produtividade.<br>❌ D: Não é add-in do OneNote — é recurso nativo do M365 Copilot."
             },
             {
                 id: 31, domain: 2, type: 'single',
-                question: "Uma diretora recebe 150 emails por dia e passa 2 horas diárias apenas triando sua caixa de entrada. Como o Copilot no Outlook pode reduzir significativamente este tempo?",
+                question: "Qual afirmação é INCORRETA sobre o recurso de Memória e Instruções no Microsoft 365 Copilot?",
                 options: [
-                    "Excluindo automaticamente emails de baixa prioridade com base em regras aprendidas pelo modelo",
-                    "Resumindo emails longos em pontos principais acionáveis e sinalizando os que requerem ação imediata",
-                    "Respondendo automaticamente todos os emails em nome da diretora sem necessidade de revisão",
-                    "Arquivando todos os emails não lidos após 24 horas para reduzir visualmente o volume da caixa"
+                    "O usuário pode salvar preferências permanentes como idioma e formato de resposta",
+                    "Instruções salvas são aplicadas automaticamente em todas as futuras interações",
+                    "A memória do Copilot é compartilhada automaticamente com todos os colegas do mesmo tenant",
+                    "O Copilot memoriza preferências pessoais para personalizar respostas sem repetir instruções"
                 ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no Outlook resume threads extensos em pontos principais acionáveis e ajuda a identificar prioridades — reduzindo drasticamente o tempo de triagem. A diretora lê o resumo e decide rapidamente sobre a ação necessária, sem precisar ler cada email por completo.<br><br>❌ A: O Copilot não exclui emails — a decisão final sempre é do usuário.<br>❌ C: O Copilot sugere rascunhos de resposta, mas nunca envia sem aprovação humana.<br>❌ D: O Copilot não arquiva emails automaticamente por timeout."
+                correct: 2,
+                explanation: "✅ <strong>C está INCORRETA!</strong><br>A memória do Copilot é <strong>estritamente pessoal</strong> — nunca é compartilhada automaticamente com colegas do tenant. Cada usuário tem suas próprias preferências e instruções isoladas.<br><br>✅ A, B e D descrevem corretamente as funcionalidades reais de Memória e Instruções.<br><br>⚠️ <strong>Diferença crítica:</strong> Memória = fatos sobre o usuário (cargo, preferências). Instruções = regras de comportamento (formato, idioma, tom)."
             },
             {
                 id: 32, domain: 2, type: 'single',
-                question: "Um gestor escreveu um relatório técnico de 30 páginas e precisa criar uma versão executiva de 2 páginas para o CEO, destacando os pontos críticos e recomendações. Como o Copilot no Word pode ajudar mais eficientemente?",
+                question: "Complete a frase: Para o Copilot no Teams funcionar em uma reunião e gerar resumos, é obrigatório que ___ esteja ativa.",
                 options: [
-                    "Usar o Copilot para criar um novo documento do zero com base em sua memória do relatório",
-                    "Solicitar ao Copilot que gere uma versão resumida do documento atual, especificando o público (CEO), limite de páginas e pontos prioritários",
-                    "Copiar manualmente os parágrafos mais importantes e pedir ao Copilot para reformatá-los",
-                    "Usar o Copilot para traduzir o relatório como técnica de compressão do conteúdo"
+                    "a gravação de vídeo da reunião",
+                    "a transcrição automática da reunião",
+                    "a câmera de todos os participantes",
+                    "a integração com o Microsoft Planner"
                 ],
                 correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no Word sintetiza e transforma documentos existentes. O gestor pode solicitar: 'Crie uma versão executiva de 2 páginas deste relatório para o CEO, destacando os 5 pontos mais críticos e as recomendações principais'. O Copilot processa o documento aberto e gera a versão transformada.<br><br>❌ A: Criar do zero sem referenciar o documento perde o conteúdo específico.<br>❌ C: Selecionar parágrafos manualmente anula o benefício da IA para trabalhos extensos.<br>❌ D: Tradução não é técnica de sumarização — e não garantiria o limite de páginas desejado."
+                explanation: "✅ <strong>Opção B correta!</strong><br>A <strong>transcrição ativa</strong> é o pré-requisito obrigatório para o Copilot no Teams funcionar em reuniões. Sem transcrição, não há texto para o Copilot processar — mesmo com gravação de vídeo ativa.<br><br>❌ A: Gravação de vídeo não é suficiente sem transcrição.<br>❌ C: Câmeras não são pré-requisito para funcionalidade do Copilot.<br>❌ D: Planner é ferramenta separada sem relação com pré-requisitos do Copilot."
             },
             {
                 id: 33, domain: 2, type: 'single',
-                question: "Após um brainstorming produtivo no BizChat, um time gerou análises ricas com dados, insights e recomendações. Eles precisam que outros membros da equipe possam acessar, editar e enriquecer este conteúdo colaborativamente. Qual funcionalidade do M365 permite isso?",
+                question: "Qual afirmação é INCORRETA sobre as capacidades do Copilot no Outlook?",
                 options: [
-                    "Exportar a conversa do BizChat como arquivo PDF e distribuir por email para o time",
-                    "Usar o Copilot Pages para converter o conteúdo do BizChat em uma página colaborativa e editável em tempo real",
-                    "Copiar manualmente o conteúdo para um documento Word compartilhado no SharePoint",
-                    "Criar uma gravação de tela da sessão do BizChat para compartilhar no canal do Teams"
+                    "Pode resumir threads extensos destacando pontos principais e próximos passos",
+                    "Pode sugerir rascunhos de resposta com base no contexto do email recebido",
+                    "Pode enviar automaticamente respostas em nome do usuário sem necessidade de aprovação",
+                    "Pode ajustar o tom de um rascunho de email (formal, conciso, empático)"
                 ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot Pages transforma conteúdo gerado pelo Copilot em páginas colaborativas e editáveis em tempo real — a equipe pode acessar, editar, comentar e continuar enriquecendo o conteúdo coletivamente. É a ponte nativa entre a geração individual no Copilot e a colaboração em equipe.<br><br>❌ A: PDF não é editável — impossibilita a colaboração.<br>❌ C: Copiar para Word funciona mas perde a integração nativa e exige esforço manual.<br>❌ D: Gravação de tela não permite edição nem colaboração assíncrona."
+                correct: 2,
+                explanation: "✅ <strong>C está INCORRETA!</strong><br>O Copilot no Outlook <strong>NUNCA envia emails automaticamente</strong> sem aprovação do usuário. Ele sugere rascunhos que o usuário revisa, edita e envia manualmente. O humano sempre permanece no controle.<br><br>✅ A, B e D são capacidades reais do Copilot no Outlook."
             },
             {
                 id: 34, domain: 2, type: 'single',
-                question: "Uma equipe realizou uma reunião de sprint de 90 minutos no Teams com transcrição ativa. O Scrum Master precisa extrair todos os itens de ação com responsáveis e prazos. Qual é a forma mais eficiente com o Copilot?",
+                question: "Um gestor quer implementar o M365 Copilot. Qual das expectativas é INCORRETA sobre suas capacidades?",
                 options: [
-                    "Assistir à gravação completa de 90 minutos e anotar os itens de ação manualmente",
-                    "Solicitar ao Copilot no Teams que liste os itens de ação, responsáveis e prazos mencionados na reunião transcrevida",
-                    "Solicitar que todos os participantes enviem seus itens de ação por email após a reunião",
-                    "Usar o Copilot no OneNote para criar a lista a partir de notas tiradas durante a reunião"
+                    "Gerar rascunhos de documentos e emails que o gestor revisa antes do envio",
+                    "Resumir reuniões transcrevidas e identificar itens de ação com responsáveis",
+                    "Aprender autonomamente os processos da empresa e executá-los sem supervisão humana após semanas de uso",
+                    "Referenciar documentos do SharePoint para responder perguntas com contexto interno"
                 ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no Teams consulta a transcrição da reunião e extrai estruturadamente os itens de ação, responsáveis e prazos mencionados. O Scrum Master obtém uma lista completa em segundos — em vez de rever 90 minutos de gravação.<br><br>❌ A: Assistir 90 minutos é o método mais ineficiente disponível.<br>❌ C: Depende da memória e boa vontade de cada participante — sujeito a omissões e inconsistências.<br>❌ D: Notas manuais no OneNote não aproveitam a transcrição automática já existente do Teams."
+                correct: 2,
+                explanation: "✅ <strong>C é expectativa INCORRETA!</strong><br>O M365 Copilot NÃO aprende processos autonomamente nem os executa sem supervisão. É ferramenta de assistência que requer instruções explícitas e aprovação humana sempre.<br><br>✅ A, B e D são expectativas corretas e alcançáveis.<br><br>⚠️ Armadilha clássica: confundir assistência de IA (Copilot = humano no controle) com automação autônoma total."
             },
             {
-                id: 35, domain: 2, type: 'single',
-                question: "Um designer instrucional precisa criar uma apresentação de 20 slides de treinamento baseada em um manual de produto de 150 páginas no Word, incluindo notas do apresentador em cada slide. Como o Copilot no PowerPoint pode ajudar neste processo completo?",
+                id: 35, domain: 2, type: 'multi',
+                question: "Selecione DUAS capacidades REAIS do Copilot no PowerPoint ao gerar uma apresentação a partir de um documento Word:",
                 options: [
-                    "O Copilot cria os slides automaticamente mas não gera notas do apresentador — estas devem ser adicionadas manualmente",
-                    "O Copilot pode gerar tanto os slides com conteúdo extraído do documento Word quanto as notas do apresentador contextuais para cada slide",
-                    "O Copilot cria apenas o esqueleto dos slides com títulos — o conteúdo de cada slide deve ser preenchido manualmente",
-                    "O Copilot no PowerPoint não pode referenciar documentos Word externos — funciona somente com prompts textuais diretos"
+                    "Gerar slides com conteúdo extraído e sintetizado do documento referenciado",
+                    "Criar automaticamente animações e transições cinematográficas para cada slide",
+                    "Gerar notas do apresentador contextuais para cada slide quando solicitado no prompt",
+                    "Traduzir automaticamente a apresentação para todos os idiomas do tenant simultaneamente"
                 ],
-                correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O Copilot no PowerPoint pode gerar uma apresentação completa a partir de um documento Word referenciado — incluindo conteúdo dos slides, estrutura visual e notas do apresentador contextuais quando solicitado no prompt.<br><br>❌ A: O Copilot gera notas do apresentador quando especificado no prompt.<br>❌ C: O Copilot gera o conteúdo completo dos slides, não apenas títulos.<br>❌ D: O Copilot no PowerPoint pode referenciar documentos Word do M365 usando / para busca de arquivo."
+                correct: [0, 2],
+                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> O Copilot extrai e sintetiza conteúdo do Word referenciado com / para gerar slides.<br>• <strong>C:</strong> Notas do apresentador contextuais são geradas quando especificado no prompt.<br><br>❌ B: O Copilot não cria animações cinematográficas — foca em conteúdo e estrutura.<br>❌ D: Tradução simultânea para todos os idiomas não é funcionalidade nativa do Copilot no PPT."
             },
             {
                 id: 36, domain: 2, type: 'multi',
-                question: "Quais DUAS ações o Copilot no Microsoft Outlook realiza nativamente para aumentar a produtividade com emails?",
+                question: "Selecione DUAS afirmações CORRETAS sobre mover dados e insights entre aplicativos Microsoft 365 com o Copilot:",
                 options: [
-                    "Resumir threads de email extensos destacando pontos principais, decisões tomadas e próximos passos",
-                    "Enviar automaticamente respostas de ausência quando detecta que o usuário está em uma reunião",
-                    "Sugerir rascunhos de resposta baseados no contexto do email recebido e no tom especificado pelo usuário",
-                    "Criar automaticamente tarefas no Microsoft Planner para cada email marcado como importante"
+                    "O Copilot no PowerPoint pode gerar uma apresentação referenciando um documento Word existente no M365",
+                    "Dados do Excel podem ser automaticamente convertidos em código Python pelo Copilot para execução no Teams",
+                    "Insights gerados no BizChat podem ser convertidos em Copilot Pages para colaboração em equipe",
+                    "O Copilot pode mover automaticamente emails do Outlook para o SharePoint como documentos editáveis"
                 ],
                 correct: [0, 2],
-                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Copilot no Outlook resume threads extensos, destaca o contexto, pontos-chave e próximos passos sugeridos — ideal para emails com múltiplos participantes e histórico longo.<br>• <strong>C:</strong> Sugere rascunhos de resposta com base no conteúdo recebido e no tom definido pelo usuário (formal, conciso, detalhado).<br><br>❌ B: O Copilot não envia respostas automáticas sem aprovação explícita do usuário.<br>❌ D: Tarefas no Planner não são criadas automaticamente pelo Copilot — requerem ação explícita do usuário."
+                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> PowerPoint Copilot referencia documentos Word via / para gerar apresentações — fluxo Word → PPT nativo.<br>• <strong>C:</strong> Copilot Pages transforma insights do BizChat em páginas colaborativas editáveis — fluxo BizChat → Pages nativo.<br><br>❌ B: Copilot não converte Excel em Python para execução no Teams.<br>❌ D: Emails não são movidos automaticamente para SharePoint como documentos editáveis."
             },
             {
                 id: 37, domain: 2, type: 'multi',
-                question: "Quais DUAS afirmações descrevem corretamente o recurso de Memória e Instruções no Microsoft 365 Copilot?",
+                question: "Selecione DUAS ações nativas do Copilot no Outlook para produtividade com emails:",
                 options: [
-                    "O usuário pode salvar instruções permanentes que o Copilot aplicará em todas as futuras interações, como preferências de idioma ou formato de resposta",
-                    "A memória do Copilot é compartilhada automaticamente com todos os colegas do mesmo tenant corporativo",
-                    "O Copilot pode memorizar preferências do usuário para personalizar respostas futuras sem precisar repetir instruções a cada nova sessão",
-                    "A memória do Copilot inclui automaticamente todas as conversas dos últimos 90 dias como contexto permanente"
+                    "Resumir threads extensos com pontos principais, decisões e próximos passos",
+                    "Excluir automaticamente emails de baixa prioridade sem interação do usuário",
+                    "Sugerir rascunhos de resposta adaptados ao tom especificado pelo usuário",
+                    "Arquivar automaticamente emails não lidos após 48 horas"
                 ],
                 correct: [0, 2],
-                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Instruções salvas (preferências de idioma, formato, estilo) são aplicadas automaticamente em todas as futuras interações sem necessidade de repetição.<br>• <strong>C:</strong> O Copilot memoriza preferências pessoais para personalizar respostas de forma consistente ao longo do tempo.<br><br>❌ B: A memória é estritamente pessoal — nunca é compartilhada automaticamente com colegas do tenant.<br>❌ D: Não há inclusão automática de histórico de conversas dos últimos 90 dias — a memória trata de preferências e instruções explicitamente salvas."
+                explanation: "✅ <strong>A e C corretas:</strong><br>• <strong>A:</strong> Resumo de threads extensos com contexto, pontos-chave e próximos passos.<br>• <strong>C:</strong> Rascunhos de resposta com tom ajustável (formal, conciso, empático, detalhado).<br><br>❌ B: O Copilot nunca exclui emails — decisão sempre do usuário.<br>❌ D: Não há arquivamento automático por timeout — o usuário controla."
             },
             {
                 id: 38, domain: 2, type: 'order',
-                question: "Ordene as etapas do fluxo ideal para preparar uma reunião executiva importante usando Microsoft 365 Copilot, do início à distribuição:",
+                question: "Ordene o fluxo ideal para preparar uma reunião executiva usando M365 Copilot, do início à distribuição:",
                 items: [
-                    { id: 0, text: "Usar o Copilot no PowerPoint para gerar slides de apresentação baseados no relatório" },
-                    { id: 1, text: "Usar o BizChat para compilar emails, arquivos e reuniões anteriores sobre o tema" },
-                    { id: 2, text: "Usar o Copilot no Word para criar um relatório estruturado com os dados compilados" },
-                    { id: 3, text: "Usar o Copilot no Outlook para enviar a apresentação e agenda aos participantes" },
-                    { id: 4, text: "Revisar e refinar os slides gerados, adicionando contexto e validação humana" }
+                    { id: 0, text: "Copilot no PowerPoint: gerar slides baseados no relatório" },
+                    { id: 1, text: "BizChat: compilar emails + arquivos + reuniões sobre o tema" },
+                    { id: 2, text: "Copilot no Word: criar relatório estruturado com dados compilados" },
+                    { id: 3, text: "Copilot no Outlook: enviar apresentação e agenda aos participantes" },
+                    { id: 4, text: "Revisão humana: validar, refinar e personalizar antes de distribuir" }
                 ],
                 correctOrder: [1, 2, 0, 4, 3],
-                explanation: "✅ <strong>Fluxo otimizado com Copilot para preparação executiva:</strong><br>1️⃣ <strong>BizChat:</strong> Compilar contexto transversal do M365 (emails + arquivos + reuniões anteriores)<br>2️⃣ <strong>Word:</strong> Estruturar os dados compilados em relatório coeso<br>3️⃣ <strong>PowerPoint:</strong> Gerar slides baseados no relatório do Word<br>4️⃣ <strong>Revisão humana:</strong> Validar e personalizar antes de distribuir<br>5️⃣ <strong>Outlook:</strong> Enviar agenda e apresentação aos participantes<br><br>⚠️ A revisão humana (passo 4) é obrigatória antes da distribuição — princípio de IA Responsável."
+                explanation: "✅ <strong>Fluxo otimizado:</strong><br>1️⃣ BizChat — Compilar contexto transversal<br>2️⃣ Word — Estruturar em relatório coeso<br>3️⃣ PowerPoint — Gerar slides do relatório<br>4️⃣ Revisão humana — Validar (IA Responsável!)<br>5️⃣ Outlook — Distribuir aos participantes<br><br>⚠️ Revisão humana ANTES da distribuição = princípio de IA Responsável."
             },
             {
-                id: 39, domain: 2, type: 'categorize',
+                id: 39, domain: 2, type: 'order',
+                question: "Ordene as etapas corretas para criar e disponibilizar um agente no Copilot Studio para toda a organização:",
+                items: [
+                    { id: 0, text: "Publicar o agente no Agent Store da organização" },
+                    { id: 1, text: "Definir instruções de comportamento e tom do agente" },
+                    { id: 2, text: "Criar o agente a partir de um template no Copilot Studio" },
+                    { id: 3, text: "Conectar fontes de conhecimento (SharePoint, arquivos)" },
+                    { id: 4, text: "Testar o agente com perguntas representativas" }
+                ],
+                correctOrder: [2, 3, 1, 4, 0],
+                explanation: "✅ <strong>Ciclo de vida do agente:</strong><br>1️⃣ <strong>Criar:</strong> Começar com template no Copilot Studio<br>2️⃣ <strong>Conhecimento:</strong> Conectar fontes de dados internas<br>3️⃣ <strong>Instruções:</strong> Definir comportamento, tom e restrições<br>4️⃣ <strong>Testar:</strong> Validar com perguntas reais antes de publicar<br>5️⃣ <strong>Publicar:</strong> Disponibilizar no Agent Store para a organização"
+            },
+            {
+                id: 40, domain: 2, type: 'categorize',
                 question: "Classifique cada capacidade do Copilot na aplicação Microsoft 365 correspondente:",
                 categories: [
                     { id: "word", label: "📝 Word" },
@@ -2118,26 +2132,14 @@
                     { id: "outlook", label: "📧 Outlook" }
                 ],
                 items: [
-                    { id: 0, text: "Resumir thread de email com decisões tomadas e próximos passos", correctCategory: "outlook" },
-                    { id: 1, text: "Reescrever seção de documento para tom mais persuasivo ou formal", correctCategory: "word" },
-                    { id: 2, text: "Extrair itens de ação de reunião transcrevida com responsáveis e prazos", correctCategory: "teams" },
-                    { id: 3, text: "Sugerir rascunho de resposta baseado no contexto do email recebido", correctCategory: "outlook" },
-                    { id: 4, text: "Transformar relatório em formato diferente (ex: relatório técnico → FAQ executiva)", correctCategory: "word" },
-                    { id: 5, text: "Responder 'Quais decisões foram tomadas sobre o orçamento?' de reunião anterior", correctCategory: "teams" }
+                    { id: 0, text: "Resumir thread de email com decisões e próximos passos", correctCategory: "outlook" },
+                    { id: 1, text: "Reescrever seção de documento para tom mais persuasivo", correctCategory: "word" },
+                    { id: 2, text: "Extrair itens de ação de reunião transcrevida com responsáveis", correctCategory: "teams" },
+                    { id: 3, text: "Sugerir rascunho de resposta com tom ajustável", correctCategory: "outlook" },
+                    { id: 4, text: "Gerar resumo executivo de 2 páginas a partir de relatório de 30", correctCategory: "word" },
+                    { id: 5, text: "Responder 'Quais decisões foram tomadas sobre o orçamento?' em reunião anterior", correctCategory: "teams" }
                 ],
-                explanation: "✅ <strong>📝 Word:</strong> Criação, transformação e refinamento de conteúdo textual dentro do documento.<br>✅ <strong>👥 Teams:</strong> Contexto de reuniões — resumos, itens de ação, consultas sobre discussões passadas transcrevidas.<br>✅ <strong>📧 Outlook:</strong> Produtividade com email — resumos de threads extensos e geração de rascunhos contextuais."
-            },
-            {
-                id: 40, domain: 2, type: 'single',
-                question: "Um gestor quer implementar o M365 Copilot para maximizar a produtividade. Qual das afirmações representa uma expectativa INCORRETA sobre as capacidades do Copilot?",
-                options: [
-                    "O Copilot pode gerar rascunhos de documentos e emails que o gestor revisa e aprova antes do envio",
-                    "O Copilot pode resumir reuniões transcrevidas e identificar automaticamente itens de ação com responsáveis",
-                    "O Copilot aprenderá autonomamente os processos únicos da empresa e os executará sem supervisão humana após algumas semanas de uso contínuo",
-                    "O Copilot pode referenciar documentos do SharePoint para responder perguntas específicas do negócio com contexto interno"
-                ],
-                correct: 2,
-                explanation: "✅ <strong>C está INCORRETA — é a expectativa errada!</strong><br>O M365 Copilot NÃO aprende processos autonomamente nem os executa sem supervisão. É uma ferramenta de assistência que sempre requer instruções explícitas e aprovação humana. 'Aprendizado autônomo de processos sem supervisão' pertence a sistemas de automação avançada e agentes de IA de nível diferente.<br><br>✅ A, B e D descrevem expectativas corretas e alcançáveis com o M365 Copilot atual.<br><br>⚠️ Armadilha clássica de prova: confundir assistência de IA (Copilot) com automação autônoma total. O Copilot sempre mantém o humano no controle."
+                explanation: "✅ <strong>📝 Word:</strong> Criação, transformação e refinamento de conteúdo textual.<br>✅ <strong>👥 Teams:</strong> Contexto de reuniões — resumos, ações, consultas sobre discussões transcritas.<br>✅ <strong>📧 Outlook:</strong> Produtividade com email — resumos de threads e rascunhos contextuais."
             }
         ];
 
