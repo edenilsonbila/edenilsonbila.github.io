@@ -545,6 +545,15 @@ Cada classe tem um significado pedagógico **fixo e obrigatório**. NUNCA trocar
 ```
 - **Quando usar:** Final de um grupo de 2-3 tópicos relacionados
 
+### `.exam-confirmed` — 🎯 Tópico confirmado em prova real
+```html
+<div class="exam-confirmed">Este tópico foi confirmado na prova real. Conteúdo aqui.</div>
+```
+- **Quando usar:** SOMENTE quando há feedback real de candidatos que fizeram a prova. NUNCA para suposições ou inferências
+- **Em EN:** Rótulo automático muda para "🎯 CONFIRMED ON EXAM" via CSS
+- **Nota:** Pode incluir informação "Baseado em feedback de candidatos reais (ano)" quando aplicável
+- **Questões bugadas:** Se uma questão da prova tem contradição ou inconsistência, usar `.exam-confirmed` para documentar o comportamento esperado E a contradição, orientando o aluno sobre como responder
+
 ### Regras de Uso dos Blocos
 
 1. **NUNCA** colocar explicação de conceito dentro de `.tip` — usar `<p>` normal

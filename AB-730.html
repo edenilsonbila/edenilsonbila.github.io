@@ -572,12 +572,66 @@
             letter-spacing: 0.5px;
         }
 
+        .exam-confirmed {
+            background: linear-gradient(135deg, #fffbeb 0%, #fef3c7 100%);
+            border-left: 4px solid #d97706;
+            color: #92400e;
+            padding: 24px;
+            border-radius: 8px;
+            margin: 32px 0;
+            box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(217,119,6,0.1);
+            position: relative;
+        }
+
+        .exam-confirmed::before {
+            content: "🎯 CAI NA PROVA";
+            display: block;
+            font-weight: 700;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+            color: #d97706;
+        }
+
+        .exam-confirmed::after {
+            content: "Baseado em feedback de candidatos reais (2025)";
+            display: block;
+            font-size: 0.75em;
+            margin-top: 12px;
+            color: #b45309;
+            font-style: italic;
+            opacity: 0.8;
+        }
+
+        [data-theme="dark"] .exam-confirmed {
+            background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+            border-left-color: #fbbf24;
+            color: #fde68a;
+            box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(251,191,36,0.15);
+        }
+
+        [data-theme="dark"] .exam-confirmed::before { color: #fbbf24; }
+        [data-theme="dark"] .exam-confirmed::after { color: #fcd34d; }
+
+        @media (prefers-color-scheme: dark) {
+            html:not([data-theme="light"]) .exam-confirmed {
+                background: linear-gradient(135deg, #451a03 0%, #78350f 100%);
+                border-left-color: #fbbf24;
+                color: #fde68a;
+                box-shadow: var(--shadow-sm), inset 0 0 0 1px rgba(251,191,36,0.15);
+            }
+            html:not([data-theme="light"]) .exam-confirmed::before { color: #fbbf24; }
+            html:not([data-theme="light"]) .exam-confirmed::after { color: #fcd34d; }
+        }
+
         /* Bilingual ::before labels */
         html[lang="en"] .macete::before { content: "🔑 MNEMONIC"; }
         html[lang="en"] .tip::before { content: "💡 TIP"; }
         html[lang="en"] .warning::before { content: "⚠️ WARNING"; }
         html[lang="en"] .example::before { content: "📝 EXAMPLE"; }
         html[lang="en"] .explanation::before { content: "💬 EXPLANATION"; }
+        html[lang="en"] .exam-confirmed::before { content: "🎯 CONFIRMED ON EXAM"; }
+        html[lang="en"] .exam-confirmed::after { content: "Based on real candidate feedback (2025)"; }
 
         /* ==========================================
            TYPOGRAPHY - Legibilidade otimizada
@@ -1615,7 +1669,7 @@
             timeLimit: 45,       // minutos (tempo real do exame)
             passScore: 700,      // nota de aprovação (padrão Microsoft)
             totalScore: 1000,    // pontuação máxima
-            questionCount: 40    // número de questões (pesquisar contagem oficial)
+            questionCount: 52    // número de questões (confirmado no exame real)
         };
 
         // ============================================================
@@ -1631,11 +1685,10 @@
 
         // ============================================================
         // SIMULADO FINAL — QUESTIONS
-        // SUBSTITUIR: 40 questões (ajustar ao questionCount acima)
-        // Mix: single(23), multi(7), match(3), order(3), categorize(4) = 40
-        // Estilos: Complete-a-frase(6), NÃO/INCORRETO(6), Conceito(6), Cenário(8), Multi(7), Drag(10) ≈ 43 slots (sobreposição)
-        // Distribuição: D0=11(27.5%), D1=16(40%), D2=13(32.5%)
-        // Referência: Microsoft Exam Sandbox + Practice Assessment AB-730
+        // 52 questões (confirmado no exame real 2025)
+        // Mix: single(23+8), multi(7+3), match(3+1), order(3), categorize(4) = 52
+        // Distribuição: D0=11+3(27%), D1=16+6(42%), D2=13+3(31%)
+        // Referência: Microsoft Exam Sandbox + Practice Assessment AB-730 + feedback real
         // ============================================================
         const SIMULADO_QUESTIONS = [
             // ── Q1–Q11: DOMÍNIO 0 — Fundamentos de IA Generativa (27.5%) ─────
@@ -1644,12 +1697,12 @@
                 question: "Complete a frase: O Microsoft 365 Copilot opera dentro do ___, garantindo que os dados do cliente não sejam usados para treinar modelos públicos de IA.",
                 options: [
                     "Azure Active Directory Tenant Isolation",
-                    "Microsoft 365 Trust Boundary",
+                    "Microsoft 365 service boundary (Enterprise Data Protection)",
                     "Microsoft Defender for Cloud perimeter",
                     "Microsoft Entra Zero Trust framework"
                 ],
                 correct: 1,
-                explanation: "✅ <strong>Opção B correta!</strong><br>O conceito oficial é <strong>Microsoft 365 Trust Boundary</strong> — os dados do cliente não saem deste perímetro de confiança, não são usados para treinar modelos públicos e seguem todos os controles de conformidade do tenant.<br><br>❌ A: AAD Tenant Isolation é conceito de identidade, não de proteção de dados do Copilot.<br>❌ C: Defender for Cloud é ferramenta de segurança de infraestrutura, não o modelo de confiança do Copilot.<br>❌ D: Zero Trust é um framework de acesso, não o boundary específico dos dados do Copilot."
+                explanation: "✅ <strong>Opção B correta!</strong><br>O conceito oficial é <strong>Microsoft 365 service boundary</strong> com <strong>Enterprise Data Protection (EDP)</strong> — os dados do cliente não saem deste perímetro de segurança, não são usados para treinar modelos públicos e seguem todos os controles de conformidade do tenant.<br><br>❌ A: AAD Tenant Isolation é conceito de identidade, não de proteção de dados do Copilot.<br>❌ C: Defender for Cloud é ferramenta de segurança de infraestrutura, não o modelo de confiança do Copilot.<br>❌ D: Zero Trust é um framework de acesso, não o boundary específico dos dados do Copilot."
             },
             {
                 id: 2, domain: 0, type: 'single',
@@ -1730,11 +1783,11 @@
                 options: [
                     "Os dados do tenant são usados para melhorar continuamente o modelo base da Microsoft para todos os clientes",
                     "O Copilot respeita todas as permissões de acesso existentes no M365 — não exibe conteúdo restrito ao usuário",
-                    "Os dados do cliente permanecem no Trust Boundary do M365 e não treinam modelos públicos",
+                    "Os dados do cliente permanecem no Microsoft 365 service boundary e não treinam modelos públicos",
                     "O Copilot desativa automaticamente a criptografia de dados para processar documentos mais rapidamente"
                 ],
                 correct: [1, 2],
-                explanation: "✅ <strong>B e C corretas:</strong><br>• <strong>B:</strong> O Copilot herda e respeita TODAS as permissões do M365 — nunca eleva acesso.<br>• <strong>C:</strong> Os dados permanecem no Trust Boundary e nunca treinam modelos públicos.<br><br>❌ A: Dados de clientes NUNCA treinam modelos públicos — cada tenant é isolado.<br>❌ D: A criptografia não é desativada — os dados são processados mantendo os controles de segurança."
+                explanation: "✅ <strong>B e C corretas:</strong><br>• <strong>B:</strong> O Copilot herda e respeita TODAS as permissões do M365 — nunca eleva acesso.<br>• <strong>C:</strong> Os dados permanecem no service boundary (EDP) e nunca treinam modelos públicos.<br><br>❌ A: Dados de clientes NUNCA treinam modelos públicos — cada tenant é isolado.<br>❌ D: A criptografia não é desativada — os dados são processados mantendo os controles de segurança."
             },
             {
                 id: 9, domain: 0, type: 'single',
@@ -2140,6 +2193,152 @@
                     { id: 5, text: "Responder 'Quais decisões foram tomadas sobre o orçamento?' em reunião anterior", correctCategory: "teams" }
                 ],
                 explanation: "✅ <strong>📝 Word:</strong> Criação, transformação e refinamento de conteúdo textual.<br>✅ <strong>👥 Teams:</strong> Contexto de reuniões — resumos, ações, consultas sobre discussões transcritas.<br>✅ <strong>📧 Outlook:</strong> Produtividade com email — resumos de threads e rascunhos contextuais."
+            },
+            // ── Q41–Q52: QUESTÕES ADICIONAIS — Temas Confirmados em Prova Real (2025) ─────
+            {
+                id: 41, domain: 1, type: 'single',
+                question: "Um usuário quer excluir TODO o histórico de interações com o Microsoft 365 Copilot. Qual portal ele deve acessar?",
+                options: [
+                    "admin.microsoft.com → Configurações de segurança",
+                    "myaccount.microsoft.com → Histórico de Atividades (Privacidade)",
+                    "copilot.cloud.microsoft → Configurações → Limpar dados",
+                    "purview.microsoft.com → Retenção de dados"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O portal <strong>Minha Conta (myaccount.microsoft.com)</strong> → seção <strong>Privacidade → Histórico de Atividades</strong> permite excluir todo o histórico de prompts e respostas do Copilot.<br><br>❌ A: Admin center é para administradores, não para dados pessoais do usuário.<br>❌ C: O app Copilot permite excluir conversas individuais, mas não TODO o histórico.<br>❌ D: Purview é para políticas de conformidade, não exclusão pelo usuário."
+            },
+            {
+                id: 42, domain: 1, type: 'single',
+                question: "Ao excluir o histórico de atividades do Copilot via Minha Conta, qual item NÃO é excluído?",
+                options: [
+                    "Prompts enviados ao Copilot",
+                    "Respostas geradas pelo Copilot",
+                    "Arquivos Word/PowerPoint já criados e salvos no OneDrive",
+                    "Registros de conversas anteriores"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>Excluir o histórico remove <strong>prompts e respostas armazenados</strong>, mas <strong>arquivos já gerados</strong> (documentos Word, apresentações PPT, planilhas) que foram salvos no OneDrive/SharePoint permanecem intactos. Também NÃO exclui Memórias e Instruções configuradas.<br><br>❌ A, B, D: Estes são excluídos quando você limpa o histórico de atividades."
+            },
+            {
+                id: 43, domain: 1, type: 'single',
+                question: "Maria planejava uma viagem para Paris e conversou com o Copilot sobre isso. Ela desistiu da viagem e quer que o Copilot pare de sugerir conteúdo sobre Paris. O que ela deve fazer?",
+                options: [
+                    "Excluir todo o histórico de atividades em Minha Conta",
+                    "Desinstalar o aplicativo Copilot e reinstalar",
+                    "Excluir a MEMÓRIA específica sobre a viagem nas configurações do Copilot",
+                    "Enviar um novo prompt dizendo 'Esqueça tudo sobre Paris'"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>Opção C correta!</strong><br>O Copilot armazena <strong>Memórias</strong> (fatos sobre o usuário) separadamente do histórico. Para parar sugestões baseadas em contexto anterior, Maria deve excluir a <strong>memória específica</strong> sobre a viagem — não precisa apagar todo o histórico.<br><br>❌ A: Excesso — apagaria tudo, não só o contexto de Paris.<br>❌ B: Memórias são da conta, não do app — reinstalar não resolve.<br>❌ D: Prompts em linguagem natural não controlam Memórias armazenadas."
+            },
+            {
+                id: 44, domain: 1, type: 'multi',
+                question: "Selecione TRÊS fontes de conhecimento válidas que podem ser adicionadas a um agente no Copilot Studio (Agent Builder):",
+                options: [
+                    "Sites do SharePoint (arquivos e pastas específicos)",
+                    "Banco de dados SQL Server via conexão direta",
+                    "Arquivos carregados manualmente (upload, até 20 arquivos)",
+                    "Sites públicos da web (até 4 URLs)",
+                    "APIs REST externas sem conector configurado"
+                ],
+                correct: [0, 2, 3],
+                explanation: "✅ <strong>A, C e D corretas:</strong><br>• <strong>A:</strong> SharePoint é uma das principais fontes (até 100 itens).<br>• <strong>C:</strong> Upload manual aceita até 20 arquivos como conhecimento do agente.<br>• <strong>D:</strong> Até 4 URLs públicas com máximo de 2 níveis de profundidade.<br><br>❌ B: Não há conexão direta a SQL — dados estruturados requerem Copilot Connectors configurados pelo admin.<br>❌ E: APIs externas requerem um Copilot Connector configurado, não são aceitas diretamente."
+            },
+            {
+                id: 45, domain: 1, type: 'single',
+                question: "Um agente no Copilot Studio precisa gerar gráficos e visualizações de dados automaticamente. Qual funcionalidade (capability) deve ser habilitada?",
+                options: [
+                    "Image Generator (Criar imagens)",
+                    "Code Interpreter (Criar documentos, gráficos e códigos)",
+                    "Data Visualizer (Criar dashboards)",
+                    "Power BI Connector (Relatórios automáticos)"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br><strong>Code Interpreter</strong> (traduzido como 'Criar documentos, gráficos e códigos') é a capability que permite ao agente gerar gráficos, documentos formatados e executar código para visualizações.<br><br>❌ A: Image Generator é para criar imagens artísticas/visuais, não gráficos de dados.<br>❌ C: 'Data Visualizer' não existe como capability no Agent Builder.<br>❌ D: Power BI Connector não é uma capability nativa do Agent Builder."
+            },
+            {
+                id: 46, domain: 1, type: 'single',
+                question: "Qual é a diferença entre as abas 'Descrever' e 'Configurar' no Agent Builder do Copilot Studio?",
+                options: [
+                    "Descrever é para agentes simples; Configurar é para agentes com IA avançada",
+                    "Descrever usa linguagem natural e o sistema auto-configura; Configurar permite controle manual campo a campo",
+                    "Descrever cria agentes públicos; Configurar cria agentes privados",
+                    "Descrever é gratuito; Configurar requer licença premium"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>• <strong>Aba Descrever:</strong> Você descreve o agente em linguagem natural e o sistema preenche automaticamente Nome, Descrição, Instruções e Conhecimento.<br>• <strong>Aba Configurar:</strong> Você preenche cada campo manualmente — nome, ícone, instruções, fontes de conhecimento, funcionalidades, solicitações iniciais.<br><br>❌ A: Ambos criam agentes com mesmas capacidades de IA.<br>❌ C: Ambos criam agentes com mesmo escopo de acesso.<br>❌ D: Ambos usam a mesma licença."
+            },
+            {
+                id: 47, domain: 2, type: 'single',
+                question: "Qual é a URL correta para acessar o Microsoft 365 Copilot via navegador web?",
+                options: [
+                    "copilot.microsoft.com",
+                    "m365.cloud.microsoft/chat",
+                    "office.com/copilot",
+                    "copilotstudio.microsoft.com"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O Microsoft 365 Copilot (BizChat) é acessado via <strong>m365.cloud.microsoft/chat</strong> — esta é a URL oficial do app M365 Copilot via web.<br><br>❌ A: copilot.microsoft.com é o Copilot gratuito/consumer (Bing Chat).<br>❌ C: office.com não tem /copilot como path direto.<br>❌ D: copilotstudio.microsoft.com é para CRIAR agentes, não para usar o BizChat."
+            },
+            {
+                id: 48, domain: 1, type: 'single',
+                question: "Qual afirmação é INCORRETA sobre trocar de agente durante uma conversa no Microsoft 365 Copilot?",
+                options: [
+                    "Você pode @mencionar diferentes agentes na mesma conversa",
+                    "O contexto da conversa é transferido automaticamente entre agentes mencionados",
+                    "Pesquisador e Analista são alternáveis via seletor de modo",
+                    "Cada agente opera com seu próprio escopo de conhecimento configurado"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B é a INCORRETA!</strong><br>O contexto <strong>NÃO transfere</strong> automaticamente entre agentes. Cada agente opera de forma isolada com seu próprio escopo de conhecimento e instruções — ao @mencionar outro agente, ele recomeça do zero.<br><br>✅ A: Correto — pode @mencionar agentes diferentes na mesma conversa.<br>✅ C: Correto — Pesquisador e Analista são modos alternáveis.<br>✅ D: Correto — cada agente tem escopo próprio."
+            },
+            {
+                id: 49, domain: 0, type: 'multi',
+                question: "Selecione DUAS garantias da Enterprise Data Protection (EDP) do Microsoft 365 Copilot:",
+                options: [
+                    "Prompts e respostas são usados para melhorar modelos para todos os clientes Microsoft",
+                    "Dados processados pelo Copilot nunca são usados para treinar modelos foundation",
+                    "O Copilot ignora sensitivity labels para fornecer respostas mais completas",
+                    "Isolamento lógico entre tenants via Microsoft Entra + RBAC",
+                    "Os dados do tenant são automaticamente compartilhados com parceiros de negócio"
+                ],
+                correct: [1, 3],
+                explanation: "✅ <strong>B e D corretas:</strong><br>• <strong>B:</strong> Um pilar fundamental do EDP — dados (prompts, respostas, Graph data) NUNCA treinam modelos foundation.<br>• <strong>D:</strong> Isolamento de tenant é garantido via Microsoft Entra ID + RBAC — cada tenant é logicamente separado.<br><br>❌ A: Exato oposto do EDP — dados NUNCA treinam modelos públicos.<br>❌ C: Copilot RESPEITA sensitivity labels — não as ignora.<br>❌ E: Dados NUNCA são compartilhados entre tenants."
+            },
+            {
+                id: 50, domain: 1, type: 'match',
+                question: "Associe cada fonte de conhecimento ao seu limite no Agent Builder:",
+                pairs: [
+                    { left: "Sites do SharePoint", right: "Até 100 itens" },
+                    { left: "Arquivos upload manual", right: "Até 20 arquivos" },
+                    { left: "Sites públicos (URLs)", right: "Até 4 URLs" },
+                    { left: "Chats do Teams", right: "Até 5 chats" }
+                ],
+                explanation: "✅ <strong>Limites oficiais por fonte:</strong><br>• SharePoint: até 100 itens (sites/pastas/arquivos)<br>• Upload manual: até 20 arquivos<br>• Sites públicos: até 4 URLs com máx. 2 níveis de profundidade<br>• Teams chats: até 5 chats (⚠️ requer licença Copilot)"
+            },
+            {
+                id: 51, domain: 0, type: 'single',
+                question: "Qual das opções abaixo NÃO é uma proteção garantida pela Enterprise Data Protection (EDP) do Microsoft 365 Copilot?",
+                options: [
+                    "Criptografia de dados em repouso e em trânsito",
+                    "Detecção de prompt injection em conteúdo processado",
+                    "Acesso irrestrito a todos os arquivos do tenant para fornecer respostas completas",
+                    "Compromisso de direitos autorais (Copyright Commitment)"
+                ],
+                correct: 2,
+                explanation: "✅ <strong>Opção C é a que NÃO é proteção do EDP!</strong><br>O EDP garante exatamente o <strong>oposto</strong> — acesso RESTRITO baseado nas permissões do usuário. Copilot NUNCA eleva privilégios.<br><br>✅ A: Correto — criptografia é pilar 1 do EDP.<br>✅ B: Correto — proteção contra riscos IA é pilar 4.<br>✅ D: Correto — Copyright Commitment faz parte das proteções contra riscos IA."
+            },
+            {
+                id: 52, domain: 0, type: 'single',
+                question: "Como o Microsoft 365 Copilot garante o isolamento de dados entre diferentes organizações (tenants)?",
+                options: [
+                    "Cada tenant usa um servidor físico separado em datacenter dedicado",
+                    "Isolamento lógico via Microsoft Entra ID + controles de acesso baseado em função (RBAC)",
+                    "Os dados são automaticamente criptografados com chave única por país",
+                    "O Common Data Service gerencia a separação física entre tenants"
+                ],
+                correct: 1,
+                explanation: "✅ <strong>Opção B correta!</strong><br>O isolamento de tenant no Microsoft 365 é <strong>lógico</strong> — implementado via <strong>Microsoft Entra ID</strong> (identidade) + <strong>RBAC</strong> (controle de acesso baseado em função). Não requer separação física.<br><br>❌ A: Microsoft usa isolamento lógico, não físico — multi-tenant compartilha infraestrutura.<br>❌ C: Chaves são por tenant, não por país — e a criptografia não é o mecanismo de isolamento.<br>❌ D: Common Data Service (antigo Dataverse) não é relevante para isolamento do Copilot M365."
             }
         ];
 
@@ -2219,8 +2418,50 @@
                                         <li><strong>Preste atenção nos MACETES</strong> 🔑 — truques de memorização para a prova</li>
                                         <li><strong>Use os Active Recall</strong> 🤔 — tente responder ANTES de ver a resposta</li>
                                         <li><strong>Faça os exercícios</strong> de cada módulo — simulam questões reais (10 por módulo)</li>
-                                        <li><strong>Faça o Simulado Final</strong> — 40 questões no estilo oficial Microsoft</li>
+                                        <li><strong>Faça o Simulado Final</strong> — 52 questões no estilo oficial Microsoft</li>
                                     </ul>
+                                </div>
+
+                                <div class="exam-confirmed">
+                                    <h4>🌐 Dicas de Tradução PearsonVue — LEIA ANTES DE ESTUDAR</h4>
+                                    <p>A prova AB-730 em <strong>português (PT-BR)</strong> usa traduções PearsonVue que podem confundir. Memorize estes termos antes de começar:</p>
+                                    <table style="width:100%; border-collapse:collapse; margin:16px 0; font-size:0.95em;">
+                                        <thead>
+                                            <tr style="background:rgba(217,119,6,0.15);">
+                                                <th style="padding:10px; text-align:left; border-bottom:2px solid #d97706;">Termo Original (EN/Técnico)</th>
+                                                <th style="padding:10px; text-align:left; border-bottom:2px solid #d97706;">Na Prova (PT-BR PearsonVue)</th>
+                                            </tr>
+                                        </thead>
+                                        <tbody>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Prompt</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Solicitação / Pedido / Comando</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">LLM / Large Language Model</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Modelo</strong> (⚠️ confuso com Template!)</td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Template</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Modelo</strong> (⚠️ mesmo termo!)</td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Tenant</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Locatário / Inquilino</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Enterprise Data Protection</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Proteção de Dados Empresarial</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Service Boundary</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Limite de Serviço</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">OneNote</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Bloco de Notas</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Pages / Copilot Pages</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Página / Páginas</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Agent Builder</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Construtor de Agentes</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Describe tab</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Aba Descrever</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Configure tab</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Aba Configurar</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Knowledge Sources</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Fontes de Conhecimento</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Code Interpreter</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>"Criar documentos, gráficos e códigos"</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Image Generator</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>"Criar imagens"</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Starter Prompts</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Solicitações iniciais</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">My Account</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Minha Conta</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Activity History</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Histórico de Atividades</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Memory (Copilot)</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Memória / Lembranças</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Instructions (Copilot)</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Instruções</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Researcher</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Pesquisador / Investigador</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Analyst</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Analista</strong></td></tr>
+                                            <tr><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);">Grounding</td><td style="padding:8px; border-bottom:1px solid rgba(0,0,0,0.1);"><strong>Fundamentação / Embasamento</strong></td></tr>
+                                            <tr><td style="padding:8px;">Token, LLM, RAG, API</td><td style="padding:8px;"><strong>NÃO aparecem na prova</strong> — termos técnicos são evitados</td></tr>
+                                        </tbody>
+                                    </table>
+                                    <div class="warning" style="margin-top:16px; margin-bottom:0;">
+                                        <strong>⚠️ Armadilha Principal:</strong> "Modelo" pode significar LLM OU Template — interprete pelo contexto!<br>
+                                        A tradução PearsonVue é estilo Google Translator — pode inverter sentido. A prova é 100% conceitual, foco no dia a dia, NÃO técnica.
+                                    </div>
                                 </div>
 
                                 <div class="intro-section">
@@ -2263,9 +2504,9 @@
 <p>1️⃣ <strong>Recebe</strong> o prompt do usuário<br>
 2️⃣ <strong>Consulta</strong> o Microsoft Graph — seus emails, arquivos, calendário e reuniões<br>
 3️⃣ <strong>Enriquece</strong> o prompt com o contexto relevante do tenant<br>
-4️⃣ <strong>Processa</strong> no LLM dentro do Microsoft 365 Trust Boundary<br>
+4️⃣ <strong>Processa</strong> no LLM dentro do <strong>Microsoft 365 service boundary</strong> (perímetro de segurança)<br>
 5️⃣ <strong>Retorna</strong> a resposta com referências às fontes quando disponíveis</p>
-<div class="warning">Os dados do seu tenant ficam dentro do <strong>Microsoft 365 Trust Boundary</strong> — nunca saem para treinar modelos públicos e as permissões do M365 são sempre respeitadas.</div>
+<div class="exam-confirmed">Os dados do seu tenant (locatário) ficam dentro do <strong>Microsoft 365 service boundary</strong> — protegidos pela <strong>Enterprise Data Protection (EDP)</strong>. Nunca saem para treinar modelos públicos e as permissões do M365 são sempre respeitadas.<br><br>⚠️ Na prova, este conceito aparece como "Limite de Serviço" ou "Proteção de Dados Empresarial" — NÃO como "Trust Boundary".</div>
 <div class="example">
   <strong>Cenário:</strong> "Resuma minha última reunião com a Contoso."<br>
   <strong>Processo:</strong> Copilot → Graph → encontra reunião no Teams → pega transcrição → gera resumo no LLM → retorna ao usuário.<br>
@@ -2398,18 +2639,26 @@
 </details>
 <div class="separator"></div>
 
-<h4>📌 Tópico: Grounding e o Microsoft 365 Trust Boundary</h4>
+<h4>📌 Tópico: Grounding e o Microsoft 365 Service Boundary (EDP)</h4>
 <p><strong>Grounding</strong> é a técnica de ancorar as respostas do modelo em fontes de dados verificadas, reduzindo drasticamente a fabricação.</p>
 <div class="example">
   <strong>Sem grounding:</strong> "Quais foram nossas receitas no Q1?" → Copilot pode inventar números convincentes.<br>
   <strong>Com grounding:</strong> "Com base no /Relatório Q1 2026.xlsx, quais foram nossas receitas?" → Copilot extrai dados reais do arquivo.<br>
   <strong>Regra:</strong> Quanto mais contexto verificado com /, menor o risco de fabricação.
 </div>
-<p><strong>Microsoft 365 Trust Boundary garante:</strong></p>
-<p>✅ Dados do tenant não saem para treinar modelos públicos<br>
-✅ Copilot respeita todas as permissões existentes do M365<br>
-✅ Classificações de confidencialidade do Microsoft Purview são honradas<br>
-✅ Nenhum dado é compartilhado entre tenants diferentes</p>
+<p><strong>Enterprise Data Protection (EDP) — os 5 pilares de segurança:</strong></p>
+<div class="exam-confirmed">
+✅ <strong>Segurança:</strong> Dados criptografados (repouso + trânsito) + isolamento lógico entre tenants<br>
+✅ <strong>Privacidade:</strong> GDPR, EU Data Boundary, DPA (Adendo de Proteção de Dados)<br>
+✅ <strong>Controle de Acesso:</strong> Copilot respeita identidade, permissões, sensitivity labels, retenção e auditoria<br>
+✅ <strong>Proteção contra riscos IA:</strong> Content filters, detecção de prompt injection, Copyright Commitment<br>
+✅ <strong>Dados NÃO treinam modelos:</strong> Prompts, respostas e dados do Graph nunca treinam modelos foundation<br><br>
+<strong>Termos oficiais para a prova:</strong><br>
+🔹 "Microsoft 365 service boundary" = perímetro de segurança (traduzido: "Limite de Serviço")<br>
+🔹 "Enterprise Data Protection (EDP)" = conjunto de proteções (traduzido: "Proteção de Dados Empresarial")<br>
+🔹 "Tenant isolation" = isolamento lógico via Microsoft Entra + RBAC (traduzido: "Isolamento de Locatário")<br>
+🔹 ❌ NÃO use "Trust Boundary" na prova — este termo não aparece na documentação oficial
+</div>
 <div class="warning">O Copilot NÃO eleva permissões. Se um usuário não tem acesso a um arquivo, o Copilot não o revelará — mesmo que seja relevante para a pergunta feita.</div>
 <details class="active-recall">
   <summary>🤔 ACTIVE RECALL: Um usuário não consegue ver um documento "Confidencial" nos resultados do Copilot. Por quê?</summary>
@@ -2455,6 +2704,18 @@
 </table>
 <div class="macete">Work mode = dados corporativos seguros via Graph. Web mode = dados públicos da internet. Ambos com segurança enterprise — mas fontes diferentes!</div>
 <div class="tip">O Work mode requer licença Microsoft 365 Copilot (add-on). O Web mode está disponível na licença base do Copilot Chat.</div>
+<div class="separator"></div>
+
+<h4>📌 Tópico: URL de Acesso ao Microsoft 365 Copilot</h4>
+<div class="exam-confirmed">
+<strong>URL oficial do M365 Copilot via web:</strong> <code>m365.cloud.microsoft/chat</code><br><br>
+<strong>Disponível em:</strong> Web (navegador), Desktop (Windows/Mac), Mobile (iOS/Android)<br><br>
+<strong>⚠️ Não confundir:</strong><br>
+🔹 <code>m365.cloud.microsoft</code> → App M365 Copilot (BizChat) ← <strong>resposta correta na prova</strong><br>
+🔹 <code>copilotstudio.microsoft.com</code> → Criar/editar agentes (Copilot Studio)<br>
+🔹 <code>copilot.microsoft.com</code> → Copilot gratuito/consumidor (NÃO é o M365 Copilot corporativo)<br>
+🔹 <code>myaccount.microsoft.com</code> → Minha Conta (privacidade, histórico)
+</div>
 ` }
                     ],
                     exercises: [
@@ -2559,6 +2820,14 @@
   <strong>Beneficio:</strong> Tarefas recorrentes são executadas automaticamente — sem dependência de memória ou disciplina manual.
 </div>
 <div class="tip">Prompts agendados executam mesmo quando você não está online — o resultado fica disponível quando você acessar.</div>
+<div class="exam-confirmed">
+<strong>Limitações do Agendador na prova:</strong><br>
+🔹 Funciona apenas com BizChat (não com prompts inline em apps como Word/Excel)<br>
+🔹 Requer prompt previamente salvo<br>
+🔹 Recorrência: diária, semanal ou mensal<br>
+🔹 <strong>Limite máximo de execuções:</strong> Ilimitado<br><br>
+⚠️ <strong>Nota sobre a prova:</strong> A questão pode pedir "Quais são as DUAS limitações do agendador?" — porém "Ilimitado" contradiz o conceito de "limitação". Identifique que NÃO há limite no número de execuções como a resposta correta neste contexto.
+</div>
 <div class="separator"></div>
 
 <h4>📌 Tópico: Compartilhar Prompts — Padronização Organizacional</h4>
@@ -2657,6 +2926,48 @@
     <strong>5. Exportar ao OneNote</strong> — preservar insights para compartilhamento e referência futura
   </div>
 </details>
+<div class="separator"></div>
+
+<h4>📌 Tópico: Gestão de Dados e Privacidade — Minha Conta vs App Copilot</h4>
+<div class="exam-confirmed">
+<strong>Dois locais para gerenciar dados do Copilot:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Ação</th>
+    <th style="padding:8px 10px">Onde</th>
+    <th style="padding:8px 10px">O que faz</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">🗑️ Excluir TODO histórico</td>
+    <td style="padding:8px 10px"><code>myaccount.microsoft.com</code> → Privacidade → Histórico de Atividades</td>
+    <td style="padding:8px 10px">Remove todos os prompts + respostas armazenados</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">💬 Excluir conversa específica</td>
+    <td style="padding:8px 10px">App Copilot → painel lateral → conversa</td>
+    <td style="padding:8px 10px">Remove uma conversa individual</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">🧠 Gerenciar Memórias</td>
+    <td style="padding:8px 10px">App Copilot → Configurações → Memória</td>
+    <td style="padding:8px 10px">Ver/excluir fatos que o Copilot lembrou sobre você</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px">📋 Gerenciar Instruções</td>
+    <td style="padding:8px 10px">App Copilot → Configurações → Instruções</td>
+    <td style="padding:8px 10px">Editar regras de comportamento do seu Copilot</td>
+  </tr>
+</table>
+<strong>⚠️ O que NÃO é excluído ao limpar o histórico:</strong><br>
+❌ Arquivos já criados (Word/PPT/Excel salvos no OneDrive)<br>
+❌ Memórias armazenadas (gerenciadas separadamente)<br>
+❌ Instruções configuradas (permanecem ativas)
+</div>
+<div class="warning"><strong>Diferença crítica para a prova:</strong><br>
+• <strong>Histórico</strong> = registro de conversas passadas (prompts + respostas)<br>
+• <strong>Memória</strong> = fatos que o Copilot lembrou sobre você ("Maria prefere relatórios em tópicos")<br>
+• <strong>Instruções</strong> = regras de comportamento ("Sempre responda em português formal")<br><br>
+Cenário típico: "Planejou viagem, desistiu, quer parar sugestões" → Excluir a <strong>MEMÓRIA</strong> específica (não o histórico inteiro).</div>
 ` },
                         { title: "3.2 Criar e Gerenciar Agentes no M365", content: `
 <h4>📌 Tópico: O que é um Agente no Copilot Studio</h4>
@@ -2681,13 +2992,90 @@
   <strong>Por quê funciona:</strong> Define escopo, fonte, tom e ação de fallback — nenhum comportamento imprevisto.</div>
 <div class="separator"></div>
 
+<h4>📌 Tópico: Interface do Agent Builder — Descrever vs Configurar</h4>
+<div class="exam-confirmed">
+<strong>3 formas de criar um agente no Copilot Studio:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Forma</th>
+    <th style="padding:8px 10px">Como funciona</th>
+    <th style="padding:8px 10px">Melhor para</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px"><strong>📝 Aba Descrever</strong></td>
+    <td style="padding:8px 10px">Descreva o agente em linguagem natural → sistema auto-preenche Nome, Descrição, Instruções e Conhecimento</td>
+    <td style="padding:8px 10px">Criação rápida, teste de conceito</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px"><strong>⚙️ Aba Configurar</strong></td>
+    <td style="padding:8px 10px">Preencha manualmente: Nome, Ícone, Modelo, Descrição, Instruções, Conhecimento, Funcionalidades, Solicitações iniciais</td>
+    <td style="padding:8px 10px">Controle detalhado, instruções complexas</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px"><strong>📋 Template pronto</strong></td>
+    <td style="padding:8px 10px">Escolha um modelo pré-configurado e personalize</td>
+    <td style="padding:8px 10px">Casos de uso comuns (onboarding, FAQ)</td>
+  </tr>
+</table>
+<strong>Aba Experimentar (Try it):</strong> Permite testar o agente em tempo real antes de publicar — ambiente sandbox para validação.
+</div>
+<div class="separator"></div>
+
 <h4>📌 Tópico: Fontes de Conhecimento — Grounding do Agente</h4>
-<p>As <strong>Knowledge Sources</strong> são o que diferencia respostas especializadas de respostas genéricas do LLM:</p>
-<p>✅ Sites do SharePoint (documentação interna)<br>
-✅ Arquivos específicos (PDF, Word, Excel)<br>
-✅ Páginas web públicas configuradas<br>
-✅ Integrações via conectores (CRM, ERP, APIs)</p>
+<p>As <strong>Knowledge Sources (Fontes de Conhecimento)</strong> são o que diferencia respostas especializadas de respostas genéricas do LLM:</p>
+<div class="exam-confirmed">
+<strong>Fontes aceitas e limites no Agent Builder:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Fonte</th>
+    <th style="padding:8px 10px">Limite</th>
+    <th style="padding:8px 10px">Observação</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">📂 SharePoint</td>
+    <td style="padding:8px 10px">Até 100 itens</td>
+    <td style="padding:8px 10px">Sites, pastas ou arquivos específicos</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">☁️ OneDrive</td>
+    <td style="padding:8px 10px">Até 50 arquivos</td>
+    <td style="padding:8px 10px">Arquivos pessoais do criador</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">📤 Upload manual</td>
+    <td style="padding:8px 10px">Até 20 arquivos</td>
+    <td style="padding:8px 10px">PDF, Word, Excel, PPT</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">🌐 Sites públicos (URLs)</td>
+    <td style="padding:8px 10px">Até 4 URLs</td>
+    <td style="padding:8px 10px">Máx. 2 níveis de profundidade</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">💬 Teams chats</td>
+    <td style="padding:8px 10px">Até 5 chats</td>
+    <td style="padding:8px 10px">⚠️ Requer licença Copilot</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px">🔗 Copilot Connectors</td>
+    <td style="padding:8px 10px">Config. pelo admin</td>
+    <td style="padding:8px 10px">CRM, ERP, APIs externas</td>
+  </tr>
+</table>
+<strong>Toggles importantes:</strong><br>
+🔹 "Usar somente as fontes especificadas" → prioriza fontes sobre conhecimento geral<br>
+🔹 "Pesquisar em todos os sites" → habilita web search
+</div>
 <div class="warning">🔄 <strong>Reforço (Módulos 1 e 2 — Grounding):</strong> Fontes de conhecimento são o mecanismo de grounding dos agentes. Sem fontes configuradas, o agente usa o conhecimento geral do LLM — podendo fabricar respostas incorretas sobre processos internos. <strong>Sempre configure fontes de conhecimento específicas.</strong></div>
+<div class="separator"></div>
+
+<h4>📌 Tópico: Funcionalidades (Capabilities) do Agente</h4>
+<div class="exam-confirmed">
+<strong>Capabilities traduzidas na prova PearsonVue:</strong><br><br>
+🔹 <strong>Code Interpreter</strong> = "Criar documentos, gráficos e códigos" → gera Word/Excel/PPT + gráficos de dados + código<br>
+🔹 <strong>Image Generator</strong> = "Criar imagens" → visuais artísticos e ilustrações<br><br>
+⚠️ Na prova, a questão pode perguntar "Qual funcionalidade gera gráficos?" — a resposta é <strong>Code Interpreter</strong> (não Image Generator!).
+</div>
 <div class="separator"></div>
 
 <h4>📌 Tópico: Publicar — Agent Store e Canais</h4>
@@ -2715,6 +3103,16 @@
 </table>
 <div class="tip"><strong>Agent Store vs Criar Novo:</strong> Antes de criar um agente do zero, verifique o Agent Store — pode já existir um agente pronto ou um <strong>template</strong> que atenda sua necessidade. Templates oferecem configuração pré-definida para casos comuns (FAQ, suporte, onboarding).</div>
 <div class="macete">Agent Store = "Loja de agentes internos" — funcionários encontram e usam agentes criados por qualquer área sem precisar criar os seus próprios.</div>
+<div class="separator"></div>
+
+<h4>📌 Tópico: Trocar de Agente Durante uma Conversa</h4>
+<div class="exam-confirmed">
+<strong>@Menção de agentes em conversa:</strong><br><br>
+✅ Pode @mencionar agentes diferentes na mesma conversa<br>
+❌ O contexto <strong>NÃO transfere</strong> entre agentes — cada um opera isolado com seu próprio escopo<br>
+🔄 Pesquisador e Analista são alternáveis via seletor de modo (não via @menção)<br><br>
+<strong>Exemplo:</strong> Ao @mencionar "Agente de RH" e depois "Agente de TI" na mesma conversa, o agente de TI <strong>não sabe</strong> o que foi discutido com o de RH.
+</div>
 <details class="active-recall">
   <summary>🤔 ACTIVE RECALL: Quais são os 5 passos para criar um agente no Copilot Studio?</summary>
   <div class="recall-content">
@@ -2897,8 +3295,8 @@
     <td style="padding:8px 10px">Aceitar outputs da IA sem verificar. Sempre valide antes de usar em decisões críticas.</td>
   </tr>
   <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
-    <td style="padding:8px 10px"><strong>Trust Boundary</strong></td>
-    <td style="padding:8px 10px">Copilot acessa SOMENTE dados que o usuário tem permissão. Sem escalada de privilégio.</td>
+    <td style="padding:8px 10px"><strong>EDP / Service Boundary</strong></td>
+    <td style="padding:8px 10px">Enterprise Data Protection — Copilot acessa SOMENTE dados que o usuário tem permissão. Sem escalada de privilégio. Dados não treinam modelos.</td>
   </tr>
   <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
     <td style="padding:8px 10px"><strong>Prompt Injection</strong></td>
@@ -3025,7 +3423,7 @@
 
 <h3>⚠️ Armadilhas Clássicas do Exame AB-730</h3>
 <div class="warning">
-❌ <strong>"O Copilot acessa todos os dados da empresa"</strong> → FALSO. Respeita Trust Boundary — só acessa o que o usuário tem permissão.<br><br>
+❌ <strong>"O Copilot acessa todos os dados da empresa"</strong> → FALSO. EDP (Enterprise Data Protection) garante que só acessa o que o usuário tem permissão.<br><br>
 ❌ <strong>"Teams Copilot funciona em qualquer reunião"</strong> → FALSO. Requer <strong>transcrição ativa</strong>.<br><br>
 ❌ <strong>"Agente e BizChat fazem a mesma coisa"</strong> → FALSO. BizChat = geral; Agente = especializado com conhecimento configurado.<br><br>
 ❌ <strong>"LLM conhece eventos recentes"</strong> → FALSO. Limitado pelo knowledge cutoff — use grounding para dados atuais.<br><br>
@@ -3051,7 +3449,7 @@
   <li>✅ Sei os 3 capacidades do Copilot no Word (CRS) e no Outlook</li>
   <li>✅ Sei que Teams Copilot requer transcrição ativa</li>
   <li>✅ Entendo Memory vs Instructions e quando usar cada um</li>
-  <li>✅ Conheço o Trust Boundary e Prompt Injection como riscos de segurança</li>
+  <li>✅ Conheço o Microsoft 365 service boundary (EDP) e Prompt Injection como riscos de segurança</li>
 </ul>
 </div>
 ` }
@@ -3180,9 +3578,9 @@
 <p>1️⃣ <strong>Receives</strong> the user's prompt<br>
 2️⃣ <strong>Queries</strong> Microsoft Graph — your emails, files, calendar, and meetings<br>
 3️⃣ <strong>Enriches</strong> the prompt with relevant tenant context<br>
-4️⃣ <strong>Processes</strong> via LLM inside the Microsoft 365 Trust Boundary<br>
+4️⃣ <strong>Processes</strong> via LLM inside the <strong>Microsoft 365 service boundary</strong><br>
 5️⃣ <strong>Returns</strong> the response with source references when available</p>
-<div class="warning">Your tenant data stays inside the <strong>Microsoft 365 Trust Boundary</strong> — it never leaves to train public models and M365 permissions are always respected.</div>
+<div class="exam-confirmed">Your tenant data stays inside the <strong>Microsoft 365 service boundary</strong> — protected by <strong>Enterprise Data Protection (EDP)</strong>. It never leaves to train public models and M365 permissions are always respected.<br><br>⚠️ On the exam, this concept appears as "Service Boundary" or "Enterprise Data Protection" — NOT as "Trust Boundary".</div>
 <div class="example">
   <strong>Scenario:</strong> "Summarize my last meeting with Contoso."<br>
   <strong>Process:</strong> Copilot → Graph → finds Teams meeting → retrieves transcript → generates summary in LLM → returns to user.<br>
@@ -3315,18 +3713,26 @@
 </details>
 <div class="separator"></div>
 
-<h4>📌 Topic: Grounding and the Microsoft 365 Trust Boundary</h4>
+<h4>📌 Topic: Grounding and the Microsoft 365 Service Boundary (EDP)</h4>
 <p><strong>Grounding</strong> is the technique of anchoring model responses in verified data sources, drastically reducing hallucination.</p>
 <div class="example">
   <strong>Without grounding:</strong> "What were our Q1 revenues?" → Copilot may invent convincing numbers.<br>
   <strong>With grounding:</strong> "Based on /Q1 2026 Report.xlsx, what were our revenues?" → Copilot extracts real data from the file.<br>
   <strong>Rule:</strong> The more verified context you provide with /, the lower the hallucination risk.
 </div>
-<p><strong>Microsoft 365 Trust Boundary guarantees:</strong></p>
-<p>✅ Tenant data never leaves to train public models<br>
-✅ Copilot respects all existing M365 permissions<br>
-✅ Microsoft Purview confidentiality classifications are honored<br>
-✅ No data is shared between different tenants</p>
+<p><strong>Enterprise Data Protection (EDP) — 5 security pillars:</strong></p>
+<div class="exam-confirmed">
+✅ <strong>Security:</strong> Encrypted data (at rest + in transit) + logical isolation between tenants<br>
+✅ <strong>Privacy:</strong> GDPR, EU Data Boundary, DPA (Data Protection Addendum)<br>
+✅ <strong>Access Control:</strong> Copilot respects identity, permissions, sensitivity labels, retention, and auditing<br>
+✅ <strong>AI Risk Protection:</strong> Content filters, prompt injection detection, Copyright Commitment<br>
+✅ <strong>Data never trains models:</strong> Prompts, responses, and Graph data never train foundation models<br><br>
+<strong>Official terms for the exam:</strong><br>
+🔹 "Microsoft 365 service boundary" = security perimeter<br>
+🔹 "Enterprise Data Protection (EDP)" = umbrella protection framework<br>
+🔹 "Tenant isolation" = logical isolation via Microsoft Entra + RBAC<br>
+🔹 ❌ Do NOT use "Trust Boundary" on the exam — this term does not appear in official documentation
+</div>
 <div class="warning">Copilot does NOT elevate permissions. If a user doesn't have access to a file, Copilot will not reveal it — even if it's relevant to the question asked.</div>
 <details class="active-recall">
   <summary>🤔 ACTIVE RECALL: A user can't see a "Confidential" document in Copilot results. Why?</summary>
@@ -3372,6 +3778,18 @@
 </table>
 <div class="macete">Work mode = secure corporate data via Graph. Web mode = public internet data. Both with enterprise security — but different sources!</div>
 <div class="tip">Work mode requires a Microsoft 365 Copilot license (add-on). Web mode is available with the base Copilot Chat license.</div>
+<div class="separator"></div>
+
+<h4>📌 Topic: Microsoft 365 Copilot Access URL</h4>
+<div class="exam-confirmed">
+<strong>Official M365 Copilot web URL:</strong> <code>m365.cloud.microsoft/chat</code><br><br>
+<strong>Available on:</strong> Web (browser), Desktop (Windows/Mac), Mobile (iOS/Android)<br><br>
+<strong>⚠️ Don't confuse:</strong><br>
+🔹 <code>m365.cloud.microsoft</code> → M365 Copilot app (BizChat) ← <strong>correct exam answer</strong><br>
+🔹 <code>copilotstudio.microsoft.com</code> → Create/edit agents (Copilot Studio)<br>
+🔹 <code>copilot.microsoft.com</code> → Free/consumer Copilot (NOT the corporate M365 Copilot)<br>
+🔹 <code>myaccount.microsoft.com</code> → My Account (privacy, history)
+</div>
 ` }
                     ],
                     exercises: [
@@ -3476,6 +3894,14 @@
   <strong>Benefit:</strong> Recurring tasks run automatically — no dependency on memory or manual discipline.
 </div>
 <div class="tip">Scheduled prompts run even when you're offline — the result is available when you next access Copilot.</div>
+<div class="exam-confirmed">
+<strong>Scheduler limitations on the exam:</strong><br>
+🔹 Works only with BizChat (not with inline prompts in apps like Word/Excel)<br>
+🔹 Requires a previously saved prompt<br>
+🔹 Recurrence: daily, weekly, or monthly<br>
+🔹 <strong>Maximum execution limit:</strong> Unlimited<br><br>
+⚠️ <strong>Exam note:</strong> The question may ask "What are the TWO limitations of the scheduler?" — however "Unlimited" contradicts the concept of "limitation". Identify that there is NO limit on the number of executions as the correct answer in this context.
+</div>
 <div class="separator"></div>
 
 <h4>📌 Topic: Sharing Prompts — Organizational Standardization</h4>
@@ -3574,6 +4000,48 @@
     <strong>5. Export to OneNote</strong> — preserve insights for sharing and future reference
   </div>
 </details>
+<div class="separator"></div>
+
+<h4>📌 Topic: Data Management and Privacy — My Account vs Copilot App</h4>
+<div class="exam-confirmed">
+<strong>Two places to manage Copilot data:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Action</th>
+    <th style="padding:8px 10px">Where</th>
+    <th style="padding:8px 10px">What it does</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">🗑️ Delete ALL history</td>
+    <td style="padding:8px 10px"><code>myaccount.microsoft.com</code> → Privacy → Activity History</td>
+    <td style="padding:8px 10px">Removes all stored prompts + responses</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">💬 Delete specific conversation</td>
+    <td style="padding:8px 10px">Copilot app → side panel → conversation</td>
+    <td style="padding:8px 10px">Removes an individual conversation</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">🧠 Manage Memories</td>
+    <td style="padding:8px 10px">Copilot app → Settings → Memory</td>
+    <td style="padding:8px 10px">View/delete facts Copilot remembered about you</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px">📋 Manage Instructions</td>
+    <td style="padding:8px 10px">Copilot app → Settings → Instructions</td>
+    <td style="padding:8px 10px">Edit behavior rules for your Copilot</td>
+  </tr>
+</table>
+<strong>⚠️ What is NOT deleted when clearing history:</strong><br>
+❌ Files already created (Word/PPT/Excel saved in OneDrive)<br>
+❌ Stored Memories (managed separately)<br>
+❌ Configured Instructions (remain active)
+</div>
+<div class="warning"><strong>Critical difference for the exam:</strong><br>
+• <strong>History</strong> = record of past conversations (prompts + responses)<br>
+• <strong>Memory</strong> = facts Copilot remembered about you ("Maria prefers bulleted reports")<br>
+• <strong>Instructions</strong> = behavior rules ("Always respond in formal English")<br><br>
+Typical scenario: "Planned a trip, cancelled it, wants Copilot to stop suggesting it" → Delete the specific <strong>MEMORY</strong> (not the entire history).</div>
 ` },
                         { title: "3.2 Creating and Managing Agents in M365", content: `
 <h4>📌 Topic: What is a Copilot Studio Agent</h4>
@@ -3599,13 +4067,90 @@
 </div>
 <div class="separator"></div>
 
+<h4>📌 Topic: Agent Builder Interface — Describe vs Configure</h4>
+<div class="exam-confirmed">
+<strong>3 ways to create an agent in Copilot Studio:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Method</th>
+    <th style="padding:8px 10px">How it works</th>
+    <th style="padding:8px 10px">Best for</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px"><strong>📝 Describe tab</strong></td>
+    <td style="padding:8px 10px">Describe the agent in natural language → system auto-fills Name, Description, Instructions, and Knowledge</td>
+    <td style="padding:8px 10px">Quick creation, proof of concept</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px"><strong>⚙️ Configure tab</strong></td>
+    <td style="padding:8px 10px">Fill in manually: Name, Icon, Model, Description, Instructions, Knowledge, Capabilities, Starter Prompts</td>
+    <td style="padding:8px 10px">Detailed control, complex instructions</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px"><strong>📋 Ready-made Template</strong></td>
+    <td style="padding:8px 10px">Choose a pre-configured model and customize</td>
+    <td style="padding:8px 10px">Common use cases (onboarding, FAQ)</td>
+  </tr>
+</table>
+<strong>Try it tab:</strong> Allows testing the agent in real time before publishing — sandbox environment for validation.
+</div>
+<div class="separator"></div>
+
 <h4>📌 Topic: Knowledge Sources — Agent Grounding</h4>
 <p><strong>Knowledge Sources</strong> are what differentiates specialized responses from generic LLM responses:</p>
-<p>✅ SharePoint sites (internal documentation)<br>
-✅ Specific files (PDF, Word, Excel)<br>
-✅ Configured public web pages<br>
-✅ Connector integrations (CRM, ERP, APIs)</p>
+<div class="exam-confirmed">
+<strong>Accepted sources and limits in Agent Builder:</strong><br><br>
+<table style="width:100%;border-collapse:collapse;margin:12px 0;font-size:0.93em">
+  <tr style="background:var(--primary);color:#fff">
+    <th style="padding:8px 10px">Source</th>
+    <th style="padding:8px 10px">Limit</th>
+    <th style="padding:8px 10px">Notes</th>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">📂 SharePoint</td>
+    <td style="padding:8px 10px">Up to 100 items</td>
+    <td style="padding:8px 10px">Sites, folders, or specific files</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">☁️ OneDrive</td>
+    <td style="padding:8px 10px">Up to 50 files</td>
+    <td style="padding:8px 10px">Creator's personal files</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">📤 Manual upload</td>
+    <td style="padding:8px 10px">Up to 20 files</td>
+    <td style="padding:8px 10px">PDF, Word, Excel, PPT</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
+    <td style="padding:8px 10px">🌐 Public sites (URLs)</td>
+    <td style="padding:8px 10px">Up to 4 URLs</td>
+    <td style="padding:8px 10px">Max. 2 levels deep</td>
+  </tr>
+  <tr style="border-bottom:1px solid var(--border)">
+    <td style="padding:8px 10px">💬 Teams chats</td>
+    <td style="padding:8px 10px">Up to 5 chats</td>
+    <td style="padding:8px 10px">⚠️ Requires Copilot license</td>
+  </tr>
+  <tr style="background:var(--bg-secondary)">
+    <td style="padding:8px 10px">🔗 Copilot Connectors</td>
+    <td style="padding:8px 10px">Admin configured</td>
+    <td style="padding:8px 10px">CRM, ERP, external APIs</td>
+  </tr>
+</table>
+<strong>Important toggles:</strong><br>
+🔹 "Use only specified sources" → prioritizes sources over general knowledge<br>
+🔹 "Search all sites" → enables web search
+</div>
 <div class="warning">🔄 <strong>Reinforcement (Modules 1 and 2 — Grounding):</strong> Knowledge sources are the agent's grounding mechanism. Without configured sources, the agent uses the LLM's general knowledge — potentially fabricating incorrect answers about internal company processes. <strong>Always configure specific knowledge sources.</strong></div>
+<div class="separator"></div>
+
+<h4>📌 Topic: Agent Capabilities</h4>
+<div class="exam-confirmed">
+<strong>Capabilities as translated on the PearsonVue exam:</strong><br><br>
+🔹 <strong>Code Interpreter</strong> = "Create documents, charts, and code" → generates Word/Excel/PPT + data charts + code<br>
+🔹 <strong>Image Generator</strong> = "Create images" → artistic visuals and illustrations<br><br>
+⚠️ On the exam, the question may ask "Which capability generates charts?" — the answer is <strong>Code Interpreter</strong> (not Image Generator!).
+</div>
 <div class="separator"></div>
 
 <h4>📌 Topic: Publishing — Agent Store and Channels</h4>
@@ -3633,6 +4178,16 @@
 </table>
 <div class="tip"><strong>Agent Store vs Create New:</strong> Before creating an agent from scratch, check the Agent Store — there may already be an existing agent or a <strong>template</strong> that meets your needs. Templates offer pre-configured setups for common use cases (FAQ, support, onboarding).</div>
 <div class="macete">Agent Store = "Internal agent store" — employees find and use agents created by any department without needing to build their own.</div>
+<div class="separator"></div>
+
+<h4>📌 Topic: Switching Agents During a Conversation</h4>
+<div class="exam-confirmed">
+<strong>@Mentioning agents in conversation:</strong><br><br>
+✅ You can @mention different agents in the same conversation<br>
+❌ Context does <strong>NOT transfer</strong> between agents — each operates in isolation with its own scope<br>
+🔄 Researcher and Analyst are switchable via mode selector (not via @mention)<br><br>
+<strong>Example:</strong> When @mentioning "HR Agent" then "IT Agent" in the same conversation, the IT agent <strong>does not know</strong> what was discussed with HR.
+</div>
 <details class="active-recall">
   <summary>🤔 ACTIVE RECALL: What are the 5 steps to create an agent in Copilot Studio?</summary>
   <div class="recall-content">
@@ -3815,8 +4370,8 @@
     <td style="padding:8px 10px">Accepting AI outputs without verification. Always validate before using in critical decisions.</td>
   </tr>
   <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
-    <td style="padding:8px 10px"><strong>Trust Boundary</strong></td>
-    <td style="padding:8px 10px">Copilot accesses ONLY data the user has permission to access. No privilege escalation.</td>
+    <td style="padding:8px 10px"><strong>EDP / Service Boundary</strong></td>
+    <td style="padding:8px 10px">Enterprise Data Protection — Copilot accesses ONLY data the user has permission to access. No privilege escalation. Data never trains models.</td>
   </tr>
   <tr style="border-bottom:1px solid var(--border);background:var(--bg-secondary)">
     <td style="padding:8px 10px"><strong>Prompt Injection</strong></td>
@@ -3943,7 +4498,7 @@
 
 <h3>⚠️ Classic AB-730 Exam Traps</h3>
 <div class="warning">
-❌ <strong>"Copilot accesses all company data"</strong> → FALSE. Respects Trust Boundary — only accesses what the user has permission for.<br><br>
+❌ <strong>"Copilot accesses all company data"</strong> → FALSE. EDP (Enterprise Data Protection) ensures only what the user has permission for is accessed.<br><br>
 ❌ <strong>"Teams Copilot works in any meeting"</strong> → FALSE. Requires <strong>active transcription</strong>.<br><br>
 ❌ <strong>"Agent and BizChat do the same thing"</strong> → FALSE. BizChat = general; Agent = specialized with configured knowledge.<br><br>
 ❌ <strong>"LLM knows recent events"</strong> → FALSE. Limited by knowledge cutoff — use grounding for current data.<br><br>
@@ -3969,7 +4524,7 @@
   <li>✅ I know the 3 Word Copilot capabilities (CSR) and Outlook features</li>
   <li>✅ I know Teams Copilot requires active transcription</li>
   <li>✅ I understand Memory vs Instructions and when to use each</li>
-  <li>✅ I know Trust Boundary and Prompt Injection as security risks</li>
+  <li>✅ I know Microsoft 365 service boundary (EDP) and Prompt Injection as security risks</li>
 </ul>
 </div>
 ` }

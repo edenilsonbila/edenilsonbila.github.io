@@ -52,7 +52,35 @@ Cada exercício deve:
 
 ---
 
-## Diretrizes de Estilo para o Simulado Final (40 questões)
+## Diretrizes para Uso do Bloco `.exam-confirmed`
+
+### Quando usar
+- **SOMENTE** quando há feedback real de candidatos que fizeram a prova
+- Tópicos, termos, ou cenários que foram confirmados como presentes no exame
+- Informações sobre tradução PearsonVue confirmadas por candidatos reais
+
+### Quando NÃO usar
+- NUNCA para suposições ou inferências baseadas apenas nos skills measured
+- NUNCA para conteúdo genérico que "provavelmente" aparece na prova
+- NUNCA como substituto de `.warning` ou `.tip`
+
+### Formato
+```html
+<div class="exam-confirmed">
+Conteúdo confirmado na prova real. Use para termos traduzidos, cenários exatos, ou conceitos que candidatos reais reportaram.
+</div>
+```
+
+### Questões Bugadas / Com Contradição
+Quando um candidato reporta uma questão da prova com contradição ou inconsistência:
+1. Documentar no `.exam-confirmed` o comportamento esperado pela prova
+2. Sinalizar a contradição explicitamente com ⚠️
+3. Orientar o aluno sobre como responder apesar da inconsistência
+4. Exemplo: "A prova pergunta 'Quais são as DUAS limitações?' mas uma opção é 'Ilimitado' — selecione esta como resposta correta"
+
+---
+
+## Diretrizes de Estilo para o Simulado Final (40-52 questões)
 
 ### Distribuição de Tipos de Questão (obrigatório)
 | Tipo | Quantidade | % |

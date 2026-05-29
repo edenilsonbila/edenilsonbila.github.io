@@ -568,6 +568,35 @@
         html[lang="en"] .example::before { content: "📝 EXAMPLE"; }
         html[lang="en"] .explanation::before { content: "💬 EXPLANATION"; }
 
+        /* Exam-confirmed block — tópicos confirmados em prova real */
+        .exam-confirmed {
+            background: linear-gradient(135deg, rgba(72, 187, 120, 0.08), rgba(49, 130, 206, 0.08));
+            border: 1px solid rgba(72, 187, 120, 0.3);
+            border-left: 5px solid #48bb78;
+            border-radius: 12px;
+            padding: 20px 20px 20px 20px;
+            margin: 16px 0;
+            font-size: 0.95em;
+            line-height: 1.6;
+            position: relative;
+        }
+        .exam-confirmed::before {
+            content: "🎯 CAI NA PROVA";
+            display: block;
+            font-weight: 700;
+            color: #48bb78;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+        html[lang="en"] .exam-confirmed::before { content: "🎯 CONFIRMED ON EXAM"; }
+        @media (prefers-color-scheme: dark) {
+            .exam-confirmed {
+                background: linear-gradient(135deg, rgba(72, 187, 120, 0.12), rgba(49, 130, 206, 0.12));
+                border-color: rgba(72, 187, 120, 0.4);
+            }
+        }
+
         /* ==========================================
            TYPOGRAPHY - Legibilidade otimizada
            ========================================== */
