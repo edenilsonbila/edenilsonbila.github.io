@@ -2910,7 +2910,7 @@
                     else isChecked = Array.isArray(currentAns) && currentAns.includes(oi);
                     return `<li class="sim-option ${isChecked?'selected':''}" onclick="selectExamOption(${oi})">
                         <input type="${inputType}" id="sim-opt-${oi}" name="sim-q" value="${oi}" ${isChecked?'checked':''} style="pointer-events:none" />
-                        <label for="sim-opt-${oi}">${opt}</label>
+                        <label>${opt}</label>
                     </li>`;
                 }).join('');
                 area.innerHTML = `${typeBadge}${scenarioHTML}<div class="sim-q-text">${qi+1}. ${q.question}</div>${multiHint}<ul class="sim-options">${optionsHTML}</ul>`;
@@ -3058,7 +3058,7 @@
             }
             if (q.type === 'match') {
                 if (!ans || typeof ans !== 'object') return false;
-                return q.pairs.every(p => ans[p.id] === p.id);
+                return q.pairs.every(p => String(ans[p.id]) === String(p.id));
             }
             if (q.type === 'order') {
                 if (!Array.isArray(ans)) return false;
@@ -3190,8 +3190,8 @@
                         if (!skipped && ans && typeof ans === 'object') {
                             userText = q.pairs.map(p => {
                                 const placedId = ans[p.id];
-                                const placedSource = placedId !== undefined ? q.pairs.find(x => x.id === placedId)?.source : null;
-                                const icon = placedId === p.id ? '✅' : '❌';
+                                const placedSource = placedId !== undefined ? q.pairs.find(x => String(x.id) === String(placedId))?.source : null;
+                                const icon = String(placedId) === String(p.id) ? '✅' : '❌';
                                 return `${icon} ${placedSource || '<em>vazio</em>'} → ${p.target}`;
                             }).join('<br>');
                         }
@@ -3315,12 +3315,12 @@
             // Shuffle pairs display order
             const shuffledPairs = [...q.pairs].sort(() => Math.random() - 0.5);
             const poolItems = shuffledPairs.map(p => {
-                const placed = Object.values(saved).includes(p.id);
+                const placed = Object.values(saved).map(String).includes(String(p.id));
                 return `<div class="sim-match-item ${placed?'placed':''}" data-pair-id="${p.id}">${p.source}</div>`;
             }).join('');
             const targetRows = q.pairs.map(p => {
-                const placedId = Object.keys(saved).find(k => saved[k] === p.id && k === p.id);
-                const placedSource = placedId ? q.pairs.find(x=>x.id===placedId)?.source : null;
+                const placedPairId = Object.keys(saved).find(k => String(k) === String(p.id) && String(saved[k]) !== '');
+                const placedSource = placedPairId !== undefined ? q.pairs.find(x => String(x.id) === String(saved[placedPairId]))?.source : null;
                 const slotContent = placedSource ? `<div class="sim-match-item placed" data-pair-id="${p.id}">${placedSource}</div>` : `<span class="sim-match-slot-placeholder">${t.sim_drag_placeholder||'Arraste aqui'}</span>`;
                 return `<div class="sim-match-target-row">
                     <div class="sim-match-target-label">${p.target}</div>
