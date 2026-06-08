@@ -572,12 +572,32 @@
             letter-spacing: 0.5px;
         }
 
+        .exam-confirmed {
+            background: linear-gradient(135deg, rgba(72,187,120,0.08), rgba(49,130,206,0.08));
+            border: 1px solid rgba(72,187,120,0.3);
+            border-left: 5px solid #48bb78;
+            border-radius: 12px;
+            padding: 20px;
+            margin: 16px 0;
+        }
+
+        .exam-confirmed::before {
+            content: "🎯 CAI NA PROVA";
+            display: block;
+            font-weight: 700;
+            color: #48bb78;
+            font-size: 0.85em;
+            margin-bottom: 12px;
+            letter-spacing: 0.5px;
+        }
+
         /* Bilingual ::before labels */
         html[lang="en"] .macete::before { content: "🔑 MNEMONIC"; }
         html[lang="en"] .tip::before { content: "💡 TIP"; }
         html[lang="en"] .warning::before { content: "⚠️ WARNING"; }
         html[lang="en"] .example::before { content: "📝 EXAMPLE"; }
         html[lang="en"] .explanation::before { content: "💬 EXPLANATION"; }
+        html[lang="en"] .exam-confirmed::before { content: "🎯 CONFIRMED ON EXAM"; }
 
         /* ==========================================
            TYPOGRAPHY - Legibilidade otimizada
@@ -1605,15 +1625,20 @@
                     { correct: 1 }, { correct: 2 }, { correct: 0 }, { correct: 3 }, { correct: 1 },
                     { correct: 2 }, { correct: 0 }
                 ]},
-                // Módulo 6 — Projetos e Comunidade (5-10% + 5-10%)
-                { id: 6, duration: "30 min", lessonCount: 2, exercises: [
+                // Módulo 6 — Gerenciar Projetos com o GitHub (5-10%)
+                { id: 6, duration: "35 min", lessonCount: 2, exercises: [
                     { correct: 2 }, { correct: 1 }, { correct: 3 }, { correct: 0 }, { correct: 2 },
                     { correct: 1 }, { correct: 3 }
                 ]},
-                // Módulo 7 — Revisão Final
-                { id: 7, duration: "25 min", lessonCount: 1, exercises: [] },
-                // Módulo 8 — Simulado Final
-                { id: 8, duration: "100 min", lessonCount: 1, exercises: [], isSimulado: true }
+                // Módulo 7 — Explorar a Comunidade do GitHub (5-10%)
+                { id: 7, duration: "30 min", lessonCount: 2, exercises: [
+                    { correct: 1 }, { correct: 2 }, { correct: 0 }, { correct: 3 }, { correct: 1 },
+                    { correct: 2 }
+                ]},
+                // Módulo 8 — Revisão Final
+                { id: 8, duration: "25 min", lessonCount: 1, exercises: [] },
+                // Módulo 9 — Simulado Final
+                { id: 9, duration: "100 min", lessonCount: 1, exercises: [], isSimulado: true }
             ]
         };
 
@@ -1633,8 +1658,9 @@
             { id: 1, pt: "Repositórios GitHub", en: "GitHub Repositories", weight: "10–15%", color: "#48bb78", icon: "📁" },
             { id: 2, pt: "Colaboração", en: "Collaboration", weight: "10–15%", color: "#ed8936", icon: "🤝" },
             { id: 3, pt: "Práticas Modernas", en: "Modern Development", weight: "10–15%", color: "#9f7aea", icon: "🚀" },
-            { id: 4, pt: "Segurança e Administração", en: "Security and Administration", weight: "10–15%", color: "#e53e3e", icon: "🔐" },
-            { id: 5, pt: "Projetos e Comunidade", en: "Projects and Community", weight: "10–20%", color: "#38b2ac", icon: "🌐" }
+            { id: 4, pt: "Gerenciar Projetos", en: "Project Management", weight: "5–10%", color: "#38b2ac", icon: "📋" },
+            { id: 5, pt: "Privacidade, Segurança e Administração", en: "Privacy, Security and Administration", weight: "10–15%", color: "#e53e3e", icon: "🔐" },
+            { id: 6, pt: "Comunidade GitHub", en: "GitHub Community", weight: "5–10%", color: "#dd6b20", icon: "🌐" }
         ];
 
         // ============================================================
@@ -1676,21 +1702,21 @@
             { id: 25, domain: 3, type: 'single', question: "Um desenvolvedor precisa fazer uma correção rápida de um typo no README diretamente pelo navegador, sem configurar um ambiente local. Qual ferramenta usar?", options: ["GitHub Codespaces", "github.dev editor (tecla '.')", "GitHub Desktop", "GitHub CLI (gh)"], correct: 1, explanation: "<strong>github.dev</strong> (tecla '.' no repo) — editor VS Code no navegador para edições leves.<br><br>✅ github.dev: edição rápida, commit direto, sem terminal/execução<br>✅ Atalho: pressione '.' em qualquer repositório<br><br>❌ Codespaces: ambiente completo com terminal — overkill para editar um README<br>❌ Desktop: aplicação instalada localmente<br>❌ CLI: requer terminal local" },
             { id: 26, domain: 3, type: 'single', scenario: "Uma equipe de desenvolvimento precisa de um ambiente de desenvolvimento completo e consistente para todos os membros, com extensões VS Code pré-configuradas, versão específica de Node.js e um banco de dados PostgreSQL disponível.", question: "Qual ferramenta GitHub resolve esse cenário?", options: ["github.dev editor", "GitHub Codespaces com dev container", "GitHub Desktop com Git hooks", "GitHub Actions self-hosted runner"], correct: 1, explanation: "<strong>GitHub Codespaces + dev container</strong> — ambiente cloud completo, consistente e configurável.<br><br>✅ Codespace: VM cloud com VS Code, terminal, extensões, port forwarding<br>✅ Dev container (.devcontainer/devcontainer.json): define imagem, extensões, features, post-create scripts<br><br>❌ github.dev: apenas editor (sem terminal, sem execução)<br>❌ Desktop: não padroniza ambiente<br>❌ Actions runner: para CI/CD, não desenvolvimento" },
             { id: 27, domain: 3, type: 'single', question: "No contexto do GitHub Copilot, o que é o 'Agent Mode'?", options: ["Um modo que apenas completa código linha a linha", "Um modo autônomo que pode executar comandos, editar múltiplos arquivos e iterar sobre tarefas complexas", "Um modo que desabilita todas as sugestões automáticas", "Um modo exclusivo para administradores de organizações"], correct: 1, explanation: "<strong>Agent Mode</strong> do Copilot é um modo autônomo e iterativo.<br><br>✅ Agent Mode: planeja tarefas, edita múltiplos arquivos, executa comandos no terminal, corrige erros iterativamente<br>✅ Diferente de sugestões inline: é um agente que executa ações complexas end-to-end<br><br>❌ A: isso é o Copilot inline padrão (completions)<br>❌ C: não existe esse modo<br>❌ D: disponível para todos os planos que incluem Copilot Chat" },
-            // ── DOMÍNIO 4: Segurança e Administração (10-15%) — 5 questões ──
-            { id: 28, domain: 4, type: 'single', question: "Um administrador quer garantir que ninguém faça push direto para a branch 'main' sem pelo menos uma aprovação de code review. Qual configuração usar?", options: ["Repository Settings → General", "Branch Protection Rules com 'Require pull request reviews'", "CODEOWNERS file", "GitHub Actions workflow"], correct: 1, explanation: "<strong>Branch Protection Rules</strong> com 'Require pull request reviews before merging'.<br><br>✅ Branch protection: bloqueia push direto, exige reviews, exige status checks<br>✅ Configurável: mínimo de aprovações, dismiss stale reviews, require review from CODEOWNERS<br><br>❌ A: General não tem proteção de branch<br>❌ C: CODEOWNERS define quem revisa, mas não impede push sem review (precisa de branch protection)<br>❌ D: Actions pode checar, mas não bloquear push por si só" },
-            { id: 29, domain: 4, type: 'single', question: "Qual método de autenticação o GitHub recomenda como mais seguro para login, substituindo senhas e 2FA tradicionais?", options: ["Senha forte de 20+ caracteres", "Passkeys (chaves de acesso)", "Token de acesso pessoal (PAT)", "Autenticação via SMS"], correct: 1, explanation: "<strong>Passkeys</strong> — autenticação resistente a phishing baseada em biometria/chave de segurança.<br><br>✅ Passkeys: sem senha, resistente a phishing, baseado em FIDO2/WebAuthn<br>✅ Suportado: Face ID, Touch ID, Windows Hello, chaves de segurança hardware<br><br>❌ Senha: vulnerável a phishing e credential stuffing<br>❌ PAT: para API/CLI, não para login no site<br>❌ SMS: vulnerável a SIM swap attacks" },
-            { id: 30, domain: 4, type: 'order', question: "Ordene os níveis de permissão de repositório GitHub do MENOR para o MAIOR acesso:", items: [{ id: 0, text: "Read (leitura)" }, { id: 1, text: "Triage (triagem)" }, { id: 2, text: "Write (escrita)" }, { id: 3, text: "Maintain (manutenção)" }, { id: 4, text: "Admin (administração)" }], correctOrder: [0, 1, 2, 3, 4], explanation: "Níveis de permissão GitHub (menor → maior):<br>1️⃣ <strong>Read:</strong> ver código, issues, PRs<br>2️⃣ <strong>Triage:</strong> gerenciar issues e PRs (labels, assign) sem editar código<br>3️⃣ <strong>Write:</strong> push, merge PRs, gerenciar releases<br>4️⃣ <strong>Maintain:</strong> gerenciar settings do repo (sem ações destrutivas)<br>5️⃣ <strong>Admin:</strong> controle total (deletar repo, gerenciar acesso, settings sensíveis)" },
-            { id: 31, domain: 4, type: 'single', question: "Uma empresa usa GitHub Enterprise Cloud e precisa que as contas dos funcionários sejam provisionadas e gerenciadas pelo Identity Provider (IdP) corporativo. Qual recurso atende essa necessidade?", options: ["GitHub personal accounts com SSO", "Enterprise Managed Users (EMUs)", "GitHub Teams com LDAP sync", "Repository collaborator invites"], correct: 1, explanation: "<strong>Enterprise Managed Users (EMUs)</strong> — contas totalmente gerenciadas pelo IdP da empresa.<br><br>✅ EMU: provisionamento via SCIM, login via SAML, empresa controla a conta completa<br>✅ Diferença: contas EMU não podem contribuir fora da enterprise (fork público impedido)<br><br>❌ A: contas pessoais com SSO ainda são contas pessoais do usuário<br>❌ C: LDAP sync é para GitHub Enterprise Server (on-premises)<br>❌ D: collaborator invites são manuais e sem gerenciamento IdP" },
-            { id: 32, domain: 4, type: 'multi', question: "Quais DUAS opções de visibilidade existem para repositórios em uma organização GitHub?", options: ["Public — visível para todos na internet", "Internal — visível para membros da Enterprise", "Shared — visível para organizações parceiras", "Private — visível apenas para membros com acesso explícito"], correct: [0, 3], explanation: "✅ <strong>Public:</strong> qualquer pessoa na internet pode ver (ideal para open source)<br>✅ <strong>Private:</strong> apenas membros com acesso explícito podem ver<br><br>Nota: <strong>Internal</strong> existe mas apenas em GitHub Enterprise Cloud — a pergunta pede opções para uma Organization (não Enterprise), onde apenas Public e Private estão disponíveis por padrão.<br><br>❌ C: 'Shared' não é uma opção de visibilidade no GitHub" },
-            // ── DOMÍNIO 5: Projetos e Comunidade (10-20%) — 8 questões ──
-            { id: 33, domain: 5, type: 'single', question: "Uma equipe quer visualizar o progresso de um sprint em formato Kanban com colunas 'To Do', 'In Progress' e 'Done'. Qual recurso GitHub usar?", options: ["GitHub Issues com milestones", "GitHub Projects (Board layout)", "GitHub Wiki", "GitHub Discussions"], correct: 1, explanation: "<strong>GitHub Projects — Board layout</strong> é exatamente um quadro Kanban.<br><br>✅ Projects: múltiplos layouts (Board/Table/Roadmap), custom fields, automações, views<br>✅ Board: colunas arrastáveis, cards = Issues/PRs/draft items<br><br>❌ A: Milestones agrupam issues por prazo, não em kanban visual<br>❌ C: Wiki é documentação<br>❌ D: Discussions é fórum" },
-            { id: 34, domain: 5, type: 'single', question: "Qual é o conceito de InnerSource?", options: ["Publicar todo o código da empresa como open source", "Aplicar práticas de open source (transparência, colaboração, PRs) dentro da organização", "Usar exclusivamente software open source na empresa", "Criar forks internos de projetos open source"], correct: 1, explanation: "<strong>InnerSource</strong> = práticas de open source aplicadas internamente na empresa.<br><br>✅ InnerSource: code visibility interna, contribuição cross-team via PRs, documentação aberta, communities of practice<br>✅ Benefícios: reduz duplicação, acelera inovação, melhora qualidade<br><br>❌ A: não é publicar código externamente<br>❌ C: não é sobre usar software OSS<br>❌ D: fork interno é uma tática, não o conceito completo" },
-            { id: 35, domain: 5, type: 'single', question: "Um mantenedor de projeto open source quer receber apoio financeiro dos usuários que se beneficiam da ferramenta. Qual recurso GitHub facilita isso?", options: ["GitHub Marketplace", "GitHub Sponsors", "GitHub Education", "GitHub Packages"], correct: 1, explanation: "<strong>GitHub Sponsors</strong> — monetização direta para mantenedores open source.<br><br>✅ Sponsors: doações recorrentes ou pontuais, tiers com benefícios, 100% vai para o dev (GitHub não cobra taxa)<br><br>❌ Marketplace: distribuição de Actions e Apps (não doações pessoais)<br>❌ Education: programa para estudantes<br>❌ Packages: hospedagem de pacotes (npm, Docker, etc.)" },
-            { id: 36, domain: 5, type: 'match', question: "Associe cada layout do GitHub Projects à sua melhor aplicação:", pairs: [{ id: 0, source: "Board (Quadro)", target: "Visualizar fluxo de trabalho com colunas arrastaveis (Kanban)" }, { id: 1, source: "Table (Tabela)", target: "Lista detalhada com filtros, agrupamento e campos custom" }, { id: 2, source: "Roadmap (Timeline)", target: "Planejamento temporal com datas de início e fim" }, { id: 3, source: "Slice by field", target: "Dividir itens em swimlanes por um campo específico" }], explanation: "<strong>Board:</strong> Kanban visual com drag-and-drop<br><strong>Table:</strong> spreadsheet-like com sorting, grouping e custom fields<br><strong>Roadmap:</strong> timeline view com barras de Gantt<br><strong>Slice:</strong> agrupa itens por qualquer campo (assignee, priority, etc.) em swimlanes" },
-            { id: 37, domain: 5, type: 'single', question: "O que é o GitHub Marketplace?", options: ["Uma loja para comprar repositórios", "Um local para encontrar e instalar Actions, Apps e ferramentas que estendem o GitHub", "Um marketplace para contratar desenvolvedores", "Uma galeria de temas visuais para o GitHub"], correct: 1, explanation: "<strong>GitHub Marketplace</strong> — diretório de Actions e Apps que estendem a funcionalidade do GitHub.<br><br>✅ Marketplace: Actions para workflows, Apps OAuth/GitHub Apps, ferramentas de CI/CD, segurança, produtividade<br>✅ Categorias: Code review, Testing, Deployment, Monitoring, etc.<br><br>❌ A: repositórios não são vendidos<br>❌ C: não é uma plataforma de contratação<br>❌ D: GitHub não tem marketplace de temas" },
-            { id: 38, domain: 5, type: 'single', question: "Uma empresa quer publicar a documentação do seu produto como um site estático diretamente a partir do repositório. Qual ferramenta usar?", options: ["GitHub Gist", "GitHub Pages", "GitHub Wiki", "GitHub Packages"], correct: 1, explanation: "<strong>GitHub Pages</strong> — hosting gratuito de sites estáticos direto do repositório.<br><br>✅ Pages: HTML/CSS/JS estático, Jekyll integrado, domínio custom, HTTPS automático<br>✅ Source: branch (main, gh-pages) ou /docs folder<br><br>❌ Gist: snippets de código (não sites)<br>❌ Wiki: documentação interna do repo (não site público customizável)<br>❌ Packages: hospedagem de pacotes de software" },
-            { id: 39, domain: 5, type: 'order', question: "Ordene as etapas para configurar um GitHub Project funcional:", items: [{ id: 0, text: "Criar o Project na organização ou perfil" }, { id: 1, text: "Adicionar Issues e Pull Requests como items" }, { id: 2, text: "Configurar custom fields (Status, Priority, Sprint)" }, { id: 3, text: "Criar views com filtros e agrupamentos" }, { id: 4, text: "Configurar automações (auto-add, auto-archive)" }], correctOrder: [0, 2, 1, 3, 4], explanation: "1️⃣ <strong>Criar Project</strong> — escolher org/perfil e template<br>2️⃣ <strong>Custom fields</strong> — definir Status, Priority, etc. antes de adicionar items<br>3️⃣ <strong>Adicionar items</strong> — Issues, PRs ou draft items<br>4️⃣ <strong>Views</strong> — criar perspectivas (Board por status, Table por assignee, etc.)<br>5️⃣ <strong>Automações</strong> — regras para mover items automaticamente" },
-            { id: 40, domain: 5, type: 'single', question: "Um desenvolvedor quer acompanhar as novidades e releases de vários projetos open source. Qual funcionalidade GitHub usar?", options: ["Star todos os repositórios", "Seguir (Follow) os usuários e organizações dos projetos", "Fazer Fork de todos os repositórios", "Criar um GitHub Project com links"], correct: 1, explanation: "<strong>Follow</strong> usuários e orgs — aparece atividade pública no feed do dashboard.<br><br>✅ Follow: releases, novos repos, stars e contribuições aparecem no feed<br>✅ Complementar: Watch em repos específicos para notificações detalhadas<br><br>❌ A: Star é bookmark, não gera feed de atividade<br>❌ C: Fork é para contribuir, não para acompanhar<br>❌ D: possível mas manual e ineficiente" }
+            // ── DOMÍNIO 5: Privacidade, Segurança e Administração (10-15%) — 5 questões ──
+            { id: 28, domain: 5, type: 'single', question: "Um administrador quer garantir que ninguém faça push direto para a branch 'main' sem pelo menos uma aprovação de code review. Qual configuração usar?", options: ["Repository Settings → General", "Branch Protection Rules com 'Require pull request reviews'", "CODEOWNERS file", "GitHub Actions workflow"], correct: 1, explanation: "<strong>Branch Protection Rules</strong> com 'Require pull request reviews before merging'.<br><br>✅ Branch protection: bloqueia push direto, exige reviews, exige status checks<br>✅ Configurável: mínimo de aprovações, dismiss stale reviews, require review from CODEOWNERS<br><br>❌ A: General não tem proteção de branch<br>❌ C: CODEOWNERS define quem revisa, mas não impede push sem review (precisa de branch protection)<br>❌ D: Actions pode checar, mas não bloquear push por si só" },
+            { id: 29, domain: 5, type: 'single', question: "Qual método de autenticação o GitHub recomenda como mais seguro para login, substituindo senhas e 2FA tradicionais?", options: ["Senha forte de 20+ caracteres", "Passkeys (chaves de acesso)", "Token de acesso pessoal (PAT)", "Autenticação via SMS"], correct: 1, explanation: "<strong>Passkeys</strong> — autenticação resistente a phishing baseada em biometria/chave de segurança.<br><br>✅ Passkeys: sem senha, resistente a phishing, baseado em FIDO2/WebAuthn<br>✅ Suportado: Face ID, Touch ID, Windows Hello, chaves de segurança hardware<br><br>❌ Senha: vulnerável a phishing e credential stuffing<br>❌ PAT: para API/CLI, não para login no site<br>❌ SMS: vulnerável a SIM swap attacks" },
+            { id: 30, domain: 5, type: 'order', question: "Ordene os níveis de permissão de repositório GitHub do MENOR para o MAIOR acesso:", items: [{ id: 0, text: "Read (leitura)" }, { id: 1, text: "Triage (triagem)" }, { id: 2, text: "Write (escrita)" }, { id: 3, text: "Maintain (manutenção)" }, { id: 4, text: "Admin (administração)" }], correctOrder: [0, 1, 2, 3, 4], explanation: "Níveis de permissão GitHub (menor → maior):<br>1️⃣ <strong>Read:</strong> ver código, issues, PRs<br>2️⃣ <strong>Triage:</strong> gerenciar issues e PRs (labels, assign) sem editar código<br>3️⃣ <strong>Write:</strong> push, merge PRs, gerenciar releases<br>4️⃣ <strong>Maintain:</strong> gerenciar settings do repo (sem ações destrutivas)<br>5️⃣ <strong>Admin:</strong> controle total (deletar repo, gerenciar acesso, settings sensíveis)" },
+            { id: 31, domain: 5, type: 'single', question: "Uma empresa usa GitHub Enterprise Cloud e precisa que as contas dos funcionários sejam provisionadas e gerenciadas pelo Identity Provider (IdP) corporativo. Qual recurso atende essa necessidade?", options: ["GitHub personal accounts com SSO", "Enterprise Managed Users (EMUs)", "GitHub Teams com LDAP sync", "Repository collaborator invites"], correct: 1, explanation: "<strong>Enterprise Managed Users (EMUs)</strong> — contas totalmente gerenciadas pelo IdP da empresa.<br><br>✅ EMU: provisionamento via SCIM, login via SAML, empresa controla a conta completa<br>✅ Diferença: contas EMU não podem contribuir fora da enterprise (fork público impedido)<br><br>❌ A: contas pessoais com SSO ainda são contas pessoais do usuário<br>❌ C: LDAP sync é para GitHub Enterprise Server (on-premises)<br>❌ D: collaborator invites são manuais e sem gerenciamento IdP" },
+            { id: 32, domain: 5, type: 'multi', question: "Quais DUAS opções de visibilidade existem para repositórios em uma organização GitHub?", options: ["Public — visível para todos na internet", "Internal — visível para membros da Enterprise", "Shared — visível para organizações parceiras", "Private — visível apenas para membros com acesso explícito"], correct: [0, 3], explanation: "✅ <strong>Public:</strong> qualquer pessoa na internet pode ver (ideal para open source)<br>✅ <strong>Private:</strong> apenas membros com acesso explícito podem ver<br><br>Nota: <strong>Internal</strong> existe mas apenas em GitHub Enterprise Cloud — a pergunta pede opções para uma Organization (não Enterprise), onde apenas Public e Private estão disponíveis por padrão.<br><br>❌ C: 'Shared' não é uma opção de visibilidade no GitHub" },
+            // ── DOMÍNIO 4: Gerenciar Projetos (5-10%) + DOMÍNIO 6: Comunidade (5-10%) — 8 questões ──
+            { id: 33, domain: 4, type: 'single', question: "Uma equipe quer visualizar o progresso de um sprint em formato Kanban com colunas 'To Do', 'In Progress' e 'Done'. Qual recurso GitHub usar?", options: ["GitHub Issues com milestones", "GitHub Projects (Board layout)", "GitHub Wiki", "GitHub Discussions"], correct: 1, explanation: "<strong>GitHub Projects — Board layout</strong> é exatamente um quadro Kanban.<br><br>✅ Projects: múltiplos layouts (Board/Table/Roadmap), custom fields, automações, views<br>✅ Board: colunas arrastáveis, cards = Issues/PRs/draft items<br><br>❌ A: Milestones agrupam issues por prazo, não em kanban visual<br>❌ C: Wiki é documentação<br>❌ D: Discussions é fórum" },
+            { id: 34, domain: 6, type: 'single', question: "Qual é o conceito de InnerSource?", options: ["Publicar todo o código da empresa como open source", "Aplicar práticas de open source (transparência, colaboração, PRs) dentro da organização", "Usar exclusivamente software open source na empresa", "Criar forks internos de projetos open source"], correct: 1, explanation: "<strong>InnerSource</strong> = práticas de open source aplicadas internamente na empresa.<br><br>✅ InnerSource: code visibility interna, contribuição cross-team via PRs, documentação aberta, communities of practice<br>✅ Benefícios: reduz duplicação, acelera inovação, melhora qualidade<br><br>❌ A: não é publicar código externamente<br>❌ C: não é sobre usar software OSS<br>❌ D: fork interno é uma tática, não o conceito completo" },
+            { id: 35, domain: 6, type: 'single', question: "Um mantenedor de projeto open source quer receber apoio financeiro dos usuários que se beneficiam da ferramenta. Qual recurso GitHub facilita isso?", options: ["GitHub Marketplace", "GitHub Sponsors", "GitHub Education", "GitHub Packages"], correct: 1, explanation: "<strong>GitHub Sponsors</strong> — monetização direta para mantenedores open source.<br><br>✅ Sponsors: doações recorrentes ou pontuais, tiers com benefícios, 100% vai para o dev (GitHub não cobra taxa)<br><br>❌ Marketplace: distribuição de Actions e Apps (não doações pessoais)<br>❌ Education: programa para estudantes<br>❌ Packages: hospedagem de pacotes (npm, Docker, etc.)" },
+            { id: 36, domain: 4, type: 'match', question: "Associe cada layout do GitHub Projects à sua melhor aplicação:", pairs: [{ id: 0, source: "Board (Quadro)", target: "Visualizar fluxo de trabalho com colunas arrastaveis (Kanban)" }, { id: 1, source: "Table (Tabela)", target: "Lista detalhada com filtros, agrupamento e campos custom" }, { id: 2, source: "Roadmap (Timeline)", target: "Planejamento temporal com datas de início e fim" }, { id: 3, source: "Slice by field", target: "Dividir itens em swimlanes por um campo específico" }], explanation: "<strong>Board:</strong> Kanban visual com drag-and-drop<br><strong>Table:</strong> spreadsheet-like com sorting, grouping e custom fields<br><strong>Roadmap:</strong> timeline view com barras de Gantt<br><strong>Slice:</strong> agrupa itens por qualquer campo (assignee, priority, etc.) em swimlanes" },
+            { id: 37, domain: 6, type: 'single', question: "O que é o GitHub Marketplace?", options: ["Uma loja para comprar repositórios", "Um local para encontrar e instalar Actions, Apps e ferramentas que estendem o GitHub", "Um marketplace para contratar desenvolvedores", "Uma galeria de temas visuais para o GitHub"], correct: 1, explanation: "<strong>GitHub Marketplace</strong> — diretório de Actions e Apps que estendem a funcionalidade do GitHub.<br><br>✅ Marketplace: Actions para workflows, Apps OAuth/GitHub Apps, ferramentas de CI/CD, segurança, produtividade<br>✅ Categorias: Code review, Testing, Deployment, Monitoring, etc.<br><br>❌ A: repositórios não são vendidos<br>❌ C: não é uma plataforma de contratação<br>❌ D: GitHub não tem marketplace de temas" },
+            { id: 38, domain: 4, type: 'single', question: "Uma empresa quer publicar a documentação do seu produto como um site estático diretamente a partir do repositório. Qual ferramenta usar?", options: ["GitHub Gist", "GitHub Pages", "GitHub Wiki", "GitHub Packages"], correct: 1, explanation: "<strong>GitHub Pages</strong> — hosting gratuito de sites estáticos direto do repositório.<br><br>✅ Pages: HTML/CSS/JS estático, Jekyll integrado, domínio custom, HTTPS automático<br>✅ Source: branch (main, gh-pages) ou /docs folder<br><br>❌ Gist: snippets de código (não sites)<br>❌ Wiki: documentação interna do repo (não site público customizável)<br>❌ Packages: hospedagem de pacotes de software" },
+            { id: 39, domain: 4, type: 'order', question: "Ordene as etapas para configurar um GitHub Project funcional:", items: [{ id: 0, text: "Criar o Project na organização ou perfil" }, { id: 1, text: "Adicionar Issues e Pull Requests como items" }, { id: 2, text: "Configurar custom fields (Status, Priority, Sprint)" }, { id: 3, text: "Criar views com filtros e agrupamentos" }, { id: 4, text: "Configurar automações (auto-add, auto-archive)" }], correctOrder: [0, 2, 1, 3, 4], explanation: "1️⃣ <strong>Criar Project</strong> — escolher org/perfil e template<br>2️⃣ <strong>Custom fields</strong> — definir Status, Priority, etc. antes de adicionar items<br>3️⃣ <strong>Adicionar items</strong> — Issues, PRs ou draft items<br>4️⃣ <strong>Views</strong> — criar perspectivas (Board por status, Table por assignee, etc.)<br>5️⃣ <strong>Automações</strong> — regras para mover items automaticamente" },
+            { id: 40, domain: 6, type: 'single', question: "Um desenvolvedor quer acompanhar as novidades e releases de vários projetos open source. Qual funcionalidade GitHub usar?", options: ["Star todos os repositórios", "Seguir (Follow) os usuários e organizações dos projetos", "Fazer Fork de todos os repositórios", "Criar um GitHub Project com links"], correct: 1, explanation: "<strong>Follow</strong> usuários e orgs — aparece atividade pública no feed do dashboard.<br><br>✅ Follow: releases, novos repos, stars e contribuições aparecem no feed<br>✅ Complementar: Watch em repos específicos para notificações detalhadas<br><br>❌ A: Star é bookmark, não gera feed de atividade<br>❌ C: Fork é para contribuir, não para acompanhar<br>❌ D: possível mas manual e ineficiente" }
         ];
 
         // ============================================================
@@ -1760,19 +1786,25 @@
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Módulo 6: Projetos e Comunidade (40 min)</strong> ⚖️ 10-20%
+                                        <strong>Módulo 6: Gerenciar Projetos com o GitHub (35 min)</strong> ⚖️ 5-10%
                                         <ul>
-                                            <li>GitHub Projects, Pages, Sponsors, Marketplace, InnerSource</li>
+                                            <li>GitHub Projects (views), Pages, Labels, Milestones, Saved Replies, Project Insights</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Módulo 7: 📝 Revisão Final (20 min)</strong>
+                                        <strong>Módulo 7: Explorar a Comunidade do GitHub (30 min)</strong> ⚖️ 5-10%
+                                        <ul>
+                                            <li>InnerSource, Open Source, Sponsors, Marketplace, Education, Stars, Issue Templates, PR Templates</li>
+                                        </ul>
+                                    </div>
+                                    <div class="module-item">
+                                        <strong>Módulo 8: 📝 Revisão Final (20 min)</strong>
                                         <ul>
                                             <li>Cheat-sheet, decision trees, checklist pré-prova</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Módulo 8: 🎯 Simulado Final (100 min)</strong>
+                                        <strong>Módulo 9: 🎯 Simulado Final (100 min)</strong>
                                         <ul>
                                             <li>40 questões no estilo real da prova</li>
                                         </ul>
@@ -1963,6 +1995,12 @@
                                 <div class="macete">🔑 <strong>B-C-P-R-M-D: "Branch, Commit, PR, Review, Merge, Deploy"</strong> — esta é a sequência sagrada do GitHub Flow.</div>
 
                                 <div class="warning">⚠️ ARMADILHA: GitHub Flow ≠ Git Flow. GitHub Flow é mais simples (apenas main + feature branches). Git Flow tem develop, release, hotfix branches — é mais complexo.</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>GitHub Flow</strong> frequentemente: a sequência correta é <strong>Branch → Commit → Pull Request → Review → Merge → Deploy</strong>.<br>
+                                    Questão típica: "O que vem IMEDIATAMENTE após os commits?" → Abrir um Pull Request.<br>
+                                    Questão de armadilha: "GitHub Flow vs Git Flow" → GitHub Flow tem apenas main + feature branches.
+                                </div>
                             `
                         },
                         {
@@ -2190,6 +2228,14 @@
 
                                 <div class="warning">⚠️ Na prova: "Como impedir push direto para main?" → Branch Protection Rules com "Require pull request reviews". NÃO é CODEOWNERS sozinho (ele define QUEM revisa, mas não OBRIGA revisão sem branch protection).</div>
 
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>CODEOWNERS + Branch Protection</strong>:<br>
+                                    "Qual arquivo define revisores automáticos por área de código?" → <strong>CODEOWNERS</strong><br>
+                                    "Como impedir push direto para main?" → <strong>Branch Protection Rules</strong><br>
+                                    "O CODEOWNERS sozinho impede push direto?" → <strong>NÃO</strong> — precisa de Branch Protection Rules.<br>
+                                    Localização: <code>.github/CODEOWNERS</code>, <code>CODEOWNERS</code> ou <code>docs/CODEOWNERS</code>
+                                </div>
+
                                 <div class="separator"></div>
 
                                 <h4>📌 Tópico: Dependency Graph e Dependabot</h4>
@@ -2291,6 +2337,11 @@
                                 <div class="warning">⚠️ <strong>Keywords mágicas para fechar Issues via PR:</strong><br>
                                 <code>Fixes #42</code> | <code>Closes #42</code> | <code>Resolves #42</code><br>
                                 Ao mergear o PR, a Issue #42 é fechada AUTOMATICAMENTE. "Related to #42" NÃO fecha!</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>linking PR to Issue</strong>: "Como fechar automaticamente uma Issue ao mergear um PR?" → Usar <code>Closes #42</code>, <code>Fixes #42</code> ou <code>Resolves #42</code> no corpo do PR.<br>
+                                    Armadilha: <code>Related to #42</code> → NÃO fecha a Issue automaticamente.
+                                </div>
 
                                 <div class="separator"></div>
 
@@ -2532,6 +2583,13 @@
                                 🔹 Completions: sugere código linha a linha enquanto você digita (passivo)<br>
                                 🔹 Agent Mode: planeja tarefas complexas, edita múltiplos arquivos, executa terminal, itera autonomamente (ativo)</div>
 
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>GitHub Copilot Agent Mode</strong> (adicionado ao exame em 2025):<br>
+                                    "O que é o Agent Mode?" → Modo autônomo que planeja, edita múltiplos arquivos e executa comandos no terminal iterativamente.<br>
+                                    "Diferença entre Agent Mode e Copilot Chat?" → Chat é conversacional (não executa ações); Agent Mode executa tarefas complexas end-to-end.<br>
+                                    "Diferença entre github.dev e Codespaces?" → github.dev: editor leve, SEM terminal. Codespaces: VM completa, COM terminal.
+                                </div>
+
                                 <details class="active-recall">
                                     <summary>🤔 ACTIVE RECALL: Qual a diferença entre github.dev e Codespaces?</summary>
                                     <div class="recall-content">
@@ -2590,6 +2648,13 @@
                                 <strong>"P-S-T-S-S"</strong> = Passkey é Suprema, TOTP é Segura, SMS é Suscetível</div>
 
                                 <div class="warning">⚠️ Na prova: "Método mais seguro de autenticação?" → <strong>Passkeys</strong>. "Resistente a phishing?" → Passkeys e Security Keys (hardware). SMS é vulnerável a SIM swap!</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>Passkeys</strong> como método mais seguro:<br>
+                                    "Qual método é resistente a phishing?" → <strong>Passkeys</strong> (FIDO2/WebAuthn) — sem senha para roubar.<br>
+                                    Hierarquia: Passkeys > Security Key (hardware) > TOTP App > SMS (mais fraco).<br>
+                                    "PAT vs SSH vs Passkeys": PAT = API, SSH = Git push/pull, Passkeys = login web.
+                                </div>
 
                                 <div class="separator"></div>
 
@@ -2681,6 +2746,14 @@
 
                                 <div class="warning">⚠️ ARMADILHA: EMU ≠ SSO com conta pessoal. Com SSO + conta pessoal, o usuário ainda controla sua conta. Com EMU, a EMPRESA controla a conta inteira.</div>
 
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>EMU vs SAML SSO com conta pessoal</strong>:<br>
+                                    "Conta 100% controlada pela empresa?" → <strong>EMU</strong> (Enterprise Managed Users)<br>
+                                    "SSO + conta pessoal ainda permite uso fora da empresa?" → <strong>SIM</strong> (usuário controla a conta)<br>
+                                    "EMU pode contribuir em repos públicos?" → <strong>NÃO</strong> — restrito à Enterprise.<br>
+                                    Provisionamento: SCIM. Autenticação: SAML SSO.
+                                </div>
+
                                 <details class="active-recall">
                                     <summary>🤔 ACTIVE RECALL: Quais são os 3 pilares de segurança do GitHub e o que cada um protege?</summary>
                                     <div class="recall-content">
@@ -2704,12 +2777,12 @@
                         { question: "Um admin quer impedir que secrets sejam pushados para o repositório, bloqueando o push ANTES de entrar no histórico. Qual recurso específico ativar?", options: ["Secret Scanning alerts", "Secret Scanning push protection", "Branch Protection Rules", "Code Scanning"], explanation: "<strong>Secret Scanning Push Protection!</strong><br><br>✅ Push Protection: bloqueia o push ANTES do secret entrar no repo<br>✅ Diferente de alerts (que detectam DEPOIS do commit)<br>✅ Prevenção vs detecção<br><br>❌ Alerts: detecta secrets já commitados (reativo)<br>❌ Branch Protection: controla quem pode push/merge, não detecta secrets<br>❌ Code Scanning: analisa vulnerabilidades de código, não secrets" }
                     ]
                 },
-                // ── Módulo 6: Projetos e Comunidade (10-15%) ─────────────────
+                // ── Módulo 6: Gerenciar Projetos com o GitHub (5-10%) ────────
                 {
-                    title: "6. Projetos e Comunidade",
+                    title: "6. Gerenciar Projetos com o GitHub",
                     lessons: [
                         {
-                            title: "6.1 GitHub Projects e Gerenciamento",
+                            title: "6.1 GitHub Projects — Layouts e Automações",
                             content: `
                                 <h4>📌 Tópico: GitHub Projects (v2)</h4>
                                 <p><strong>Explicação:</strong></p>
@@ -2719,10 +2792,16 @@
                                     <li>📊 <strong>Table view</strong> — Planilha com filtros, ordenação e campos customizados</li>
                                     <li>🗺️ <strong>Roadmap view</strong> — Timeline com datas de início/fim</li>
                                     <li>🔄 <strong>Automações</strong> — Mover cards automaticamente quando Issues são fechadas ou PRs mergeados</li>
-                                    <li>🏷️ <strong>Custom Fields</strong> — Campos personalizados (prioridade, sprint, estimativa)</li>
+                                    <li>🏷️ <strong>Custom Fields</strong> — Campos personalizados (prioridade, sprint, estimativa, data, iteração)</li>
                                 </ul>
 
                                 <div class="macete">🔑 <strong>Projects v2 = "Jira do GitHub"</strong> — planejamento integrado que puxa dados diretamente de Issues e PRs. Três views: Board (Kanban), Table (planilha), Roadmap (timeline).</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra as <strong>3 views do Projects</strong> e para que cada uma serve:<br>
+                                    🔹 Board = Kanban visual (por status) | Table = planilha (filtros/agrupamentos) | Roadmap = timeline (datas/releases)<br>
+                                    Também cobra <strong>Project Insights</strong> — gráficos de burnup e velocity para acompanhar o progresso do projeto.
+                                </div>
 
                                 <div class="example">
                                     <strong>Cenário:</strong> Uma equipe usa Issues para bugs e PRs para features — conceitos do Módulo 3 (Colaboração). Precisa visualizar o progresso em sprints.<br>
@@ -2758,19 +2837,113 @@
                             `
                         },
                         {
-                            title: "6.2 Comunidade e Open Source",
+                            title: "6.2 Labels, Milestones, Saved Replies e Project Insights",
+                            content: `
+                                <h4>📌 Tópico: Labels (Etiquetas)</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p><strong>Labels</strong> são etiquetas coloridas para categorizar Issues e PRs. Permitem filtrar, priorizar e organizar o trabalho visualmente.</p>
+                                <ul>
+                                    <li>🏷️ Labels padrão: <code>bug</code>, <code>enhancement</code>, <code>documentation</code>, <code>good first issue</code>, <code>help wanted</code>, <code>question</code></li>
+                                    <li>🎨 Labels customizados: criar com nome, cor e descrição personalizados</li>
+                                    <li>🔍 Filtro: <code>label:bug</code> para filtrar Issues por label</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Labels = "Etiquetas de post-it coloridas"</strong> — cada cor/nome tem um significado. "good first issue" = entrada para novos contribuidores. "help wanted" = precisa de ajuda da comunidade.</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: Milestones (Marcos)</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p><strong>Milestones</strong> agrupam Issues e PRs para rastrear o progresso em direção a um objetivo ou prazo específico (ex: "Sprint 5", "Release v2.0", "Q3 2025").</p>
+                                <ul>
+                                    <li>📅 <strong>Data de prazo:</strong> opcional, útil para releases planejadas</li>
+                                    <li>📊 <strong>Progresso:</strong> barra de percentual (Issues fechadas / total)</li>
+                                    <li>🔗 <strong>Múltiplos repos:</strong> Milestones são por repositório (não cross-repo)</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Milestone = "Checkpoint de maratona"</strong> — agrupa trabalho com prazo. Mostra % concluído automaticamente. Diferente do Projects Roadmap (cross-issue visual).</div>
+
+                                <div class="warning">⚠️ Na prova: Milestones são por REPOSITÓRIO. GitHub Projects (Roadmap view) é para planejamento cross-repo e multi-team. Milestones = granular, repo-scoped.</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: Saved Replies (Respostas Salvas)</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p><strong>Saved Replies</strong> são respostas pré-formatadas reutilizáveis em Issues, PRs e Discussions. Evitam digitar o mesmo texto repetidamente.</p>
+                                <ul>
+                                    <li>💾 Configuradas em: Profile Settings → Saved Replies</li>
+                                    <li>⚡ Usadas com: atalho <code>/</code> (slash command) ou dropdown no editor</li>
+                                    <li>📝 Exemplos: "Obrigado pelo report!", "Precisa de mais informações", "Fechando por inatividade"</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Saved Replies = "Respostas enlatadas de suporte"</strong> — como templates de email. Digita uma vez, reutiliza para sempre. Acessado via slash command <code>/</code>.</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra <strong>Saved Replies</strong>: "Para que serve?" → Reutilizar respostas frequentes em Issues e PRs.<br>
+                                    "Onde configurar?" → Profile Settings → Saved Replies.<br>
+                                    "Como usar?" → Slash command <code>/</code> no editor de comentários.
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: Project Insights</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p><strong>Project Insights</strong> são gráficos analíticos embutidos nos GitHub Projects que ajudam a acompanhar o progresso e identificar gargalos.</p>
+                                <ul>
+                                    <li>📈 <strong>Burnup chart:</strong> acúmulo de trabalho concluído ao longo do tempo</li>
+                                    <li>🔥 <strong>Burndown chart:</strong> quanto trabalho ainda falta (velocidade x prazo)</li>
+                                    <li>🌊 <strong>Flow efficiency:</strong> tempo médio de ciclo (do In Progress para Done)</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Insights = "Painel de controle do gerente"</strong> — sem sair do GitHub Projects, você vê se o time está acelerando (burnup) ou atrasando (burndown). Disponível em Projects v2.</div>
+
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: Qual a diferença entre Milestone e GitHub Projects Roadmap?</summary>
+                                    <div class="recall-content">
+                                        <strong>Resposta:</strong><br>
+                                        🔹 <strong>Milestone</strong>: por repositório, agrupa Issues com % de progresso automático, tem data de prazo<br>
+                                        🔹 <strong>Roadmap view</strong>: parte do GitHub Projects, timeline visual cross-repo, barras de Gantt, custom fields<br>
+                                        🔹 Use Milestone para rastrear issues de um repo; Roadmap para planejamento maior cross-team
+                                    </div>
+                                </details>
+                            `
+                        }
+                    ],
+                    exercises: [
+                        { question: "Uma equipe precisa visualizar Issues e PRs em um board Kanban integrado ao GitHub, com automações para mover cards quando Issues são fechadas. Qual ferramenta?", options: ["GitHub Actions", "GitHub Discussions", "GitHub Projects (Board view)", "GitHub Wiki"], explanation: "<strong>GitHub Projects (Board view)!</strong><br><br>✅ Projects v2: Board (Kanban), Table (planilha), Roadmap (timeline)<br>✅ Automações: mover cards automaticamente ao fechar Issues/mergear PRs<br>✅ Integração nativa com Issues e PRs<br><br>❌ Actions: CI/CD (não gerenciamento visual)<br>❌ Discussions: fórum de debates<br>❌ Wiki: documentação estática" },
+                        { question: "Onde uma equipe pode hospedar documentação estática de um projeto diretamente do repositório GitHub, sem custo?", options: ["GitHub Codespaces", "GitHub Pages", "GitHub Wiki apenas", "Azure Static Web Apps"], explanation: "<strong>GitHub Pages!</strong><br><br>✅ Pages: hospedagem gratuita de sites estáticos direto do repo<br>✅ URL: username.github.io/repo-name (ou domínio customizado)<br>✅ Suporta Jekyll, Hugo, Next.js (via Actions) e HTML puro<br><br>❌ Codespaces: ambiente de desenvolvimento, não hospedagem<br>❌ Azure SWA: serviço pago separado" },
+                        { question: "Uma empresa precisa de planejamento visual com timeline e datas de início/fim de releases. Qual view do GitHub Projects é mais adequada?", options: ["Board view (Kanban)", "Table view (planilha)", "Insights view (burnup)", "Roadmap view (timeline)"], explanation: "<strong>Roadmap view!</strong><br><br>✅ Roadmap: timeline visual com datas de início/fim, barras de Gantt, ideal para planejamento de releases<br>✅ Mostra progresso ao longo do tempo<br><br>❌ Board: Kanban (status colunar, sem timeline)<br>❌ Table: planilha com filtros (sem visualização temporal)<br>❌ Insights: gráficos analíticos, não timeline" },
+                        { question: "Qual é o propósito das Saved Replies no GitHub?", options: ["Reutilizar respostas frequentes em Issues, PRs e Discussions", "Salvar rascunhos de commits para publicar depois", "Criar respostas automáticas de email quando há menções", "Armazenar templates de código para snippets"], explanation: "<strong>Saved Replies = reutilizar respostas frequentes!</strong><br><br>✅ Criadas em: Profile Settings → Saved Replies<br>✅ Usadas via slash command <code>/</code> no editor<br>✅ Evitam digitar o mesmo texto (ex: 'Obrigado pelo report! Vamos investigar')<br><br>❌ B: Git não tem rascunhos de commits<br>❌ C: não é email automático<br>❌ D: Gists são para snippets de código" },
+                        { question: "Um gestor quer ver um gráfico do progresso acumulado do projeto ao longo do tempo, mostrando o trabalho concluído. Qual recurso do GitHub Projects usar?", options: ["Roadmap view", "Table view com filtros", "Project Insights (burnup chart)", "GitHub Milestones"], explanation: "<strong>Project Insights — burnup chart!</strong><br><br>✅ Insights: gráficos analíticos embutidos no Projects v2<br>✅ Burnup: mostra trabalho concluído acumulado ao longo do tempo<br>✅ Burndown: mostra trabalho restante<br><br>❌ Roadmap: timeline visual, não gráfico de progresso<br>❌ Table: lista com filtros, não gráfico<br>❌ Milestones: % de conclusão por repo, não gráfico temporal" },
+                        { question: "Um time quer agrupar Issues e PRs relacionadas a uma release específica (v2.0) com data de prazo e % de progresso. Qual recurso usar?", options: ["GitHub Projects", "GitHub Milestone", "Labels", "GitHub Discussions"], explanation: "<strong>GitHub Milestone!</strong><br><br>✅ Milestone: agrupa Issues/PRs por objetivo/prazo<br>✅ Mostra % de conclusão automaticamente (Issues fechadas / total)<br>✅ Pode ter data de prazo<br><br>❌ Projects: ferramenta mais ampla (cross-team, múltiplas views)<br>❌ Labels: classificação/filtragem (não agrupamento com prazo)<br>❌ Discussions: fórum, não rastreamento de trabalho" },
+                        { question: "Qual tipo de campo NÃO está disponível como Custom Field em GitHub Projects (v2)?", options: ["Text", "Number", "Date", "Git branch (para ligar commits ao campo)"], explanation: "<strong>Git branch não é um tipo de campo custom!</strong><br><br>✅ Custom fields disponíveis: Text, Number, Date, Single select, Iteration, GitHub repository field<br>✅ Não há campo de tipo 'branch' — branches aparecem em Issues/PRs automaticamente, mas não como campo de Project<br><br>❌ Text: ✅ disponível<br>❌ Number: ✅ disponível<br>❌ Date: ✅ disponível" }
+                    ]
+                },
+                // ── Módulo 7: Explorar a Comunidade do GitHub (5-10%) ────────
+                {
+                    title: "7. Explorar a Comunidade do GitHub",
+                    lessons: [
+                        {
+                            title: "7.1 InnerSource, Open Source e Ecossistema GitHub",
                             content: `
                                 <h4>📌 Tópico: InnerSource</h4>
                                 <p><strong>Explicação:</strong></p>
                                 <p><strong>InnerSource</strong> é a prática de aplicar metodologias open source DENTRO de uma organização privada:</p>
                                 <ul>
-                                    <li>🔓 Repositórios internos visíveis para toda a organização</li>
+                                    <li>🔓 Repositórios internos visíveis para toda a organização (visibilidade <strong>Internal</strong>)</li>
                                     <li>🤝 Qualquer dev da org pode contribuir via PRs (como open source)</li>
                                     <li>📋 Issues, Discussions, CONTRIBUTING.md — mesmas práticas de OSS</li>
                                     <li>👥 Responsáveis definidos (CODEOWNERS) mas contribuição aberta internamente</li>
                                 </ul>
 
-                                <div class="macete">🔑 <strong>InnerSource = "Open Source interno"</strong> — mesmas práticas (PR, review, transparência) mas dentro da empresa. Visibilidade: Internal (não public).</div>
+                                <div class="macete">🔑 <strong>InnerSource = "Open Source interno"</strong> — mesmas práticas (PR, review, transparência) mas dentro da empresa. Visibilidade: Internal (não public, não private).</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra: <strong>InnerSource vs Open Source</strong><br>
+                                    🔹 InnerSource: código privado dentro da empresa, colaboração interna via PRs<br>
+                                    🔹 Open Source: código público, qualquer pessoa pode contribuir via Fork + PR<br>
+                                    Visibilidade para InnerSource: <strong>Internal</strong> (Enterprise) — não confundir com Public.
+                                </div>
 
                                 <div class="tip">💡 <strong>Visibilidades de repositório:</strong><br>
                                 🔹 <strong>Public</strong>: qualquer pessoa na internet vê<br>
@@ -2782,56 +2955,124 @@
                                 <h4>📌 Tópico: GitHub Sponsors e Marketplace</h4>
                                 <p><strong>Explicação:</strong></p>
                                 <p><strong>GitHub Sponsors</strong> permite financiar mantedores open source diretamente no GitHub (pagamento recorrente ou pontual).</p>
-                                <p><strong>GitHub Marketplace</strong> oferece Apps e Actions para estender funcionalidades:</p>
+                                <p><strong>GitHub Marketplace</strong> oferece Apps e Actions para estender funcionalidades do GitHub:</p>
                                 <ul>
                                     <li>💰 <strong>Sponsors</strong>: financiamento direto a devs/projetos OSS</li>
-                                    <li>🛒 <strong>Marketplace Apps</strong>: integrações OAuth (CI, project mgmt, code quality)</li>
-                                    <li>⚡ <strong>Marketplace Actions</strong>: ações reutilizáveis para workflows — já vistas no Módulo 4</li>
+                                    <li>🛒 <strong>Marketplace Apps</strong>: integrações OAuth (CI, project mgmt, code quality, bots)</li>
+                                    <li>⚡ <strong>Marketplace Actions</strong>: ações reutilizáveis para workflows (usadas em .github/workflows/)</li>
                                 </ul>
+
+                                <div class="macete">🔑 <strong>Sponsors ≠ Marketplace:</strong><br>
+                                🔹 Sponsors = doação financeira para PESSOA/PROJETO OSS<br>
+                                🔹 Marketplace = loja de FERRAMENTAS que extendem o GitHub (Apps + Actions)</div>
 
                                 <div class="separator"></div>
 
-                                <h4>📌 Tópico: GitHub Education e Community</h4>
+                                <h4>📌 Tópico: GitHub Education e Stars</h4>
                                 <p><strong>Explicação:</strong></p>
                                 <ul>
-                                    <li>🎓 <strong>GitHub Education</strong> — Student Developer Pack (ferramentas grátis para estudantes)</li>
+                                    <li>🎓 <strong>GitHub Education</strong> — Student Developer Pack (ferramentas grátis para estudantes verificados: Copilot, domínios, cloud credits)</li>
                                     <li>👨‍🏫 <strong>GitHub Classroom</strong> — gestão de exercícios/assignments para professores</li>
-                                    <li>🌟 <strong>GitHub Stars</strong> — programa de reconhecimento para membros ativos da comunidade</li>
-                                    <li>💬 <strong>GitHub Community</strong> — fórum de discussão oficial</li>
+                                    <li>🌟 <strong>GitHub Stars</strong> — programa de reconhecimento para membros ativos e evangelizadores da comunidade</li>
                                 </ul>
 
-                                <div class="macete">🔑 <strong>Ecossistema GitHub:</strong><br>
-                                🔹 Sponsors = financiar OSS<br>
-                                🔹 Marketplace = extender GitHub (Apps + Actions)<br>
-                                🔹 Pages = hospedar sites<br>
-                                🔹 Education = recursos para estudantes/professores<br>
-                                🔹 Stars = reconhecimento comunitário</div>
+                                <div class="macete">🔑 <strong>Education = grátis para estudantes | Stars = reconhecimento comunitário</strong></div>
 
                                 <details class="active-recall">
-                                    <summary>🤔 ACTIVE RECALL: Qual a diferença entre GitHub Marketplace Apps e Actions?</summary>
+                                    <summary>🤔 ACTIVE RECALL: Qual a diferença entre GitHub Marketplace Apps e Marketplace Actions?</summary>
                                     <div class="recall-content">
                                         <strong>Resposta:</strong><br>
-                                        🔹 <strong>Marketplace Apps</strong>: integrações OAuth completas que adicionam funcionalidades ao GitHub (CI tools, project mgmt, bots)<br>
-                                        🔹 <strong>Marketplace Actions</strong>: unidades reutilizáveis para GitHub Actions workflows (steps individuais como checkout, deploy, lint)<br>
-                                        🔹 Apps vivem "fora" dos workflows; Actions vivem "dentro" dos workflows YAML
+                                        🔹 <strong>Marketplace Apps</strong>: integrações OAuth completas (CI tools, project mgmt, bots) — vivem "fora" dos workflows<br>
+                                        🔹 <strong>Marketplace Actions</strong>: steps reutilizáveis para GitHub Actions workflows — vivem "dentro" dos arquivos YAML em .github/workflows/
+                                    </div>
+                                </details>
+                            `
+                        },
+                        {
+                            title: "7.2 Follow, Repositórios Descobríveis e Templates",
+                            content: `
+                                <h4>📌 Tópico: Follow Usuários e Organizações</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p>Seguir usuários e organizações no GitHub mantém você informado sobre a atividade pública deles:</p>
+                                <ul>
+                                    <li>👤 <strong>Follow users</strong>: atividade pública (novos repos, stars, contribuições) aparece no seu feed do dashboard</li>
+                                    <li>🏢 <strong>Follow organizations</strong>: novos repositórios e releases da org aparecem no seu feed</li>
+                                    <li>👁️ <strong>Watch repo</strong>: notificações específicas (Issues, PRs, releases) de um repositório — diferente de Follow</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Follow = "Seguir no Instagram"</strong> — atividade geral no feed. Watch = "Notificações push ativas" — alertas específicos do repositório.</div>
+
+                                <div class="warning">⚠️ Na prova: "Como acompanhar releases de um projeto?" → <strong>Watch</strong> o repositório. "Como ver o que uma pessoa/org está fazendo?" → <strong>Follow</strong> o usuário/org.</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: Repositórios Descobríveis (Discoverable)</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p>Um <strong>repositório descobrível</strong> é fácil de encontrar e entender. Elementos que tornam um repo descobrível:</p>
+                                <ul>
+                                    <li>🏷️ <strong>Topics</strong> — tags que categorizam o repo (ex: <code>python</code>, <code>machine-learning</code>, <code>web</code>)</li>
+                                    <li>📝 <strong>Description</strong> — resumo na página do repositório</li>
+                                    <li>🌐 <strong>Website</strong> — link para docs ou demo</li>
+                                    <li>📖 <strong>README</strong> — guia de uso claro</li>
+                                    <li>📄 <strong>LICENSE</strong> — define termos de uso</li>
+                                    <li>🤝 <strong>CONTRIBUTING.md</strong> — como contribuir</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>DISCOVERABLE = T-D-W-R-L-C:</strong> Topics, Description, Website, README, LICENSE, CONTRIBUTING — essas 6 coisas fazem um repo fácil de encontrar e usar.</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Tópico: Issue Templates e Pull Request Templates</h4>
+                                <p><strong>Explicação:</strong></p>
+                                <p><strong>Issue Templates</strong> e <strong>PR Templates</strong> padronizam como Issues e PRs são abertas no projeto:</p>
+                                <ul>
+                                    <li>📋 <strong>Issue Templates</strong>: formulários pre-formatados (.github/ISSUE_TEMPLATE/) com campos como "Descrição do Bug", "Passos para reproduzir", "Versão do software"</li>
+                                    <li>🔀 <strong>PR Templates</strong>: template automático para descrição de Pull Requests (.github/PULL_REQUEST_TEMPLATE.md) com checklist (testes passando, documentação atualizada)</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Templates = Formulários obrigatórios</strong><br>
+                                Issue Template → .github/ISSUE_TEMPLATE/*.md (ou .yml)<br>
+                                PR Template → .github/PULL_REQUEST_TEMPLATE.md</div>
+
+                                <div class="exam-confirmed">
+                                    A prova cobra a diferença entre Issue Templates e Issue Forms:<br>
+                                    🔹 <strong>Issue Template (.md)</strong>: preencher texto livre no editor<br>
+                                    🔹 <strong>Issue Form (.yml)</strong>: formulário estruturado com dropdowns, checkboxes e campos obrigatórios<br>
+                                    Issue Forms são mais modernos e oferecem validação de campos.
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <div class="example">
+                                    <strong>Cenário (Reforço Módulo 2 — Repos):</strong> Um projeto open source no GitHub tinha muitas Issues mal preenchidas, sem contexto suficiente para reproduzir bugs.<br>
+                                    <strong>Solução:</strong> Criaram .github/ISSUE_TEMPLATE/bug_report.yml com campos obrigatórios: Versão, SO, Passos para reproduzir, Comportamento esperado.<br>
+                                    <strong>Resultado:</strong> 🔄 Reforço: combinado com CONTRIBUTING.md (Módulo 2) e CODEOWNERS (Módulo 2), o projeto ficou 100% contribuição-ready.
+                                </div>
+
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: Qual a diferença entre Fork e usar um repositório como Template?</summary>
+                                    <div class="recall-content">
+                                        <strong>Resposta:</strong><br>
+                                        🔹 <strong>Fork</strong>: cópia na sua conta com conexão upstream — usado para contribuir ao projeto original via PR<br>
+                                        🔹 <strong>Template</strong>: cria repo NOVO sem histórico e sem conexão — usado para scaffolding/boilerplate<br>
+                                        🔹 Regra: precisa contribuir → Fork. Precisa iniciar projeto igual → Template.
                                     </div>
                                 </details>
                             `
                         }
                     ],
                     exercises: [
-                        { question: "Uma equipe precisa visualizar Issues e PRs em um board Kanban integrado ao GitHub, com automações para mover cards quando Issues são fechadas. Qual ferramenta?", options: ["GitHub Actions", "GitHub Discussions", "GitHub Projects (Board view)", "GitHub Wiki"], explanation: "<strong>GitHub Projects (Board view)!</strong><br><br>✅ Projects v2: Board (Kanban), Table (planilha), Roadmap (timeline)<br>✅ Automações: mover cards automaticamente ao fechar Issues/mergear PRs<br>✅ Integração nativa com Issues e PRs<br><br>❌ Actions: CI/CD e automação de workflows (não gerenciamento visual)<br>❌ Discussions: fórum de perguntas/debates<br>❌ Wiki: documentação estática" },
-                        { question: "Onde uma equipe pode hospedar documentação estática de um projeto diretamente do repositório GitHub, sem custo?", options: ["GitHub Codespaces", "GitHub Pages", "GitHub Wiki apenas", "Azure Static Web Apps"], explanation: "<strong>GitHub Pages!</strong><br><br>✅ GitHub Pages: hospedagem gratuita de sites estáticos direto do repo<br>✅ URL: username.github.io/repo-name (ou domínio customizado)<br>✅ Suporta Jekyll, Hugo, Next.js (via Actions) e HTML puro<br><br>❌ Codespaces: ambiente de desenvolvimento, não hospedagem<br>❌ Wiki: documentação dentro do GitHub (não gera site externo acessível via URL pública com SSG)<br>❌ Azure SWA: serviço pago separado" },
-                        { question: "Uma empresa quer que todos os desenvolvedores internos possam contribuir em repositórios de outros times via PRs, seguindo práticas open source mas mantendo o código privado. Qual abordagem?", options: ["Tornar todos os repos públicos", "InnerSource com repos de visibilidade Internal", "Criar forks privados de cada repo", "Dar Admin access a todos os devs"], explanation: "<strong>InnerSource com repos Internal!</strong><br><br>✅ InnerSource: práticas open source (PRs, issues, reviews) dentro da empresa<br>✅ Visibilidade Internal: qualquer membro da org/enterprise pode ver e contribuir<br>✅ CODEOWNERS define responsáveis, mas contribuição é aberta internamente<br><br>❌ Repos públicos: expõe código ao mundo (não privado!)<br>❌ Forks privados: fragmenta o código, dificulta contribuição<br>❌ Admin para todos: viola princípio do menor privilégio (R-T-W-M-A do Módulo 5)" },
-                        { question: "Qual recurso permite financiar diretamente mantedores e projetos open source no GitHub?", options: ["GitHub Marketplace", "GitHub Sponsors", "GitHub Education", "GitHub Stars"], explanation: "<strong>GitHub Sponsors!</strong><br><br>✅ Sponsors: pagamento recorrente ou pontual diretamente a devs/projetos OSS<br>✅ Integrado ao perfil do GitHub (botão 'Sponsor')<br><br>❌ Marketplace: vende Apps e Actions (produtos, não doações)<br>❌ Education: recursos gratuitos para estudantes/professores<br>❌ Stars: programa de reconhecimento (sem pagamento)" },
-                        { question: "Uma empresa precisa de planejamento com timeline e datas de releases. Qual view do GitHub Projects é mais adequada?", options: ["Board view (Kanban)", "Table view (planilha)", "Roadmap view (timeline)", "GitHub Issues apenas"], explanation: "<strong>Roadmap view!</strong><br><br>✅ Roadmap: timeline visual com datas de início/fim, ideal para planejamento de releases<br>✅ Mostra progresso ao longo do tempo<br><br>❌ Board: Kanban (status colunar, sem timeline)<br>❌ Table: planilha com filtros (sem visualização temporal)<br>❌ Issues apenas: lista plana sem visualização de projeto" },
-                        { question: "Qual programa oferece ferramentas gratuitas (incluindo GitHub Copilot, domínios, cloud credits) para estudantes verificados?", options: ["GitHub Sponsors", "GitHub Stars", "GitHub Education Student Developer Pack", "GitHub Free plan"], explanation: "<strong>GitHub Education Student Developer Pack!</strong><br><br>✅ Student Developer Pack: coleção de ferramentas grátis para estudantes verificados<br>✅ Inclui: Copilot grátis, domínios, cloud credits, ferramentas de desenvolvimento<br><br>❌ Sponsors: financiamento de OSS (não é para estudantes)<br>❌ Stars: reconhecimento comunitário (não oferece ferramentas)<br>❌ Free plan: plano básico para todos (sem benefícios extras de estudante)" },
-                        { question: "Qual é a diferença entre GitHub Marketplace Apps e GitHub Marketplace Actions?", options: ["Apps são gratuitas, Actions são pagas", "Apps são integrações OAuth completas, Actions são steps reutilizáveis em workflows", "Apps rodam em .github/workflows/, Actions rodam externamente", "Não há diferença — são a mesma coisa"], explanation: "<strong>Apps = integrações OAuth; Actions = steps de workflow!</strong><br><br>✅ Apps: integrações OAuth completas (CI tools, bots, project mgmt) que vivem 'fora' dos workflows<br>✅ Actions: unidades reutilizáveis que vivem 'dentro' de workflows YAML (.github/workflows/)<br><br>❌ Ambas podem ser grátis ou pagas<br>❌ Actions rodam em .github/workflows/ (não Apps)<br>❌ São coisas distintas" }
+                        { question: "Qual é o conceito de InnerSource no GitHub?", options: ["Publicar todo o código da empresa como open source", "Aplicar práticas de open source (PRs, reviews, transparência) dentro da organização mantendo o código privado", "Usar exclusivamente software open source na empresa", "Criar forks públicos de projetos internos"], explanation: "<strong>InnerSource = práticas OSS aplicadas internamente!</strong><br><br>✅ InnerSource: contribuição cross-team via PRs, visibilidade Internal (não público)<br>✅ Mesmas práticas: CONTRIBUTING.md, CODEOWNERS, Issues, code review<br><br>❌ A: não é publicar externamente<br>❌ C: não é sobre usar software OSS<br>❌ D: forks públicos expõem código interno" },
+                        { question: "Um mantenedor de projeto open source quer receber apoio financeiro dos usuários que se beneficiam da ferramenta. Qual recurso GitHub facilita isso?", options: ["GitHub Marketplace", "GitHub Education", "GitHub Sponsors", "GitHub Stars"], explanation: "<strong>GitHub Sponsors!</strong><br><br>✅ Sponsors: doações recorrentes ou pontuais diretamente a devs/projetos OSS<br>✅ Integrado ao perfil (botão 'Sponsor'), 100% vai para o dev<br><br>❌ Marketplace: distribuição de Apps/Actions (não doações)<br>❌ Education: recursos para estudantes<br>❌ Stars: reconhecimento comunitário (sem pagamento)" },
+                        { question: "O que torna um repositório GitHub mais 'descobrível' para a comunidade?", options: ["Adicionar topics, description, README, LICENSE e CONTRIBUTING.md", "Tornar o repo privado com acesso restrito", "Usar apenas arquivos .txt sem formatação", "Não adicionar nenhum arquivo especial para manter o repo limpo"], explanation: "<strong>Discoverable = Topics + Description + README + LICENSE + CONTRIBUTING!</strong><br><br>✅ Topics: categorizam o repo nos resultados de busca (ex: python, ml, web)<br>✅ README: explica o projeto<br>✅ CONTRIBUTING.md: guia para contribuição<br>✅ LICENSE: define uso<br><br>❌ B: repo privado não é descoberto publicamente<br>❌ D: sem esses arquivos, o repo é difícil de entender" },
+                        { question: "Um desenvolvedor quer ser notificado sobre todas as novidades (Issues, PRs, releases) de um repositório específico. Qual ação tomar?", options: ["Star o repositório", "Fork o repositório", "Fazer Watch (Watching) no repositório", "Seguir (Follow) o owner do repositório"], explanation: "<strong>Watch (Watching) no repositório!</strong><br><br>✅ Watch: notificações específicas do repo (Issues, PRs, releases, discussions)<br>✅ Níveis: All Activity, Participating and @mentions, Releases only, Custom<br><br>❌ Star: apenas bookmark/favorito, não gera notificações detalhadas<br>❌ Fork: cópia do repo para contribuir, não para receber notificações<br>❌ Follow owner: mostra atividade geral do usuário no feed, não alertas específicos do repo" },
+                        { question: "Qual é a diferença entre Issue Template (.md) e Issue Form (.yml) no GitHub?", options: ["Issue Template é mais moderno e tem validação de campos; Issue Form é texto livre", "Issue Template é texto livre no editor; Issue Form tem campos estruturados (dropdowns, checkboxes, obrigatórios)", "Não há diferença — são a mesma coisa com extensões diferentes", "Issue Forms só funcionam em repos privados"], explanation: "<strong>Issue Form (.yml) = estruturado com validação!</strong><br><br>✅ Issue Template (.md): texto Markdown pré-preenchido, o usuário pode modificar livremente<br>✅ Issue Form (.yml): campos tipados (dropdown, checkbox, textarea), campos obrigatórios, validação<br><br>❌ A: invertido — Form é mais moderno<br>❌ C: são diferentes: md = livre, yml = estruturado<br>❌ D: Issue Forms funcionam em repos públicos e privados" },
+                        { question: "O que é o GitHub Marketplace?", options: ["Uma loja para contratar desenvolvedores freelancers", "Um fórum para discussões técnicas", "Um diretório de Apps e Actions que estendem a funcionalidade do GitHub", "Um serviço de hospedagem de código pago"], explanation: "<strong>GitHub Marketplace = Apps e Actions que extendem o GitHub!</strong><br><br>✅ Apps: integrações OAuth (CI tools, bots, code quality, project mgmt)<br>✅ Actions: steps reutilizáveis para GitHub Actions workflows<br>✅ Pode ser free ou pago<br><br>❌ A: não é plataforma de contratação<br>❌ B: GitHub Discussions é o fórum<br>❌ D: hospedagem é o github.com padrão" }
                     ]
                 },
-                // ── Módulo 7: Revisão Final ─────────────────────────────
+                // ── Módulo 8: Revisão Final ─────────────────────────────
                 {
-                    title: "📝 7. Revisão Final - Guia Rápido",
+                    title: "📝 8. Revisão Final - Guia Rápido",
                     lessons: [
                         {
                             title: "Revisão Rápida para o Exame GH-900",
@@ -2859,6 +3100,9 @@
                                         <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Controlar merge</td><td>Branch Protection Rules</td><td>Settings → Branches</td></tr>
                                         <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Discussão aberta (Q&A)</td><td>GitHub Discussions</td><td>Discussions tab</td></tr>
                                         <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Identidade corporativa</td><td>Enterprise Managed Users</td><td>Enterprise settings</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Respostas pré-formatadas</td><td>Saved Replies</td><td>Profile Settings</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Agrupamento por prazo</td><td>Milestones</td><td>Issues → Milestones</td></tr>
+                                        <tr><td style="padding:6px;border-bottom:1px solid var(--border)">Categorizar Issues/PRs</td><td>Labels</td><td>Issues → Labels</td></tr>
                                     </tbody>
                                 </table>
 
@@ -2891,6 +3135,13 @@
                                 🔹 <strong>Maintain</strong>: gerenciar settings (tech lead)<br>
                                 🔹 <strong>Admin</strong>: controle total (owner)</div>
 
+                                <div class="macete">🔑 <strong>COMUNIDADE E PROJETOS:</strong><br>
+                                ❓ Financiar OSS? → <strong>GitHub Sponsors</strong><br>
+                                ❓ Extender GitHub? → <strong>Marketplace</strong> (Apps = OAuth | Actions = workflow steps)<br>
+                                ❓ OSS interno? → <strong>InnerSource</strong> (repos Internal)<br>
+                                ❓ Guardar resposta frequente? → <strong>Saved Replies</strong><br>
+                                ❓ Agrupar issues por release? → <strong>Milestones</strong></div>
+
                                 <div class="separator"></div>
 
                                 <h4>📌 Macetes Compilados</h4>
@@ -2912,27 +3163,30 @@
 
                                 <div class="separator"></div>
 
-                                <h4>📌 Checklist Pré-Prova</h4>
+                                <h4>📌 Checklist Pré-Prova (Jan 2026)</h4>
                                 <ul>
-                                    <li>✅ Entendo a diferença entre Git e GitHub</li>
+                                    <li>✅ Entendo a diferença entre Git e GitHub (DVCS vs plataforma cloud)</li>
                                     <li>✅ Sei explicar GitHub Flow e os 3 merge strategies</li>
                                     <li>✅ Conheço os 3 pilares de segurança (Dependabot, Secret Scanning, Code Scanning)</li>
                                     <li>✅ Sei diferenciar github.dev vs Codespaces</li>
                                     <li>✅ Conheço os 5 níveis de permissão (R-T-W-M-A)</li>
                                     <li>✅ Entendo GitHub Actions (Workflow → Event → Job → Step → Runner)</li>
                                     <li>✅ Sei o que é EMU vs SAML SSO com conta pessoal</li>
-                                    <li>✅ Conheço GitHub Projects (Board, Table, Roadmap)</li>
+                                    <li>✅ Conheço GitHub Projects (Board, Table, Roadmap) e Project Insights</li>
                                     <li>✅ Sei a diferença entre Issues, Discussions, PRs</li>
                                     <li>✅ Entendo InnerSource e visibilidade Internal</li>
+                                    <li>✅ Sei para que servem Labels, Milestones e Saved Replies</li>
+                                    <li>✅ Sei a diferença entre Issue Template (.md) e Issue Form (.yml)</li>
+                                    <li>✅ Conheço Copilot plans (Free/Individual/Business/Enterprise) e Agent Mode</li>
                                 </ul>
                             `
                         }
                     ],
                     exercises: []
                 },
-                // ── Módulo 8: Simulado Final ────────────────────────────
+                // ── Módulo 9: Simulado Final ────────────────────────────
                 {
-                    title: "🎯 8. Simulado Final — Prova Completa",
+                    title: "🎯 9. Simulado Final — Prova Completa",
                     lessons: [{ title: "Simulado Oficial GH-900", content: `` }],
                     exercises: []
                 }
@@ -2997,19 +3251,25 @@
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Module 6: Projects and Community (40 min)</strong> ⚖️ 10-20%
+                                        <strong>Module 6: Managing Projects with GitHub (35 min)</strong> ⚖️ 5-10%
                                         <ul>
-                                            <li>GitHub Projects, Pages, Sponsors, Marketplace, InnerSource</li>
+                                            <li>GitHub Projects (views), Pages, Labels, Milestones, Saved Replies, Project Insights</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Module 7: 📝 Final Review (20 min)</strong>
+                                        <strong>Module 7: Exploring the GitHub Community (30 min)</strong> ⚖️ 5-10%
+                                        <ul>
+                                            <li>InnerSource, Open Source, Sponsors, Marketplace, Education, Stars, Issue Templates, PR Templates</li>
+                                        </ul>
+                                    </div>
+                                    <div class="module-item">
+                                        <strong>Module 8: 📝 Final Review (20 min)</strong>
                                         <ul>
                                             <li>Cheat-sheet, decision trees, pre-exam checklist</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
-                                        <strong>Module 8: 🎯 Final Exam (100 min)</strong>
+                                        <strong>Module 9: 🎯 Final Exam (100 min)</strong>
                                         <ul>
                                             <li>40 questions in real exam style</li>
                                         </ul>
@@ -3935,12 +4195,12 @@
                         { question: "An admin wants to prevent secrets from being pushed to the repository, blocking the push BEFORE it enters the history. Which specific feature to enable?", options: ["Secret Scanning alerts", "Secret Scanning push protection", "Branch Protection Rules", "Code Scanning"], explanation: "<strong>Secret Scanning Push Protection!</strong><br><br>✅ Push Protection: blocks the push BEFORE the secret enters the repo<br>✅ Different from alerts (which detect AFTER the commit)<br>✅ Prevention vs detection<br><br>❌ Alerts: detect secrets already committed (reactive)<br>❌ Branch Protection: controls who can push/merge, doesn't detect secrets<br>❌ Code Scanning: analyzes code vulnerabilities, not secrets" }
                     ]
                 },
-                // ── Module 6: Projects and Community (10-15%) ─────────────────
+                // ── Module 6: Managing Projects with GitHub (5-10%) ────────────
                 {
-                    title: "6. Projects and Community",
+                    title: "6. Managing Projects with GitHub",
                     lessons: [
                         {
-                            title: "6.1 GitHub Projects and Management",
+                            title: "6.1 GitHub Projects — Layouts and Automations",
                             content: `
                                 <h4>📌 Topic: GitHub Projects (v2)</h4>
                                 <p><strong>Explanation:</strong></p>
@@ -3989,9 +4249,260 @@
                             `
                         },
                         {
-                            title: "6.2 Community and Open Source",
+                            title: "6.2 Labels, Milestones, Saved Replies, and Project Insights",
+                            content: `
+                                <h4>📌 Topic: Labels</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>Labels</strong> are colored tags applied to Issues, PRs, and Discussions for categorization, filtering, and prioritization.</p>
+                                <ul>
+                                    <li>🏷️ Default labels: <code>bug</code>, <code>enhancement</code>, <code>documentation</code>, <code>good first issue</code>, <code>help wanted</code>, <code>question</code>, <code>wontfix</code>, <code>duplicate</code>, <code>invalid</code></li>
+                                    <li>✏️ Customizable: create, edit, and delete labels per repository</li>
+                                    <li>🔍 Filtering: filter Issues and PRs by label on the repository Issues tab</li>
+                                    <li>🤖 Automation: Actions can auto-apply labels (e.g., <code>labeler</code> action)</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Labels = "Post-it stickers"</strong> — categorize and filter. Multiple labels per Issue. "good first issue" and "help wanted" are special labels that appear in GitHub's community discovery.</div>
+
+                                <div class="exam-confirmed">
+                                    The exam tests <strong>Labels</strong>: "What are default labels?" → bug, enhancement, documentation, good first issue, help wanted.<br>
+                                    "What is 'good first issue' for?" → Mark beginner-friendly Issues to attract new contributors to the project.
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: Milestones</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>Milestones</strong> group Issues and PRs around a specific objective or delivery — such as a release, sprint, or version.</p>
+                                <ul>
+                                    <li>📅 Can have a due date (deadline)</li>
+                                    <li>📊 Automatic progress: % completed = closed Issues / total Issues</li>
+                                    <li>🗂️ Scoped per repository (not cross-repo like Projects)</li>
+                                    <li>🔗 Link Issues to Milestone via dropdown in the sidebar</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Milestone = "Sprint container"</strong> — groups Issues/PRs for a release (v2.0, Sprint 3) with deadline + automatic % progress. Per repository.</div>
+
+                                <div class="tip">💡 <strong>Milestone vs Projects:</strong><br>
+                                🔹 <strong>Milestone</strong>: per-repo, groups issues by objective/deadline, % auto-progress<br>
+                                🔹 <strong>Projects</strong>: can be org-level/cross-repo, multiple views (Board/Table/Roadmap), custom fields</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: Saved Replies</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>Saved Replies</strong> are pre-formatted reusable responses for Issues, PRs, and Discussions. They avoid typing the same text repeatedly.</p>
+                                <ul>
+                                    <li>💾 Configured in: Profile Settings → Saved Replies</li>
+                                    <li>⚡ Used with: <code>/</code> slash command or dropdown in the editor</li>
+                                    <li>📝 Examples: "Thanks for the report!", "Needs more information", "Closing for inactivity"</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Saved Replies = "Support canned responses"</strong> — like email templates. Write once, reuse forever. Accessed via slash command <code>/</code>.</div>
+
+                                <div class="exam-confirmed">
+                                    The exam tests <strong>Saved Replies</strong>: "What is it for?" → Reuse frequent responses in Issues and PRs.<br>
+                                    "Where to configure?" → Profile Settings → Saved Replies.<br>
+                                    "How to use?" → Slash command <code>/</code> in the comment editor.
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: Project Insights</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>Project Insights</strong> are built-in analytical charts in GitHub Projects that help track progress and identify bottlenecks.</p>
+                                <ul>
+                                    <li>📈 <strong>Burnup chart:</strong> accumulation of completed work over time</li>
+                                    <li>🔥 <strong>Burndown chart:</strong> how much work remains (velocity vs deadline)</li>
+                                    <li>🌊 <strong>Flow efficiency:</strong> average cycle time (from In Progress to Done)</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Insights = "Manager's dashboard"</strong> — without leaving GitHub Projects, see if the team is accelerating (burnup) or falling behind (burndown). Available in Projects v2.</div>
+
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: What's the difference between Milestone and GitHub Projects Roadmap?</summary>
+                                    <div class="recall-content">
+                                        <strong>Answer:</strong><br>
+                                        🔹 <strong>Milestone</strong>: per-repo, groups Issues with automatic % progress, has deadline date<br>
+                                        🔹 <strong>Roadmap view</strong>: part of GitHub Projects, cross-repo visual timeline, Gantt bars, custom fields<br>
+                                        🔹 Use Milestone to track issues in one repo; Roadmap for larger cross-team planning
+                                    </div>
+                                </details>
+                            `
+                        }
+                    ],
+                    exercises: [
+                        { question: "A team needs to visualize Issues and PRs in an integrated Kanban board on GitHub, with automations to move cards when Issues are closed. Which tool?", options: ["GitHub Actions", "GitHub Discussions", "GitHub Projects (Board view)", "GitHub Wiki"], explanation: "<strong>GitHub Projects (Board view)!</strong><br><br>✅ Projects v2: Board (Kanban), Table (spreadsheet), Roadmap (timeline)<br>✅ Automations: move cards automatically when closing Issues/merging PRs<br>✅ Native integration with Issues and PRs<br><br>❌ Actions: CI/CD (not visual management)<br>❌ Discussions: forum/debates<br>❌ Wiki: static documentation" },
+                        { question: "Where can a team host static project documentation directly from a GitHub repository, for free?", options: ["GitHub Codespaces", "GitHub Pages", "GitHub Wiki only", "Azure Static Web Apps"], explanation: "<strong>GitHub Pages!</strong><br><br>✅ Pages: free static site hosting directly from the repo<br>✅ URL: username.github.io/repo-name (or custom domain)<br>✅ Supports Jekyll, Hugo, Next.js (via Actions) and plain HTML<br><br>❌ Codespaces: development environment, not hosting<br>❌ Azure SWA: separate paid service" },
+                        { question: "A company needs visual planning with a timeline and start/end dates for releases. Which GitHub Projects view is most suitable?", options: ["Board view (Kanban)", "Table view (spreadsheet)", "Insights view (burnup)", "Roadmap view (timeline)"], explanation: "<strong>Roadmap view!</strong><br><br>✅ Roadmap: visual timeline with start/end dates, Gantt bars, ideal for release planning<br>✅ Shows progress over time<br><br>❌ Board: Kanban (columnar status, no timeline)<br>❌ Table: spreadsheet with filters (no temporal visualization)<br>❌ Insights: analytical charts, not timeline" },
+                        { question: "What is the purpose of Saved Replies in GitHub?", options: ["Reuse frequent responses in Issues, PRs, and Discussions", "Save commit drafts to publish later", "Create automatic email replies when mentioned", "Store code templates for snippets"], explanation: "<strong>Saved Replies = reuse frequent responses!</strong><br><br>✅ Created in: Profile Settings → Saved Replies<br>✅ Used via slash command <code>/</code> in the editor<br>✅ Avoids typing the same text (e.g., 'Thanks for the report!')<br><br>❌ B: Git doesn't have commit drafts<br>❌ C: not automatic email<br>❌ D: Gists are for code snippets" },
+                        { question: "A manager wants to see a chart of accumulated project progress over time, showing completed work. Which GitHub Projects feature to use?", options: ["Roadmap view", "Table view with filters", "Project Insights (burnup chart)", "GitHub Milestones"], explanation: "<strong>Project Insights — burnup chart!</strong><br><br>✅ Insights: analytical charts built into Projects v2<br>✅ Burnup: shows cumulative completed work over time<br>✅ Burndown: shows remaining work<br><br>❌ Roadmap: visual timeline, not progress chart<br>❌ Table: list with filters, not chart<br>❌ Milestones: % completion per repo, not temporal chart" },
+                        { question: "A team wants to group Issues and PRs related to a specific release (v2.0) with a deadline and % progress. Which feature to use?", options: ["GitHub Projects", "GitHub Milestone", "Labels", "GitHub Discussions"], explanation: "<strong>GitHub Milestone!</strong><br><br>✅ Milestone: groups Issues/PRs by objective/deadline<br>✅ Shows % completion automatically (closed Issues / total)<br>✅ Can have a deadline date<br><br>❌ Projects: broader tool (cross-team, multiple views)<br>❌ Labels: classification/filtering (not grouping with deadline)<br>❌ Discussions: forum, not work tracking" },
+                        { question: "Which field type is NOT available as a Custom Field in GitHub Projects (v2)?", options: ["Text", "Number", "Date", "Git branch (to link commits to the field)"], explanation: "<strong>Git branch is not a custom field type!</strong><br><br>✅ Available custom fields: Text, Number, Date, Single select, Iteration, GitHub repository field<br>✅ There is no 'branch' field type — branches appear in Issues/PRs automatically, but not as a Project field<br><br>❌ Text: ✅ available<br>❌ Number: ✅ available<br>❌ Date: ✅ available" }
+                    ]
+                },
+                // ── Module 7: Exploring the GitHub Community (5-10%) ────────────
+                {
+                    title: "7. Exploring the GitHub Community",
+                    lessons: [
+                        {
+                            title: "7.1 InnerSource, Open Source, and GitHub Ecosystem",
                             content: `
                                 <h4>📌 Topic: InnerSource</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>InnerSource</strong> is the practice of applying open source methodologies WITHIN a private organization:</p>
+                                <ul>
+                                    <li>🔓 Internal repositories visible to the entire organization</li>
+                                    <li>🤝 Any dev in the org can contribute via PRs (like open source)</li>
+                                    <li>📋 Issues, Discussions, CONTRIBUTING.md — same OSS practices</li>
+                                    <li>👥 Defined owners (CODEOWNERS) but contribution open internally</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>InnerSource = "Internal Open Source"</strong> — same practices (PR, review, transparency) but within the company. Visibility: Internal (not public).</div>
+
+                                <div class="tip">💡 <strong>Repository visibilities:</strong><br>
+                                🔹 <strong>Public</strong>: anyone on the internet can see<br>
+                                🔹 <strong>Internal</strong>: only Enterprise/Organization members can see (ideal for InnerSource)<br>
+                                🔹 <strong>Private</strong>: only explicit collaborators can see</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: GitHub Sponsors and Marketplace</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>GitHub Sponsors</strong> allows funding open source maintainers directly on GitHub (recurring or one-time payment).</p>
+                                <p><strong>GitHub Marketplace</strong> offers Apps and Actions to extend functionality:</p>
+                                <ul>
+                                    <li>💰 <strong>Sponsors</strong>: direct funding for OSS devs/projects</li>
+                                    <li>🛒 <strong>Marketplace Apps</strong>: OAuth integrations (CI, project mgmt, code quality)</li>
+                                    <li>⚡ <strong>Marketplace Actions</strong>: reusable actions for workflows — already seen in Module 4</li>
+                                </ul>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: GitHub Education and Community</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <ul>
+                                    <li>🎓 <strong>GitHub Education</strong> — Student Developer Pack (free tools for students)</li>
+                                    <li>👨‍🏫 <strong>GitHub Classroom</strong> — exercise/assignment management for teachers</li>
+                                    <li>🌟 <strong>GitHub Stars</strong> — recognition program for active community members</li>
+                                    <li>💬 <strong>GitHub Community</strong> — official discussion forum</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>GitHub Ecosystem:</strong><br>
+                                🔹 Sponsors = fund OSS<br>
+                                🔹 Marketplace = extend GitHub (Apps + Actions)<br>
+                                🔹 Pages = host sites<br>
+                                🔹 Education = resources for students/teachers<br>
+                                🔹 Stars = community recognition</div>
+
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: What's the difference between GitHub Marketplace Apps and Actions?</summary>
+                                    <div class="recall-content">
+                                        <strong>Answer:</strong><br>
+                                        🔹 <strong>Marketplace Apps</strong>: full OAuth integrations that add functionality to GitHub (CI tools, project mgmt, bots)<br>
+                                        🔹 <strong>Marketplace Actions</strong>: reusable units for GitHub Actions workflows (individual steps like checkout, deploy, lint)<br>
+                                        🔹 Apps live "outside" workflows; Actions live "inside" YAML workflows
+                                    </div>
+                                </details>
+                            `
+                        },
+                        {
+                            title: "7.2 Following Users, Discoverable Repositories, and Templates",
+                            content: `
+                                <h4>📌 Topic: Following Users and Organizations on GitHub</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p>GitHub has a <strong>social network</strong> layer that lets you follow developers and organizations to see their public activity in your feed.</p>
+                                <ul>
+                                    <li>👤 <strong>Follow user</strong>: see their public commits, stars, repos in your feed</li>
+                                    <li>🏢 <strong>Follow organization</strong>: see public activity of the org (releases, new repos)</li>
+                                    <li>⭐ <strong>Star repository</strong>: bookmark a project + signal popularity + appears in feed</li>
+                                    <li>👁️ <strong>Watch repository</strong>: receive notifications about issues, PRs, discussions</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Star vs Watch:</strong><br>
+                                🔹 <strong>Star</strong>: bookmark + show appreciation (no notifications)<br>
+                                🔹 <strong>Watch</strong>: receive notifications about activity in the repo<br>
+                                🔹 <strong>Follow</strong>: see someone's public activity in your feed</div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: Making a Repository Discoverable</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p>To make a repository easier to find by the community:</p>
+                                <ul>
+                                    <li>🏷️ <strong>Topics</strong>: keyword tags (e.g., <code>python</code>, <code>machine-learning</code>) — appear in search and topic pages</li>
+                                    <li>📝 <strong>Description</strong>: brief text about the project visible on the repository card</li>
+                                    <li>📄 <strong>README.md</strong>: detailed documentation on the repository home page</li>
+                                    <li>⚖️ <strong>LICENSE</strong>: defines how others can use the code (MIT, Apache, GPL)</li>
+                                    <li>🤝 <strong>CONTRIBUTING.md</strong>: guides contributors on how to collaborate</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Discoverable repo = Topics + Description + README + LICENSE + CONTRIBUTING</strong><br>
+                                Topics → appear in github.com/topics/{topic}<br>
+                                "good first issue" label → also attracts new contributors</div>
+
+                                <div class="exam-confirmed">
+                                    The exam tests making repositories discoverable: adding <strong>Topics</strong> to a repository makes it appear on GitHub topic search pages.<br>
+                                    <strong>CONTRIBUTING.md</strong> guides contributors on how to help. <strong>LICENSE</strong> defines terms of use.
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: Issue Templates vs Issue Forms</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <ul>
+                                    <li>📝 <strong>Issue Templates</strong> (.md): Markdown files in <code>.github/ISSUE_TEMPLATE/</code> that pre-fill the Issue editor — free text with headers</li>
+                                    <li>📋 <strong>Issue Forms</strong> (.yml): YAML files in <code>.github/ISSUE_TEMPLATE/</code> that render structured forms with required fields, dropdowns, checkboxes</li>
+                                    <li>🔧 <strong>PR Templates</strong>: Markdown file in <code>.github/PULL_REQUEST_TEMPLATE.md</code> that pre-fills the PR description</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>Template (.md) = blank pre-fill; Form (.yml) = structured form with validation</strong><br>
+                                Issue Forms force contributors to provide specific information (type, steps to reproduce, version).</div>
+
+                                <div class="exam-confirmed">
+                                    The exam differentiates <strong>Issue Templates (.md)</strong> vs <strong>Issue Forms (.yml)</strong>:<br>
+                                    Forms → YAML, structured fields, required validation, dropdown/checkbox.<br>
+                                    Templates → Markdown, free text pre-fill, no validation.<br>
+                                    Both reside in <code>.github/ISSUE_TEMPLATE/</code>
+                                </div>
+
+                                <div class="separator"></div>
+
+                                <h4>📌 Topic: PR Templates</h4>
+                                <p><strong>Explanation:</strong></p>
+                                <p><strong>PR Templates</strong> pre-fill the description field when a Pull Request is opened:</p>
+                                <ul>
+                                    <li>📂 Location: <code>.github/PULL_REQUEST_TEMPLATE.md</code></li>
+                                    <li>✅ Typical content: description of changes, checklist (tests, documentation), related issue</li>
+                                    <li>🔗 Auto-linking: <code>Closes #42</code> in PR body automatically closes Issue #42 when merged</li>
+                                </ul>
+
+                                <div class="macete">🔑 <strong>PR Template = "standard checklist for every PR"</strong><br>
+                                🔹 Location: <code>.github/PULL_REQUEST_TEMPLATE.md</code><br>
+                                🔹 <code>Closes #42</code> in body → Issue auto-closes on merge</div>
+
+                                <details class="active-recall">
+                                    <summary>🤔 ACTIVE RECALL: What is the difference between Issue Template and Issue Form?</summary>
+                                    <div class="recall-content">
+                                        <strong>Answer:</strong><br>
+                                        🔹 <strong>Issue Template (.md)</strong>: Markdown, pre-fills the Issue editor with text, no form validation<br>
+                                        🔹 <strong>Issue Form (.yml)</strong>: YAML, renders a structured form with required fields, dropdowns, checkboxes<br>
+                                        🔹 Both in <code>.github/ISSUE_TEMPLATE/</code> folder<br>
+                                        🔹 Forms force structured data entry; Templates allow free text
+                                    </div>
+                                </details>
+                            `
+                        }
+                    ],
+                    exercises: [
+                        { question: "A company wants all internal developers to contribute to other teams' repositories via PRs, following open source practices while keeping code private. Which approach?", options: ["Make all repos public", "InnerSource with Internal visibility repos", "Create private forks of each repo", "Give Admin access to all devs"], explanation: "<strong>InnerSource with Internal repos!</strong><br><br>✅ InnerSource: open source practices (PRs, issues, reviews) within the company<br>✅ Internal visibility: any org/enterprise member can view and contribute<br>✅ CODEOWNERS defines owners, but contribution is open internally<br><br>❌ Public repos: exposes code to the world (not private!)<br>❌ Private forks: fragments code, hinders contribution<br>❌ Admin for all: violates least privilege (R-T-W-M-A from Module 5)" },
+                        { question: "Which feature allows directly funding open source maintainers and projects on GitHub?", options: ["GitHub Marketplace", "GitHub Sponsors", "GitHub Education", "GitHub Stars"], explanation: "<strong>GitHub Sponsors!</strong><br><br>✅ Sponsors: recurring or one-time payment directly to OSS devs/projects<br>✅ Integrated into GitHub profile ('Sponsor' button)<br><br>❌ Marketplace: sells Apps and Actions (products, not donations)<br>❌ Education: free resources for students/teachers<br>❌ Stars: recognition program (no payment)" },
+                        { question: "A team wants to make their repository easy to find on GitHub by adding keyword tags that appear on topic search pages. Which feature to use?", options: ["GitHub Discussions categories", "Labels", "Topics", "Repository Description only"], explanation: "<strong>Topics!</strong><br><br>✅ Topics: keyword tags (e.g., python, machine-learning) that make the repo appear on github.com/topics/{tag}<br>✅ Added in repository Settings or the About section<br><br>❌ Labels: for Issues/PRs (not repository search)<br>❌ Description: helps but doesn't create topic pages<br>❌ Discussions: Q&A forum, not discoverability" },
+                        { question: "A maintainer wants to enforce that every new Issue follows a structured form with required fields and dropdowns — not free text. Which feature to use?", options: ["Issue Templates (.md)", "Issue Forms (.yml)", "PR Templates (.md)", "GitHub Discussions forms"], explanation: "<strong>Issue Forms (.yml)!</strong><br><br>✅ Issue Forms: YAML files in .github/ISSUE_TEMPLATE/ that render structured forms with required fields, dropdowns, checkboxes<br>✅ Enforce structured data entry (unlike Markdown templates)<br><br>❌ Issue Templates (.md): Markdown pre-fill, free text, no validation<br>❌ PR Templates: for Pull Request descriptions, not Issues<br>❌ Discussions forms: don't have the same validation" },
+                        { question: "Which program offers free tools (including GitHub Copilot, domains, cloud credits) for verified students?", options: ["GitHub Sponsors", "GitHub Stars", "GitHub Education Student Developer Pack", "GitHub Free plan"], explanation: "<strong>GitHub Education Student Developer Pack!</strong><br><br>✅ Student Developer Pack: collection of free tools for verified students<br>✅ Includes: free Copilot, domains, cloud credits, development tools<br><br>❌ Sponsors: OSS funding (not for students)<br>❌ Stars: community recognition (doesn't offer tools)<br>❌ Free plan: basic plan for everyone (no extra student benefits)" },
+                        { question: "What is the difference between GitHub Marketplace Apps and GitHub Marketplace Actions?", options: ["Apps are free, Actions are paid", "Apps are full OAuth integrations, Actions are reusable steps in workflows", "Apps run in .github/workflows/, Actions run externally", "There's no difference — they're the same thing"], explanation: "<strong>Apps = OAuth integrations; Actions = workflow steps!</strong><br><br>✅ Apps: full OAuth integrations (CI tools, bots, project mgmt) that live 'outside' workflows<br>✅ Actions: reusable units that live 'inside' YAML workflows (.github/workflows/)<br><br>❌ Both can be free or paid<br>❌ Actions run in .github/workflows/ (not Apps)<br>❌ They are distinct things" }
+                    ]
+                },
+                // ── Module 8: Final Review ───────────────────────────────
                                 <p><strong>Explanation:</strong></p>
                                 <p><strong>InnerSource</strong> is the practice of applying open source methodologies WITHIN a private organization:</p>
                                 <ul>
@@ -4062,7 +4573,7 @@
                 },
                 // ── Module 7: Final Review ───────────────────────────────
                 {
-                    title: "📝 7. Final Review - Quick Guide",
+                    title: "📝 8. Final Review - Quick Guide",
                     lessons: [
                         {
                             title: "Quick Review for the GH-900 Exam",
@@ -4163,7 +4674,7 @@
                 },
                 // ── Module 8: Final Exam ────────────────────────────────
                 {
-                    title: "🎯 8. Final Exam — Full Practice Test",
+                    title: "🎯 9. Final Exam — Full Practice Test",
                     lessons: [{ title: "Official GH-900 Practice Exam", content: `` }],
                     exercises: []
                 }
