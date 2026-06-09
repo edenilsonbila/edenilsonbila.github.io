@@ -1782,7 +1782,7 @@
                                     <div class="module-item">
                                         <strong>Módulo 5: Segurança e Administração (40 min)</strong> ⚖️ 10-15%
                                         <ul>
-                                            <li>Autenticação, Branch Protection, Dependabot, Secret Scanning, EMUs</li>
+                                            <li>Autenticação, Branch Protection, Dependabot, Secret Scanning, EMUs (Contas Gerenciadas pela Empresa)</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
@@ -2014,6 +2014,13 @@
                                     <li><strong>Organization (Organização)</strong> — para equipes, gerenciamento centralizado de teams, repos e permissões</li>
                                     <li><strong>Enterprise</strong> — para empresas grandes, múltiplas orgs, policies centralizadas, EMUs, SAML SSO</li>
                                 </ul>
+
+                                <div class="tip">💡 <strong>Termos corporativos — o que significam:</strong><br>
+                                🔹 <strong>SSO</strong> (Single Sign-On / Login Único) — o funcionário faz login uma vez no sistema da empresa e já acessa todos os serviços (incluindo GitHub) sem precisar de nova senha. Como usar um crachá para abrir várias portas<br>
+                                🔹 <strong>SAML</strong> (Security Assertion Markup Language) — protocolo que o sistema corporativo usa para "confirmar" ao GitHub que aquele usuário é válido. O GitHub aceita o login sem precisar criar senha separada<br>
+                                🔹 <strong>IdP</strong> (Identity Provider / Provedor de Identidade) — o sistema da empresa responsável por gerenciar os logins dos funcionários (ex: Azure Active Directory / Entra ID, Okta, Google Workspace)<br>
+                                🔹 <strong>SCIM</strong> (System for Cross-domain Identity Management) — sincroniza automaticamente usuários entre o IdP e o GitHub. Novo funcionário contratado → conta GitHub criada. Funcionário demitido → conta removida<br>
+                                🔹 <strong>EMU</strong> (Enterprise Managed Users / Contas Gerenciadas pela Empresa) — conta GitHub 100% controlada pela empresa, não pelo funcionário. Veremos em detalhes no Módulo 5</div>
 
                                 <div class="macete">🔑 <strong>P-O-E: "Person → Org → Enterprise"</strong> — escala crescente. Person é solo, Org é time, Enterprise é corporação inteira.</div>
 
@@ -2316,7 +2323,7 @@
 
                                 <div class="macete">🔑 <strong>Issue = "Ticket de suporte do código"</strong> — tem título, corpo, labels, assignee, e um número único (#123) que pode ser referenciado em qualquer lugar do GitHub.</div>
 
-                                <div class="tip">💡 <strong>Issue Templates</strong> ficam em <code>.github/ISSUE_TEMPLATE/</code> como YAML ou Markdown. Criam formulários com campos obrigatórios para padronizar o report.</div>
+                                <div class="tip">💡 <strong>Issue Templates</strong> ficam em <code>.github/ISSUE_TEMPLATE/</code> como <strong>YAML</strong> (Yet Another Markup Language — formato de texto estruturado usando indentação por espaços, amplamente usado para configurações no GitHub) ou <strong>Markdown</strong>. YAML permite formulários com campos obrigatórios, dropdowns e validação. Markdown cria templates de texto livre.</div>
 
                                 <div class="separator"></div>
 
@@ -2327,10 +2334,12 @@
                                 <ul>
                                     <li>✅ <strong>Diff de código</strong> — visualiza alterações linha a linha</li>
                                     <li>✅ <strong>Code review inline</strong> — comentários em linhas específicas</li>
-                                    <li>✅ <strong>Status checks</strong> — CI/CD roda automaticamente</li>
+                                    <li>✅ <strong>Status checks</strong> — CI/CD (pipeline automático de build e testes) executa ao abrir ou atualizar o PR</li>
                                     <li>✅ <strong>Merge options</strong> — merge commit, squash, rebase</li>
                                     <li>✅ <strong>Draft PRs</strong> — WIP, não pode ser mergeado até estar pronto</li>
                                 </ul>
+
+                                <div class="tip">💡 <strong>CI/CD</strong> (Continuous Integration / Continuous Delivery — Integração/Entrega Contínua): pipeline automático que compila, roda testes e valida o código a cada mudança. No GitHub é implementado via <strong>GitHub Actions</strong> — veremos em detalhes no Módulo 4.</div>
 
                                 <div class="macete">🔑 <strong>PR = "Pedido de permissão para entrar no main"</strong> — você mostra o que fez (diff), alguém revisa (review), e se aprovado, entra (merge).</div>
 
@@ -2679,7 +2688,7 @@
                                         <strong>Resposta:</strong><br>
                                         🔹 <strong>Triage</strong>: gerencia issues/PRs (labels, assign, close) mas NÃO pode fazer push/merge de código<br>
                                         🔹 <strong>Write</strong>: PODE push, merge PRs, criar releases (altera código)<br>
-                                        🔹 <strong>Maintain</strong>: gerencia settings do repo (branch protection, webhooks) mas NÃO pode deletar repo ou alterar acesso<br>
+                                        🔹 <strong>Maintain</strong>: gerencia settings do repo (branch protection, webhooks — notificações HTTP enviadas automaticamente a sistemas externos quando eventos ocorrem no repo) mas NÃO pode deletar repo ou alterar acesso<br>
                                         🔹 <strong>Admin</strong>: controle TOTAL (deletar repo, gerenciar collaborators, alterar visibilidade)
                                     </div>
                                 </details>
@@ -2958,7 +2967,7 @@
                                 <p><strong>GitHub Marketplace</strong> oferece Apps e Actions para estender funcionalidades do GitHub:</p>
                                 <ul>
                                     <li>💰 <strong>Sponsors</strong>: financiamento direto a devs/projetos OSS</li>
-                                    <li>🛒 <strong>Marketplace Apps</strong>: integrações OAuth (CI, project mgmt, code quality, bots)</li>
+                                    <li>🛒 <strong>Marketplace Apps</strong>: integrações <strong>OAuth</strong> (protocolo de autorização que permite que apps de terceiros acessem sua conta GitHub de forma segura, sem compartilhar sua senha — como "Entrar com Google") — CI tools, project mgmt, bots</li>
                                     <li>⚡ <strong>Marketplace Actions</strong>: ações reutilizáveis para workflows (usadas em .github/workflows/)</li>
                                 </ul>
 
@@ -3247,7 +3256,7 @@
                                     <div class="module-item">
                                         <strong>Module 5: Security and Administration (40 min)</strong> ⚖️ 10-15%
                                         <ul>
-                                            <li>Authentication, Branch Protection, Dependabot, Secret Scanning, EMUs</li>
+                                            <li>Authentication, Branch Protection, Dependabot, Secret Scanning, EMUs (Enterprise Managed Users)</li>
                                         </ul>
                                     </div>
                                     <div class="module-item">
@@ -3467,6 +3476,13 @@
                                     <li><strong>Organization</strong> — for teams, centralized management of teams, repos, and permissions</li>
                                     <li><strong>Enterprise</strong> — for large companies, multiple orgs, centralized policies, EMUs, SAML SSO</li>
                                 </ul>
+
+                                <div class="tip">💡 <strong>Corporate terms explained:</strong><br>
+                                🔹 <strong>SSO</strong> (Single Sign-On) — employees log in once to the company system and access all services (including GitHub) without entering another password. Like using a keycard to open multiple doors<br>
+                                🔹 <strong>SAML</strong> (Security Assertion Markup Language) — protocol the corporate system uses to "confirm" to GitHub that the user is valid. GitHub accepts the login without requiring a separate password<br>
+                                🔹 <strong>IdP</strong> (Identity Provider) — the company system that manages employee logins (e.g., Azure Active Directory / Entra ID, Okta, Google Workspace)<br>
+                                🔹 <strong>SCIM</strong> (System for Cross-domain Identity Management) — automatically syncs users between the IdP and GitHub. New employee hired → GitHub account created. Employee fired → account removed<br>
+                                🔹 <strong>EMU</strong> (Enterprise Managed Users) — GitHub account 100% controlled by the company, not the employee. Full details in Module 5</div>
 
                                 <div class="macete">🔑 <strong>P-O-E: "Person → Org → Enterprise"</strong> — increasing scale. Person is solo, Org is team, Enterprise is entire corporation.</div>
 
@@ -3761,7 +3777,7 @@
 
                                 <div class="macete">🔑 <strong>Issue = "Code support ticket"</strong> — has title, body, labels, assignee, and a unique number (#123) that can be referenced anywhere on GitHub.</div>
 
-                                <div class="tip">💡 <strong>Issue Templates</strong> live in <code>.github/ISSUE_TEMPLATE/</code> as YAML or Markdown. They create forms with required fields to standardize reporting.</div>
+                                <div class="tip">💡 <strong>Issue Templates</strong> live in <code>.github/ISSUE_TEMPLATE/</code> as <strong>YAML</strong> (Yet Another Markup Language — structured text format using space indentation, widely used for configurations on GitHub) or <strong>Markdown</strong>. YAML enables forms with required fields, dropdowns, and validation. Markdown creates free-text templates.</div>
 
                                 <div class="separator"></div>
 
@@ -3772,10 +3788,12 @@
                                 <ul>
                                     <li>✅ <strong>Code diff</strong> — visualize changes line by line</li>
                                     <li>✅ <strong>Inline code review</strong> — comments on specific lines</li>
-                                    <li>✅ <strong>Status checks</strong> — CI/CD runs automatically</li>
+                                    <li>✅ <strong>Status checks</strong> — CI/CD (automated build and test pipeline) runs when a PR is opened or updated</li>
                                     <li>✅ <strong>Merge options</strong> — merge commit, squash, rebase</li>
                                     <li>✅ <strong>Draft PRs</strong> — WIP, cannot be merged until ready</li>
                                 </ul>
+
+                                <div class="tip">💡 <strong>CI/CD</strong> (Continuous Integration / Continuous Delivery): automated pipeline that compiles, runs tests, and validates code on every change. On GitHub it's implemented via <strong>GitHub Actions</strong> — covered in detail in Module 4.</div>
 
                                 <div class="macete">🔑 <strong>PR = "Permission request to enter main"</strong> — you show what you did (diff), someone reviews (review), and if approved, it enters (merge).</div>
 
@@ -4105,7 +4123,7 @@
                                         <strong>Answer:</strong><br>
                                         🔹 <strong>Triage</strong>: manages issues/PRs (labels, assign, close) but CANNOT push/merge code<br>
                                         🔹 <strong>Write</strong>: CAN push, merge PRs, create releases (modifies code)<br>
-                                        🔹 <strong>Maintain</strong>: manages repo settings (branch protection, webhooks) but CANNOT delete repo or change access<br>
+                                        🔹 <strong>Maintain</strong>: manages repo settings (branch protection, webhooks — automatic HTTP notifications sent to external systems when repo events occur) but CANNOT delete repo or change access<br>
                                         🔹 <strong>Admin</strong>: FULL control (delete repo, manage collaborators, change visibility)
                                     </div>
                                 </details>
@@ -4372,7 +4390,7 @@
                                 <p><strong>GitHub Marketplace</strong> offers Apps and Actions to extend functionality:</p>
                                 <ul>
                                     <li>💰 <strong>Sponsors</strong>: direct funding for OSS devs/projects</li>
-                                    <li>🛒 <strong>Marketplace Apps</strong>: OAuth integrations (CI, project mgmt, code quality)</li>
+                                    <li>🛒 <strong>Marketplace Apps</strong>: <strong>OAuth</strong> integrations (authorization protocol that allows third-party apps to access your GitHub account securely, without sharing your password — like "Sign in with Google") — CI tools, project mgmt, bots</li>
                                     <li>⚡ <strong>Marketplace Actions</strong>: reusable actions for workflows — already seen in Module 4</li>
                                 </ul>
 
