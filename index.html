@@ -252,6 +252,47 @@
     }
     [data-tooltip]:hover::after { opacity: 1; }
 
+    /* ── PROGRESS BAR ── */
+    .card-progress {
+      width: 100%;
+      height: 6px;
+      background: rgba(255,255,255,.06);
+      border-radius: 100px;
+      overflow: hidden;
+      position: relative;
+    }
+    .card-progress-fill {
+      height: 100%;
+      border-radius: 100px;
+      background: var(--card-accent, #5c6bc0);
+      transition: width .4s ease;
+    }
+    .card-progress-text {
+      font-size: .7rem;
+      color: var(--text-muted);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 4px;
+    }
+    .card-progress-text .pct {
+      font-weight: 600;
+      color: var(--card-accent, #a5b4fc);
+    }
+
+    /* ── STATUS BADGE ── */
+    .status-badge {
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .04em;
+      padding: 3px 9px;
+      border-radius: 100px;
+      text-transform: uppercase;
+    }
+    .status-badge.not-started { background: rgba(255,255,255,.06); color: var(--text-muted); }
+    .status-badge.in-progress { background: rgba(96,165,250,.12); border: 1px solid rgba(96,165,250,.3); color: #60a5fa; }
+    .status-badge.completed   { background: rgba(74,222,128,.12); border: 1px solid rgba(74,222,128,.3); color: #4ade80; }
+
     .card-cta {
       display: flex;
       align-items: center;
@@ -308,7 +349,7 @@
   <div class="grid">
 
     <!-- AI-900 -->
-    <a class="card" href="AI-900.html" style="--card-accent:#38bdf8">
+    <a class="card" href="AI-900.html" style="--card-accent:#38bdf8" data-course="AI-900">
       <div class="card-head">
         <div class="card-icon">🧠</div>
         <span class="card-code">AI-900</span>
@@ -328,7 +369,7 @@
     </a>
 
     <!-- AB-730 -->
-    <a class="card" href="AB-730.html" style="--card-accent:#a78bfa">
+    <a class="card" href="AB-730.html" style="--card-accent:#a78bfa" data-course="AB-730">
       <div class="card-head">
         <div class="card-icon">💼</div>
         <span class="card-code">AB-730</span>
@@ -348,7 +389,7 @@
     </a>
 
     <!-- AB-731 -->
-    <a class="card" href="AB-731.html" style="--card-accent:#fb923c">
+    <a class="card" href="AB-731.html" style="--card-accent:#fb923c" data-course="AB-731">
       <div class="card-head">
         <div class="card-icon">🚀</div>
         <span class="card-code">AB-731</span>
@@ -368,7 +409,7 @@
     </a>
 
     <!-- GH-300 -->
-    <a class="card" href="GH-300.html" style="--card-accent:#60a5fa">
+    <a class="card" href="GH-300.html" style="--card-accent:#60a5fa" data-course="GH-300">
       <div class="card-head">
         <div class="card-icon">🤖</div>
         <span class="card-code">GH-300</span>
@@ -388,7 +429,7 @@
     </a>
 
     <!-- GH-900 -->
-    <a class="card" href="GH-900.html" style="--card-accent:#4ade80">
+    <a class="card" href="GH-900.html" style="--card-accent:#4ade80" data-course="GH-900">
       <div class="card-head">
         <div class="card-icon">🐙</div>
         <span class="card-code">GH-900</span>
@@ -408,7 +449,7 @@
     </a>
 
     <!-- AB-900 -->
-    <a class="card" href="AB-900.html" style="--card-accent:#f59e0b">
+    <a class="card" href="AB-900.html" style="--card-accent:#f59e0b" data-course="AB-900">
       <div class="review-badge" data-tooltip="Este minicurso ainda está em revisão. O conteúdo foi gerado com base no Study Guide oficial, mas ainda não houve aprovação no exame real nem review pós-prova para validar a aderência das questões.">Em Revisão</div>
       <div class="card-head">
         <div class="card-icon">🤖</div>
@@ -436,6 +477,78 @@
   Criado por <a href="https://github.com/edenilsonbila" target="_blank">Edenilson Bila</a> · Licença MIT ·
   <a href="https://github.com/edenilsonbila/Certificacoes" target="_blank">Ver no GitHub</a>
 </footer>
+
+<script>
+(function() {
+  const courses = [
+    { code: 'AI-900',  key: 'ai900_completed_lessons',  total: 18 },
+    { code: 'AB-730',  key: 'ab730_completed_lessons',  total: 11 },
+    { code: 'AB-731',  key: 'ab731_completed_lessons',  total: 9  },
+    { code: 'GH-300',  key: 'gh300_completed_lessons',  total: 20 },
+    { code: 'GH-900',  key: 'gh900_completed_lessons',  total: 18 },
+    { code: 'AB-900',  key: 'ab900_completed_lessons',  total: 12 }
+  ];
+
+  function getProgress(key) {
+    try {
+      const raw = localStorage.getItem(key);
+      if (!raw) return 0;
+      const arr = JSON.parse(raw);
+      return Array.isArray(arr) ? arr.length : 0;
+    } catch(e) { return 0; }
+  }
+
+  function getStatus(completed, total) {
+    if (completed === 0) return 'not-started';
+    if (completed >= total) return 'completed';
+    return 'in-progress';
+  }
+
+  function getStatusLabel(status) {
+    switch(status) {
+      case 'not-started': return 'Não iniciado';
+      case 'in-progress': return 'Em andamento';
+      case 'completed':   return 'Concluído ✅';
+      default: return '';
+    }
+  }
+
+  const cards = document.querySelectorAll('.card[data-course]');
+  cards.forEach(card => {
+    const code = card.getAttribute('data-course');
+    const course = courses.find(c => c.code === code);
+    if (!course) return;
+
+    const completed = getProgress(course.key);
+    const pct = Math.round((completed / course.total) * 100);
+    const status = getStatus(completed, course.total);
+
+    // Insert status badge in card-head
+    const head = card.querySelector('.card-head');
+    if (head && status !== 'not-started') {
+      const badge = document.createElement('span');
+      badge.className = 'status-badge ' + status;
+      badge.textContent = getStatusLabel(status);
+      head.appendChild(badge);
+    }
+
+    // Insert progress bar before card-cta
+    const cta = card.querySelector('.card-cta');
+    if (cta && completed > 0) {
+      const wrapper = document.createElement('div');
+      wrapper.innerHTML = `
+        <div class="card-progress">
+          <div class="card-progress-fill" style="width:${pct}%"></div>
+        </div>
+        <div class="card-progress-text">
+          <span>${completed}/${course.total} lições</span>
+          <span class="pct">${pct}%</span>
+        </div>`;
+      cta.parentNode.insertBefore(wrapper, cta);
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
