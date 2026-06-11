@@ -202,6 +202,55 @@
     .tag.price   { color: #fde68a; border-color: rgba(253,230,138,.3); background: rgba(253,230,138,.08); }
     .tag.time    { color: #bfdbfe; border-color: rgba(191,219,254,.3); background: rgba(191,219,254,.08); }
     .tag.vendor  { color: #e9d5ff; border-color: rgba(233,213,255,.3); background: rgba(233,213,255,.08); }
+    .tag.review  { color: #fbbf24; border-color: rgba(251,191,36,.35); background: rgba(251,191,36,.1); cursor: help; }
+
+    /* ── IN REVIEW BADGE ── */
+    .review-badge {
+      position: absolute;
+      top: 14px; right: 14px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+      background: rgba(251,191,36,.12);
+      border: 1px solid rgba(251,191,36,.35);
+      color: #fbbf24;
+      font-size: .65rem;
+      font-weight: 700;
+      letter-spacing: .06em;
+      text-transform: uppercase;
+      padding: 4px 10px;
+      border-radius: 100px;
+      cursor: help;
+      z-index: 1;
+    }
+    .review-badge::before { content: '⏳'; font-size: .75rem; }
+
+    /* ── TOOLTIP ── */
+    [data-tooltip] { position: relative; }
+    [data-tooltip]::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      bottom: calc(100% + 8px);
+      right: 0;
+      width: 240px;
+      background: #1e2235;
+      border: 1px solid rgba(251,191,36,.4);
+      color: #e8eaf6;
+      font-size: .75rem;
+      font-weight: 400;
+      line-height: 1.5;
+      padding: 10px 12px;
+      border-radius: 10px;
+      box-shadow: 0 8px 24px rgba(0,0,0,.5);
+      pointer-events: none;
+      opacity: 0;
+      transition: opacity .15s;
+      z-index: 100;
+      white-space: normal;
+      text-transform: none;
+      letter-spacing: 0;
+    }
+    [data-tooltip]:hover::after { opacity: 1; }
 
     .card-cta {
       display: flex;
@@ -247,7 +296,7 @@
   <h1>Minicursos de Certificação</h1>
   <p>Preparação interativa para exames Microsoft &amp; GitHub — módulos, flashcards e simulados no estilo da prova oficial.</p>
   <div class="header-stats">
-    <div class="stat"><div class="stat-n">5</div><div class="stat-l">Certificações</div></div>
+    <div class="stat"><div class="stat-n">6</div><div class="stat-l">Certificações</div></div>
     <div class="stat"><div class="stat-n">200+</div><div class="stat-l">Questões de Simulado</div></div>
     <div class="stat"><div class="stat-n">PT / EN</div><div class="stat-l">Bilíngue</div></div>
     <div class="stat"><div class="stat-n">100%</div><div class="stat-l">Gratuito</div></div>
@@ -351,6 +400,28 @@
         <span class="tag vendor">GitHub</span>
         <span class="tag price">USD 99</span>
         <span class="tag time">120 min · 750/1000</span>
+      </div>
+      <div class="card-cta">
+        <span>Iniciar minicurso</span>
+        <div class="cta-arrow">→</div>
+      </div>
+    </a>
+
+    <!-- AB-900 -->
+    <a class="card" href="AB-900.html" style="--card-accent:#f59e0b">
+      <div class="review-badge" data-tooltip="Este minicurso ainda está em revisão. O conteúdo foi gerado com base no Study Guide oficial, mas ainda não houve aprovação no exame real nem review pós-prova para validar a aderência das questões.">Em Revisão</div>
+      <div class="card-head">
+        <div class="card-icon">🤖</div>
+        <span class="card-code">AB-900</span>
+      </div>
+      <div class="card-title">M365 Copilot &amp; Agent Admin Fundamentals</div>
+      <div class="card-desc">Administração do Microsoft 365 Copilot e agentes: identidade, Microsoft Purview, proteção de dados, licenciamento e ciclo de vida de agentes.</div>
+      <div class="card-meta">
+        <span class="tag level">Fundamentals</span>
+        <span class="tag vendor">Microsoft 365</span>
+        <span class="tag price">USD 165</span>
+        <span class="tag time">60 min · 700/1000</span>
+        <span class="tag review" data-tooltip="Este minicurso ainda está em revisão. O conteúdo foi gerado com base no Study Guide oficial, mas ainda não houve aprovação no exame real nem review pós-prova para validar a aderência das questões.">⚠ Em Revisão</span>
       </div>
       <div class="card-cta">
         <span>Iniciar minicurso</span>
